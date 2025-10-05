@@ -1,0 +1,20 @@
+[package]
+name = "rustml-tensor"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+rustml-core = { path = "../rustml-core" }
+ndarray.workspace = true
+num-traits.workspace = true
+serde = { workspace = true, features = ["derive"] }
+
+[[example]]
+name = "basic_tensor_ops"
+path = "../examples/basic_tensor_ops.rs"

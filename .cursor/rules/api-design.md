@@ -1,0 +1,63 @@
+---
+description: "API design principles for RustML library"
+globs: ["**/lib.rs", "**/*.rs"]
+alwaysApply: true
+---
+
+# 🎨 RustML - API Design Principles
+
+## Core Design Philosophy
+Создаем API который:
+- **Type-safe** на уровне компиляции
+- **Ergonomic** для пользователей с Python/PyTorch background
+- **Performance-first** без жертв в safety
+
+## Essential Traits Pattern
+```rust
+// Всегда используй этот паттерн для core abstractions
+pub trait Device: Send + Sync {
+    type Buffer;
+    fn allocate(&self, size: usize) -> Self::Buffer;
+}
+
+pub trait DType: Copy + Clone + Send + Sync + 'static {
+    const SIZE: usize;
+    const NAME: &'static str;
+}
+```
+
+## Builder Pattern для конфигураций
+```rust
+// Сложные объекты создаем через builders
+pub struct ModelBuilder<T> {
+    layers: Vec<Box<dyn Layer<T>>>,
+    optimizer: Option<Box<dyn Optimizer<T>>>,
+}
+
+impl<T> ModelBuilder<T> {
+    pub fn add_layer(mut self, layer: impl Layer<T> + 'static) -> Self {
+        self.layers.push(Box::new(layer));
+        self
+    }
+}
+```
+
+## Consistency Rules
+- **Единый стиль** parameter ordering: `(input, weights, bias)`
+- **Predictable return types**: Result<Tensor<T>, Error> для операций
+- **Chainable APIs** где логично (builder pattern)
+
+## Memory Management APIs
+- `view()` для readonly доступа без копирования
+- `into_owned()` для получения owned tensor
+- `share()` для Arc-wrapped версии
+
+## Error Handling Strategy
+- Domain-specific error types для каждого модуля
+- Clear error messages с предложениями по исправлению
+- No panics в public API - только в internal debugging
+
+## Generic Design
+- Generic over data types где возможно: `Tensor<T: DType>`
+- Feature flags для optional backends: `[features] cuda = ["dep:cudarc"]`
+- Backend abstraction через traits, не concrete types

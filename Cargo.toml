@@ -1,0 +1,43 @@
+[workspace]
+resolver = "2"
+members = [
+    "rustml-core",
+    "rustml-tensor", 
+    "rustml", "rustml-autograd",
+]
+# Добавим остальные crates по мере их создания
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["RustML Contributors"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/username/rustml"
+description = "High-performance machine learning library for Rust"
+keywords = ["machine-learning", "deep-learning", "tensor", "neural-networks"]
+categories = ["science", "algorithms", "mathematics"]
+
+[workspace.dependencies]
+# Core dependencies для всех crates
+ndarray = "0.15"
+num-traits = "0.2"
+thiserror = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+
+# Performance
+rayon = "1.8"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+# Development
+anyhow = "1.0"
+approx = "0.5"  # Для floating point comparisons
+
+# Optional features
+# candle-core = { version = "0.4", optional = true }
+# tch = { version = "0.13", optional = true }
+
+# Examples будут в individual crates
+
+[workspace.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

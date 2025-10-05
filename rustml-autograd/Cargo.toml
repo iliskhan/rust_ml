@@ -1,0 +1,28 @@
+[package]
+name = "rustml-autograd"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+rustml-core = { path = "../rustml-core" }
+rustml-tensor = { path = "../rustml-tensor" }
+num-traits.workspace = true
+serde = { workspace = true, features = ["derive"] }
+
+[[example]]
+name = "autograd_test"
+path = "../examples/autograd_test.rs"
+
+[[example]]
+name = "milestone_check"
+path = "../examples/milestone_check.rs"
+
+[[example]]
+name = "scalar_demo"
+path = "../examples/scalar_demo.rs"

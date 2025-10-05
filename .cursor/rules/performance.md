@@ -1,0 +1,70 @@
+---
+description: "Performance optimization rules for ML computations"
+globs: ["**/tensor/**/*.rs", "**/ops/**/*.rs", "**/autograd/**/*.rs"]
+alwaysApply: true
+---
+
+# ⚡ RustML - Performance Rules
+
+## Memory Management для ML
+- **Stack allocation** для small tensors (< 1KB)
+- **Heap allocation** для large tensors с proper cleanup
+- **Memory pools** для frequent tensor allocations
+- **Zero-copy views** везде где математически корректно
+
+## Critical Performance Patterns
+```rust
+// ХОРОШО: zero-copy operation
+fn add_inplace(&mut self, other: &Tensor<T>) -> Result<(), TensorError> {
+    // in-place operation без allocations
+}
+
+// ПЛОХО: unnecessary clone
+fn add(&self, other: &Tensor<T>) -> Tensor<T> {
+    let mut result = self.clone(); // Избегай для больших тензоров!
+    result.add_inplace(other);
+    result
+}
+```
+
+## SIMD и Vectorization
+- **Обязательно** используй SIMD для mathematical operations
+- `std::simd` для portable SIMD
+- Platform-specific intrinsics только если доказано нужно
+- Batch operations где возможно
+
+## Parallelism Rules
+- **Rayon** для data parallelism по умолчанию
+- **Async** для I/O bound operations (data loading)
+- **Thread pools** для compute-heavy tasks
+- Избегай lock contention на hot paths
+
+## GPU Memory Management
+- **Minimize** CPU ↔ GPU transfers
+- **Batch** operations для GPU efficiency  
+- **Async** kernel launches где возможно
+- **Memory pools** для GPU allocations
+
+## Benchmarking Requirements
+- `criterion` benchmarks для всех hot functions
+- **Measure BEFORE** optimization
+- Regression tests для performance critical paths
+- Memory usage profiling с `dhat`
+
+## Unsafe Code Guidelines
+- `unsafe` ТОЛЬКО после benchmark-driven evidence
+- **Детальная документация** для каждого unsafe block
+- Safety invariants четко описаны
+- Alternative safe implementations сначала
+
+## Hot Path Optimization
+- `#[inline]` для functions < 20 lines на critical paths
+- `#[inline(never)]` для cold functions > 100 lines
+- Profile-guided optimization где applicable
+- Avoid allocations в loops
+
+## Memory Layout Optimization
+- **Contiguous memory** для tensor storage
+- **Cache-friendly** data access patterns
+- **Alignment** для SIMD operations
+- **Memory prefetching** hints где appropriate

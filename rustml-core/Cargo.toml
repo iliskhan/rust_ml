@@ -1,0 +1,20 @@
+[package]
+name = "rustml-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+num-traits.workspace = true
+thiserror.workspace = true
+serde = { workspace = true, features = ["derive"] }
+
+[features]
+default = []
+cuda = []    # CUDA backend support
+opencl = []  # OpenCL backend support
