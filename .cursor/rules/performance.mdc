@@ -1,9 +1,7 @@
 ---
 description: "Performance optimization rules for ML computations"
-globs: ["**/tensor/**/*.rs", "**/ops/**/*.rs", "**/autograd/**/*.rs"]
-alwaysApply: true
+alwaysApply: false
 ---
-
 # ⚡ RustML - Performance Rules
 
 ## Memory Management для ML

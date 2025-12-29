@@ -1,9 +1,11 @@
 [workspace]
 resolver = "2"
 members = [
+    "rustml",
+    "rustml-nn",
     "rustml-core",
     "rustml-tensor", 
-    "rustml", "rustml-autograd",
+    "rustml-autograd",
 ]
 # Добавим остальные crates по мере их создания
 

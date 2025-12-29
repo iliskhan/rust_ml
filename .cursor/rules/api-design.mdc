@@ -1,9 +1,6 @@
 ---
-description: "API design principles for RustML library"
-globs: ["**/lib.rs", "**/*.rs"]
 alwaysApply: true
 ---
-
 # 🎨 RustML - API Design Principles
 
 ## Core Design Philosophy
