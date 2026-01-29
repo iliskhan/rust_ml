@@ -113,10 +113,13 @@ assert_eq!(x.grad().unwrap().item(), 4.0); // dy/dx = 2x = 4
 4. **rustml** - main crate (re-exports)
 
 ### Всего:
-- **4 crates** ✅
-- **15 исходных файлов** (.rs) ✅
-- **37 passing tests** (1+8+16+12) ✅
-- **3 working examples** ✅
+- **5 crates** ✅ (core, tensor, autograd, nn, main)
+- **15+ исходных файлов** (.rs) ✅
+- **40+ passing tests** ✅
+  - rustml-tensor: 20 tests
+  - rustml-autograd: 12+ tests
+  - rustml-core: 8 tests
+- **4 working examples** ✅
 - **0 compilation errors** ✅
 
 ---
@@ -137,16 +140,59 @@ assert_eq!(x.grad().unwrap().item(), 4.0); // dy/dx = 2x = 4
 
 ---
 
-## 🚀 Следующий этап
+## 🔄 MILESTONE 3: Базовые NN слои (месяц 5-6)
 
-**MILESTONE 3: Базовые NN слои (месяц 5-6)**
+**Статус:** 🔄 **В ПРОЦЕССЕ**  
+**Начат:** Январь 2026
 
-Планируемые компоненты:
-- rustml-nn crate
-- Linear/Dense слои
-- Activation functions
-- Loss functions
-- Basic optimizers (SGD, Adam)
+### Прогресс задач:
+
+| Задача | Статус | Описание |
+|--------|--------|----------|
+| 3.1 Matmul для Tensor | ✅ | Реализовано матричное умножение с нуля |
+| 3.1a Transpose | ✅ | Транспонирование 2D матриц |
+| 3.2 MatMulOp для autograd | ⏳ | Градиенты для matmul |
+| 3.3 Module trait | ⬜ | Базовый trait для NN слоёв |
+| 3.4 Linear layer | ⬜ | Fully connected слой |
+| 3.5 Activation functions | ⬜ | ReLU, Sigmoid, Tanh |
+| 3.6 Loss functions | ⬜ | MSE, CrossEntropy |
+
+### Реализовано в rustml-tensor:
+
+**Новые методы Tensor:**
+- ✅ `matmul(&self, other: &Tensor<T>) -> Result<Tensor<T>>`
+  - Матричное умножение [M,K] × [K,N] → [M,N]
+  - Реализовано через три вложенных цикла (без использования готового dot)
+  - Проверки размерностей
+  
+- ✅ `transpose(&self) -> Result<Tensor<T>>`
+  - Транспонирование 2D матриц
+  - A[i][j] → Aᵀ[j][i]
+
+### Новые тесты:
+- ✅ `test_matmul_2x2` - базовый matmul
+- ✅ `test_matmul_2x3_3x2` - разные размеры матриц  
+- ✅ `test_matmul_dimension_error` - проверка ошибок
+- ✅ `test_transpose` - транспонирование
+
+### Изученная математика:
+- Матричное умножение: C[i][j] = Σₖ A[i][k] × B[k][j]
+- Транспонирование: Aᵀ[j][i] = A[i][j]
+- Градиенты matmul (следующий шаг):
+  - ∂L/∂A = grad_output @ Bᵀ
+  - ∂L/∂B = Aᵀ @ grad_output
+
+---
+
+## 🚀 Следующие этапы
+
+**Текущая задача:** Задача 3.2 - MatMulOp для autograd
+
+**Далее:**
+- Module trait для NN слоёв
+- Linear layer (y = Wx + b)
+- Activation functions (ReLU, Sigmoid)
+- Loss functions (MSE, CrossEntropy)
 
 ---
 
@@ -172,6 +218,6 @@ assert_eq!(x.grad().unwrap().item(), 4.0); // dy/dx = 2x = 4
 
 ---
 
-**Дата проверки:** 2025-09-26  
+**Дата обновления:** 2026-01-08  
 **Проверено:** Автоматическими тестами и примерами  
-**Результат:** ✅ ОБА MILESTONE'А ПОЛНОСТЬЮ СООТВЕТСТВУЮТ КРИТЕРИЯМ
+**Результат:** ✅ Milestone 1-2 завершены, Milestone 3 в процессе

@@ -26,6 +26,7 @@ cargo test
 cargo run --example basic_tensor_ops     # Тензорные операции
 cargo run --example autograd_test        # Автоматическое дифференцирование
 cargo run --example milestone_check      # Проверка критериев milestone'ов
+cargo run --example scalar_demo          # Scalar + Variable операции
 ```
 
 ---
@@ -35,7 +36,9 @@ cargo run --example milestone_check      # Проверка критериев m
 ```
 ✅ Milestone 1: Базовые тензоры (месяц 1-2)
 ✅ Milestone 2: Автоматическое дифференцирование (месяц 3-4)
-⏳ Milestone 3: Базовые NN слои (месяц 5-6) ← ВЫ ЗДЕСЬ
+🔄 Milestone 3: Базовые NN слои (месяц 5-6) ← В ПРОЦЕССЕ
+   ├── ✅ matmul, transpose
+   └── ⏳ MatMulOp для autograd
 ```
 
 **Подробности:** см. [PROGRESS.md](PROGRESS.md)
@@ -107,11 +110,11 @@ assert_eq!(x.grad().unwrap().item(), 4.0); // dy/dx = 2x = 4
 
 ## 📊 Статистика
 
-- **Crates:** 4
+- **Crates:** 5 (core, tensor, autograd, nn, main)
 - **Исходных файлов:** 15+
-- **Тесты:** 37 passing
+- **Тесты:** 45 passing
 - **Примеры:** 4 working
-- **Строк кода:** ~1500+
+- **Строк кода:** ~1800+
 
 ---
 

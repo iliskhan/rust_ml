@@ -3,7 +3,8 @@
 ## Оглавление
 1. [Milestone 1: Базовые тензоры - Математика и реализация](#milestone-1-базовые-тензоры)
 2. [Milestone 2: Автоматическое дифференцирование - Математика и реализация](#milestone-2-автодифф)
-3. [Bonus: Scalar wrapper - Решение orphan rule](#bonus-scalar-wrapper)
+3. [Milestone 3: Базовые NN слои (В ПРОЦЕССЕ)](#milestone-3-базовые-nn-слои)
+4. [Bonus: Scalar wrapper - Решение orphan rule](#bonus-scalar-wrapper)
 
 ---
 
@@ -770,6 +771,139 @@ let ref2 = node.clone();  // ref count = 3
 ✅ Memory management (Arc + RwLock)
 ✅ Extensible (trait objects)
 ✅ 12 unit tests для autograd
+
+---
+
+# Milestone 3: Базовые NN слои
+
+## 🎯 Цель
+Создать базовые компоненты для нейронных сетей: matmul, Linear layer, activation functions.
+
+---
+
+## 📐 Математическая сторона
+
+### Матричное умножение (Matmul)
+
+**Определение:**
+Для матриц A размера [M, K] и B размера [K, N], результат C = A × B имеет размер [M, N].
+
+**Формула:**
+```
+C[i][j] = Σ(k=0..K-1) A[i][k] × B[k][j]
+```
+
+**Пример:**
+```
+A = | 1  2 |     B = | 5  6 |
+    | 3  4 |         | 7  8 |
+
+C[0][0] = 1×5 + 2×7 = 19
+C[0][1] = 1×6 + 2×8 = 22
+C[1][0] = 3×5 + 4×7 = 43
+C[1][1] = 3×6 + 4×8 = 50
+
+C = | 19  22 |
+    | 43  50 |
+```
+
+### Транспонирование
+
+**Определение:**
+Транспонированная матрица Aᵀ получается заменой строк на столбцы.
+
+**Формула:**
+```
+Aᵀ[j][i] = A[i][j]
+```
+
+**Пример:**
+```
+A = | 1  2  3 |  shape [2, 3]
+    | 4  5  6 |
+
+Aᵀ = | 1  4 |   shape [3, 2]
+     | 2  5 |
+     | 3  6 |
+```
+
+### Градиенты Matmul (для autograd)
+
+Для операции `C = A @ B`:
+```
+∂L/∂A = grad_output @ Bᵀ
+∂L/∂B = Aᵀ @ grad_output
+```
+
+**Интуиция:**
+- Градиент по A требует "развернуть" операцию через транспонирование B
+- Градиент по B требует "развернуть" через транспонирование A
+
+---
+
+## 💻 Реализация в Rust
+
+### Матричное умножение (три вложенных цикла)
+
+```rust
+fn matmul(&self, other: &Self) -> Result<Self> {
+    let m = self.shape()[0];  // строки A
+    let k = self.shape()[1];  // столбцы A = строки B
+    let n = other.shape()[1]; // столбцы B
+    
+    let mut result = Tensor::<T>::zeros([m, n]);
+    
+    for i in 0..m {
+        for j in 0..n {
+            for k_idx in 0..k {
+                result.data_mut()[[i, j]] = 
+                    result.data_mut()[[i, j]] + 
+                    self.data()[[i, k_idx]] * other.data()[[k_idx, j]];
+            }
+        }
+    }
+    
+    Ok(result)
+}
+```
+
+**Сложность:** O(M × N × K)
+
+### Транспонирование
+
+```rust
+pub fn transpose(&self) -> Result<Tensor<T>> {
+    let m = self.shape().dims()[0];
+    let k = self.shape().dims()[1];
+    
+    let mut result = Self::zeros([k, m]);
+    for i in 0..m {
+        for j in 0..k {
+            result.data_mut()[[j, i]] = self.data()[[i, j]];
+        }
+    }
+    
+    Ok(result)
+}
+```
+
+---
+
+## 🎓 Что реализовано в Milestone 3 (на данный момент)
+
+### ✅ Завершено:
+- **matmul** - матричное умножение [M,K] × [K,N] → [M,N]
+- **transpose** - транспонирование 2D матриц
+- 4 новых теста
+
+### ⏳ В работе:
+- **MatMulOp** для autograd (градиенты matmul)
+
+### ⬜ Планируется:
+- Module trait
+- Linear layer (y = Wx + b)
+- Activation functions (ReLU, Sigmoid, Tanh)
+- Loss functions (MSE, CrossEntropy)
 
 ---
 

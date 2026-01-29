@@ -1,10 +1,10 @@
 # 🗺️ Прогресс разработки RustML
 
-**Дата последнего обновления:** 2 ноября 2025
+**Дата последнего обновления:** 8 января 2026
 
 ---
 
-## 📍 **ВЫ ЗДЕСЬ** → Готовы к Milestone 3
+## 📍 **ВЫ ЗДЕСЬ** → Milestone 3 в процессе (Задача 3.2)
 
 ---
 
@@ -19,7 +19,7 @@
 ФАЗА 2: Основы библиотеки
 ├─ Milestone 1: Базовые тензоры                    ✅ ЗАВЕРШЕН
 ├─ Milestone 2: Автоматическое дифференцирование   ✅ ЗАВЕРШЕН
-├─ Milestone 3: Базовые NN слои                    ⏳ СЛЕДУЮЩИЙ
+├─ Milestone 3: Базовые NN слои                    🔄 В ПРОЦЕССЕ
 ├─ Milestone 4: Обучение моделей                   ⬜ Не начат
 └─ Milestone 5: GPU поддержка                      ⬜ Не начат
 
@@ -79,29 +79,35 @@
 
 ---
 
-## ⏳ Что дальше
+## 🔄 В процессе
 
 ### 🎯 Milestone 3: Базовые NN слои (месяц 5-6)
-**Статус:** ⏳ **СЛЕДУЮЩИЙ НА ОЧЕРЕДИ**
+**Статус:** 🔄 **В ПРОЦЕССЕ**  
+**Начат:** Январь 2026
 
-**План:**
-1. **Создать crate `rustml-nn`**
-   - Linear/Dense слои
-   - Parameter management
-   
-2. **Activation functions:**
-   - ReLU
-   - Sigmoid
-   - Tanh
-   - Softmax
-   
-3. **Loss functions:**
-   - MSE (Mean Squared Error)
-   - CrossEntropy
-   
-4. **Weight initialization:**
-   - Xavier/Glorot
-   - He initialization
+**Прогресс задач:**
+```
+✅ Задача 3.1: Matmul для Tensor       — ГОТОВО!
+   - Реализовано матричное умножение с нуля (три вложенных цикла)
+   - Добавлен transpose() для матриц
+   - 3 новых теста (matmul_2x2, matmul_2x3_3x2, matmul_dimension_error)
+   - 1 новый тест для transpose
+
+⏳ Задача 3.2: MatMulOp для autograd   ← ТЫ ЗДЕСЬ
+   - Нужно добавить градиенты для matmul
+   - ∂L/∂A = grad_output @ Bᵀ
+   - ∂L/∂B = Aᵀ @ grad_output
+
+⬜ Задача 3.3: Module trait
+⬜ Задача 3.4: Linear layer
+⬜ Задача 3.5: Activation functions
+⬜ Задача 3.6: Loss functions
+```
+
+**Изученная математика:**
+- ✅ Матричное умножение: C[i][j] = Σₖ A[i][k] × B[k][j]
+- ✅ Транспонирование: Aᵀ[j][i] = A[i][j]
+- ⏳ Градиенты matmul: ∂L/∂A = grad @ Bᵀ, ∂L/∂B = Aᵀ @ grad
 
 **Критерий готовности:**
 ```rust
@@ -120,10 +126,10 @@ assert!(linear.weight().grad().is_some());
 ## 📊 Общая статистика проекта
 
 ### Код:
-- **Crates:** 4 (core, tensor, autograd, main)
+- **Crates:** 5 (core, tensor, autograd, nn, main)
 - **Исходные файлы:** 15+ `.rs` файлов
-- **Строк кода:** ~1500+ LOC
-- **Тесты:** 37 passing tests
+- **Строк кода:** ~1700+ LOC
+- **Тесты:** 40+ passing tests (20 в tensor, 12+ в autograd, 8 в core)
 
 ### Документация:
 - ✅ `PLAN.md` - общий план
@@ -159,6 +165,7 @@ assert!(linear.weight().grad().is_some());
 
 | Дата | Событие |
 |------|---------|
+| 2026-01-08 | 🔄 Начат Milestone 3 - реализован matmul и transpose |
 | 2025-11-02 | ✅ Создан файл отслеживания прогресса |
 | 2025-11-02 | ✅ Добавлен teaching-mode.md |
 | 2025-10-26 | ✅ Завершен Milestone 2 (Autograd) |
@@ -187,8 +194,8 @@ cargo build --release
 
 ---
 
-**📍 ТЕКУЩИЙ ЭТАП:** Готовы начать Milestone 3 - Neural Network Layers  
-**🎯 СЛЕДУЮЩИЙ ШАГ:** Создать `rustml-nn` crate и реализовать Linear layer
+**📍 ТЕКУЩИЙ ЭТАП:** Milestone 3 - Neural Network Layers (в процессе)  
+**🎯 СЛЕДУЮЩИЙ ШАГ:** Задача 3.2 - Добавить MatMulOp в autograd с градиентами
 
-**Готов к следующей задаче?** Напиши "давай" и я дам первое задание! 🚀
+**Прогресс:** matmul ✅ → transpose ✅ → MatMulOp ⏳ → Module trait → Linear layer
 

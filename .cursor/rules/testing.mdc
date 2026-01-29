@@ -1,9 +1,7 @@
 ---
 description: "Testing strategy and requirements for ML library"
-globs: ["**/tests/**/*.rs", "**/*test*.rs", "**/src/**/*.rs"]
-alwaysApply: true
+alwaysApply: false
 ---
-
 # 🧪 RustML - Testing Rules
 
 ## Test Coverage Requirements
