@@ -1,13 +1,14 @@
 {
-  "title": "Углубление учебника RustML",
+  "title": "Новые главы RustML",
   "language": "ru",
-  "updated_at": "2026-10-11T07:18:00+03:00",
-  "focus": "Готово в основном проекте · запуск .\\learn.cmd",
+  "updated_at": "2026-10-11T09:31:05+03:00",
+  "focus": "Готово и отправлено · запуск .\\learn.cmd",
   "steps": [
-    {"id":"research","title":"Исследование и карта курса","status":"done","result":"Первичные источники и явная карта покрытия","evidence":["learning-lab/research: transformers.md, ux.md, curriculum.md; карта из 24 тем"]},
-    {"id":"math","title":"Математические основы","status":"done","result":"30 понятий и 14 типов демонстраций","evidence":["Численные тесты, граф предпосылок, поиск и переход к пределу проверены"]},
-    {"id":"transformer","title":"Transformer подробно","status":"done","result":"8 разделов с вычислениями и визуализациями","evidence":["MHA/GQA/MQA, RoPE, нормы, cross-attention, KV-cache и sampling; 10 численных тестов"]},
-    {"id":"ux","title":"Углубление и возврат","status":"done","result":"Параметры, прокрутка и фокус сохраняются","evidence":["Desktop и mobile: вложенные темы, назад, Escape; XOR останавливается при погружении"]},
-    {"id":"qa","title":"Независимая проверка","status":"done","result":"54 теста, сборка, desktop/320/390 прошли","evidence":["Console error/warn: 0; 48 защищённых файлов Rust совпадают по SHA256","Полный протокол: learning-lab/evidence/EXPANSION.md"]}
+    {"id":"research","title":"Исследование и математика","status":"done","result":"51 понятие, 10 новых типов опытов","evidence":["Первичные материалы в research; все цепочки предпосылок помещаются в глубину 8","Возврат сохраняет настройки, фокус и scroll"]},
+    {"id":"vae-gan","title":"VAE и GAN","status":"done","result":"10 разделов с настоящим обучением","evidence":["VAE 6 параметров, ELBO; GAN две MLP, раздельные D/G и две цели","12 численных тестов, desktop/mobile root QA"]},
+    {"id":"diffusion","title":"Diffusion","status":"done","result":"Denoiser, DDPM/DDIM и отдельный CFG","evidence":["5 разделов, 146 параметров, 12 численных тестов","В браузере обучение останавливается при погружении"]},
+    {"id":"gnn-rl","title":"GNN и RL","status":"done","result":"GCN, Bellman, Q-learning и политика","evidence":["10 разделов, 15 численных тестов; мобильный граф исправлен","GCN loss 0.58621 → 0.01344; frozen Q-оценка 100/100 целей"]},
+    {"id":"qa","title":"Общая приёмка","status":"done","result":"102 web tests, Rust и интерфейс прошли","evidence":["Rust debug/release 52+5, fmt/Clippy/rustdoc, четыре CI-примера","25 разделов desktop/320/390, прежние уроки/Transformer; console error/warn 0","128 неизменённых baseline-файлов: SHA совпали; evidence/ADVANCED.md"]},
+    {"id":"push","title":"Commit и push","status":"done","result":"121cfa0 отправлен, remote SHA совпал","evidence":["До расширения отдельно отправлен checkpoint 009a58b","Обычный push origin/master; финальная фиксация статуса меняет только документы"]}
   ]
 }
