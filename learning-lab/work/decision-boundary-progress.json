@@ -1,8 +1,8 @@
 {
   "title": "Граница решений: плоскость и 3D",
   "language": "ru",
-  "updated_at": "2026-10-11T15:53:44+03:00",
-  "focus": "Проверки завершены; фиксируем и отправляем результат",
+  "updated_at": "2026-10-11T15:55:22+03:00",
+  "focus": "Граница решений в 2D/3D проверена и отправлена",
   "steps": [
     {
       "id": "inspect",
@@ -50,8 +50,14 @@
     {
       "id": "push",
       "title": "Commit и push",
-      "status": "in_progress",
-      "result": "Отчёт готов; выполняется обычный push master"
+      "status": "done",
+      "result": "Код/приёмка отправлены в origin/master",
+      "evidence": [
+        "Commit c5e0173865f469b21f20c4c9810c78cc4e34390a",
+        "ls-remote совпал с HEAD; дерево чистое",
+        "74/74 итоговых source/config SHA после push совпали",
+        "Этот checkpoint меняет только документы/проекцию"
+      ]
     }
   ]
 }
