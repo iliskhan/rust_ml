@@ -1,0 +1,43 @@
+.decision-boundary>.eyebrow{margin-bottom:8px}
+.decision-boundary-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;margin-top:24px;align-items:start}
+.decision-boundary-layout>div{min-width:0}
+.decision-boundary-figure{margin:0}
+.decision-boundary-figure figcaption{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:10px}
+.decision-boundary-map{width:100%;max-width:520px;margin-inline:auto}
+.decision-boundary-map svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:pan-y}
+.decision-boundary-map text{font:12px "Segoe UI",Arial,sans-serif;fill:#233d30}
+.decision-boundary-map .decision-boundary-target{font-weight:700}
+.decision-boundary-grid{stroke:#fffefa;stroke-opacity:.5;stroke-width:.8}
+.decision-boundary-frame{fill:none;stroke:#829785;stroke-width:1}
+.decision-boundary-contour{fill:none;stroke:#8c411d;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.decision-boundary-crosshair{fill:none;stroke:#694799;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.65}
+.decision-boundary-probe{fill:none;stroke:#694799;stroke-width:2.5;stroke-dasharray:4 2}
+.decision-boundary-legend{display:flex;flex-wrap:wrap;gap:8px 15px;font-size:12px;line-height:1.5;color:#3c5339}
+.decision-boundary-legend>span{display:flex;gap:6px;align-items:center}
+.decision-boundary-legend i{display:inline-block;flex-shrink:0;width:15px;height:12px;border:1px solid #819786;border-radius:2px}
+.decision-boundary-legend .decision-boundary-line-key{height:3px;background:#8c411d;border:0;border-radius:0}
+.decision-boundary-legend .decision-boundary-point-key{height:12px;width:12px;border:2px dashed #694799;border-radius:50%}
+.decision-boundary-legend .decision-boundary-gradient i{width:70px;background:linear-gradient(90deg,hsl(153 32% 96%),hsl(153 32% 34%))}
+.decision-boundary .decision-boundary-check{display:flex;flex-direction:row;align-items:center;gap:10px;min-height:44px;margin-top:14px;font-size:13px;line-height:1.5;cursor:pointer}
+.decision-boundary-check input{width:18px;height:18px;margin:0;flex-shrink:0;accent-color:var(--green)}
+.decision-boundary .decision-boundary-contour-note{padding:10px 12px;border-left:3px solid #b88f71;background:#f6f0e5;border-radius:0 5px 5px 0;margin-top:9px}
+.decision-boundary-controls>.range-control{margin-bottom:0}
+.decision-boundary-controls>.note{margin-top:9px}
+.decision-boundary-probe-card{padding:17px 16px;margin-top:20px;border:1px solid #d9d3e3;border-radius:8px;background:#f8f6fa}
+.decision-boundary-probe-card h4{font-size:15px;font-weight:600;margin:0 0 15px;color:#48365f}
+.decision-boundary-probe-card .range-control>span{font-size:13px;gap:8px}
+.decision-boundary-readout{margin:17px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 15px;font-size:12px;line-height:1.6}
+.decision-boundary-readout>div{min-width:0}
+.decision-boundary-readout dt{color:#665a75}
+.decision-boundary-readout dd{margin:2px 0 0;color:#332544;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.decision-boundary .decision-boundary-probe-card .note{font-size:12px;color:#61576b;margin-top:14px}
+.decision-boundary-controls .button-row{margin:18px 0 0}
+.decision-boundary-controls .button-row button{font-size:13px;flex:1 1 130px}
+.decision-boundary-table-wrap{margin-top:22px;max-width:100%;overflow-x:auto}
+.decision-boundary-table-wrap table{table-layout:fixed}
+.decision-boundary-table-wrap th,.decision-boundary-table-wrap td{overflow-wrap:anywhere}
+.decision-boundary-match{font-size:11px;white-space:nowrap}
+.decision-boundary .decision-boundary-3d>summary{font-weight:600}
+.decision-boundary .formula{margin-top:16px}
+@media(max-width:1050px){.decision-boundary-layout{grid-template-columns:1fr;gap:24px}}
+@media(max-width:560px){.decision-boundary-layout{margin-top:19px}.decision-boundary-probe-card{padding:15px 12px}.decision-boundary-table-wrap th,.decision-boundary-table-wrap td{padding:9px 3px;font-size:11px}.decision-boundary-table-wrap thead th{font-size:11px}.decision-boundary-match{display:block;font-size:11px}.decision-boundary-controls>.range-control>span{font-size:14px}.decision-boundary .decision-boundary-check{font-size:12px}}

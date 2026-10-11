@@ -1,0 +1,501 @@
+[
+  {
+    "checkboxMinHeight": "44px",
+    "documentWidth": 305,
+    "labels": [
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₂"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₁"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      }
+    ],
+    "mapWidth": 233.1999969482422,
+    "tableContentWidth": 233,
+    "tableWidth": 233,
+    "touchAction": "pan-y",
+    "viewBox": "0 0 233.1875 262.1875",
+    "viewport": 320
+  },
+  {
+    "camera": [
+      "36",
+      "25",
+      "1"
+    ],
+    "documentWidth": 305,
+    "kind": "3D",
+    "labels": [
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "X"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Y"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Z"
+      }
+    ],
+    "touchAction": "pan-y",
+    "viewport": 320,
+    "width": 231.6000061035156
+  },
+  {
+    "documentWidth": 375,
+    "kind": "2D",
+    "labels": [
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₂"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₁"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      }
+    ],
+    "mapWidth": 303.6000061035156,
+    "step": "101",
+    "tableContentWidth": 304,
+    "tableWidth": 304,
+    "viewport": 390
+  },
+  {
+    "camera": [
+      "35",
+      "25",
+      "1"
+    ],
+    "documentWidth": 375,
+    "kind": "3D",
+    "labels": [
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "X"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Y"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Z"
+      }
+    ],
+    "viewport": 390,
+    "width": 302
+  },
+  {
+    "documentWidth": 305,
+    "kind": "final 2D+3D",
+    "labels": [
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₂"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₁"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "X"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Y"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Z"
+      }
+    ],
+    "viewport": 320
+  },
+  {
+    "inputs": [
+      "0.5",
+      "0.23",
+      "0.67",
+      "36",
+      "25",
+      "1"
+    ],
+    "kind": "nested return final build",
+    "mathOpen": true,
+    "sceneOpen": true,
+    "step": "101",
+    "viewport": 1280
+  },
+  {
+    "documentWidth": 1265,
+    "kind": "final 2D+3D",
+    "labels": [
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₂"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Вход x₁"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "0"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "X"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Y"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "0,5"
+      },
+      {
+        "font": "11px",
+        "inside": true,
+        "text": "1"
+      },
+      {
+        "font": "12px",
+        "inside": true,
+        "text": "Z"
+      }
+    ],
+    "viewport": 1280
+  }
+]

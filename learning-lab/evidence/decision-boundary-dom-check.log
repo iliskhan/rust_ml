@@ -1,0 +1,14 @@
+{"timestamp":"2026-10-11T12:50:40.204Z","checkout":"C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\","node":"v24.19.0","command":"node evidence/decision-boundary-dom-check.ts","baseline":"a52273cdf3e67593aadb3a69cbfe6086166dcd18","url":"http://127.0.0.1:5182/#network"}
+{"file":"./decision-boundary-browser-numbers.json","sha256":"dc48dd20891666f68023e68d59156877bf2bea167bbfe4e6eeedf71f281081d6"}
+{"file":"../src/math.ts","sha256":"7417fae9ca3f9052ebcdedd84b6a7fd34f48f235dbafcd9b83ae578609375943"}
+{"file":"../src/scene3dMath.ts","sha256":"9e580a76f2788e7ee83fbc95c85a3930ceb21ed1b9ac5b91afddaa1dcfbc4ce6"}
+{"file":"../src/decisionBoundaryMath.ts","sha256":"a30037665471b97d583b89608b820fabb3a1a87d8250cb21b904875a7f381981"}
+{"file":"../src/DecisionBoundaryLesson.tsx","sha256":"588cf4af60a06e6cc65b64543413ce3f6741ed4e717471b255ed1bc251256f9e"}
+{"file":"../src/Scene3D.tsx","sha256":"040de943086e01f4437ffbd4423d62958b8070e0b4e8375d87dc37a30858c5e0"}
+{"file":"./decision-boundary-dom-check.ts","sha256":"bb605ecfcffa0f905cbb9d3cd7fd4587a85362804359b96d43273e43d02476ab"}
+{"check":"probe/corners: PASS","probability":0.4155217180493663,"probeRoundingError":2.8195063372926654e-7,"marginRoundingError":2.8195063372926654e-7,"cornerProbabilities":[0.005213662172302612,0.9482839167027601,0.9827575074693352,0.05625375855273132],"cornerRoundingErrors":[3.3782769738761875e-7,8.329723988342863e-8,4.925306648084771e-7,2.414472686784741e-7]}
+{"check":"1681 rendered classes: PASS","class0":1250,"class1":431}
+{"check":"inverted real 2D SVG contour: PASS","segments":84,"endpoints":168,"maximumEndpointResidual":4.440892098500626e-16}
+{"check":"actual threshold-plane vertices: PASS","triangles":2,"checkedVertices":6,"z":0.5,"maximumPlaneProjectionError":0}
+{"check":"actual 3D SVG slice/floor: PASS","slicePaths":84,"floorPaths":84,"planeFacets":2,"camera":[36,25,1],"viewport":[867.59375,420],"maximumProjectionError":1.1368683772161603e-13,"pointNames":"5/5 correct"}
+PASS. No numerical/geometry mismatch in this captured production DOM. Scope: seed42, Adam lr=.03, step101, threshold=.5, probe [.23,.67], desktop width1280. Both threshold-plane triangles match the input-domain corners at z=tau. Screenshot appearance is checked separately; chord interiors/topology remain sampled approximations.
