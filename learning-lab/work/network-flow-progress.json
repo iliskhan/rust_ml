@@ -1,0 +1,56 @@
+{
+  "title": "Нейросеть в 3D: данные и градиенты",
+  "language": "ru",
+  "updated_at": "2026-10-11T15:25:21.2518219+03:00",
+  "focus": "Приёмка завершена; фиксируем и отправляем master",
+  "steps": [
+    {
+      "id": "inspect",
+      "title": "Сохранность и сценарий урока",
+      "status": "done",
+      "result": "Чистая master, состояние прежней XOR сохраняется",
+      "evidence": [
+        "HEAD a41e784; исходный git status пуст",
+        "Защищены 64 прежних web-файла и 43 Rust/config"
+      ]
+    },
+    {
+      "id": "trace",
+      "title": "Настоящий forward и backward",
+      "status": "done",
+      "result": "135/135 tests; конечные разности по весам, входам и скрытым узлам",
+      "evidence": [
+        "network-trace.test.ts: 7/7 у независимого исполнителя",
+        "Конечные разности, нулевая сеть, BCE ±1000; root прочитал формулы и tests"
+      ]
+    },
+    {
+      "id": "scene",
+      "title": "Пошаговая 3D-сеть",
+      "status": "done",
+      "result": "10 этапов, все17 параметров, настоящее обновление и возврат",
+      "evidence": [
+        "network-flow-browser.json: 7 neurons/12 connections/5 bias; preview equals actual",
+        "network-flow-browser-final.json: limit4000/reset PASS",
+        "Final source SHA 3D0ACEE6; desktop/320/390 screenshots inspected"
+      ]
+    },
+    {
+      "id": "qa",
+      "title": "Независимая проверка",
+      "status": "done",
+      "result": "Desktop/320/390 и1020 числовых ячеек PASS, предел4000 подтверждён",
+      "evidence": [
+        "135/135 tests; strict typecheck/Vite build PASS",
+        "Исправлены обрезка и наложение bias; окончательные DOM bounds без clipping/overlap",
+        "Таймаут дополнительного browser batch разрешён: повторная связь и отдельные limit/reset/surface проверки PASS"
+      ]
+    },
+    {
+      "id": "push",
+      "title": "Commit и push",
+      "status": "in_progress",
+      "result": "Diff проверен, приёмка записана"
+    }
+  ]
+}

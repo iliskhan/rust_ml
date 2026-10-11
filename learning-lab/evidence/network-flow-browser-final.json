@@ -1,0 +1,15 @@
+{
+  "limit": {
+    "training": "Шаг 4000 · BCE 5.23e-5 · верных классов 4/4",
+    "flowDisabled": true,
+    "oldDisabled": true
+  },
+  "rateReset": "1. Вход",
+  "seedReset": {
+    "phase": "1. Вход",
+    "training": "Шаг 0 · BCE 0,72973 · верных классов 1/4"
+  },
+  "oldSurfaceVisible": true,
+  "console": [],
+  "checkedAt": "2026-10-11T12:21:18.133Z"
+}
