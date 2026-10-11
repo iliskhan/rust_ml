@@ -17,3 +17,6 @@ Thumbs.db
 # Testing
 *.profraw
 *.profdata
+
+# Generated copies for the documented CSS text stress test
+/work/a11y-text-*/

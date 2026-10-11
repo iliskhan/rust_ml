@@ -203,7 +203,8 @@ export function BoundaryPlayground() {
             <button disabled={atLimit || !!error} onClick={() => setExperiment(current => ({ ...current, auto: !busy, remaining: 0 }))}>{busy ? 'Пауза' : 'Авто'}</button>
             <button aria-describedby={`${id}-reset-help`} onClick={() => setExperiment(current => createExperiment(current.settings))}>Сброс</button>
           </div>
-          <p className="note boundary-run-status" role="status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}. {atLimit ? 'Достигнут предел. Сброс начинает новый опыт.' : experiment.auto ? 'Автообучение идёт.' : experiment.remaining ? `Осталось ${experiment.remaining} шагов выбранного запуска.` : 'Обучение на паузе.'}</p>
+          <p className="note boundary-run-status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}.{experiment.remaining > 0 && ` Осталось ${experiment.remaining} шагов выбранного запуска.`}</p>
+          <p className="note boundary-training-status" role="status">{error ? `Обучение остановлено из-за ошибки на шаге ${optimizer.step}.` : atLimit ? `Достигнут предел: ${optimizer.step} шагов. Сброс начинает новый опыт.` : busy ? experiment.auto ? 'Автообучение идёт.' : 'Выполняется выбранный запуск.' : `Обучение на паузе. Итоговый шаг: ${optimizer.step}.`}</p>
           <p className="note boundary-reset-help" id={`${id}-reset-help`}>Сброс вернёт начальные веса и шаг 0, очистит историю. Слоты A/B, порог и проба сохранятся.</p>
           {error && <p className="boundary-error" role="alert">{error}</p>}
         </div>

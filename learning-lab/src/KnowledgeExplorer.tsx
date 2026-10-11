@@ -72,6 +72,6 @@ export function KnowledgeExplorer({ lessonTitle }: { lessonTitle: string }) {
         <ConceptLesson id={id} />
       </LearningActivity>
     </section>)}</div>
-    <div className="explorer-footer"><span>Настройки сохраняются в этой вкладке до перезагрузки.</span><span><kbd>Esc</kbd> — к уроку</span></div>
+    <div className="explorer-footer" tabIndex={0} role="region" aria-label="Подсказки к разбору понятия"><span>Настройки сохраняются в этой вкладке до перезагрузки.</span><span><kbd>Esc</kbd> — к уроку</span></div>
   </dialog>;
 }

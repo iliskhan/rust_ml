@@ -16,6 +16,9 @@ input[type=range]{height:32px;touch-action:pan-y}
 summary{min-height:40px;padding:7px 0;font-size:15px}
 summary::marker{color:var(--green)}
 h1,h2,h3{text-wrap:balance}
+h1,h2,h3,h4,h5{overflow-wrap:anywhere}
+button,a{overflow-wrap:anywhere}
+.curriculum-stage-heading>div{min-width:0}
 p{overflow-wrap:break-word}
 :focus-visible{outline:3px solid #9f4a19;outline-offset:4px}
 h1:focus:not(:focus-visible),.explorer-title h2:focus:not(:focus-visible){outline:none}
@@ -137,4 +140,11 @@ kbd{font:11px Consolas,monospace;padding:2px 5px;border:1px solid #c4cdbb;border
 .explorer-breadcrumbs{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin;padding-bottom:3px}
 .explorer-breadcrumbs ol{flex-wrap:nowrap;width:max-content;max-width:none}
 .explorer-breadcrumbs li{flex-shrink:0;white-space:nowrap}
+.explorer-header{min-height:0;max-height:45%;overflow-y:auto}
+.explorer-topline{flex-wrap:wrap}
+.explorer-topline>div{min-width:0;flex:1 1 10rem}
+.explorer-close{flex-shrink:1;max-width:100%;overflow-wrap:anywhere}
+.explorer-footer{max-height:20%;overflow:auto;flex-wrap:wrap}
+.pipeline{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+.pipeline button code{white-space:normal}
 @media(max-height:560px){.knowledge-explorer{height:100dvh;max-height:100dvh}.explorer-header{padding-top:10px}.explorer-origin,.explorer-footer{display:none}.explorer-breadcrumbs{margin-top:5px}.explorer-toolbar{padding:5px 0 9px}.explorer-frame{padding-top:18px}.explorer-message:not(:empty){max-height:76px;overflow:auto}}

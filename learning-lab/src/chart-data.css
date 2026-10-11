@@ -1,0 +1,52 @@
+.chart-axis-label {
+  font-size: .875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  color: #53694f;
+}
+
+.chart-axis-label-x {
+  text-align: center;
+}
+
+.chart-data summary {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.chart-data-scroll {
+  max-width: 100%;
+  max-height: 24rem;
+  overflow: auto;
+  margin-top: 12px;
+}
+
+.chart-data table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: .875rem;
+}
+
+.chart-data caption {
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+.chart-data th,
+.chart-data td {
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.chart-data th {
+  min-width: 7em;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+
+.chart-data td {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
