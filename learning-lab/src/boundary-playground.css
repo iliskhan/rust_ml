@@ -1,0 +1,67 @@
+.boundary-playground>.eyebrow{margin-bottom:8px}
+.boundary-settings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:25px}
+.boundary-playground label{min-width:0}
+.boundary-settings>label,.boundary-layers label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:500;color:var(--deep)}
+.boundary-playground select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:9px 28px 9px 10px;border:1px solid #d0d8cc;border-radius:5px;background:#fffefa;color:var(--deep);font:inherit}
+.boundary-layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px}
+.boundary-layers fieldset{min-width:0;margin:0;padding:15px 14px;border:1px solid #dce1d6;border-radius:7px;background:#f8f9f3}
+.boundary-layers legend{padding:0 6px;font-size:13px;font-weight:600;color:var(--deep)}
+.boundary-layers .range-control{margin:0 0 16px}
+.boundary-layers .range-control>span{font-size:13px;gap:8px}
+.boundary-training{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.5fr);align-items:center;gap:24px;margin-top:23px}
+.boundary-training>.range-control{margin:0}
+.boundary-training .button-row{margin:12px 0 0;gap:8px}
+.boundary-training .button-row button{min-height:44px;padding:9px 14px;font-size:13px}
+.boundary-architecture{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin:0!important}
+.boundary-architecture strong{color:var(--deep);font-size:20px}
+.boundary-architecture span{font-size:12px;color:#53624d}
+.boundary-playground .boundary-run-status{margin-top:18px}
+.boundary-error{padding:13px 16px;border:1px solid #c06e50;background:#fff0e9;color:#7e3115;border-radius:6px}
+.boundary-experiment-layout{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr);gap:28px;margin-top:29px;align-items:start}
+.boundary-experiment-layout>div{min-width:0}
+.boundary-map-figure{margin:0}
+.boundary-map-figure figcaption{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:10px}
+.boundary-map{width:100%;max-width:520px;margin-inline:auto}
+.boundary-map svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:pan-y}
+.boundary-map text{font:12px "Segoe UI",Arial,sans-serif;fill:#233d30}
+.boundary-map-grid{stroke:#fffefa;stroke-opacity:.6;stroke-width:.8}
+.boundary-map-frame{fill:none;stroke:#829785;stroke-width:1}
+.boundary-contour{fill:none;stroke:#8c411d;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.boundary-crosshair{fill:none;stroke:#694799;stroke-width:1;stroke-dasharray:3 4;stroke-opacity:.65}
+.boundary-probe-marker{fill:#fffefa;fill-opacity:.6;stroke:#694799;stroke-width:2.5;stroke-dasharray:3 2}
+.boundary-legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;line-height:1.5;color:#3c5339}
+.boundary-legend>span{display:flex;gap:6px;align-items:center}
+.boundary-legend i{display:inline-block;flex-shrink:0;box-sizing:border-box;width:14px;height:12px;border:1px solid #819786;border-radius:2px}
+.boundary-legend .boundary-key-circle{height:10px;width:10px;border:0;border-radius:50%;background:#27669a}
+.boundary-legend .boundary-key-triangle{width:0;height:0;border:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid #26724b;border-radius:0}
+.boundary-legend .boundary-key-train{width:10px;height:10px;border:1.6px solid #4c5b51;background:#4c5b51;border-radius:50%}
+.boundary-legend .boundary-key-validation{width:10px;height:10px;border:1.6px solid #4c5b51;background:#fffefa;border-radius:50%}
+.boundary-legend .boundary-key-line{height:3px;background:#8c411d;border:0;border-radius:0}
+.boundary-legend .boundary-key-probe{height:12px;width:12px;border:2px dashed #694799;border-radius:50%}
+.boundary-legend .boundary-key-gradient{width:70px;background:linear-gradient(90deg,hsl(153 32% 97%),hsl(153 32% 43%))}
+.boundary-background-legend{margin-top:10px}
+.boundary-playground .boundary-check{display:flex;flex-direction:row;align-items:center;gap:10px;min-height:44px;margin-top:13px;font-size:13px;line-height:1.5;cursor:pointer}
+.boundary-check input{width:18px;height:18px;margin:0;flex-shrink:0;accent-color:var(--green)}
+.boundary-playground .boundary-contour-note{padding:10px 12px;border-left:3px solid #b88f71;background:#f6f0e5;border-radius:0 5px 5px 0;margin-top:9px}
+.boundary-probe-controls>.range-control{margin-bottom:0}
+.boundary-probe-controls>.note{margin-top:9px}
+.boundary-probe-card{padding:17px 16px;margin-top:18px;border:1px solid #d9d3e3;border-radius:8px;background:#f8f6fa}
+.boundary-probe-card h4{font-size:15px;font-weight:600;margin:0 0 8px;color:#48365f}
+.boundary-probe-card .range-control>span{font-size:13px;gap:8px}
+.boundary-playground .boundary-probe-card .note{font-size:12px;color:#61576b;margin:8px 0 15px}
+.boundary-readout{margin:17px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 15px;font-size:12px;line-height:1.6}
+.boundary-readout>div{min-width:0}
+.boundary-readout dt{color:#665a75}
+.boundary-readout dd{margin:2px 0 0;color:#332544;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.boundary-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.boundary-scores>div{padding:12px 10px;background:#f4f6ed;border:1px solid #dce1d6;border-radius:6px;min-width:0}
+.boundary-scores h4{margin:0 0 7px;font-size:13px;font-weight:600;color:var(--deep)}
+.boundary-scores p{font-size:12px;margin:5px 0!important;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.boundary-loss{margin-top:26px;max-width:780px}
+.boundary-loss h4{font-size:16px;margin:0 0 10px;color:var(--deep)}
+.boundary-playground details>summary{font-weight:600}
+.boundary-playground .formula{margin-top:15px}
+.boundary-playground .boundary-xor-note{padding-top:15px;border-top:1px solid #dce1d6;color:#53624d;font-size:13px}
+@media(max-width:1100px){.boundary-settings{grid-template-columns:repeat(2,minmax(0,1fr))}.boundary-experiment-layout{grid-template-columns:1fr;gap:24px}.boundary-map{max-width:510px}}
+@media(max-width:560px){.boundary-settings{gap:12px}.boundary-layers{grid-template-columns:1fr}.boundary-training{grid-template-columns:1fr;gap:17px}.boundary-training .button-row button{flex:1 1 42%;padding:9px 10px}.boundary-experiment-layout{margin-top:22px}.boundary-probe-card{padding:15px 12px}.boundary-settings>label,.boundary-layers label{font-size:12px}.boundary-playground select{font-size:16px}.boundary-playground .boundary-check{font-size:12px}.boundary-probe-controls>.range-control>span{font-size:14px}.boundary-scores{gap:8px}.boundary-scores>div{padding:10px 8px}.boundary-readout{gap:10px}}
+@media(max-width:380px){.boundary-settings{grid-template-columns:1fr}}

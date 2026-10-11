@@ -1,0 +1,447 @@
+[
+  {
+    "labels": [
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₂"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₁"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "X"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Y"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Z"
+      }
+    ],
+    "scrollWidth": 305,
+    "step": "1441",
+    "viewport": 305
+  },
+  {
+    "labels": [
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₂"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₁"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "X"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Y"
+      }
+    ],
+    "scrollWidth": 375,
+    "step": "2691",
+    "viewport": 375
+  },
+  {
+    "labels": [
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₂"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₁"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "X"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Y"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Z"
+      }
+    ],
+    "scrollWidth": 1265,
+    "step": "300",
+    "viewport": 1265
+  },
+  {
+    "labels": [
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₂"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₁"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "X"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Y"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Z"
+      }
+    ],
+    "scrollWidth": 305,
+    "step": "300",
+    "viewport": 305
+  },
+  {
+    "labels": [
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₂"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Вход x₁"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "X"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Y"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "0,5"
+      },
+      {
+        "clipped": false,
+        "font": "11px",
+        "text": "1"
+      },
+      {
+        "clipped": false,
+        "font": "12px",
+        "text": "Z"
+      }
+    ],
+    "scrollWidth": 375,
+    "step": "300",
+    "viewport": 375
+  }
+]

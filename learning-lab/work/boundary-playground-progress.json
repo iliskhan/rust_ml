@@ -1,0 +1,52 @@
+{
+  "title": "Настраиваемые границы решений",
+  "language": "ru",
+  "updated_at": "2026-10-11T16:36:48.5137992+03:00",
+  "focus": "Commit и обычный push master",
+  "steps": [
+    {
+      "id": "baseline",
+      "title": "Основа и сценарий",
+      "status": "done",
+      "result": "Baseline 4ad0ddd; прежний XOR сохраняется",
+      "evidence": [
+        "Прочитаны PLAN.md, PROGRESS.md и исходники; 72 web и 43 Rust/config совпали с baseline"
+      ]
+    },
+    {
+      "id": "engine",
+      "title": "Данные и настраиваемая сеть",
+      "status": "done",
+      "result": "9 численных тестов и независимая сверка градиентов",
+      "evidence": [
+        "9/9 node:test; независимый max |Δ|=9.14e−11; три набора обучаются при проверенной конфигурации"
+      ]
+    },
+    {
+      "id": "lab",
+      "title": "Интерактивные 2D/3D",
+      "status": "done",
+      "result": "Настройки, обучение, возврат и камера проверены",
+      "evidence": [
+        "Production desktop1280/mobile320390; auto/pause/cap4000 и nested math return PASS"
+      ]
+    },
+    {
+      "id": "checks",
+      "title": "Численные и браузерные проверки",
+      "status": "done",
+      "result": "154 tests, build и 11 DOM cases PASS",
+      "evidence": [
+        "11979 p/fill, 2048 граней3D, 129 точек; 115 protected hashes совпали",
+        "Browser policy остановка устранена ручным открытием пользователем; без обхода",
+        "Console warn/error0; doc overflow0, SVG clipping0"
+      ]
+    },
+    {
+      "id": "deliver",
+      "title": "Commit и push",
+      "status": "in_progress",
+      "result": "Отправляю проверенные файлы в origin/master"
+    }
+  ]
+}

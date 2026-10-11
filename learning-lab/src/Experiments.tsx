@@ -7,6 +7,7 @@ import { functionSurface, quadraticHeight, networkHeight } from './lessonSceneMa
 
 const NetworkFlow3D = lazy(() => import('./NetworkFlow3D').then(module => ({ default: module.NetworkFlow3D })));
 const DecisionBoundaryLesson = lazy(() => import('./DecisionBoundaryLesson').then(module => ({ default: module.DecisionBoundaryLesson })));
+const BoundaryPlayground = lazy(() => import('./BoundaryPlayground').then(module => ({ default: module.BoundaryPlayground })));
 
 const kinds: OptimizerKind[] = ['sgd', 'momentum', 'adam'];
 const names = { sgd: 'SGD', momentum: 'Momentum', adam: 'Adam' };
@@ -126,6 +127,11 @@ export function NetworkLesson() {
   const hidden = Array.from({ length: 4 }, (_, i) => Math.tanh(p[2 * i] * input[0] + p[2 * i + 1] * input[1] + p[8 + i]));
   const logit = hidden.reduce((sum, h, i) => sum + p[12 + i] * h, p[16]);
   return <>
+    <p className="lesson-intro">Сеть учится отделять один класс от другого. Сначала меняйте данные и размер сети в лаборатории границ; ниже разберите каждый шаг на небольшом примере XOR. Это два независимых эксперимента со своими весами.</p>
+    <Suspense fallback={<section className="panel"><p role="status">Загружается лаборатория границ…</p></section>}>
+      <BoundaryPlayground />
+    </Suspense>
+    <h3>Пошаговый пример: сеть XOR 2 → 4 → 1</h3>
     <p className="lesson-intro">Теперь весь цикл работает вместе: сеть 2 → 4 → 1 учится XOR — выдавать 1, когда два бита различаются. Четыре скрытых нейрона с tanh позволяют построить нелинейную границу. Каждый шаг: прямой проход, средняя <ConceptLink concept="cross-entropy">BCE от логитов</ConceptLink>, <ConceptLink concept="backpropagation">обратный проход</ConceptLink> и изменение всех 17 параметров.</p>
     <p className="note">Здесь все четыре примера участвуют в обучении. Для новой задачи нужны <ConceptLink concept="train-validation-test">раздельные выборки</ConceptLink> и <ConceptLink concept="evaluation">проверка качества</ConceptLink>. Углубление ставит автоматическое обучение на паузу и сохраняет веса.</p>
     <details className="panel" onToggle={event => {

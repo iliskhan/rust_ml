@@ -100,7 +100,22 @@ export function decisionGrid(parameters: number[], threshold: number, segments =
   const bounds = Array.from({ length: 4 }, (_, j) => Math.abs(parameters[2 * j]) + Math.abs(parameters[2 * j + 1]) + Math.abs(parameters[8 + j]));
   bounds.push(parameters.slice(12).reduce((sum, parameter) => sum + Math.abs(parameter), 0));
   if (!bounds.every(Number.isFinite)) throw new RangeError('Граница XOR: переполнение суммы параметров');
-  const { rows, evaluate } = sampleGrid((x, y) => predictNetwork(parameters, [x, y]), threshold, segments);
+  return probabilityGrid((x, y) => predictNetwork(parameters, [x, y]), threshold, segments);
+}
+
+/** Probability surface for any binary model; classification threshold does not train it. */
+export function probabilityGrid(value: (x: number, y: number) => number, threshold: number, segments = 40): DecisionGrid {
+  if (!Number.isFinite(threshold) || threshold <= 0 || threshold >= 1) {
+    throw new RangeError('Граница: порог должен быть строго между 0 и 1');
+  }
+  const probability = (x: number, y: number) => {
+    const result = value(x, y);
+    if (!Number.isFinite(result) || result < 0 || result > 1) {
+      throw new RangeError('Граница: вероятность должна быть конечной и в [0,1]');
+    }
+    return result;
+  };
+  const { rows, evaluate } = sampleGrid(probability, threshold, segments);
   let min = Infinity, max = -Infinity, above = 0, below = 0, onThreshold = 0;
   for (const row of rows) {
     for (const [, , probability] of row) {
