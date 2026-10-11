@@ -1,0 +1,577 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-11T16:44:23.122762+00:00",
+  "timezone": "Europe/Moscow",
+  "checkout": "C:/Users/lomaster/.codex/worktrees/6209/rust_ml",
+  "baseline_commit": "00827968ac6f4fd2624b7540e0f582a54d38c695",
+  "head_commit": "00827968ac6f4fd2624b7540e0f582a54d38c695",
+  "git_object_format": "sha1",
+  "method": {
+    "tracked_comparison": "Every baseline/current tracked path outside the explicit allowlist was checked by Git blob hash. hash-object --stdin-paths uses repository clean/eol rules and does not write objects.",
+    "aggregate_sha256": "SHA256 of UTF-8 compact sorted-key JSON array of sorted {path, git_blob} records; equal hashes mean equal Git-normalized file contents.",
+    "review_sha256": "Raw on-disk byte SHA256, compared with the prior independent review.",
+    "commands": [
+      "git ls-tree -r -z BASELINE",
+      "git ls-files -z",
+      "git hash-object --stdin-paths",
+      "git diff BASELINE --name-only -z",
+      "git ls-files --others --exclude-standard -z"
+    ],
+    "caveats": [
+      "One snapshot during ongoing final checks; no expensive tests, browser or server were run by this integrity check.",
+      "Computational source identity does not alone prove behavior of the changed UI. Browser and 171-test/build/typecheck results belong to the coordinator.",
+      "This output was created after the untracked-file inventory and is therefore not included in that inventory."
+    ]
+  },
+  "allowlist": [
+    "PLAN.md",
+    "PROGRESS.md",
+    "learning-lab/src/App.tsx",
+    "learning-lab/src/BoundaryPlayground.tsx",
+    "learning-lab/src/CurriculumView.tsx",
+    "learning-lab/src/Experiments.tsx",
+    "learning-lab/src/Foundations.tsx",
+    "learning-lab/src/KnowledgeExplorer.tsx",
+    "learning-lab/src/LessonOutline.tsx",
+    "learning-lab/src/boundary-playground.css",
+    "learning-lab/src/learning-ux.css",
+    "learning-lab/src/range-control.css",
+    "learning-lab/src/ui.tsx",
+    "learning-lab/work/ui-ux-research.md",
+    "learning-lab/work/ui-ux-review.md"
+  ],
+  "allowed_new_evidence_prefix": "learning-lab/evidence/ui-ux/",
+  "baseline_tracked_count": 329,
+  "current_tracked_count": 329,
+  "all_tracked_outside_allowlist": {
+    "count": 319,
+    "baseline_manifest_sha256": "0073bbde0a05b73d972576fcfc7e99ef632129fb2b757be1f7a57a03ef58f3da",
+    "worktree_manifest_sha256": "0073bbde0a05b73d972576fcfc7e99ef632129fb2b757be1f7a57a03ef58f3da",
+    "changed_files": []
+  },
+  "changed_tracked_files": [
+    "PLAN.md",
+    "PROGRESS.md",
+    "learning-lab/src/App.tsx",
+    "learning-lab/src/BoundaryPlayground.tsx",
+    "learning-lab/src/CurriculumView.tsx",
+    "learning-lab/src/Experiments.tsx",
+    "learning-lab/src/Foundations.tsx",
+    "learning-lab/src/KnowledgeExplorer.tsx",
+    "learning-lab/src/boundary-playground.css",
+    "learning-lab/src/ui.tsx"
+  ],
+  "unexpected_changed_tracked_files": [],
+  "missing_tracked_files": [],
+  "untracked_files_at_snapshot": [
+    "learning-lab/evidence/ui-ux/01-before-map-desktop.jpg",
+    "learning-lab/evidence/ui-ux/02-before-curriculum-desktop.jpg",
+    "learning-lab/evidence/ui-ux/03-before-neuron-desktop.jpg",
+    "learning-lab/evidence/ui-ux/04-before-neuron-mobile.jpg",
+    "learning-lab/evidence/ui-ux/05-before-context-mobile.jpg",
+    "learning-lab/evidence/ui-ux/06-before-network-mobile.jpg",
+    "learning-lab/evidence/ui-ux/07-before-network-desktop.jpg",
+    "learning-lab/evidence/ui-ux/08-before-transformer-desktop.jpg",
+    "learning-lab/evidence/ui-ux/09-before-attention-desktop.jpg",
+    "learning-lab/evidence/ui-ux/10-after-curriculum-desktop.jpg",
+    "learning-lab/evidence/ui-ux/11-after-neuron-desktop.jpg",
+    "learning-lab/evidence/ui-ux/12-after-neuron-mobile320.jpg",
+    "learning-lab/evidence/ui-ux/13-after-context-mobile320.jpg",
+    "learning-lab/evidence/ui-ux/14-after-context-mobile390.jpg",
+    "learning-lab/evidence/ui-ux/15-after-network-mobile390.jpg",
+    "learning-lab/evidence/ui-ux/16-after-network-desktop1050.jpg",
+    "learning-lab/evidence/ui-ux/17-after-hidden-desktop.jpg",
+    "learning-lab/evidence/ui-ux/18-after-hidden3d-desktop.jpg",
+    "learning-lab/evidence/ui-ux/19-after-settings-mobile320.jpg",
+    "learning-lab/evidence/ui-ux/20-after-hidden1d-mobile320.jpg",
+    "learning-lab/evidence/ui-ux/21-after-hidden1d-plot-mobile320.jpg",
+    "learning-lab/evidence/ui-ux/build.log",
+    "learning-lab/evidence/ui-ux/tests.log",
+    "learning-lab/evidence/ui-ux/typecheck.log",
+    "learning-lab/src/LessonOutline.tsx",
+    "learning-lab/src/learning-ux.css",
+    "learning-lab/src/range-control.css",
+    "learning-lab/work/ui-ux-research.md",
+    "learning-lab/work/ui-ux-review.md"
+  ],
+  "unexpected_untracked_files": [],
+  "groups": {
+    "mathematical_modules": {
+      "count": 17,
+      "baseline_manifest_sha256": "d383fc876637f9b742a7485119a0ac3b627e2854b3c547926fe018682e36f214",
+      "worktree_manifest_sha256": "d383fc876637f9b742a7485119a0ac3b627e2854b3c547926fe018682e36f214",
+      "changed_files": [],
+      "files": [
+        {
+          "path": "learning-lab/src/advancedConceptMath.ts",
+          "baseline_git_blob": "445369ac5febc25ec08ec813f685858bf2bfdfac",
+          "worktree_git_blob": "445369ac5febc25ec08ec813f685858bf2bfdfac"
+        },
+        {
+          "path": "learning-lab/src/architectures.ts",
+          "baseline_git_blob": "920de7982a20904d344aa1b36f90ecf2c5fd7c2b",
+          "worktree_git_blob": "920de7982a20904d344aa1b36f90ecf2c5fd7c2b"
+        },
+        {
+          "path": "learning-lab/src/boundaryNetworkMath.ts",
+          "baseline_git_blob": "d8a439356c69b558b72a88e3633b5aaefcb80f2c",
+          "worktree_git_blob": "d8a439356c69b558b72a88e3633b5aaefcb80f2c"
+        },
+        {
+          "path": "learning-lab/src/conceptMath.ts",
+          "baseline_git_blob": "36ad8406ed4e3ab38cbc40a0657d103cdd28461a",
+          "worktree_git_blob": "36ad8406ed4e3ab38cbc40a0657d103cdd28461a"
+        },
+        {
+          "path": "learning-lab/src/decisionBoundaryMath.ts",
+          "baseline_git_blob": "8ab7ada104a2e57c2f9d7ef23eaa37fd16ca7f16",
+          "worktree_git_blob": "8ab7ada104a2e57c2f9d7ef23eaa37fd16ca7f16"
+        },
+        {
+          "path": "learning-lab/src/diffusionMath.ts",
+          "baseline_git_blob": "2c886b76b470df548dcd9c13deefdf2df5ab545b",
+          "worktree_git_blob": "2c886b76b470df548dcd9c13deefdf2df5ab545b"
+        },
+        {
+          "path": "learning-lab/src/generativeSceneMath.ts",
+          "baseline_git_blob": "3a4db4c198d4c4aea4f160f32e0d903737b40501",
+          "worktree_git_blob": "3a4db4c198d4c4aea4f160f32e0d903737b40501"
+        },
+        {
+          "path": "learning-lab/src/gnnMath.ts",
+          "baseline_git_blob": "86e0fd686d3c47960425c07e8af22d10ac916a86",
+          "worktree_git_blob": "86e0fd686d3c47960425c07e8af22d10ac916a86"
+        },
+        {
+          "path": "learning-lab/src/lessonSceneMath.ts",
+          "baseline_git_blob": "d40f663b21bd7122cff96829d7a1e5f4767fff02",
+          "worktree_git_blob": "d40f663b21bd7122cff96829d7a1e5f4767fff02"
+        },
+        {
+          "path": "learning-lab/src/math.ts",
+          "baseline_git_blob": "28e8d495affefdadd15ed3e5dcc1fde20d59308b",
+          "worktree_git_blob": "28e8d495affefdadd15ed3e5dcc1fde20d59308b"
+        },
+        {
+          "path": "learning-lab/src/mathSnapshot.ts",
+          "baseline_git_blob": "250bc81d46a6cacf7934f04705b2d150b7466f31",
+          "worktree_git_blob": "250bc81d46a6cacf7934f04705b2d150b7466f31"
+        },
+        {
+          "path": "learning-lab/src/networkTrace.ts",
+          "baseline_git_blob": "df6d5bef03b8348e0d0cc02386c7ea31df3cd328",
+          "worktree_git_blob": "df6d5bef03b8348e0d0cc02386c7ea31df3cd328"
+        },
+        {
+          "path": "learning-lab/src/rlMath.ts",
+          "baseline_git_blob": "cb76f766eaa009f5b78d9fdffa07b68572c6917c",
+          "worktree_git_blob": "cb76f766eaa009f5b78d9fdffa07b68572c6917c"
+        },
+        {
+          "path": "learning-lab/src/scene3dMath.ts",
+          "baseline_git_blob": "e70437da71d1eafccecc541222b1b5df1aa6109c",
+          "worktree_git_blob": "e70437da71d1eafccecc541222b1b5df1aa6109c"
+        },
+        {
+          "path": "learning-lab/src/spatialSceneMath.ts",
+          "baseline_git_blob": "8f55040ea70f94b575ad7e3c767e0b9f2eb108f0",
+          "worktree_git_blob": "8f55040ea70f94b575ad7e3c767e0b9f2eb108f0"
+        },
+        {
+          "path": "learning-lab/src/transformerMath.ts",
+          "baseline_git_blob": "dce3269c53bf36ace2047c63d468fa2f8bb87b5e",
+          "worktree_git_blob": "dce3269c53bf36ace2047c63d468fa2f8bb87b5e"
+        },
+        {
+          "path": "learning-lab/src/vaeGanMath.ts",
+          "baseline_git_blob": "d505ebb01677162a96d187d0b15e9870d92a19d5",
+          "worktree_git_blob": "d505ebb01677162a96d187d0b15e9870d92a19d5"
+        }
+      ]
+    },
+    "rust_sources_and_tests": {
+      "count": 22,
+      "baseline_manifest_sha256": "8c2dd8ba9b6cc6078c5d06ea91655de107a13cfdaa3312eeece0a3ec6a55e3d2",
+      "worktree_manifest_sha256": "8c2dd8ba9b6cc6078c5d06ea91655de107a13cfdaa3312eeece0a3ec6a55e3d2",
+      "changed_files": [],
+      "files": [
+        {
+          "path": "examples/autograd_test.rs",
+          "baseline_git_blob": "a03dfdb7a7f7b2b9469a22605cfea09cc94f5b04",
+          "worktree_git_blob": "a03dfdb7a7f7b2b9469a22605cfea09cc94f5b04"
+        },
+        {
+          "path": "examples/basic_tensor_ops.rs",
+          "baseline_git_blob": "d86dff83cb53fa3e71d11913c347582f07024e20",
+          "worktree_git_blob": "d86dff83cb53fa3e71d11913c347582f07024e20"
+        },
+        {
+          "path": "examples/milestone_check.rs",
+          "baseline_git_blob": "6fa73bafc51aac911c68ad7427cd90cf26dde9d7",
+          "worktree_git_blob": "6fa73bafc51aac911c68ad7427cd90cf26dde9d7"
+        },
+        {
+          "path": "examples/scalar_demo.rs",
+          "baseline_git_blob": "a13b0f35ab4959485f191c7a08834af6e1fe35eb",
+          "worktree_git_blob": "a13b0f35ab4959485f191c7a08834af6e1fe35eb"
+        },
+        {
+          "path": "rustml-autograd/src/graph.rs",
+          "baseline_git_blob": "06bd75fff0a877e7a7601db86cefa10013be9a4b",
+          "worktree_git_blob": "06bd75fff0a877e7a7601db86cefa10013be9a4b"
+        },
+        {
+          "path": "rustml-autograd/src/lib.rs",
+          "baseline_git_blob": "e8f0c2a727fdf129c65ad681eb7e61045c61ca68",
+          "worktree_git_blob": "e8f0c2a727fdf129c65ad681eb7e61045c61ca68"
+        },
+        {
+          "path": "rustml-autograd/src/ops.rs",
+          "baseline_git_blob": "8a733ae59fddf3cd5db4048e5c259b0751140ce6",
+          "worktree_git_blob": "8a733ae59fddf3cd5db4048e5c259b0751140ce6"
+        },
+        {
+          "path": "rustml-autograd/src/scalar.rs",
+          "baseline_git_blob": "fa16917ab3dad5c691d6b483947504e8b5bd1c4e",
+          "worktree_git_blob": "fa16917ab3dad5c691d6b483947504e8b5bd1c4e"
+        },
+        {
+          "path": "rustml-autograd/src/variable.rs",
+          "baseline_git_blob": "4e5b359701a6e982049e682cacb5e4901f897695",
+          "worktree_git_blob": "4e5b359701a6e982049e682cacb5e4901f897695"
+        },
+        {
+          "path": "rustml-autograd/tests/gradients.rs",
+          "baseline_git_blob": "794230c351037928f8acccb3368759f252e1c765",
+          "worktree_git_blob": "794230c351037928f8acccb3368759f252e1c765"
+        },
+        {
+          "path": "rustml-core/src/backend.rs",
+          "baseline_git_blob": "31a101c059cc41741e453f30cec981ae408c6bff",
+          "worktree_git_blob": "31a101c059cc41741e453f30cec981ae408c6bff"
+        },
+        {
+          "path": "rustml-core/src/device.rs",
+          "baseline_git_blob": "3b4c6907aa93d40e254bc593f2eddf334d8dba35",
+          "worktree_git_blob": "3b4c6907aa93d40e254bc593f2eddf334d8dba35"
+        },
+        {
+          "path": "rustml-core/src/dtype.rs",
+          "baseline_git_blob": "d405a43ca7f8edd0d58e9d7b755439ff0ec8c6fb",
+          "worktree_git_blob": "d405a43ca7f8edd0d58e9d7b755439ff0ec8c6fb"
+        },
+        {
+          "path": "rustml-core/src/error.rs",
+          "baseline_git_blob": "5b95f9d188254e32daa154716035c48909b77f0f",
+          "worktree_git_blob": "5b95f9d188254e32daa154716035c48909b77f0f"
+        },
+        {
+          "path": "rustml-core/src/lib.rs",
+          "baseline_git_blob": "bf41b08b91fe0e1cdbf19f650dc2408325009f33",
+          "worktree_git_blob": "bf41b08b91fe0e1cdbf19f650dc2408325009f33"
+        },
+        {
+          "path": "rustml-nn/src/lib.rs",
+          "baseline_git_blob": "c3c383c1923d81dba1d272b7d3e41fa3d12b9704",
+          "worktree_git_blob": "c3c383c1923d81dba1d272b7d3e41fa3d12b9704"
+        },
+        {
+          "path": "rustml-tensor/src/lib.rs",
+          "baseline_git_blob": "f03e06f7d02cbc31c04063870089813a0e932a5c",
+          "worktree_git_blob": "f03e06f7d02cbc31c04063870089813a0e932a5c"
+        },
+        {
+          "path": "rustml-tensor/src/ops.rs",
+          "baseline_git_blob": "cf76468ffcd7763817cbeafe46bae32df5d67549",
+          "worktree_git_blob": "cf76468ffcd7763817cbeafe46bae32df5d67549"
+        },
+        {
+          "path": "rustml-tensor/src/shape.rs",
+          "baseline_git_blob": "6956f4207eac45f1a49e870eedc9f3cf236251d1",
+          "worktree_git_blob": "6956f4207eac45f1a49e870eedc9f3cf236251d1"
+        },
+        {
+          "path": "rustml-tensor/src/tensor.rs",
+          "baseline_git_blob": "4945f0fa21785481ec2afa281055f8134be0f11f",
+          "worktree_git_blob": "4945f0fa21785481ec2afa281055f8134be0f11f"
+        },
+        {
+          "path": "rustml/src/lib.rs",
+          "baseline_git_blob": "6141677140b390581baa31970b57e0d9faa92d50",
+          "worktree_git_blob": "6141677140b390581baa31970b57e0d9faa92d50"
+        },
+        {
+          "path": "rustml/tests/public_api.rs",
+          "baseline_git_blob": "4a85462f8dcfcb7ace36370699a2980442d2654c",
+          "worktree_git_blob": "4a85462f8dcfcb7ace36370699a2980442d2654c"
+        }
+      ]
+    },
+    "package_manifests_and_locks": {
+      "count": 10,
+      "baseline_manifest_sha256": "d26d8c8ed32f8781f6777ea5cf159873eb3e714a8000d161d33714e37231c386",
+      "worktree_manifest_sha256": "d26d8c8ed32f8781f6777ea5cf159873eb3e714a8000d161d33714e37231c386",
+      "changed_files": [],
+      "files": [
+        {
+          "path": "Cargo.lock",
+          "baseline_git_blob": "e81d13bdbcd99da4420913b1acc34429de6459f6",
+          "worktree_git_blob": "e81d13bdbcd99da4420913b1acc34429de6459f6"
+        },
+        {
+          "path": "Cargo.toml",
+          "baseline_git_blob": "e58b59b1e00151cf19305f7d96911562afb717b8",
+          "worktree_git_blob": "e58b59b1e00151cf19305f7d96911562afb717b8"
+        },
+        {
+          "path": "learning-lab/package.json",
+          "baseline_git_blob": "f3c60c6179c8709a81ccff989ed5d827b7c3feb8",
+          "worktree_git_blob": "f3c60c6179c8709a81ccff989ed5d827b7c3feb8"
+        },
+        {
+          "path": "learning-lab/pnpm-lock.yaml",
+          "baseline_git_blob": "b019cf0111549bfd862bea54b6efc7797f1c0d07",
+          "worktree_git_blob": "b019cf0111549bfd862bea54b6efc7797f1c0d07"
+        },
+        {
+          "path": "learning-lab/pnpm-workspace.yaml",
+          "baseline_git_blob": "706d6b81d610927dd29b6f256fc4ec1f474079d1",
+          "worktree_git_blob": "706d6b81d610927dd29b6f256fc4ec1f474079d1"
+        },
+        {
+          "path": "rustml-autograd/Cargo.toml",
+          "baseline_git_blob": "ee3577230ae40dfeabefe1f47b7d73b07965e827",
+          "worktree_git_blob": "ee3577230ae40dfeabefe1f47b7d73b07965e827"
+        },
+        {
+          "path": "rustml-core/Cargo.toml",
+          "baseline_git_blob": "acce61ebcf522bb6d482cadfc12755bce6a62e5f",
+          "worktree_git_blob": "acce61ebcf522bb6d482cadfc12755bce6a62e5f"
+        },
+        {
+          "path": "rustml-nn/Cargo.toml",
+          "baseline_git_blob": "7eb9598fd5cda4b725861ed889a08b87bbc256c4",
+          "worktree_git_blob": "7eb9598fd5cda4b725861ed889a08b87bbc256c4"
+        },
+        {
+          "path": "rustml-tensor/Cargo.toml",
+          "baseline_git_blob": "15ce2fa4ffdeb78a9e16bf8fe67e1bdc016b849a",
+          "worktree_git_blob": "15ce2fa4ffdeb78a9e16bf8fe67e1bdc016b849a"
+        },
+        {
+          "path": "rustml/Cargo.toml",
+          "baseline_git_blob": "85c78cf8b9683946f0869015b3ec2cd6b2fa7444",
+          "worktree_git_blob": "85c78cf8b9683946f0869015b3ec2cd6b2fa7444"
+        }
+      ]
+    },
+    "toolchain_and_configuration": {
+      "count": 7,
+      "baseline_manifest_sha256": "9b866bd58f7d934d1eaf59882abf0c26b6cc907a3a5433fdeab15de6aefc178a",
+      "worktree_manifest_sha256": "9b866bd58f7d934d1eaf59882abf0c26b6cc907a3a5433fdeab15de6aefc178a",
+      "changed_files": [],
+      "files": [
+        {
+          "path": ".gitignore",
+          "baseline_git_blob": "f8bc1ccaa1617c5484acdf32a1908ebe4d8ea60f",
+          "worktree_git_blob": "f8bc1ccaa1617c5484acdf32a1908ebe4d8ea60f"
+        },
+        {
+          "path": "learning-lab/.gitignore",
+          "baseline_git_blob": "2293debb0f76debd0a66a5d59881cb9a82c2765c",
+          "worktree_git_blob": "2293debb0f76debd0a66a5d59881cb9a82c2765c"
+        },
+        {
+          "path": "learning-lab/tsconfig.json",
+          "baseline_git_blob": "6d3ae97e2ce7fdff0de939e0bb40567bd313987b",
+          "worktree_git_blob": "6d3ae97e2ce7fdff0de939e0bb40567bd313987b"
+        },
+        {
+          "path": "rust-toolchain.toml",
+          "baseline_git_blob": "f2004ae052365f079739aa4314abff4739108f03",
+          "worktree_git_blob": "f2004ae052365f079739aa4314abff4739108f03"
+        },
+        {
+          "path": "rustml-core/.gitignore",
+          "baseline_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba",
+          "worktree_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba"
+        },
+        {
+          "path": "rustml-tensor/.gitignore",
+          "baseline_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba",
+          "worktree_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba"
+        },
+        {
+          "path": "rustml/.gitignore",
+          "baseline_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba",
+          "worktree_git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba"
+        }
+      ]
+    },
+    "ci": {
+      "count": 1,
+      "baseline_manifest_sha256": "773aa3961f8bad1674e23963e4659a958d27c1b4caf156c824c51c7f88c69d57",
+      "worktree_manifest_sha256": "773aa3961f8bad1674e23963e4659a958d27c1b4caf156c824c51c7f88c69d57",
+      "changed_files": [],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "baseline_git_blob": "bb9a0d0c32b0cbd949dfcadebc2c5e57231422d9",
+          "worktree_git_blob": "bb9a0d0c32b0cbd949dfcadebc2c5e57231422d9"
+        }
+      ]
+    },
+    "learning_lab_tests": {
+      "count": 22,
+      "baseline_manifest_sha256": "55e7cc33027d27cb9eeb5e0df5ba762c42cf89bc0bbf23eecaeb37aad71621cc",
+      "worktree_manifest_sha256": "55e7cc33027d27cb9eeb5e0df5ba762c42cf89bc0bbf23eecaeb37aad71621cc",
+      "changed_files": [],
+      "files": [
+        {
+          "path": "learning-lab/tests/advancedConceptMath.test.ts",
+          "baseline_git_blob": "23ec9f380f423e95df9219b708ae008ffe18f15c",
+          "worktree_git_blob": "23ec9f380f423e95df9219b708ae008ffe18f15c"
+        },
+        {
+          "path": "learning-lab/tests/architectures.test.ts",
+          "baseline_git_blob": "523ec12c8effa69336032c9b841358616a6c9884",
+          "worktree_git_blob": "523ec12c8effa69336032c9b841358616a6c9884"
+        },
+        {
+          "path": "learning-lab/tests/boundary-network.test.ts",
+          "baseline_git_blob": "fd0d59bebf638a9da18f363ded32a14f3f03ff4a",
+          "worktree_git_blob": "fd0d59bebf638a9da18f363ded32a14f3f03ff4a"
+        },
+        {
+          "path": "learning-lab/tests/conceptMath.test.ts",
+          "baseline_git_blob": "09d8a52c2637034b80af86ffc0ca5f913464756c",
+          "worktree_git_blob": "09d8a52c2637034b80af86ffc0ca5f913464756c"
+        },
+        {
+          "path": "learning-lab/tests/content-links.test.ts",
+          "baseline_git_blob": "38c96fac98d4fa68972929b80728ac4b61e9899c",
+          "worktree_git_blob": "38c96fac98d4fa68972929b80728ac4b61e9899c"
+        },
+        {
+          "path": "learning-lab/tests/curriculum.test.ts",
+          "baseline_git_blob": "501151a4e78e5a4e52f91d955de76c2a123da695",
+          "worktree_git_blob": "501151a4e78e5a4e52f91d955de76c2a123da695"
+        },
+        {
+          "path": "learning-lab/tests/decision-boundary.test.ts",
+          "baseline_git_blob": "b0f811baf2a2954c5cb14fea0e78bfc5df919c85",
+          "worktree_git_blob": "b0f811baf2a2954c5cb14fea0e78bfc5df919c85"
+        },
+        {
+          "path": "learning-lab/tests/diffusionMath.test.ts",
+          "baseline_git_blob": "37604fb1ab99fc7161e2920ac1d986789e8fa71f",
+          "worktree_git_blob": "37604fb1ab99fc7161e2920ac1d986789e8fa71f"
+        },
+        {
+          "path": "learning-lab/tests/generative-scene.test.ts",
+          "baseline_git_blob": "8f456420e2f5a8f7643a0ad41792d5841f84dc03",
+          "worktree_git_blob": "8f456420e2f5a8f7643a0ad41792d5841f84dc03"
+        },
+        {
+          "path": "learning-lab/tests/gnnMath.test.ts",
+          "baseline_git_blob": "962537388823f147201866b0aee6eb896dd0ef38",
+          "worktree_git_blob": "962537388823f147201866b0aee6eb896dd0ef38"
+        },
+        {
+          "path": "learning-lab/tests/hidden-representations.test.ts",
+          "baseline_git_blob": "b628eb5ab28ab8fc638abda3bf812b5430437ee7",
+          "worktree_git_blob": "b628eb5ab28ab8fc638abda3bf812b5430437ee7"
+        },
+        {
+          "path": "learning-lab/tests/learning-navigation.test.ts",
+          "baseline_git_blob": "5b5a3c7e152dba7d852380d608f2d7eaf872d35b",
+          "worktree_git_blob": "5b5a3c7e152dba7d852380d608f2d7eaf872d35b"
+        },
+        {
+          "path": "learning-lab/tests/lesson-scene.test.ts",
+          "baseline_git_blob": "77ac1ce0dc7c63a7fc98de048b01fdefcccc4142",
+          "worktree_git_blob": "77ac1ce0dc7c63a7fc98de048b01fdefcccc4142"
+        },
+        {
+          "path": "learning-lab/tests/math-snapshot.test.ts",
+          "baseline_git_blob": "4dc28c525753f6418fe560caf678fe21bed433e7",
+          "worktree_git_blob": "4dc28c525753f6418fe560caf678fe21bed433e7"
+        },
+        {
+          "path": "learning-lab/tests/math.test.ts",
+          "baseline_git_blob": "8607c81a44ed4b60aebfc29ad5ea9786edf368ce",
+          "worktree_git_blob": "8607c81a44ed4b60aebfc29ad5ea9786edf368ce"
+        },
+        {
+          "path": "learning-lab/tests/network-trace.test.ts",
+          "baseline_git_blob": "40bdbff7460397ba2ed3c9e1de2371691b660c44",
+          "worktree_git_blob": "40bdbff7460397ba2ed3c9e1de2371691b660c44"
+        },
+        {
+          "path": "learning-lab/tests/probability-grid.test.ts",
+          "baseline_git_blob": "28a8fd1011d9677a909605db75cf383720e34a3e",
+          "worktree_git_blob": "28a8fd1011d9677a909605db75cf383720e34a3e"
+        },
+        {
+          "path": "learning-lab/tests/rlMath.test.ts",
+          "baseline_git_blob": "5a582124462c7fbe4f2ea7df98d9465c4114e57b",
+          "worktree_git_blob": "5a582124462c7fbe4f2ea7df98d9465c4114e57b"
+        },
+        {
+          "path": "learning-lab/tests/scene3d.test.ts",
+          "baseline_git_blob": "4993ff11f9ed9685cc1010eae67dda11052d3ac2",
+          "worktree_git_blob": "4993ff11f9ed9685cc1010eae67dda11052d3ac2"
+        },
+        {
+          "path": "learning-lab/tests/spatial-scene.test.ts",
+          "baseline_git_blob": "726fe66be61bf17a0b8d6004dee10a70f5529a4e",
+          "worktree_git_blob": "726fe66be61bf17a0b8d6004dee10a70f5529a4e"
+        },
+        {
+          "path": "learning-lab/tests/transformerMath.test.ts",
+          "baseline_git_blob": "f4ac8b091f4de3144b7f4996dfde38e039596b6b",
+          "worktree_git_blob": "f4ac8b091f4de3144b7f4996dfde38e039596b6b"
+        },
+        {
+          "path": "learning-lab/tests/vaeGanMath.test.ts",
+          "baseline_git_blob": "80076a2af1914a7b99bfefcbced32fff4e6669a6",
+          "worktree_git_blob": "80076a2af1914a7b99bfefcbced32fff4e6669a6"
+        }
+      ]
+    }
+  },
+  "review_source_hashes": [
+    {
+      "path": "learning-lab/src/ui.tsx",
+      "review_sha256": "9AC5E07A677042CC6F488CF8BDFA27898A19EA8479F64364596C86D4368913AC",
+      "current_sha256": "9AC5E07A677042CC6F488CF8BDFA27898A19EA8479F64364596C86D4368913AC",
+      "matches_review": true
+    },
+    {
+      "path": "learning-lab/src/Experiments.tsx",
+      "review_sha256": "8446B830C9EC2DCD13D1145719AC605A26A6233D64221E5C69786CE5B99CBED4",
+      "current_sha256": "8446B830C9EC2DCD13D1145719AC605A26A6233D64221E5C69786CE5B99CBED4",
+      "matches_review": true
+    },
+    {
+      "path": "learning-lab/src/BoundaryPlayground.tsx",
+      "review_sha256": "D34787E74524C235149CD1B1CDEE0C2080E85B9832602D557BE42664E1272BBC",
+      "current_sha256": "D34787E74524C235149CD1B1CDEE0C2080E85B9832602D557BE42664E1272BBC",
+      "matches_review": true
+    },
+    {
+      "path": "learning-lab/src/LessonOutline.tsx",
+      "review_sha256": "2770C5DCA3D4D9943150E030D5322A61A04439D68FD70401CFE7B1387F38A4BE",
+      "current_sha256": "2770C5DCA3D4D9943150E030D5322A61A04439D68FD70401CFE7B1387F38A4BE",
+      "matches_review": true
+    }
+  ],
+  "range_final_read_only_review": {
+    "status": "no_additional_actionable_findings",
+    "integer_and_min_step": "Native number validity.valid enforces min, max and step; valueAsNumber must be finite before onChange. No manual clamping/rounding was introduced.",
+    "floating_camera_no_edit": "onBlur returns when draft is null, preserving a camera angle produced by pointer dragging even if it is not on the step=1 lattice.",
+    "escape": "Escape only prevents default while draft is non-null or invalid; otherwise native dialog cancel remains available. A cancelled draft becomes null.",
+    "limits": "Static code check only; native browser event behavior was delegated to coordinator and is not claimed as independently executed here."
+  },
+  "result": "pass"
+}

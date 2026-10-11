@@ -4,6 +4,7 @@ import { Chart, Exercise, Range, fmt } from './ui';
 import { ConceptLink, LearningActivity, useLearningActive } from './learning-context';
 import { Scene3D } from './ThreeD';
 import { functionSurface, quadraticHeight, networkHeight } from './lessonSceneMath';
+import { LessonOutline } from './LessonOutline';
 
 const NetworkFlow3D = lazy(() => import('./NetworkFlow3D').then(module => ({ default: module.NetworkFlow3D })));
 const DecisionBoundaryLesson = lazy(() => import('./DecisionBoundaryLesson').then(module => ({ default: module.DecisionBoundaryLesson })));
@@ -129,9 +130,10 @@ export function NetworkLesson() {
   return <>
     <p className="lesson-intro">Сеть учится отделять один класс от другого. Сначала меняйте данные и размер сети в лаборатории границ; ниже разберите каждый шаг на небольшом примере XOR. Это два независимых эксперимента со своими весами.</p>
     <Suspense fallback={<section className="panel"><p role="status">Загружается лаборатория границ…</p></section>}>
+      <LessonOutline items={[{ id: 'boundary-experiment', label: 'Граница и обучение' }, { id: 'network-representations', label: 'Скрытые представления' }, { id: 'network-xor', label: 'XOR по шагам' }]} />
       <BoundaryPlayground />
     </Suspense>
-    <h3>Пошаговый пример: сеть XOR 2 → 4 → 1</h3>
+    <h3 id="network-xor" className="lesson-anchor network-xor-heading" tabIndex={-1}>Пошаговый пример: сеть XOR 2 → 4 → 1</h3>
     <p className="lesson-intro">Теперь весь цикл работает вместе: сеть 2 → 4 → 1 учится XOR — выдавать 1, когда два бита различаются. Четыре скрытых нейрона с tanh позволяют построить нелинейную границу. Каждый шаг: прямой проход, средняя <ConceptLink concept="cross-entropy">BCE от логитов</ConceptLink>, <ConceptLink concept="backpropagation">обратный проход</ConceptLink> и изменение всех 17 параметров.</p>
     <p className="note">Здесь все четыре примера участвуют в обучении. Для новой задачи нужны <ConceptLink concept="train-validation-test">раздельные выборки</ConceptLink> и <ConceptLink concept="evaluation">проверка качества</ConceptLink>. Углубление ставит автоматическое обучение на паузу и сохраняет веса.</p>
     <details className="panel" onToggle={event => {

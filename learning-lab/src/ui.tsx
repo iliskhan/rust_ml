@@ -1,4 +1,5 @@
-import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import './range-control.css';
 
 export function fmt(value: number, digits = 3) {
   if (!Number.isFinite(value)) return value === Infinity ? '∞' : value === -Infinity ? '−∞' : 'не определено';
@@ -11,9 +12,40 @@ export function Range({ label, value, min, max, step = 0.1, onChange }: {
   label: string; value: number; min: number; max: number; step?: number; onChange: (n: number) => void;
 }) {
   const id = useId();
-  return <label className="range-control" htmlFor={id}><span>{label}<output>{fmt(value, 4)}</output></span>
-    <input id={id} type="range" value={value} min={min} max={max} step={step} onChange={e => onChange(Number(e.target.value))} />
-  </label>;
+  const [draft, setDraft] = useState<string | null>(null);
+  const [invalid, setInvalid] = useState(false);
+  useEffect(() => {
+    setDraft(null);
+    setInvalid(false);
+  }, [value, min, max, step]);
+  return <div className="range-control">
+    <span className="range-control-heading"><label htmlFor={id}>{label}</label><output htmlFor={id}>{fmt(value, 4)}</output></span>
+    <div className="range-control-inputs">
+      <input id={id} type="range" value={value} min={min} max={max} step={step} onChange={e => {
+        setDraft(null);
+        setInvalid(false);
+        onChange(Number(e.target.value));
+      }} />
+      <input type="number" aria-label={`${label} (точное значение)`} value={draft ?? String(value)}
+        min={min} max={max} step={step} required aria-invalid={invalid || undefined}
+        aria-describedby={invalid ? `${id}-error` : undefined}
+        title="Точное значение: Enter — применить, Esc — отменить"
+        onChange={e => { setDraft(e.target.value); setInvalid(false); }}
+        onBlur={e => {
+          if (draft === null) return;
+          const next = e.currentTarget.valueAsNumber;
+          if (!e.currentTarget.validity.valid || !Number.isFinite(next)) { setInvalid(true); return; }
+          setDraft(null);
+          setInvalid(false);
+          if (next !== value) onChange(next);
+        }}
+        onKeyDown={e => {
+          if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); }
+          if (e.key === 'Escape' && (draft !== null || invalid)) { e.preventDefault(); setDraft(null); setInvalid(false); }
+        }} />
+    </div>
+    {invalid && <p id={`${id}-error`} className="range-control-error" role="alert">Введите число от {fmt(min, 4)} до {fmt(max, 4)} с шагом {fmt(step, 4)}. Esc — отменить.</p>}
+  </div>;
 }
 
 export type Series = { name: string; points: { x: number; y: number }[]; color?: string; dashed?: boolean };

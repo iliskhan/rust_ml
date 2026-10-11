@@ -136,38 +136,44 @@ export function BoundaryPlayground() {
   ], [grid, projection, probe, probability]);
   const architecture = [2, ...config.layers.map(layer => layer.width), 1].join(' → ');
 
-  return <section className="panel boundary-playground" aria-labelledby={`${id}-heading`}>
+  return <section className="panel boundary-playground" aria-labelledby="boundary-experiment">
     <span className="eyebrow">Лаборатория · данные, сеть, обучение</span>
-    <h3 id={`${id}-heading`}>Лаборатория границ: данные и сеть</h3>
-    <p>Выберите рисунок точек и размер сети, затем запустите обучение. Голубая и зелёная области показывают решение сети; коричневая линия — место, где она меняет класс. Сравните одну прямую границу без скрытых слоёв с сетью из нескольких слоёв.</p>
+    <h3 id="boundary-experiment" tabIndex={-1}>Лаборатория границ: данные и сеть</h3>
+    <p>Запустите 100 шагов и посмотрите, как меняется граница классов — коричневая линия на карте.</p>
 
-    <div className="boundary-settings">
-      <label>Набор данных<select value={settings.kind} onChange={event => changeSettings({ kind: event.target.value as BoundaryKind })}>{Object.entries(kinds).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
-      <label>Seed · случайный старт<select value={settings.seed} onChange={event => changeSettings({ seed: Number(event.target.value) })}>{[42, 7, 1337].map(seed => <option key={seed}>{seed}</option>)}</select></label>
-      <label>Скрытых слоёв<select value={config.layers.length} onChange={event => changeSettings({ config: { layers: Array.from({ length: Number(event.target.value) }, (_, i) => config.layers[i] ?? { width: 8, activation: 'tanh' }) } })}>{[0, 1, 2, 3].map(count => <option key={count} value={count}>{count}{count === 0 ? ' · линейный логит' : ''}</option>)}</select></label>
-      <label>Оптимизатор<select value={settings.method} onChange={event => changeSettings({ method: event.target.value as OptimizerKind })}><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam">Adam</option></select></label>
-    </div>
-    <div className="boundary-layers">{config.layers.map((layer, index) => <fieldset key={index}><legend>Скрытый слой {index + 1}</legend>
-      <Range label={`Нейронов в слое ${index + 1}`} value={layer.width} min={1} max={16} step={1} onChange={width => changeLayer(index, { width })} />
-      <label>Активация слоя {index + 1}<select value={layer.activation} onChange={event => changeLayer(index, { activation: event.target.value as Activation })}><option value="relu">ReLU</option><option value="tanh">tanh</option><option value="sigmoid">sigmoid</option></select></label>
-    </fieldset>)}</div>
-    <div className="boundary-training">
-      <Range label="Скорость обучения η" value={settings.lr} min={.001} max={.2} step={.001} onChange={lr => changeSettings({ lr })} />
-      <div><p className="boundary-architecture"><strong>{architecture}</strong><span>{boundaryParameterCount(config)} обучаемых параметров · выход sigmoid</span></p>
-        <div className="button-row">
-          <button disabled={busy || atLimit || !!error} onClick={() => train(1)}>1 шаг</button>
-          <button disabled={busy || atLimit || !!error} onClick={() => train(100)}>100 шагов</button>
-          <button disabled={atLimit || !!error} onClick={() => setExperiment(current => ({ ...current, auto: !busy, remaining: 0 }))}>{busy ? 'Пауза' : 'Авто'}</button>
-          <button onClick={() => setExperiment(current => createExperiment(current.settings))}>Сброс</button>
-        </div>
+    <details className="boundary-setup">
+      <summary>Данные и сеть: {kinds[settings.kind]} · {architecture}<span>Изменение настроек начнёт новый опыт</span></summary>
+      <p className="note boundary-reset-note">Любая настройка ниже сбрасывает шаг, веса и историю. Тот же seed воспроизводит данные и стартовые веса выбранной архитектуры. Порог, проба и ракурс сохраняются.</p>
+      <div className="boundary-settings">
+        <label>Набор данных<select value={settings.kind} onChange={event => changeSettings({ kind: event.target.value as BoundaryKind })}>{Object.entries(kinds).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
+        <label>Seed · случайный старт<select value={settings.seed} onChange={event => changeSettings({ seed: Number(event.target.value) })}>{[42, 7, 1337].map(seed => <option key={seed}>{seed}</option>)}</select></label>
+        <label>Скрытых слоёв<select value={config.layers.length} onChange={event => changeSettings({ config: { layers: Array.from({ length: Number(event.target.value) }, (_, i) => config.layers[i] ?? { width: 8, activation: 'tanh' }) } })}>{[0, 1, 2, 3].map(count => <option key={count} value={count}>{count}{count === 0 ? ' · линейный логит' : ''}</option>)}</select></label>
+        <label>Оптимизатор<select value={settings.method} onChange={event => changeSettings({ method: event.target.value as OptimizerKind })}><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam">Adam</option></select></label>
       </div>
-    </div>
-    <p className="note boundary-run-status" role="status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}. {atLimit ? 'Достигнут предел. Сброс начинает новый опыт.' : experiment.auto ? 'Автообучение идёт.' : experiment.remaining ? `Осталось ${experiment.remaining} шагов выбранного запуска.` : 'Обучение на паузе.'} Каждый шаг использует все 96 обучающих точек.</p>
-    {error && <p className="boundary-error" role="alert">{error}</p>}
-    <p className="note">Любая настройка данных, слоёв или обучения начинает опыт заново: шаг, веса и история сбрасываются. Тот же seed воспроизводит данные и стартовые веса выбранной архитектуры. Большая скорость η может мешать сходимости и повышать ошибку. Порог, проба и ракурс сохраняются. При открытии математического понятия или уходе из урока обучение ставится на паузу.</p>
+      <div className="boundary-layers">{config.layers.map((layer, index) => <fieldset key={index}><legend>Скрытый слой {index + 1}</legend>
+        <Range label={`Нейронов в слое ${index + 1}`} value={layer.width} min={1} max={16} step={1} onChange={width => changeLayer(index, { width })} />
+        <label>Активация слоя {index + 1}<select value={layer.activation} onChange={event => changeLayer(index, { activation: event.target.value as Activation })}><option value="relu">ReLU</option><option value="tanh">tanh</option><option value="sigmoid">sigmoid</option></select></label>
+      </fieldset>)}</div>
+      <Range label="Скорость обучения η" value={settings.lr} min={.001} max={.2} step={.001} onChange={lr => changeSettings({ lr })} />
+      <p className="note">Большая скорость η может мешать сходимости и повышать ошибку. Каждый шаг использует все 96 обучающих точек. При открытии математического понятия или уходе из урока обучение ставится на паузу.</p>
+      <p className="note">Сравните одну прямую границу без скрытых слоёв с сетью из нескольких слоёв.</p>
+    </details>
 
     <div className="boundary-experiment-layout">
       <div>
+        <div className="boundary-training">
+          <p className="boundary-architecture"><strong>{architecture}</strong><span>{boundaryParameterCount(config)} параметров · выход sigmoid</span></p>
+          <p className="note boundary-current-settings">{settings.method === 'adam' ? 'Adam' : settings.method === 'sgd' ? 'SGD' : 'Momentum'} · η = {fmt(settings.lr, 3)} · seed {settings.seed}</p>
+          <div className="button-row">
+            <button disabled={busy || atLimit || !!error} onClick={() => train(1)}>1 шаг</button>
+            <button className="primary" disabled={busy || atLimit || !!error} onClick={() => train(100)}>100 шагов</button>
+            <button disabled={atLimit || !!error} onClick={() => setExperiment(current => ({ ...current, auto: !busy, remaining: 0 }))}>{busy ? 'Пауза' : 'Авто'}</button>
+            <button aria-describedby={`${id}-reset-help`} onClick={() => setExperiment(current => createExperiment(current.settings))}>Сброс</button>
+          </div>
+          <p className="note boundary-run-status" role="status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}. {atLimit ? 'Достигнут предел. Сброс начинает новый опыт.' : experiment.auto ? 'Автообучение идёт.' : experiment.remaining ? `Осталось ${experiment.remaining} шагов выбранного запуска.` : 'Обучение на паузе.'}</p>
+          <p className="note boundary-reset-help" id={`${id}-reset-help`}>Сброс вернёт начальные веса и шаг 0, очистит историю.</p>
+          {error && <p className="boundary-error" role="alert">{error}</p>}
+        </div>
         <figure className="boundary-map-figure" aria-labelledby={`${id}-map-caption`}>
           <figcaption id={`${id}-map-caption`}>2D · {kinds[settings.kind]} · обучаемая граница</figcaption>
           <div className="boundary-map" ref={map}><svg viewBox={`0 0 ${width} ${bottom + 48}`} role="img" aria-labelledby={`${id}-map-title`} aria-describedby={`${id}-map-description`} onClick={chooseProbe}>
@@ -200,6 +206,10 @@ export function BoundaryPlayground() {
         <p className="note boundary-contour-note">{contourMessage}</p>
       </div>
       <div className="boundary-probe-controls">
+        <div className="boundary-scores" aria-label="Качество выбранной сети">
+          <div><h4>Обучение · train</h4><p><strong>{scores.train.correct} / {scores.train.total}</strong> верно · {fmt(100 * scores.train.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.train.loss, 6)}</strong></p></div>
+          <div><h4>Проверка · validation</h4><p><strong>{scores.validation.correct} / {scores.validation.total}</strong> верно · {fmt(100 * scores.validation.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.validation.loss, 6)}</strong></p></div>
+        </div>
         <Range label="Порог решения τ" value={threshold} min={.05} max={.95} step={.01} onChange={setThreshold} />
         <p className="note">p ≥ τ → класс 1, иначе класс 0. Порог меняет решения и долю верных ответов; веса и потеря BCE остаются прежними.</p>
         <div className="boundary-probe-card"><h4>Проверьте свою точку</h4>
@@ -209,14 +219,12 @@ export function BoundaryPlayground() {
           <dl className="boundary-readout"><div><dt>p(класс 1)</dt><dd>{fmt(probability, 6)}</dd></div><div><dt>Решение при τ = {fmt(threshold, 2)}</dt><dd>Класс {Number(probability >= threshold)}</dd></div></dl>
           <p className="note">Ответ рассчитан самой сетью. Показанные числа округлены, сравнение с порогом использует полное значение.</p>
         </div>
-        <div className="boundary-scores" aria-label="Качество выбранной сети">
-          <div><h4>Обучение · train</h4><p><strong>{scores.train.correct} / {scores.train.total}</strong> верно · {fmt(100 * scores.train.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.train.loss, 6)}</strong></p></div>
-          <div><h4>Проверка · validation</h4><p><strong>{scores.validation.correct} / {scores.validation.total}</strong> верно · {fmt(100 * scores.validation.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.validation.loss, 6)}</strong></p></div>
-        </div>
       </div>
     </div>
 
-    <HiddenRepresentations params={optimizer.params} config={config} dataset={dataset} probe={probe} onProbeChange={setProbe} step={optimizer.step} source={`${kinds[settings.kind]} · seed ${settings.seed}`} />
+    <div id="network-representations" tabIndex={-1} role="region" aria-label="Скрытые представления сети">
+      <HiddenRepresentations params={optimizer.params} config={config} dataset={dataset} probe={probe} onProbeChange={setProbe} step={optimizer.step} source={`${kinds[settings.kind]} · seed ${settings.seed}`} />
+    </div>
 
     <div className="boundary-loss"><h4>Уменьшается ли ошибка на новых точках?</h4>
       <Chart series={[{ name: 'Обучение · train', points: history.map(point => ({ x: point.step, y: point.train })), color: '#27694e' }, { name: 'Проверка · validation', points: history.map(point => ({ x: point.step, y: point.validation })), color: '#b75d24', dashed: true }]} xLabel="Шаг обучения" yLabel="Средняя потеря BCE" xDomain={[0, Math.max(1, optimizer.step)]} yDomain={[0, Math.max(.1, ...history.flatMap(point => [point.train, point.validation])) * 1.1]} />

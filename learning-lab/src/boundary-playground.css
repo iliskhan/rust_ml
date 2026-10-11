@@ -1,5 +1,11 @@
 .boundary-playground>.eyebrow{margin-bottom:8px}
-.boundary-settings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:25px}
+.boundary-playground #boundary-experiment,.boundary-playground #network-representations{scroll-margin-top:20px}
+.boundary-playground .boundary-setup{margin-top:18px;padding:12px 15px;border:1px solid #d8dfd1;border-radius:8px;background:#f8f9f3}
+.boundary-setup>summary{width:100%;line-height:1.6}
+.boundary-setup>summary>span{display:block;margin-top:3px;font-size:12px;font-weight:400;color:#7e4c2e}
+.boundary-playground .boundary-reset-note{padding:10px 12px;border-left:3px solid #b88f71;background:#f6f0e5;color:#624630}
+.boundary-setup>.range-control{max-width:420px;margin-top:20px}
+.boundary-settings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:18px}
 .boundary-playground label{min-width:0}
 .boundary-settings>label,.boundary-layers label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:500;color:var(--deep)}
 .boundary-playground select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:9px 28px 9px 10px;border:1px solid #d0d8cc;border-radius:5px;background:#fffefa;color:var(--deep);font:inherit}
@@ -8,16 +14,17 @@
 .boundary-layers legend{padding:0 6px;font-size:13px;font-weight:600;color:var(--deep)}
 .boundary-layers .range-control{margin:0 0 16px}
 .boundary-layers .range-control>span{font-size:13px;gap:8px}
-.boundary-training{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.5fr);align-items:center;gap:24px;margin-top:23px}
-.boundary-training>.range-control{margin:0}
+.boundary-training{margin-bottom:18px}
 .boundary-training .button-row{margin:12px 0 0;gap:8px}
-.boundary-training .button-row button{min-height:44px;padding:9px 14px;font-size:13px}
+.boundary-training .button-row button{min-height:44px;padding:9px 11px;font-size:13px}
 .boundary-architecture{display:flex;flex-wrap:wrap;gap:4px 16px;align-items:baseline;margin:0!important}
-.boundary-architecture strong{color:var(--deep);font-size:20px}
+.boundary-architecture strong{color:var(--deep);font-size:18px}
 .boundary-architecture span{font-size:12px;color:#53624d}
-.boundary-playground .boundary-run-status{margin-top:18px}
+.boundary-playground .boundary-current-settings{margin-top:3px;font-size:12px}
+.boundary-playground .boundary-run-status{margin-top:10px;line-height:1.5}
+.boundary-playground .boundary-reset-help{margin-top:5px;font-size:12px;line-height:1.5}
 .boundary-error{padding:13px 16px;border:1px solid #c06e50;background:#fff0e9;color:#7e3115;border-radius:6px}
-.boundary-experiment-layout{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr);gap:28px;margin-top:29px;align-items:start}
+.boundary-experiment-layout{display:grid;grid-template-columns:minmax(0,1.14fr) minmax(0,1fr);gap:28px;margin-top:22px;align-items:start}
 .boundary-experiment-layout>div{min-width:0}
 .boundary-map-figure{margin:0}
 .boundary-map-figure figcaption{font-size:15px;font-weight:600;color:var(--deep);margin-bottom:10px}
@@ -53,7 +60,7 @@
 .boundary-readout>div{min-width:0}
 .boundary-readout dt{color:#665a75}
 .boundary-readout dd{margin:2px 0 0;color:#332544;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.boundary-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.boundary-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:22px}
 .boundary-scores>div{padding:12px 10px;background:#f4f6ed;border:1px solid #dce1d6;border-radius:6px;min-width:0}
 .boundary-scores h4{margin:0 0 7px;font-size:13px;font-weight:600;color:var(--deep)}
 .boundary-scores p{font-size:12px;margin:5px 0!important;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
@@ -62,6 +69,7 @@
 .boundary-playground details>summary{font-weight:600}
 .boundary-playground .formula{margin-top:15px}
 .boundary-playground .boundary-xor-note{padding-top:15px;border-top:1px solid #dce1d6;color:#53624d;font-size:13px}
-@media(max-width:1100px){.boundary-settings{grid-template-columns:repeat(2,minmax(0,1fr))}.boundary-experiment-layout{grid-template-columns:1fr;gap:24px}.boundary-map{max-width:510px}}
-@media(max-width:560px){.boundary-settings{gap:12px}.boundary-layers{grid-template-columns:1fr}.boundary-training{grid-template-columns:1fr;gap:17px}.boundary-training .button-row button{flex:1 1 42%;padding:9px 10px}.boundary-experiment-layout{margin-top:22px}.boundary-probe-card{padding:15px 12px}.boundary-settings>label,.boundary-layers label{font-size:12px}.boundary-playground select{font-size:16px}.boundary-playground .boundary-check{font-size:12px}.boundary-probe-controls>.range-control>span{font-size:14px}.boundary-scores{gap:8px}.boundary-scores>div{padding:10px 8px}.boundary-readout{gap:10px}}
+@media(max-width:1100px){.boundary-settings{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1000px){.boundary-experiment-layout{grid-template-columns:1fr;gap:24px}.boundary-map{max-width:510px}}
+@media(max-width:560px){.boundary-playground .boundary-setup{padding:10px 12px}.boundary-setup>summary{font-size:14px}.boundary-settings{gap:12px}.boundary-layers{grid-template-columns:1fr}.boundary-training .button-row button{flex:1 1 42%;padding:9px 10px}.boundary-probe-card{padding:15px 12px}.boundary-settings>label,.boundary-layers label{font-size:12px}.boundary-playground select{font-size:16px}.boundary-playground .boundary-check{font-size:12px}.boundary-probe-controls>.range-control>span{font-size:14px}.boundary-scores{gap:8px}.boundary-scores>div{padding:10px 8px}.boundary-readout{gap:10px}}
 @media(max-width:380px){.boundary-settings{grid-template-columns:1fr}}

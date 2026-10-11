@@ -1,9 +1,31 @@
 # Прогресс RustML
 
-Обновлено: 2026-10-11 19:15 Europe/Moscow. Учебная цель и порядок развития — [PLAN.md](PLAN.md).
+Обновлено: 2026-10-11 19:48 Europe/Moscow. Учебная цель и порядок развития — [PLAN.md](PLAN.md).
 Этот файл — текущий checkpoint; результаты прошлых запусков не заменяют проверку изменённого кода.
 
 ## Текущая задача и результат
+
+### UI/UX Learning Lab — проверено, 2026-10-11 19:48 Europe/Moscow
+
+Checkout `C:/Users/lomaster/.codex/worktrees/6209/rust_ml`: исходно чистый detached
+HEAD `00827968ac6f4fd2624b7540e0f582a54d38c695`. Изменения только этой задачи.
+Ветка `codex/ui-ux-learning-lab`, отдельный production preview
+`http://127.0.0.1:5183/`; основной checkout, master и чужой порт5182 не менялись.
+Готовы точный ввод рядом с Range, явный первый опыт и ранний словарь,
+переходы внутри нейрона/сети, результат рядом с контролами, компактная подготовка
+Boundary и обучение возле карты. Три Astra ultra работали в раздельных scope;
+root интегрировал изменения и исправил два замечания независимого ревью.
+В текущем checkout повторно:171/171 tests, typecheck и build PASS
+(Node24.19.0 / pnpm11.25.0 / Vite7.3.7,19:46–19:47 MSK).
+Настоящий IAB: desktop1440/1050, mobile390/320;22 записанных проверки PASS,
+включая точный ввод/валидацию, вложенный attention, MLP snapshot/pause,
+клавиатуру3D, сохранение дробной камеры и прежний XOR4/4. Console warn/error0.
+319 tracked-файлов вне UI/doc allowlist неизменны, включая математику, Rust,
+dependencies/toolchain/CI/tests. Исходники после final review не менялись.
+[Приёмка, before/after и пределы проверки](learning-lab/evidence/ui-ux/README.md).
+Следующий шаг этого checkpoint: commit, обычный push своей ветки, сверка remoteSHA
+и clean. Результат Git delivery root сообщает в завершении чата; merge не входит
+в эту задачу. Этот checkpoint не утверждает, что push уже выполнен.
 
 ### Разбор чисел и скрытые признаки MLP — реализация принята, 2026-10-11
 

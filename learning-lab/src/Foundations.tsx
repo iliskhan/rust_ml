@@ -5,6 +5,7 @@ import { Range, Chart, Exercise, fmt } from './ui'
 import { AnalyzeNumbers, ConceptLink } from './learning-context'
 import { Scene3D } from './ThreeD'
 import { functionSurface, neuronHeight, mseHeight } from './lessonSceneMath'
+import { LessonOutline, focusLessonSection } from './LessonOutline'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
@@ -27,9 +28,10 @@ export function NeuronLesson() {
   return <>
     <p className="lesson-intro">Нейрон объединяет признаки: умножает каждый вход на вес, прибавляет смещение и применяет активацию. Вес задаёт влияние признака; смещение сдвигает границу реакции.</p>
     <p className="note">Входы образуют <ConceptLink concept="vector">вектор</ConceptLink>. Взвешенная сумма — это <ConceptLink concept="dot-product">скалярное произведение</ConceptLink>, а чувствительность выхода описывает <ConceptLink concept="derivative">производная</ConceptLink>.</p>
+    <LessonOutline items={[{ id: 'neuron-controls', label: 'Собрать нейрон' }, { id: 'neuron-result', label: 'Разобрать результат' }, { id: 'neuron-activation', label: 'Активация и наклон' }, { id: 'neuron-batch', label: 'Пакет и слой' }]} />
     <div className="lab-grid">
       <section className="panel">
-        <h3>Соберите один нейрон</h3>
+        <h3 id="neuron-controls" className="lesson-anchor" tabIndex={-1}>Соберите один нейрон</h3>
         <div className="controls">
           <Range label="Вход x₁" value={x1} min={-3} max={3} step={0.1} onChange={setX1} />
           <Range label="Вход x₂" value={x2} min={-3} max={3} step={0.1} onChange={setX2} />
@@ -42,9 +44,10 @@ export function NeuronLesson() {
             <option value="tanh">tanh — выход от −1 до 1</option>
           </select></label>
         </div>
+        <div className="neuron-live-result"><p>Сейчас: z = <strong>{fmt(z)}</strong> → a = <strong>{fmt(output)}</strong></p><button type="button" onClick={() => focusLessonSection('neuron-result')}>К подробному расчёту ↓</button></div>
       </section>
       <section className="panel">
-        <h3>Из входов в выход</h3>
+        <h3 id="neuron-result" className="lesson-anchor" tabIndex={-1}>Из входов в выход</h3>
         <div className="formula">z = x₁w₁ + x₂w₂ + b<br />z = ({fmt(x1)})·({fmt(w1)}) + ({fmt(x2)})·({fmt(w2)}) + ({fmt(bias)}) = {fmt(z)}</div>
         <table className="data-table"><caption>Вклад каждого входа до активации</caption><thead><tr><th scope="col">Операция</th><th scope="col">Значение</th></tr></thead><tbody>
           <tr><th scope="row">x₁ · w₁</th><td>{fmt(x1 * w1)}</td></tr>
@@ -63,7 +66,7 @@ export function NeuronLesson() {
       <p className="note">Рядом остаются точные числа и плоский график активации. <ConceptLink concept="derivative">Производная</ConceptLink> объясняет местный наклон, а <ConceptLink concept="gradient">градиент</ConceptLink> собирает наклоны по обоим входам.</p>
     </details>
     <section className="panel">
-      <h3>Форма активации и её наклон</h3>
+      <h3 id="neuron-activation" className="lesson-anchor" tabIndex={-1}>Форма активации и её наклон</h3>
       <Chart series={[
         { name: `${activationNames[kind]}(z)`, points: samples.map(x => ({ x, y: activate(x, kind) })), color: '#0e9b8a' },
         { name: 'Производная da/dz', points: samples.map(x => ({ x, y: activationDerivative(x, kind) })), color: '#e89337', dashed: true },
@@ -76,7 +79,7 @@ export function NeuronLesson() {
       </details>
     </section>
     <section className="panel">
-      <h3>Тот же расчёт для пакета и двух нейронов</h3>
+      <h3 id="neuron-batch" className="lesson-anchor" tabIndex={-1}>Тот же расчёт для пакета и двух нейронов</h3>
       <p>Пакет (batch) — несколько примеров, обработанных вместе. Строки X — примеры; строки W — нейроны. Второй пример и второй нейрон фиксированы, первый использует ползунки.</p>
       <div className="formula">X = [[{fmt(x1)}; {fmt(x2)}]; [−1; 0,5]]<br />W = [[{fmt(w1)}; {fmt(w2)}]; [0,5; −1]]<br />b = [{fmt(bias)}; 0,25]<br />Z = X · Wᵀ + b → A = {activationNames[kind]}(Z)</div>
       <table className="data-table"><caption>Матрица выхода 2 × 2: активация применяется к каждому элементу</caption><thead><tr><th scope="col">Пример</th><th scope="col">Нейрон 1: z → a</th><th scope="col">Нейрон 2: z → a</th></tr></thead><tbody>

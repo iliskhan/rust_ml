@@ -20,7 +20,7 @@ const lessons = [
   { id: 'loss', title: 'Функции потерь', group: 'Основы на практике', hint: 'Измерить ошибку предсказания', component: LossLesson },
   { id: 'backprop', title: 'Обратный проход', group: 'Основы на практике', hint: 'Найти влияние каждого веса', component: BackpropLesson },
   { id: 'optimizers', title: 'Оптимизаторы', group: 'Основы на практике', hint: 'Сравнить три траектории', component: OptimizerLesson },
-  { id: 'network', title: 'Сеть целиком', group: 'Основы на практике', hint: 'Обучить и разобрать свою сеть на XOR', component: NetworkLesson },
+  { id: 'network', title: 'Сеть целиком', group: 'Основы на практике', hint: 'Границы решений, скрытые признаки и XOR', component: NetworkLesson },
   { id: 'architectures', title: 'Семейства сетей', group: 'Дальше и глубже', hint: 'Dense, CNN, RNN, LSTM, GRU, Transformer', component: ArchitectureLesson },
   { id: 'transformer', title: 'Transformer по шагам', group: 'Дальше и глубже', hint: 'От токенов к вниманию и предсказанию', component: TransformerCourse },
   { id: 'vae', title: 'VAE: скрытый код', group: 'Генерация', hint: 'Реконструкция, распределение и вариационная граница', component: VAECourse },

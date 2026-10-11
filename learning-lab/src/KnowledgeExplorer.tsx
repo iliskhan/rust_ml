@@ -62,7 +62,7 @@ export function KnowledgeExplorer({ lessonTitle }: { lessonTitle: string }) {
         <li><button type="button" onClick={close}>Урок</button></li>
         {navigation.path.map((id, index) => { const title = getConcept(id)?.title ?? id; const short = title.split(':')[0]; return <li key={id}>{index === navigation.path.length - 1 ? <span aria-current="page" title={title}>{short}</span> : <button type="button" title={title} onClick={() => jump(index)}>{short}</button>}</li>; })}
       </ol></nav>
-      <div className="explorer-toolbar"><button type="button" onClick={back}>{navigation.path.length > 1 ? '← На один уровень назад' : '← К уроку'}</button><span>Уровень {navigation.path.length} · настройки сохранены</span></div>
+      <div className="explorer-toolbar">{navigation.path.length > 1 && <button type="button" onClick={back}>← На один уровень назад</button>}<span>Уровень {navigation.path.length} · настройки сохранены</span></div>
       <p className="explorer-message" role="status">{navigation.message}</p>
     </header>
     <div className="explorer-viewport">{navigation.visited.map(id => <section key={id} ref={element => { if (element) frames.current.set(id, element); else frames.current.delete(id); }} hidden={id !== current} className="explorer-frame" aria-labelledby={`concept-heading-${id}`}>

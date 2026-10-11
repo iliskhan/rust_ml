@@ -1,0 +1,35 @@
+$ tsc --noEmit && vite build
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 87 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                    0.72 kB │ gzip:   0.45 kB
+dist/assets/Scene3D-07YGMzQb.css                   2.68 kB │ gzip:   0.98 kB
+dist/assets/vae-gan-3IchR_o_.css                   3.51 kB │ gzip:   0.89 kB
+dist/assets/DecisionBoundaryLesson-C_h8fpur.css    4.16 kB │ gzip:   1.24 kB
+dist/assets/DiffusionCourse-CDXWXHcs.css           4.87 kB │ gzip:   1.24 kB
+dist/assets/gnn-rl-4FBr7wD1.css                    5.98 kB │ gzip:   1.45 kB
+dist/assets/TransformerCourse-Hsgk7oNS.css         8.05 kB │ gzip:   2.14 kB
+dist/assets/NetworkFlow3D-5o2kBx1H.css             9.74 kB │ gzip:   2.42 kB
+dist/assets/BoundaryPlayground-CzmLzSMf.css       10.08 kB │ gzip:   2.47 kB
+dist/assets/index-CgtVcAob.css                    39.14 kB │ gzip:   8.67 kB
+dist/assets/spatialSceneMath-DKnV3ZYQ.js           1.61 kB │ gzip:   0.92 kB
+dist/assets/decisionBoundaryMath-IlSP12Gg.js       2.70 kB │ gzip:   1.32 kB
+dist/assets/scene3dMath-B0VK_gBr.js                2.88 kB │ gzip:   1.43 kB
+dist/assets/vaeGanMath-C0Vp19Xo.js                 5.74 kB │ gzip:   2.52 kB
+dist/assets/generativeSceneMath-CMlwrVhv.js        6.38 kB │ gzip:   2.81 kB
+dist/assets/Scene3D-mHa2mV_6.js                    8.96 kB │ gzip:   3.81 kB
+dist/assets/AdvancedConceptLesson-Dhg4Zo3Q.js     15.55 kB │ gzip:   4.99 kB
+dist/assets/DecisionBoundaryLesson-BrOOcUmO.js    15.95 kB │ gzip:   5.69 kB
+dist/assets/NetworkFlow3D-Bacb16V1.js             27.10 kB │ gzip:   9.00 kB
+dist/assets/ArchitectureLesson-J0VvmDe6.js        37.22 kB │ gzip:  12.41 kB
+dist/assets/VAECourse-Bxqt-dVT.js                 37.41 kB │ gzip:  11.60 kB
+dist/assets/GNNCourse-BmAxj_Lx.js                 40.87 kB │ gzip:  13.37 kB
+dist/assets/GANCourse-_Sx0uwoY.js                 40.90 kB │ gzip:  12.14 kB
+dist/assets/BoundaryPlayground-D3wloLxk.js        43.90 kB │ gzip:  14.58 kB
+dist/assets/RLCourse-DxxqX9w3.js                  47.10 kB │ gzip:  14.32 kB
+dist/assets/DiffusionCourse-GbFGpPN3.js           52.63 kB │ gzip:  15.52 kB
+dist/assets/TransformerCourse-C7s8G9bE.js         65.36 kB │ gzip:  19.63 kB
+dist/assets/index-B3kSE9Dl.js                    484.76 kB │ gzip: 147.28 kB
+✓ built in 1.39s
