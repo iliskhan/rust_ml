@@ -1,0 +1,32 @@
+.scene3d{margin:22px 0 0;padding:0;min-width:0}
+.scene3d .scene3d-heading{font-size:17px;font-weight:600;color:var(--deep);line-height:1.5}
+.scene3d .scene3d-description{margin-top:8px;font-size:14px;line-height:1.7;color:#455b43}
+.scene3d-view{min-width:0;margin-top:12px;border:1px solid #e0e6d8;border-radius:8px;background:#f7f9f2;overflow:hidden}
+.scene3d-view>svg{display:block;touch-action:pan-y;user-select:none;cursor:grab;max-width:100%}
+.scene3d-view>svg:active{cursor:grabbing}
+.scene3d-view>p{padding:18px}
+.scene3d-frame{fill:none;stroke:#b8c7b0;stroke-width:.75;stroke-dasharray:3 4}
+.scene3d-axis text{font:11px "Segoe UI",Arial,sans-serif;fill:#243d2c;paint-order:stroke;stroke:#f7f9f2;stroke-width:3px;stroke-linejoin:round}
+.scene3d-axis .scene3d-axis-name{font-size:12px;font-weight:700}
+.scene3d-axis-key{list-style:none;display:flex;flex-wrap:wrap;gap:3px 18px;margin:10px 0 0;padding:0;font-size:12px;color:#3d553a}
+.scene3d-axis-key li{overflow-wrap:anywhere}
+.scene3d .scene3d-note{font-size:12px;line-height:1.65;color:#53674b;margin-top:9px}
+.scene3d-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 18px;margin-top:15px}
+.scene3d-controls .range-control>span{display:flex;justify-content:space-between;gap:6px;align-items:center;font-size:13px;line-height:1.5}
+.scene3d-controls .range-control output{font-size:12px;flex-shrink:0}
+.scene3d-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.scene3d-buttons button{font-size:12px;padding:8px 11px;min-height:44px}
+.scene3d-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 17px;margin:13px 0 0;padding:0;font-size:12px;line-height:1.55;color:#3f573b}
+.scene3d-legend li{display:flex;align-items:center;gap:5px;min-width:0}
+.scene3d-legend svg{flex-shrink:0}
+.scene3d-legend span{overflow-wrap:anywhere}
+.scene3d .scene3d-data{margin-top:12px;padding-top:7px}
+.scene3d-data summary{font-size:13px}
+.scene3d-table-wrap{overflow-x:auto;max-width:100%;margin-top:7px}
+.scene3d-data table{border-collapse:collapse;width:100%;font-size:12px;text-align:left;line-height:1.6}
+.scene3d-data caption{text-align:left;margin-bottom:7px;color:#53674b}
+.scene3d-data th,.scene3d-data td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.scene3d-data th{font-weight:550}
+.scene3d-data td{font-variant-numeric:tabular-nums}
+.scene3d .scene3d-render-note{font-size:11px;margin-top:12px}
+@media(max-width:600px){.scene3d-controls{grid-template-columns:1fr;gap:5px}.scene3d .scene3d-heading{font-size:16px}.scene3d .scene3d-description{font-size:13px}.scene3d-buttons button{flex:1 1 125px}.scene3d-axis-key{display:block}.scene3d-axis-key li+li{margin-top:3px}}

@@ -1,0 +1,54 @@
+{
+  "title": "3D в учебнике RustML",
+  "language": "ru",
+  "updated_at": "2026-10-11T13:52:51.3735932+03:00",
+  "focus": "Отправляем проверенные изменения в master",
+  "steps": [
+    {
+      "id": "rule",
+      "title": "Правило и исходное состояние",
+      "status": "done",
+      "result": "Правило сохранено; исходная master чистая",
+      "evidence": [
+        "git status до изменений: чисто; HEAD 35942ec",
+        "Проверено содержимое глобального и корневого AGENTS.md"
+      ]
+    },
+    {
+      "id": "research",
+      "title": "Математический смысл 3D",
+      "status": "done",
+      "result": "Первичные источники; реальные оси и альтернативы",
+      "evidence": [
+        "research/three-dimensional.md: математические ограничения, первичные источники и численные эталоны"
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Девять пространственных представлений",
+      "status": "done",
+      "result": "Девять сцен встроены; реальные вычисления сохранены",
+      "evidence": [
+        "README и THREE_DIMENSIONAL.md; независимое review CNN/RoPE/lazy state"
+      ]
+    },
+    {
+      "id": "qa",
+      "title": "Математика и интерфейс",
+      "status": "done",
+      "result": "128 tests, build, Rust и desktop/mobile прошли",
+      "evidence": [
+        "3d-tests.log и 3d-build.log: exit 0",
+        "43 Rust/config и 29 web protected SHA совпали",
+        "28 scene/width проверок; overflow и console errors — 0",
+        "Camera close/open и math-return VAE/diffusion повторно проверены"
+      ]
+    },
+    {
+      "id": "push",
+      "title": "Commit и push",
+      "status": "in_progress",
+      "result": "Приёмка записана; commit и обычный push"
+    }
+  ]
+}

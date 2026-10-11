@@ -1,0 +1,9 @@
+cargo run -p rustml-tensor --example basic_tensor_ops --locked --offline
+started=2026-10-11T13:37:07.8786616+03:00
+RUSTDOCFLAGS=-D warnings
+   Compiling rustml-tensor v0.1.0 (C:\Users\lomaster\Desktop\dev\rust_ml\rustml-tensor)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.55s
+     Running `target\debug\examples\basic_tensor_ops.exe`
+CPU тензоры: арифметика, broadcasting, reshape и matmul проверены.
+exit=0
+seconds=0.5953461

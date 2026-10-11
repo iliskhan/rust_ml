@@ -3,10 +3,13 @@ import { activate, activationDerivative, linear, mse, bceProbability, bceLogit, 
 import type { Activation } from './math'
 import { Range, Chart, Exercise, fmt } from './ui'
 import { ConceptLink } from './learning-context'
+import { Scene3D } from './ThreeD'
+import { functionSurface, neuronHeight, mseHeight } from './lessonSceneMath'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
 export function NeuronLesson() {
+  const [sceneOpened, setSceneOpened] = useState(false)
   const [x1, setX1] = useState(1)
   const [x2, setX2] = useState(2)
   const [w1, setW1] = useState(0.8)
@@ -53,6 +56,11 @@ export function NeuronLesson() {
         <p className="note">Локальная производная da/dz = {fmt(derivative)}: насколько изменится выход при малом изменении z.</p>
       </section>
     </div>
+    <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: два входа и высота ответа нейрона</summary>
+      <p>Выберите место по двум входам. Высота показывает, что ответит нейрон именно там. Меняйте веса и смещение выше: наклон и граница реакции меняются. ReLU делает сгиб, а sigmoid и tanh плавно выходят на плато.</p>
+      {sceneOpened && <Scene3D title="Поверхность ответа одного нейрона" description="Каждая точка имеет координаты x₁, x₂ и вычисленный выход a=activation(w₁x₁+w₂x₂+b). Третья ось — выход, а не новый вход." axes={[{label:'Вход x₁',min:-3,max:3},{label:'Вход x₂',min:-3,max:3},{label:'Выход a',min:kind==='tanh'?-1:0,max:kind==='relu'?Math.max(1,3*Math.abs(w1)+3*Math.abs(w2)+bias):1}]} surfaces={[{name:activationNames[kind],rows:functionSurface([-3,3],[-3,3],(a,b)=>neuronHeight(a,b,w1,w2,bias,kind))}]} points={[{name:'Текущие входы',position:[x1,x2,output]}]} />}
+      <p className="note">Рядом остаются точные числа и плоский график активации. <ConceptLink concept="derivative">Производная</ConceptLink> объясняет местный наклон, а <ConceptLink concept="gradient">градиент</ConceptLink> собирает наклоны по обоим входам.</p>
+    </details>
     <section className="panel">
       <h3>Форма активации и её наклон</h3>
       <Chart series={[
@@ -80,6 +88,7 @@ export function NeuronLesson() {
 }
 
 export function LossLesson() {
+  const [sceneOpened, setSceneOpened] = useState(false)
   const [predictions, setPredictions] = useState([0.5, 2.5, 2])
   const [mode, setMode] = useState<'probability' | 'logit'>('probability')
   const [probability, setProbability] = useState(0.7)
@@ -116,6 +125,11 @@ export function LossLesson() {
         <p className="note">Большой промах штрафуется сильнее: ошибка 2 даёт квадрат 4, ошибка 1 — квадрат 1. Линии соединяют только три показанных примера.</p>
       </section>
     </div>
+    <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: чаша MSE для двух предсказаний</summary>
+      <p>Двигаем первые два предсказания, третье удерживаем на его текущем значении. Внизу чаши первые два попали в цели 1 и 2. Если третье всё ещё ошибается, высота внизу останется больше нуля.</p>
+      {sceneOpened && <Scene3D title="Срез MSE по двум предсказаниям" description="Высота ((ŷ₁−1)²+(ŷ₂−2)²+(ŷ₃−3)²)/3. ŷ₃ берётся из ползунка выше и фиксируется во всём срезе. Это два предсказания и потеря, не поверхность всех весов сети." axes={[{label:'Предсказание ŷ₁',min:-1,max:5},{label:'Предсказание ŷ₂',min:-1,max:5},{label:'MSE',min:0,max:mseHeight(5,-1,predictions[2])}]} surfaces={[{name:'MSE · третье предсказание фиксировано',rows:functionSurface([-1,5],[-1,5],(a,b)=>mseHeight(a,b,predictions[2]))}]} points={[{name:'Текущие предсказания',position:[predictions[0],predictions[1],squared.loss]},{name:'Минимум этого среза',position:[1,2,mseHeight(1,2,predictions[2])]}]} />}
+      <p className="note">Минимальная высота этого среза: {fmt(mseHeight(1,2,predictions[2]))}. Ползунки и таблица выше позволяют проверить числа без 3D.</p>
+    </details>
     <section className="panel">
       <h3>BCE: насколько уверенно выбран класс</h3>
       <p>Бинарная кросс-энтропия (binary cross-entropy, BCE) сравнивает вероятность класса 1 с меткой y. Логит — любое вещественное число до сигмоиды; вероятность получается как p = σ(z).</p>

@@ -1,0 +1,9 @@
+cargo run -p rustml-autograd --example autograd_test --locked --offline
+started=2026-10-11T13:37:08.4774021+03:00
+RUSTDOCFLAGS=-D warnings
+   Compiling rustml-autograd v0.1.0 (C:\Users\lomaster\Desktop\dev\rust_ml\rustml-autograd)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s
+     Running `target\debug\examples\autograd_test.exe`
+x = 2: d(x² + 3)/dx = 4, d(x³)/dx = 12; накопление проверено.
+exit=0
+seconds=0.6476912

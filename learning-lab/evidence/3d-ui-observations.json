@@ -1,0 +1,355 @@
+{
+  "checkout": "C:/Users/lomaster/Desktop/dev/rust_ml",
+  "baseHead": "35942ec6c2d43628b8517f35efaf5c13a28034b5",
+  "productionUrl": "http://127.0.0.1:5182/",
+  "observedAt": "2026-10-11T10:44:35.571Z",
+  "scenes": [
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 255,
+      "screenWidth": 267.20001220703125,
+      "title": "RoPE: пара 0–1 по позициям",
+      "viewBox": "0 0 267.1875 280",
+      "width": 320
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 255,
+      "screenWidth": 267.20001220703125,
+      "title": "RoPE: пара 2–3 по позициям",
+      "viewBox": "0 0 267.1875 280",
+      "width": 320
+    },
+    {
+      "circles": 1,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 231.6000061035156,
+      "title": "Поверхность ответа одного нейрона",
+      "viewBox": "0 0 231.59375 280",
+      "width": 320
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 231.6000061035156,
+      "title": "Срез MSE по двум предсказаниям",
+      "viewBox": "0 0 231.59375 280",
+      "width": 320
+    },
+    {
+      "circles": 3,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 231.6000061035156,
+      "title": "Оптимизаторы на поверхности L",
+      "viewBox": "0 0 231.59375 280",
+      "width": 320
+    },
+    {
+      "circles": 4,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 231.6000061035156,
+      "title": "Поверхность ответа XOR",
+      "viewBox": "0 0 231.59375 280",
+      "width": 320
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.39990234375,
+      "overflow": false,
+      "paths": 1615,
+      "screenWidth": 267.20001220703125,
+      "title": "Как энкодер распределяет коды",
+      "viewBox": "0 0 267.1875 280",
+      "width": 320
+    },
+    {
+      "circles": 0,
+      "collisions": [],
+      "minTextHeight": 14.39990234375,
+      "overflow": false,
+      "paths": 2191,
+      "screenWidth": 267.20001220703125,
+      "title": "Как шум меняет распределение",
+      "viewBox": "0 0 267.1875 280",
+      "width": 320
+    },
+    {
+      "circles": 50,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 187,
+      "screenWidth": 231.6000061035156,
+      "title": "CNN: окно проходит через все входные каналы",
+      "viewBox": "0 0 231.59375 280",
+      "width": 320
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.39990234375,
+      "overflow": false,
+      "paths": 853,
+      "screenWidth": 228.40000915527344,
+      "title": "Градиент и касательная плоскость",
+      "viewBox": "0 0 228.390625 280",
+      "width": 320
+    },
+    {
+      "circles": 1,
+      "collisions": [],
+      "minTextHeight": 14.399988174438477,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 867.6000366210938,
+      "title": "Поверхность ответа одного нейрона",
+      "viewBox": "0 0 867.59375 420",
+      "width": 1280
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399988174438477,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 867.6000366210938,
+      "title": "Срез MSE по двум предсказаниям",
+      "viewBox": "0 0 867.59375 420",
+      "width": 1280
+    },
+    {
+      "circles": 3,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 867.6000366210938,
+      "title": "Оптимизаторы на поверхности L",
+      "viewBox": "0 0 867.59375 420",
+      "width": 1280
+    },
+    {
+      "circles": 4,
+      "collisions": [],
+      "minTextHeight": 14.399975776672363,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 867.6000366210938,
+      "title": "Поверхность ответа XOR",
+      "viewBox": "0 0 867.59375 420",
+      "width": 1280
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 1615,
+      "screenWidth": 921.2000122070312,
+      "title": "Как энкодер распределяет коды",
+      "viewBox": "0 0 921.1875 420",
+      "width": 1280
+    },
+    {
+      "circles": 0,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 2191,
+      "screenWidth": 921.2000122070312,
+      "title": "Как шум меняет распределение",
+      "viewBox": "0 0 921.1875 420",
+      "width": 1280
+    },
+    {
+      "circles": 50,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 187,
+      "screenWidth": 396.2000122070313,
+      "title": "CNN: окно проходит через все входные каналы",
+      "viewBox": "0 0 396.1875 327.7125",
+      "width": 1280
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 255,
+      "screenWidth": 921.2000122070312,
+      "title": "RoPE: пара 2–3 по позициям",
+      "viewBox": "0 0 921.1875 420",
+      "width": 1280
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399988174438477,
+      "overflow": false,
+      "paths": 853,
+      "screenWidth": 942,
+      "title": "Градиент и касательная плоскость",
+      "viewBox": "0 0 942 420",
+      "width": 1280
+    },
+    {
+      "circles": 1,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 302,
+      "title": "Поверхность ответа одного нейрона",
+      "viewBox": "0 0 302 280",
+      "width": 390
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 302,
+      "title": "Срез MSE по двум предсказаниям",
+      "viewBox": "0 0 302 280",
+      "width": 390
+    },
+    {
+      "circles": 3,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 936,
+      "screenWidth": 302,
+      "title": "Оптимизаторы на поверхности L",
+      "viewBox": "0 0 302 280",
+      "width": 390
+    },
+    {
+      "circles": 4,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 815,
+      "screenWidth": 302,
+      "title": "Поверхность ответа XOR",
+      "viewBox": "0 0 302 280",
+      "width": 390
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 1615,
+      "screenWidth": 337.6000061035156,
+      "title": "Как энкодер распределяет коды",
+      "viewBox": "0 0 337.59375 292.55625",
+      "width": 390
+    },
+    {
+      "circles": 0,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 2191,
+      "screenWidth": 337.6000061035156,
+      "title": "Как шум меняет распределение",
+      "viewBox": "0 0 337.59375 292.55625",
+      "width": 390
+    },
+    {
+      "circles": 50,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 187,
+      "screenWidth": 302,
+      "title": "CNN: окно проходит через все входные каналы",
+      "viewBox": "0 0 302 280",
+      "width": 390
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.40000057220459,
+      "overflow": false,
+      "paths": 255,
+      "screenWidth": 337.6000061035156,
+      "title": "RoPE: пара 2–3 по позициям",
+      "viewBox": "0 0 337.59375 292.55625",
+      "width": 390
+    },
+    {
+      "circles": 2,
+      "collisions": [],
+      "minTextHeight": 14.399950981140137,
+      "overflow": false,
+      "paths": 853,
+      "screenWidth": 298.8000183105469,
+      "title": "Градиент и касательная плоскость",
+      "viewBox": "0 0 298.796875 280",
+      "width": 390
+    }
+  ],
+  "legacyRoutes": [
+    {
+      "name": "GAN: игра двух сетей",
+      "heading": "GAN: игра двух сетей",
+      "overflow": false
+    },
+    {
+      "name": "GNN: сеть на графе",
+      "heading": "GNN: сеть на графе",
+      "overflow": false
+    },
+    {
+      "name": "RL: учиться действовать",
+      "heading": "RL: учиться действовать",
+      "overflow": false
+    }
+  ],
+  "console": [],
+  "interactions": [
+    "Desktop mouse drag changed optimizer yaw 35→101, pitch 25→45 without changing numerical table",
+    "Keyboard yaw 35→36 persisted through gradient→derivative→gradient return",
+    "Front/top/reset pitch values 0/90/25 verified",
+    "XOR 100 steps: BCE 0.03416 and 4/4; surface markers updated",
+    "Optimizer 20 steps: SGD L0.027, momentum L1.373, Adam L0.667",
+    "VAE 100 steps: NLL0.795, KL0.712, Lβ1.507 in real UI",
+    "Diffusion selected t=0,25,64 density slice updates, odd t computed separately",
+    "CNN two input channels and padding: selected contributions 0+1=1"
+  ],
+  "limits": [
+    "Viewport checks are not physical touch-device tests",
+    "SVG bbox collision checks cover tested camera/settings; arbitrary rotations can still create overlapping projected labels",
+    "Painter sorting approximates intersections; axis scaling is independent"
+  ],
+  "cameraRegression": {
+    "checkedAt": "2026-10-11T10:49:14.464Z",
+    "vaeAfterCloseOpen": "36",
+    "diffusionAfterCloseOpen": "36",
+    "diffusionAfterMathReturn": "36"
+  }
+}

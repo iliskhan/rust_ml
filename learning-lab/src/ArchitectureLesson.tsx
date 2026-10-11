@@ -1,8 +1,10 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { memo, useLayoutEffect, useRef, useState } from 'react';
 import { Range, Exercise, fmt } from './ui';
 import { architectureFamilies, denseForward, conv2d, pool2d, rnnForward, lstmForward, gruForward, transformerForward, transformerMatrices } from './architectures';
 import type { Activation, TransformerMode } from './architectures';
 import { ConceptLink } from './learning-context';
+import { Scene3D, type Vec3 } from './ThreeD';
+import { cnnSpatialTrace } from './spatialSceneMath';
 
 function useDiagramWidth() {
   const ref = useRef<HTMLDivElement>(null);
@@ -61,20 +63,32 @@ function DenseLab() {
   </>;
 }
 
+const CnnChannelScene = memo(function CnnChannelScene({ trace, channels, open: _open }: { trace: ReturnType<typeof cnnSpatialTrace>; channels: number; open: boolean }) {
+  const bounds = (axis: 0 | 1) => ({ min: Math.min(-.5, ...trace.window.map(cell => cell.position[axis] - .4)), max: Math.max(4.5, ...trace.window.map(cell => cell.position[axis] + .4)) });
+  const square = ([x, y, c]: Vec3): Vec3[] => [[x - .35, y - .35, c], [x + .35, y - .35, c], [x + .35, y + .35, c], [x - .35, y + .35, c], [x - .35, y - .35, c]];
+  return <>
+    <Scene3D title="CNN: окно проходит через все входные каналы" description="Две пространственные оси — столбец и строка. Высота стопки — индекс канала c, начиная с 0. Оранжевые рамки выделяют взятые фильтром ячейки, пунктир — добавленные нули за краями." showLegend={false}
+      axes={[{ label: 'Столбец x', ...bounds(0) }, { label: 'Строка y', ...bounds(1) }, { label: 'Индекс канала c', min: -.5, max: Math.max(.5, channels - .5) }]}
+      surfaces={Array.from({ length: channels }, (_, c) => ({ name: `Канал ${c + 1} (c=${c})`, rows: [[[-.5, -.5, c] as Vec3, [4.5, -.5, c] as Vec3], [[-.5, 4.5, c] as Vec3, [4.5, 4.5, c] as Vec3]], color: '#287f80', opacity: .07 }))}
+      lines={trace.window.map(cell => ({ name: `Окно [${cell.position.join('; ')}]${cell.padded ? ' · padding=0' : ''}`, points: square(cell.position), color: '#b75d24', dashed: cell.padded }))}
+      points={[...trace.cells, ...trace.window.filter(cell => cell.padded)].map(cell => ({ name: `c=${cell.position[2]}, [${cell.position[1]}, ${cell.position[0]}] = ${cell.value}`, position: cell.position, color: cell.value ? '#287f80' : '#88949a' }))} />
+    <p className="note">Бирюзовая точка — 1, серая — 0; оранжевая рамка — выбранное окно. На плоскостях {channels * 25} настоящих входных значений; пунктирные рамки показывают дополнительные нули padding. Индекс c=0 соответствует первой матрице канала выше.</p>
+    <p>Здесь выполняется Conv2D: канал — отдельный набор признаков, а не третья пространственная ось. Один выход складывает вклады всех каналов: {trace.contributions.map(value => fmt(value)).join(' + ')} = {fmt(trace.contributions.reduce((a, b) => a + b, 0))}. Для Conv3D потребовалась бы ещё пространственная ось глубины.</p>
+  </>;
+// Keep the camera mounted while collapsed, without rebuilding hidden geometry.
+}, (_previous, next) => !next.open);
+
 function CnnLab() {
   const [stride, setStride] = useState(1), [padding, setPadding] = useState(0), [dilation, setDilation] = useState(1), [channels, setChannels] = useState(1), [scale, setScale] = useState(1), [scan, setScan] = useState(0), [pooling, setPooling] = useState<'max' | 'average'>('max');
+  const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const input = Array.from({ length: channels }, (_, c) => Array.from({ length: 5 }, (_, y) => Array.from({ length: 5 }, (_, x) => c ? (x + y) % 2 : x < 2 ? 0 : 1)));
   const filter = [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]].map(row => row.map(v => v * scale));
   const kernels = [Array.from({ length: channels }, () => filter)];
   const result = conv2d(input, kernels, { stride, padding, dilation });
   const count = result.height * result.width, step = Math.min(scan, Math.max(0, count - 1)), oy = Math.floor(step / result.width), ox = step % result.width;
   const pooled = pool2d(result.output[0], 2, pooling);
-  const patches = input.map(channel => filter.map((row, ky) => row.map((_, kx) => channel[oy * stride - padding + ky * dilation]?.[ox * stride - padding + kx * dilation] ?? 0)));
-  const contributions = patches.map(patch => patch.flat().reduce((sum, x, i) => sum + x * filter.flat()[i], 0));
-  const inWindow = (y: number, x: number) => {
-    const ky = (y - oy * stride + padding) / dilation, kx = (x - ox * stride + padding) / dilation;
-    return Number.isInteger(ky) && Number.isInteger(kx) && ky >= 0 && ky < 3 && kx >= 0 && kx < 3;
-  };
+  const spatial = cnnSpatialTrace(input, filter, { stride, padding, dilation }, oy, ox);
+  const { patches, contributions, inWindow } = spatial;
   return <><p className="lesson-intro">CNN (Convolutional Neural Network) — свёрточная нейронная сеть. Один фильтр скользит по входу с одними и теми же весами. Он ищет локальный признак; здесь — вертикальную границу. Вход имеет форму C×5×5, выход — 1×H×W. Щёлкните ячейку выхода, чтобы увидеть её поле восприятия — участок входа, участвующий в расчёте.</p>
     <div className="lab-grid"><section className="panel controls"><h3>Параметры свёртки</h3>
       <Range label="Stride — шаг окна" value={stride} min={1} max={2} step={1} onChange={setStride} /><Range label="Padding — нули по краям" value={padding} min={0} max={2} step={1} onChange={setPadding} /><Range label="Dilation — расстояние между весами" value={dilation} min={1} max={2} step={1} onChange={setDilation} /><Range label="Входных каналов" value={channels} min={1} max={2} step={1} onChange={setChannels} /><Range label="Масштаб фильтра" value={scale} min={-2} max={2} step={0.25} onChange={setScale} />
@@ -86,6 +100,7 @@ function CnnLab() {
       <Range label="Положение окна" value={step + 1} min={1} max={Math.max(1, count)} step={1} onChange={n => setScan(n - 1)} />
       <div className="button-row"><button disabled={step === 0} onClick={() => setScan(step - 1)}>← Предыдущее окно</button><button disabled={step + 1 === count} onClick={() => setScan(step + 1)}>Следующее окно →</button></div>
       <details open><summary>Почему выход [{oy + 1}, {ox + 1}] = {fmt(result.output[0][oy][ox])}</summary><div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>{patches.map((patch, c) => <Matrix key={c} label={`Выбранные 9 значений канала ${c + 1}`} values={patch} />)}</div><p className="formula">y = Σ по каналам и окну (x × w) + b = {contributions.map(v => fmt(v)).join(' + ')} + 0 = {fmt(result.output[0][oy][ox])}</p><p>Операция соответствует cross-correlation: ядро не переворачивается, как и в обычных CNN. Второй входной канал суммируется в том же выходном канале; второй выходной канал потребовал бы другого набора фильтров.</p></details>
+      <details onToggle={event => { setSceneOpen(event.currentTarget.open); if (event.currentTarget.open) setSceneVisited(true); }}><summary>3D: каналы и выбранное окно свёртки</summary>{sceneVisited && <CnnChannelScene trace={spatial} channels={channels} open={sceneOpen} />}</details>
       <Matrix label={`ReLU → ${pooling} pooling 2×2`} values={pool2d(result.output[0].map(row => row.map(x => Math.max(0, x))), 2, pooling)} />
       <details><summary>Варианты CNN и форма данных</summary><table className="data-table"><thead><tr><th>Операция</th><th>Данные без batch</th><th>Здесь</th></tr></thead><tbody><tr><td>Conv1D</td><td>C×L: звук, временной ряд</td><td>Только схема расширения</td></tr><tr><td>Conv2D</td><td>C×H×W: изображение</td><td>Численный расчёт</td></tr><tr><td>Conv3D</td><td>C×D×H×W: объём, видео</td><td>Только схема расширения</td></tr></tbody></table><p>В 1D сумма идёт по одной пространственной оси, в 3D — по трём. Формула размера применяется отдельно к каждой оси. В этой лаборатории groups=1, один выходной канал и bias=0; нет обучения фильтров.</p></details>
     </section></div><Exercise question="Что меняется при увеличении dilation с 1 до 2 у ядра 3×3?" options={['Весов становится 25', 'Охват становится 5×5, весов остаётся 9 на входной канал', 'Pooling отключается']} correct={1} explanation="Между соседними весами появляется промежуток: эффективный размер d×(k−1)+1 = 5. Самих весов по-прежнему 3×3." /></>;

@@ -1,0 +1,9 @@
+cargo run -p rustml-autograd --example scalar_demo --locked --offline
+started=2026-10-11T13:37:10.0273920+03:00
+RUSTDOCFLAGS=-D warnings
+   Compiling rustml-autograd v0.1.0 (C:\Users\lomaster\Desktop\dev\rust_ml\rustml-autograd)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.77s
+     Running `target\debug\examples\scalar_demo.exe`
+Scalar + Variable и Scalar * Variable: значения и градиенты проверены.
+exit=0
+seconds=0.8467617

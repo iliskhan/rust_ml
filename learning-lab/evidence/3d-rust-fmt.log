@@ -1,0 +1,4 @@
+cargo fmt --all -- --check
+started=2026-10-11T13:33:52.4964662+03:00
+exit=0
+seconds=1.3378744

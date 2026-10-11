@@ -1,0 +1,7 @@
+cargo doc --workspace --all-features --no-deps --locked --offline
+started=2026-10-11T13:37:07.7217373+03:00
+RUSTDOCFLAGS=-D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.12s
+   Generated C:\Users\lomaster\Desktop\dev\rust_ml\target\doc\rustml\index.html and 4 other files
+exit=0
+seconds=0.1531823

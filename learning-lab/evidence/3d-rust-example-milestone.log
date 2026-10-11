@@ -1,0 +1,9 @@
+cargo run -p rustml-autograd --example milestone_check --locked --offline
+started=2026-10-11T13:37:09.1276106+03:00
+RUSTDOCFLAGS=-D warnings
+   Compiling rustml-autograd v0.1.0 (C:\Users\lomaster\Desktop\dev\rust_ml\rustml-autograd)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.83s
+     Running `target\debug\examples\milestone_check.exe`
+Текущие проверки CPU тензоров и autograd прошли.
+exit=0
+seconds=0.8954434

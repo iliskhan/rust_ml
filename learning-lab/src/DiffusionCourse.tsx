@@ -1,6 +1,8 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
+import { Scene3D } from './ThreeD';
+import { diffusionDensityScene } from './generativeSceneMath';
 import {
   DATA_MEAN, DATA_STD, DENOISER_HIDDEN, DENOISER_PARAMETERS, DIFFUSION_STEPS,
   diffusionSchedule, forwardNoise, forwardTrajectory, noisyDataDensity, normalDensity,
@@ -23,8 +25,28 @@ function Numbers({ items }: { items: { label: string; value: number; note?: stri
   return <dl className="dc-numbers">{items.map(item => <div key={item.label}><dt>{item.label}</dt><dd>{fmt(item.value, 4)}</dd>{item.note && <small>{item.note}</small>}</div>)}</dl>;
 }
 
+function ForwardDensityScene({ schedule, t }: { schedule: DiffusionSchedule; t: number }) {
+  const scene = useMemo(() => diffusionDensityScene(schedule, t), [schedule, t]);
+  const a = schedule.alphaBar[t], mean = Math.sqrt(a) * DATA_MEAN, sd = Math.sqrt(a * DATA_STD ** 2 + 1 - a);
+  return <>
+    <p>Разрежьте поверхность поперёк оси t: получится плоская кривая плотности из графика выше. Проследите, как две вершины сближаются и превращаются в одну. <strong>Данные всё ещё одномерные</strong>: ось t — номер шага процесса, а высота — плотность, не дополнительные координаты примера.</p>
+    <Scene3D title="Как шум меняет распределение" description="Оси: значение x, шаг t и плотность qₜ(x). Оранжевая линия показывает текущий шаг из ползунка выше."
+      axes={[{ label: 'Значение x · одно число', min: -4, max: 4 }, { label: 'Шаг t · время процесса', min: 0, max: schedule.steps }, { label: 'Плотность qₜ(x)', min: 0, max: scene.densityMax }]}
+      surfaces={[{ name: 'Плотность qₜ(x)', rows: scene.rows, color: '#427e7a', opacity: .42 }]}
+      lines={[{ name: `Текущий срез t = ${t}`, points: scene.slice, color: '#b75b21' }]} />
+    <p className="dc-answer">t=<strong>{t}</strong>; ᾱₜ={fmt(a, 5)}; центры групп ±{fmt(mean)}; σₜ={fmt(sd)}. При x=0 плотность qₜ(0)={fmt(noisyDataDensity(0, t, schedule), 5)}.</p>
+    <p className="note">Показано окно x∈[−4;4]; ненулевые хвосты за краями не обрезаются в формуле. Поверхность соединяет срезы t=0,2,…,64 плоскими гранями, а оранжевый срез вычислен точно для выбранного целого t, включая нечётные шаги. Это плотность известной смеси, не прогноз обучаемой сети.</p>
+    <details><summary>Плоский срез и точная формула</summary>
+      <Chart series={[{ name: `qₜ(x), t=${t}`, points: scene.slice.map(p => ({ x: p[0], y: p[2] })) }]} xLabel="Значение x" yLabel="Плотность qₜ(x)" xDomain={[-4, 4]} yDomain={[0, 1]} />
+      <p className="formula">mₜ=1,5√ᾱₜ; vₜ=0,28²ᾱₜ+1−ᾱₜ<br />qₜ(x)=½ N(x;−mₜ,vₜ)+½ N(x;+mₜ,vₜ)<br />mₜ={fmt(mean, 5)}; vₜ={fmt(sd ** 2, 5)}</p>
+      <p>Ползунок t над сценой выбирает этот же срез. x₀ и ε меняют отдельный пример, поэтому не меняют поверхность всех данных. Расписание в начале главы меняет поверхность целиком.</p>
+    </details>
+  </>;
+}
+
 function ForwardLesson({ schedule }: { schedule: DiffusionSchedule }) {
   const [t, setT] = useState(24), [x0, setX0] = useState(1.5), [epsilon, setEpsilon] = useState(-0.8), [seed, setSeed] = useState(17);
+  const [showDensityScene, setShowDensityScene] = useState(false);
   const bar = schedule.alphaBar[t], signal = Math.sqrt(bar) * x0, noise = Math.sqrt(1 - bar) * epsilon;
   const path = useMemo(() => forwardTrajectory(x0, schedule, seed), [x0, schedule, seed]);
   return <>
@@ -43,6 +65,9 @@ function ForwardLesson({ schedule }: { schedule: DiffusionSchedule }) {
       <p>Кривая показывает распределение всех возможных примеров, поэтому ползунки x₀ и ε её не меняют. Высота — плотность, а <ConceptLink concept="probability">вероятность</ConceptLink> интервала равна площади под кривой.</p>
       <p className="note">Данные: ½ N(−1,5; 0,28²) + ½ N(+1,5; 0,28²). В N(μ; σ²) второе число — дисперсия. При t=64 распределение близко к N(0,1), но при конечном ᾱₜ&gt;0 совпадение не точное.</p>
     </section></div>
+    <details onToggle={event => { if (event.currentTarget.open) setShowDensityScene(true); }}><summary>3D: как шум меняет распределение</summary>
+      {showDensityScene && <ForwardDensityScene schedule={schedule} t={t} />}
+    </details>
     <details><summary>Расписание β, накопление ᾱ и настоящая траектория</summary>
       <p><ConceptLink concept="noise-schedule">Расписание шума</ConceptLink> задаёт βₜ — дисперсию нового шума на одном шаге. αₜ=1−βₜ. Накопленная ᾱₜ — произведение всех α от 1 до t, а не их сумма. Поэтому βₜ и 1−ᾱₜ описывают разные вещи.</p>
       <div className="dc-columns"><section className="panel"><h4>От одного шага ко всем шагам</h4><Chart series={[{ name: 'βₜ', points: schedule.beta.map((y, x) => ({ x, y })) }, { name: 'ᾱₜ', points: schedule.alphaBar.map((y, x) => ({ x, y })), color: '#a45b27' }]} xLabel="Шаг t" yLabel="Коэффициент" xDomain={[0, schedule.steps]} yDomain={[0, 1]} /><p className="formula">q(xₜ|xₜ₋₁)=N(√αₜ xₜ₋₁, βₜ)<br />ᾱₜ = ∏ₛ₌₁ᵗ αₛ; ᾱ₀=1<br />q(xₜ|x₀)=N(√ᾱₜ x₀, 1−ᾱₜ)</p><p>Последняя формула позволяет сразу получить выбранный t без вычисления предыдущих шагов. Сумма независимых нормальных шумов остаётся нормальной.</p></section>

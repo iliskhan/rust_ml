@@ -4,6 +4,8 @@ import { conceptSources, getConcept, type ConceptDemo } from './concepts';
 import { Chart, Range, fmt } from './ui';
 import { bernoulli, chainSquare, crossEntropyLogits, descent1D, dotProduct, finiteDifference, linear, mse, normalize, quadratic, regressionErrors, regressionPrediction, regressionTrain, regressionValidation, secant, sharedGraph, stableSoftmax } from './conceptMath';
 import './concept-lessons.css';
+import { Scene3D } from './ThreeD';
+import { functionSurface, quadraticHeight, quadraticTangent } from './lessonSceneMath';
 const AdvancedConceptExperiment = lazy(() => import('./AdvancedConceptLesson').then(module => ({ default: module.AdvancedConceptExperiment })));
 
 const samples = (min: number, max: number, fn: (x: number) => number) => Array.from({ length: 101 }, (_, i) => { const x = min + (max - min) * i / 100; return { x, y: fn(x) }; });
@@ -76,6 +78,7 @@ function DerivativeDemo({ simple = false }: { simple?: boolean }) {
 }
 
 function GradientDemo() {
+  const [sceneOpened, setSceneOpened] = useState(false);
   const [x, setX] = useState(2), [y, setY] = useState(1), [eta, setEta] = useState(.1), [angle, setAngle] = useState(45);
   const { loss, grad } = quadratic([x, y]);
   const next = [x - eta * grad[0], y - eta * grad[1]], after = quadratic(next).loss;
@@ -104,6 +107,12 @@ function GradientDemo() {
     <div className="chart-legend"><span><i style={{ background: '#b75d24' }} />∇L: рост · длина условная</span><span><i style={{ background: '#27694e' }} />−η∇L: настоящий шаг</span><span><i style={{ background: '#6a52a0' }} />u: пунктир</span></div>
     <div className="concept-numbers"><span>∇L=(x;8y)<strong>{vectorText(grad)}</strong></span><span>Наклон вдоль u<strong>{fmt(slope)}</strong></span><span>L до → после<strong>{fmt(loss)} → {fmt(after)}</strong></span></div>
     <p className="concept-live">Шаг ведёт в {vectorText(next)}. {after < loss ? 'Потеря уменьшилась.' : after > loss ? 'Потеря выросла: для этой точки шаг слишком велик.' : 'Потеря не изменилась.'} Контуры — вид сверху на поверхность, не траектория обучения.</p>
+    <details onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: поверхность и её касательная плоскость</summary>
+      <p>Поднимем каждую пару (x,y) на высоту L. Маленькая плоская площадка касается чаши в выбранной точке: её наклоны по x и y — числа из градиента. Чаша изгибается, поэтому далеко от точки площадка уже ошибается.</p>
+      {sceneOpened && <Scene3D title="Градиент и касательная плоскость" description="Чаша L=½(x²+8y²), локальная касательная плоскость и конечный шаг SGD. Градиент (x,8y) живёт в плоскости двух параметров; соединение двух точек на чаше показывает шаг, а не трёхмерный градиент." axes={[{label:'Параметр x',min:-3,max:3},{label:'Параметр y',min:-3,max:3},{label:'L / касательная оценка',min:-5,max:41}]} surfaces={[{name:'Настоящая потеря L',rows:functionSurface([-3,3],[-3,3],quadraticHeight),opacity:.23},{name:'Локальная касательная',rows:functionSurface([x-.4,x+.4],[y-.4,y+.4],(a,b)=>quadraticTangent(a,b,x,y),4),color:'#b75d24',opacity:.5}]} lines={[{name:'Конечный шаг SGD · хорда',points:[[x,y,loss],[next[0],next[1],after]],color:'#27694e'},{name:'Касательная вдоль u',points:[-.35,.35].map(s=>[x+s*direction[0],y+s*direction[1],loss+s*slope] as const),color:'#6a52a0',dashed:true}]} points={[{name:'Точка касания',position:[x,y,loss]},{name:'После SGD',position:[next[0],next[1],after]}]} />}
+      <p className="formula">T(X,Y) = {fmt(loss)} + ({fmt(grad[0])})·(X−{fmt(x)}) + ({fmt(grad[1])})·(Y−{fmt(y)})</p>
+      <p>На следующем шаге плоскость предсказывает {fmt(quadraticTangent(next[0],next[1],x,y))}, а настоящая чаша даёт {fmt(after)}. Даже отрицательная оценка плоскости допустима: это местное приближение, потеря L остаётся неотрицательной.</p>
+    </details>
     <p>Компоненты градиента — это <ConceptLink concept="derivative">производные</ConceptLink>; его применение зависит от <ConceptLink concept="learning-rate">размера шага</ConceptLink>.</p>
   </section>;
 }

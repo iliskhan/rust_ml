@@ -1,11 +1,11 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BackpropLesson, LossLesson, NeuronLesson } from './Foundations';
 import { NetworkLesson, OptimizerLesson } from './Experiments';
-import { ArchitectureLesson } from './ArchitectureLesson';
 import { CurriculumView } from './CurriculumView';
 import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './learning-context';
 import { KnowledgeExplorer } from './KnowledgeExplorer';
 
+const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
 const VAECourse = lazy(() => import('./VAECourse').then(module => ({ default: module.VAECourse })));
 const GANCourse = lazy(() => import('./GANCourse').then(module => ({ default: module.GANCourse })));

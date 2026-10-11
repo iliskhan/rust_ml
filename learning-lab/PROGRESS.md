@@ -1,8 +1,27 @@
 # RustML Learning Lab — состояние
 
-Обновлено 2026-10-11 09:30 Europe/Moscow. Учебник находится в основном проекте:
+Обновлено 2026-10-11 13:49 Europe/Moscow. Учебник находится в основном проекте:
 `C:/Users/lomaster/Desktop/dev/rust_ml/learning-lab`. План интеграции и проверки всего проекта —
 [../PROGRESS.md](../PROGRESS.md); `work/progress.json` — краткая проекция состояния учебника.
+
+## Пространственные визуализации
+
+Девять 3D-блоков встроены и проверены: нейрон, MSE, оптимизаторы, градиент, XOR,
+VAE, diffusion, CNN и RoPE. Вращение/масштаб/виды с клавиатуры и мышью, настоящая
+математика, прежние плоские/численные альтернативы и вложенный возврат сохранены.
+Постоянное правило commit/push записано в глобальных инструкциях и корневом AGENTS.md.
+
+Последний общий test/build 13:48 MSK: 128/128 PASS, strict typecheck и Vite PASS,
+без новых зависимостей и предупреждения о chunk size. В production осмотрены все 9 сцен
+на desktop/320/390; 28 DOM-наблюдений, screenshots, console error/warn — 0.
+После независимого review исправлено сохранение камеры VAE/diffusion при закрытии;
+повторное открытие и math-return проверены в финальной сборке, yaw=36 сохраняется.
+43 Rust/config и 29 прежних web protected SHA совпали. Rust debug/release 52+5,
+fmt/clippy/rustdoc и четыре примера — PASS. Полная приёмка и пределы проверки:
+[evidence/THREE_DIMENSIONAL.md](evidence/THREE_DIMENSIONAL.md).
+
+Исходный HEAD текущей задачи — `35942ec6c2d43628b8517f35efaf5c13a28034b5`.
+Код готов; следующий шаг — commit/push и сверка remote. Запуск `.\learn.cmd`.
 
 ## Новые VAE / GAN / diffusion / GNN / RL
 

@@ -1,0 +1,6 @@
+cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings
+started=2026-10-11T13:37:05.1131238+03:00
+RUSTDOCFLAGS=
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.14s
+exit=0
+seconds=0.2395198

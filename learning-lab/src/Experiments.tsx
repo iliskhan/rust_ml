@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { createNetwork, createOptimizerState, networkLossGradient, optimizerStep, predictNetwork, quadratic, XOR_DATA, type OptimizerKind, type OptimizerState } from './math';
 import { Chart, Exercise, Range, fmt } from './ui';
 import { ConceptLink, useLearningActive } from './learning-context';
+import { Scene3D } from './ThreeD';
+import { functionSurface, quadraticHeight, networkHeight } from './lessonSceneMath';
 
 const kinds: OptimizerKind[] = ['sgd', 'momentum', 'adam'];
 const names = { sgd: 'SGD', momentum: 'Momentum', adam: 'Adam' };
@@ -13,6 +15,7 @@ function makeTracks(): Record<OptimizerKind, Track> {
 
 export function OptimizerLesson() {
   const active = useLearningActive();
+  const [sceneOpened, setSceneOpened] = useState(false);
   const [lr, setLr] = useState(.12), [momentum, setMomentum] = useState(.9);
   const [beta1, setBeta1] = useState(.9), [beta2, setBeta2] = useState(.999);
   const [tracks, setTracks] = useState(makeTracks), [running, setRunning] = useState(false);
@@ -65,6 +68,11 @@ export function OptimizerLesson() {
         <p className="note">Эллипсы — одинаковые значения L; центр — минимум (0, 0). График ограничен x ∈ [−4, 4], y ∈ [−2, 2]; таблица сохраняет координаты вне окна.</p>
       </section>
     </div>
+    <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: высота потери и пути трёх оптимизаторов</summary>
+      <p>Представьте чашу. Два веса задают место на её основании, а высота — величину ошибки. Все три метода шагают по одной чаше. Поверните её: вдоль y склон круче, поэтому большой шаг легко переносит нас на другую сторону.</p>
+      {sceneOpened && <Scene3D title="Оптимизаторы на поверхности L" description="Настоящая функция L=½(x²+8y²) и координаты всех выполненных шагов. Это два веса и значение потери, а не три веса. Координаты за пределами окна остаются в таблице расчётов." axes={[{label:'Вес x',min:-4,max:4},{label:'Вес y',min:-2,max:2},{label:'Потеря L',min:0,max:24}]} surfaces={[{name:'L = ½(x² + 8y²)',rows:functionSurface([-4,4],[-2,2],quadraticHeight),opacity:.28}]} lines={kinds.map(k=>({name:names[k],color:colors[k],dashed:k!=='sgd',points:tracks[k].path.map(point=>[point.x,point.y,quadraticHeight(point.x,point.y)] as const)}))} points={kinds.map(k=>({name:`${names[k]} · текущий шаг`,color:colors[k],position:[tracks[k].state.params[0],tracks[k].state.params[1],quadraticHeight(tracks[k].state.params[0],tracks[k].state.params[1])] as const}))} />}
+      <p className="note">Плоские контуры выше — взгляд на эту же функцию сверху. Масштабы весов и высоты различаются; угол на экране не измеряет величину градиента. <ConceptLink concept="gradient">Как высота связана с градиентом?</ConceptLink></p>
+    </details>
     <section className="panel"><h3>Градиент и шаг — разные числа</h3>
       <label>Разберите метод <select value={selected} onChange={e => setSelected(e.target.value as OptimizerKind)}>{kinds.map(k => <option key={k} value={k}>{names[k]}</option>)}</select></label>
       <div className="formula">Градиент перед последним шагом g = [{t.grad.map(v => fmt(v)).join('; ')}]<br />Изменение параметров Δθ = [{t.delta.map(v => fmt(v)).join('; ')}]<br />{selected === 'sgd' ? 'θₜ = θₜ₋₁ − ηgₜ' : selected === 'momentum' ? 'vₜ = μvₜ₋₁ + gₜ; θₜ = θₜ₋₁ − ηvₜ' : 'mₜ = β₁mₜ₋₁ + (1−β₁)gₜ; vₜ = β₂vₜ₋₁ + (1−β₂)gₜ²'}</div>
@@ -82,6 +90,7 @@ function initialExperiment(seed: number) {
 
 export function NetworkLesson() {
   const active = useLearningActive();
+  const [sceneOpened, setSceneOpened] = useState(false);
   const [seed, setSeed] = useState(42), [lr, setLr] = useState(.03), [kind, setKind] = useState<OptimizerKind>('adam');
   const [experiment, setExperiment] = useState(() => initialExperiment(42)), [running, setRunning] = useState(false);
   const [sample, setSample] = useState(1), [hiddenNode, setHiddenNode] = useState(0);
@@ -128,6 +137,11 @@ export function NetworkLesson() {
       <text x="162" y="285">Вход x₁ (0 → 1)</text><text transform="translate(17 188) rotate(-90)">Вход x₂ (0 → 1)</text>
     </svg><div className="map-key">Светлее: p ≈ 0 <span /> Темнее: p ≈ 1</div></div><div><p>Обучение использует только четыре угловые точки. Цвет показывает реальную вероятность на промежуточных входах; таблица выше показывает числа. Эта карта иллюстрирует функцию сети, качество обобщения по четырём точкам не измерено.</p><details><summary>Как устроен проход сети?</summary><p>Для каждого примера h = tanh(W₁x + b₁), z = W₂h + b₂, p = σ(z). Потеря берёт z непосредственно. Производная по z — (p−y)/4. Затем ∂L/∂W₂ⱼ = (∂L/∂z)hⱼ, а через tanh назад идёт множитель 1−hⱼ². Вклады четырёх примеров суммируются перед одним шагом.</p><p>Псевдослучайный генератор задаёт начальные веса, данные и порядок фиксированы. Здесь нет dropout, мини-пакетов, автоматического графа, GPU или интеграции с Rust API.</p></details></div></div></section>
     <section className="panel"><h3>Разберите текущий прямой проход</h3><div className="controls inline-controls"><label>Пример<select value={sample} onChange={e => setSample(Number(e.target.value))}>{XOR_DATA.map((d, i) => <option value={i} key={i}>[{d.input.join('; ')}], y = {d.target}</option>)}</select></label><label>Скрытый нейрон<select value={hiddenNode} onChange={e => setHiddenNode(Number(e.target.value))}>{[0, 1, 2, 3].map(i => <option key={i} value={i}>h{i + 1}</option>)}</select></label></div><div className="formula">z{j + 1} = {fmt(p[2 * j])}·{input[0]} + {fmt(p[2 * j + 1])}·{input[1]} + {fmt(p[8 + j])} = {fmt(z)}<br />h{j + 1} = tanh({fmt(z)}) = {fmt(Math.tanh(z))}<br />z выхода = {hidden.map((h, i) => `(${fmt(p[12 + i])}·${fmt(h)})`).join(' + ')} + ({fmt(p[16])}) = {fmt(logit)}<br />p = σ({fmt(logit)}) = {fmt(result.predictions[sample], 5)}</div></section>
+    <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: как обученная сеть изгибает свой ответ</summary>
+      <p>У двух входов есть место на плоскости. Поднимем каждое место на высоту ответа сети. После обучения противоположные углы должны оказаться внизу, два других — наверху: именно этого требует XOR.</p>
+      {sceneOpened && <Scene3D title="Поверхность ответа XOR" description="Два входа и настоящая вероятность класса 1 из текущих 17 параметров сети. Высота является выходом, а не третьим входом. Сеть обучается только на четырёх углах." axes={[{label:'Вход x₁',min:0,max:1},{label:'Вход x₂',min:0,max:1},{label:'Вероятность класса 1',min:0,max:1}]} surfaces={[{name:'Текущий ответ сети',rows:functionSurface([0,1],[0,1],(a,b)=>networkHeight(a,b,p))}]} points={XOR_DATA.map(d=>({name:`[${d.input.join('; ')}] · цель ${d.target}`,position:[d.input[0],d.input[1],networkHeight(...d.input,p)] as const}))} />}
+      <p className="note">Нажмите «100 шагов» выше — поверхность изменится вместе с весами. Карта цветов и таблица дают те же значения без вращения.</p>
+    </details>
     <Exercise question="После сброса с тем же seed и настройками что произойдёт?" options={['Другие начальные веса', 'Те же веса и траектория обучения', 'Потеря сразу станет нулевой']} correct={1} explanation="Seed воспроизводит начальные параметры. Данные, порядок и вычисления здесь тоже фиксированы, поэтому повторяется весь эксперимент." />
   </>;
 }

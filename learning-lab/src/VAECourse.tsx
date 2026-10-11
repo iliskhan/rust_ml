@@ -1,6 +1,8 @@
-import { useId, useRef, useState } from 'react';
+import { useId, useMemo, useRef, useState } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
+import { Scene3D } from './ThreeD';
+import { vaeDensityScene } from './generativeSceneMath';
 import {
   EVALUATION_NOISE, TRAINING_LIMIT, VAE_DATA, VAE_INITIAL, VAE_NOISE_SD, VAE_PARAMETER_NAMES,
   gaussianDensity, normalSamples, plotPoints, sampleDensity, vaeDecode, vaeEncode,
@@ -21,12 +23,32 @@ const SECTIONS = [
   ['Границы', 'β-VAE, другие варианты и честные ограничения'],
 ];
 
+function VaeEncoderScene({ parameters, x, epsilon, beta }: { parameters: number[]; x: number; epsilon: number; beta: number }) {
+  const scene = useMemo(() => vaeDensityScene(parameters, x, epsilon), [parameters, x, epsilon]);
+  return <>
+    <p>Разрежьте поверхность при выбранном x: получите обычную кривую q(z|x). Энкодер по-прежнему выдаёт <strong>одно скрытое число z</strong>; остальные оси показывают вход x и плотность. Поверхность — семейство условных плотностей, а не совместное распределение x и z.</p>
+    <Scene3D title="Как энкодер распределяет коды" description="Оси: вход x, скалярный код z и плотность q(z|x). Оранжевая линия — срез при выбранном x; точка — z = μ + σε."
+      axes={[{ label: 'Вход x', min: scene.xDomain[0], max: scene.xDomain[1] }, { label: 'Код z · одно число', min: scene.zDomain[0], max: scene.zDomain[1] }, { label: 'Плотность q(z|x)', min: 0, max: scene.densityMax }]}
+      surfaces={[{ name: 'q(z|x) по текущим весам', rows: scene.rows, color: '#427e7a', opacity: .42 }]}
+      lines={[{ name: `Срез x = ${fmt(x)}`, points: scene.slice, color: '#b75b21' }]}
+      points={[{ name: 'Центр μ', position: scene.mean, color: '#325fad' }, { name: 'Выбранный z = μ + σε', position: scene.sample, color: '#b1365b' }]} />
+    <p className="vg-observation">x={fmt(x)}; μ={fmt(scene.mu)}; σ={fmt(scene.sd)}; ε={fmt(epsilon)} → z=<strong>{fmt(scene.sample[1])}</strong>, q(z|x)={fmt(scene.sample[2])}. β={fmt(beta)} влияет на следующие обновления весов; при фиксированных весах изменение ε перемещает только выбранную точку.</p>
+    <p className="note">В каждой строке показаны z от μ(x)−4σ(x) до μ(x)+4σ(x). Хвосты нормального распределения за этим окном не показаны; внутри около 99,994% вероятности каждого среза. Сетка 25×33 соединяет вычисленные значения плоскими гранями. Высота — плотность, она может превышать 1; вероятность интервала — площадь под отдельным срезом по z.</p>
+    <details><summary>Плоский срез и численная проверка</summary>
+      <Chart series={[{ name: `q(z|x), x=${fmt(x)}`, points: scene.slice.map(p => ({ x: p[1], y: p[2] })) }]} xLabel="Скрытый код z" yLabel="Плотность q(z|x)" xDomain={[scene.slice[0][1], scene.slice.at(-1)![1]]} />
+      <p className="formula">q(z|x) = exp(−½((z−μ)/σ)²)/(σ√(2π))<br />q(μ|x)={fmt(scene.mean[2], 5)}; q(μ+σε|x)={fmt(scene.sample[2], 5)}</p>
+      <p>Ползунки x и ε над сценой управляют этим же срезом и точкой. Обучение в следующем разделе меняет всю поверхность.</p>
+    </details>
+  </>;
+}
+
 export function VAECourse() {
   const [chapter, setChapter] = useState(0), [beta, setBeta] = useState(1), [rate, setRate] = useState(0.015);
   const [run, setRun] = useState(() => startRun(1));
   const [x, setX] = useState(1), [epsilon, setEpsilon] = useState(0.5), [parameter, setParameter] = useState(4);
   const [priorZ, setPriorZ] = useState(0), [outputNoise, setOutputNoise] = useState(0), [sampleSeed, setSampleSeed] = useState(0);
   const [inputA, setInputA] = useState(-1), [inputB, setInputB] = useState(2), [mix, setMix] = useState(0.5);
+  const [showEncoderScene, setShowEncoderScene] = useState(false);
   const active = useLearningActive(), selectId = useId(), heading = useRef<HTMLHeadingElement>(null);
   const trace = vaeTrace(run.parameters, x, epsilon, beta);
   const expected = vaeExpected(run.parameters, [x], 1);
@@ -119,6 +141,9 @@ export function VAECourse() {
           <Chart xLabel="скрытый код z" yLabel="плотность" series={[{ name: 'q: энкодер', points: plotPoints(z => gaussianDensity(z, trace.mu, trace.sd)) }, { name: 'p(z|x): точный posterior', points: plotPoints(z => gaussianDensity(z, posterior.mu, Math.sqrt(posterior.variance))) }]} />
         </details>
       </section></div>
+      <details onToggle={event => { if (event.currentTarget.open) setShowEncoderScene(true); }}><summary>3D: как encoder распределяет коды</summary>
+        {showEncoderScene && <VaeEncoderScene parameters={run.parameters} x={x} epsilon={epsilon} beta={beta} />}
+      </details>
       <Exercise question="Если μ = 0 и σ = 1, чему равен KL(q || N(0,1))?" options={['0: распределения совпадают', '1: стандартное отклонение равно 1', 'Нельзя узнать без конкретного ε']} correct={0} explanation="В формуле ½(μ²+σ²−1−log σ²) все слагаемые сокращаются. KL — свойство двух распределений, оно не зависит от выбранного ε." />
     </div>
 

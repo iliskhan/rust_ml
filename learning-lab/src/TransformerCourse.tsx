@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { memo, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { ConceptLink } from './learning-context';
 import { Exercise, Range, fmt } from './ui';
 import {
@@ -10,6 +10,8 @@ import {
 } from './transformerMath';
 import type { Matrix, NormKind, KvCache } from './transformerMath';
 import './transformer-course.css';
+import { Scene3D } from './ThreeD';
+import { ropePairPath, ropePairPoint } from './spatialSceneMath';
 
 const vec = (values: number[], digits = 2) => `[${values.map(x => fmt(x, digits)).join('; ')}]`;
 const percent = (x: number) => `${fmt(x * 100, 1)}%`;
@@ -119,8 +121,22 @@ function HeadsLesson() {
   </>;
 }
 
+const RopePositionScene = memo(function RopePositionScene({ q, k, pair, queryPosition, keyPosition, open: _open }: { q: number[]; k: number[]; pair: number; queryPosition: number; keyPosition: number; open: boolean }) {
+  const start = Math.min(queryPosition, keyPosition) - 2, end = Math.max(queryPosition, keyPosition) + 2;
+  const radius = Math.max(.25, Math.hypot(q[2 * pair], q[2 * pair + 1]), Math.hypot(k[2 * pair], k[2 * pair + 1])) * 1.15;
+  return <>
+    <Scene3D title={`RoPE: пара ${2 * pair}–${2 * pair + 1} по позициям`} description="Каждая линия вращает одну фиксированную исходную пару Q или K при изменении позиции. Точки отмечают нынешние позиции запроса и ключа. Позиция — отдельная ось графика, а не ещё одна координата embedding."
+      axes={[{ label: 'Позиция p', min: start, max: end }, { label: `Координата ${2 * pair} после RoPE`, min: -radius, max: radius }, { label: `Координата ${2 * pair + 1} после RoPE`, min: -radius, max: radius }]}
+      lines={[{ name: 'Фиксированная пара Q по позициям', points: ropePairPath(q, pair, start, end), color: '#287f80' }, { name: 'Фиксированная пара K по позициям', points: ropePairPath(k, pair, start, end), color: '#b75d24', dashed: true }]}
+      points={[{ name: `Q: позиция ${queryPosition}`, position: ropePairPoint(q, pair, queryPosition), color: '#287f80' }, { name: `K: позиция ${keyPosition}`, position: ropePairPoint(k, pair, keyPosition), color: '#b75d24' }]} />
+    <p>Для этой пары угол = позиция / {pair === 0 ? '1' : '100'}. Линия показывает, как вращался бы один и тот же исходный вектор; у разных настоящих токенов исходные Q и K могут различаться. Между целыми позициями показано непрерывное математическое вращение.</p>
+    <p className="note">Полные длины Q/K и Q′·K′ выше вычисляются по четырём настоящим координатам. Координата позиции из 3D-графика в эти вычисления не входит. Плоские стрелки и численные значения остаются точным разбором выбранных позиций.</p>
+  </>;
+}, (_previous, next) => !next.open);
+
 function RopeLesson() {
   const [p, setP] = useState(1), [distance, setDistance] = useState(2), [shift, setShift] = useState(0), [pair, setPair] = useState(0);
+  const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [q, setQ] = useState<Matrix>([[1, 0.5, 0.8, -0.4]]), [k, setK] = useState<Matrix>([[0.5, 1, -0.3, 0.9]]);
   const rotatedQ = rope(q[0], p + shift), rotatedK = rope(k[0], p + distance + shift);
   const score = dotProduct(rotatedQ, rotatedK), baseScore = dotProduct(rope(q[0], p), rope(k[0], p + distance));
@@ -132,6 +148,7 @@ function RopeLesson() {
     <LessonLead idea={<>Порядок нужен, чтобы различить «кот ест рыбу» и «рыба ест кота». Позицию можно добавить к входу. RoPE делает другое: поворачивает пары координат Q и K. Их взаимный угол меняется с расстоянием между позициями.</>} experiment={<>Двигайте общий сдвиг: обе стрелки поворачиваются, а их скалярное произведение сохраняется. Измените расстояние — число изменится. Сравните быструю и медленную пару координат.</>} />
     <div className="tc-columns"><section className="panel"><h4>Две позиции и две скорости вращения</h4><Range label="Базовая позиция запроса p" value={p} min={0} max={10} step={1} onChange={setP} /><Range label="Расстояние ключа Δ = m−p" value={distance} min={-10} max={10} step={1} onChange={setDistance} /><Range label="Общий сдвиг обеих позиций" value={shift} min={0} max={30} step={1} onChange={setShift} /><label>Пара координат<select value={pair} onChange={e => setPair(Number(e.target.value))}><option value={0}>0–1: угол = позиция</option><option value={1}>2–3: угол = позиция / 100</option></select></label><p>Позиции: Q={p + shift}, K={p + distance + shift}. Углы измеряются в радианах. Отрицательные позиции допустимы для этой математической демонстрации.</p><details><summary>Изменить исходные Q и K</summary><Grid label="Q до RoPE" values={q} onChange={setQ} /><Grid label="K до RoPE" values={k} onChange={setK} /></details></section>
     <section className="panel"><h4>Вращение пары {2 * pair}–{2 * pair + 1}</h4><svg className="tc-rope" viewBox="0 0 300 300" role="img" aria-label={`RoPE: Q ${vec(shown[0])}, K ${vec(shown[1])}. Полное скалярное произведение ${fmt(score)}.`}><defs>{['#287f80', '#b75d24'].map((color, i) => <marker key={color} id={`${id}-${i}`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill={color} /></marker>)}</defs><circle cx={center} cy={center} r={105} fill="none" stroke="currentColor" opacity="0.15" /><line x1="18" y1={center} x2="282" y2={center} stroke="currentColor" opacity="0.35" /><line x1={center} y1="18" x2={center} y2="282" stroke="currentColor" opacity="0.35" /><text x="280" y="171" textAnchor="end">x</text><text x="161" y="24">y</text>{shown.map((value, i) => <g key={i}><line x1={center} y1={center} x2={center + value[0] * scale} y2={center - value[1] * scale} stroke={i ? '#b75d24' : '#287f80'} strokeWidth="3" markerEnd={`url(#${id}-${i})`} /><circle cx={center + value[0] * scale} cy={center - value[1] * scale} r="3" fill={i ? '#b75d24' : '#287f80'} /></g>)}</svg><p className="tc-legend"><span>● Q — бирюзовая стрелка {vec(shown[0])}</span><span>● K — оранжевая стрелка {vec(shown[1])}</span></p><p className="tc-answer">Полный Q′·K′ = <strong>{fmt(score, 5)}</strong></p><p>Без общего сдвига: {fmt(baseScore, 5)}. Разница: {fmt(Math.abs(score - baseScore), 8)}.</p><p>Длина Q: {fmt(Math.hypot(...q[0]))} → {fmt(Math.hypot(...rotatedQ))}; длина K: {fmt(Math.hypot(...k[0]))} → {fmt(Math.hypot(...rotatedK))}.</p></section></div>
+    <details onToggle={event => { setSceneOpen(event.currentTarget.open); if (event.currentTarget.open) setSceneVisited(true); }}><summary>3D: как пара RoPE вращается вдоль позиции</summary>{sceneVisited && <RopePositionScene q={q[0]} k={k[0]} pair={pair} queryPosition={p + shift} keyPosition={p + distance + shift} open={sceneOpen} />}</details>
     <details><summary>Точные формулы и отличие от добавления PE</summary><p className="formula">[x′; y′] = [x cos θ − y sin θ; x sin θ + y cos θ]<br />θᵢ(p)=p / 10000^(2i/d), d=4, i=0 или 1.<br />(Rₚq)ᵀ(Rₘk) = qᵀR₍ₘ₋ₚ₎k.</p><p>Для фиксированных исходных q и k общий сдвиг сокращается: остаётся относительное расстояние. Это не обещание, что вся модель с любыми масками и границами контекста инвариантна к сдвигу. В обычном варианте RoPE вращаются Q и K, а V не вращается. Вращение не делает score монотонно убывающим с расстоянием: даже одна пара даёт периодические значения.</p><Grid label={`Обычный добавляемый PE для позиций ${p}, ${p + distance}`} values={[sinusoidalPosition(p), sinusoidalPosition(p + distance)]} /><p>Синусоидальный PE складывают с embedding до Q/K/V-проекций. RoPE применяется к спроецированным Q/K внутри attention. Обучаемые абсолютные позиции и относительные bias, например в T5, — другие варианты; они здесь описаны, но не вычисляются.</p></details>
   </>;
 }
