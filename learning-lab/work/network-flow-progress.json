@@ -1,8 +1,8 @@
 {
   "title": "Нейросеть в 3D: данные и градиенты",
   "language": "ru",
-  "updated_at": "2026-10-11T15:25:21.2518219+03:00",
-  "focus": "Приёмка завершена; фиксируем и отправляем master",
+  "updated_at": "2026-10-11T15:27:34.5466626+03:00",
+  "focus": "Готово: пошаговая 3D-сеть проверена и отправлена",
   "steps": [
     {
       "id": "inspect",
@@ -49,8 +49,13 @@
     {
       "id": "push",
       "title": "Commit и push",
-      "status": "in_progress",
-      "result": "Diff проверен, приёмка записана"
+      "status": "done",
+      "result": "Код5874c5d отправлен в master; remote SHA совпал, дерево чистое",
+      "evidence": [
+        "Обычный push origin/master; HEAD=5874c5df5ee9e15d888acf66424787e0b7742a25",
+        "ls-remote совпал с HEAD, git status пуст",
+        "70/70 проверенных source/config SHA после push совпали; дополнительная фиксация меняет только docs/progress"
+      ]
     }
   ]
 }
