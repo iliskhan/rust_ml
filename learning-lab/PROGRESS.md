@@ -1,6 +1,6 @@
 # RustML Learning Lab — состояние
 
-Обновлено 2026-10-11 13:49 Europe/Moscow. Учебник находится в основном проекте:
+Обновлено 2026-10-11 13:54 Europe/Moscow. Учебник находится в основном проекте:
 `C:/Users/lomaster/Desktop/dev/rust_ml/learning-lab`. План интеграции и проверки всего проекта —
 [../PROGRESS.md](../PROGRESS.md); `work/progress.json` — краткая проекция состояния учебника.
 
@@ -21,7 +21,10 @@ fmt/clippy/rustdoc и четыре примера — PASS. Полная при�
 [evidence/THREE_DIMENSIONAL.md](evidence/THREE_DIMENSIONAL.md).
 
 Исходный HEAD текущей задачи — `35942ec6c2d43628b8517f35efaf5c13a28034b5`.
-Код готов; следующий шаг — commit/push и сверка remote. Запуск `.\learn.cmd`.
+Код и приёмка отправлены: `399cbf6a1b7cba6bcc9812bc4cb8be163927db9b`, обычный push
+в origin/master, remote SHA совпал с HEAD. Все 65 source/config SHA приёмки совпали
+после отправки. Дополнительная фиксация статуса меняет только документы/проекцию.
+Обязательной незавершённой работы нет. Запуск `.\learn.cmd`.
 
 ## Новые VAE / GAN / diffusion / GNN / RL
 

@@ -1,8 +1,8 @@
 {
   "title": "3D в учебнике RustML",
   "language": "ru",
-  "updated_at": "2026-10-11T13:52:51.3735932+03:00",
-  "focus": "Отправляем проверенные изменения в master",
+  "updated_at": "2026-10-11T13:54:46.723911+03:00",
+  "focus": "Девять 3D-представлений проверены и отправлены",
   "steps": [
     {
       "id": "rule",
@@ -47,8 +47,13 @@
     {
       "id": "push",
       "title": "Commit и push",
-      "status": "in_progress",
-      "result": "Приёмка записана; commit и обычный push"
+      "status": "done",
+      "result": "399cbf6 отправлен; удалённый SHA совпал",
+      "evidence": [
+        "Обычный push origin master завершился exit 0",
+        "HEAD и ls-remote: 399cbf6a1b7cba6bcc9812bc4cb8be163927db9b",
+        "После отправки 65 source/config SHA совпали, рабочее дерево было чистым"
+      ]
     }
   ]
 }
