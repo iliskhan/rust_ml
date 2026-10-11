@@ -1,0 +1,248 @@
+{
+  "checkedAtUTC": "2026-10-11T03:07:21.867Z",
+  "browser": "Codex in-app browser",
+  "checks": [
+    {
+      "test": "neuron keyboard + sigmoid",
+      "observed": "a = Сигмоида(-2,7) = 0,063"
+    },
+    {
+      "test": "exercise",
+      "observed": "Верно. ReLU оставляет положительную часть: max(0, −2) = 0. На отрицательной стороне её производная тоже равна 0."
+    },
+    {
+      "test": "MSE slider changes terms+loss",
+      "observed": "L = (1/3) Σ(ŷᵢ − yᵢ)²\nL = (16 + 0,25 + 1) / 3 = 5,75"
+    },
+    {
+      "test": "BCE extreme logit",
+      "observed": "L = max(z, 0) − zy + ln(1 + exp(−|z|))\nL = max(20, 0) − (20)·0 + ln(1 + exp(−20)) = 20\n∂L/∂z = σ(z) − y = 1"
+    },
+    {
+      "test": "backprop 4 steps + accumulation",
+      "observed": [
+        "q = xw = (1,2)·(0,8) = 0,96p = q² + q = 0,922 + (0,96) = 1,882L = ½(p − y)² = ½(1,882 − (1))² = 0,389",
+        "∂L/∂p = p − y = 0,882∂(q²)/∂q = 2q = 1,92; ∂q/∂q = 1∂q/∂x = w = 0,8; ∂q/∂w = x = 1,2",
+        "∂L/∂q = вклад квадрата + вклад тождества= 1,693 + (0,882) = 2,574∂L/∂w = (∂L/∂q)·x = (2,574)·(1,2) = 3,089∂L/∂x = (∂L/∂q)·w = (2,574)·(0,8) = 2,059",
+        "ε = 1e-5∂L/∂θ ≈ [L(θ + ε) − L(θ − ε)] / (2ε)"
+      ]
+    },
+    {
+      "test": "finite difference recalculates",
+      "observed": "Аналитический и численный градиенты\nПАРАМЕТР Θ\tОБРАТНЫЙ ПРОХОД\tКОНЕЧНАЯ РАЗНОСТЬ\tАБСОЛЮТНАЯ РАЗНИЦА\nx\t3,544762\t3,544762\t2.44e-10\nw\t4,726349\t4,726349\t5.49e-10"
+    },
+    {
+      "test": "optimizer common first step",
+      "observed": "Реальные координаты и потери\nМЕТОД\tШАГ\tX; Y\tL\nSGD\t1\t-2,64; 0,06\t3,499\nMomentum\t1\t-2,64; 0,06\t3,499\nAdam\t1\t-2,88; 1,38\t11,765"
+    },
+    {
+      "test": "optimizer large LR diverges actual",
+      "observed": "Реальные координаты и потери\nМЕТОД\tШАГ\tX; Y\tL\nSGD\t5\t-0,233; -77,304\t2.39e+4 · остановлен: уход за |50|\nMomentum\t5\t2,187; 2,767\t33,01\nAdam\t5\t-1,051; -0,294\t0,9"
+    },
+    {
+      "test": "optimizer auto/pause",
+      "observed": "Реальные координаты и потери\nМЕТОД\tШАГ\tX; Y\tL\nSGD\t1\t-1,8; -3,3\t45,18\nMomentum\t1\t-1,8; -3,3\t45,18\nAdam\t1\t-2,6; 1,1\t8,22"
+    },
+    {
+      "test": "XOR real UI training 3000",
+      "initial": "Шаг 0 · BCE 0,70573 · верных классов 1/4",
+      "observed": "Шаг 3000 · BCE 1.02e-4 · верных классов 4/4"
+    },
+    {
+      "test": "XOR inspect neuron and sample",
+      "observed": "z3 = -2,822·1 + -3,162·1 + 0,447 = -5,537\nh3 = tanh(-5,537) = -1\nz выхода = (3,811·-0,981) + (6,065·-0,987) + (-4,034·-1) + (8,845·-0,989) + (5,82) = -8,613\np = σ(-8,613) = 1.82e-4"
+    },
+    {
+      "test": "XOR seed/auto/pause/reset",
+      "observed": "Шаг 40 · BCE 0,51474 · верных классов 3/4",
+      "reset": "Шаг 0 · BCE 0,70573 · верных классов 1/4"
+    },
+    {
+      "test": "Dense topology/layer/activation/selected neuron",
+      "observed": "z = (0,11 × 0,29) + (0 × -0,13) + (0,39 × -0,43) + (0,22 × -0,34) + (0 × 0,07) + 0,1 = -0,108\na = relu(-0,108) = 0"
+    },
+    {
+      "test": "CNN channels/stride/padding/dilation/scan/pool",
+      "observed": [
+        "H = W = floor((5 + 2×2 − 2×(3−1) − 1)/2 + 1) = 3",
+        "y = Σ по каналам и окну (x × w) + b = 2 + 0 + 0 = 2"
+      ]
+    },
+    {
+      "test": "RNN stacked early input",
+      "observed": "hₜ = tanh(0.8×xₜ + 0,7×hₜ₋₁ + 0.1)\n= tanh(0.8×0,095 + 0,7×-0,687 + 0.1)\n= tanh(-0,305) = -0,296"
+    },
+    {
+      "test": "RNN bidirectional",
+      "observed": [
+        "hₜ = tanh(0.8×xₜ + 0,7×hₜ₋₁ + 0.1)= tanh(0.8×0,6 + 0,7×-0,693 + 0.1)= tanh(0,095) = 0,095",
+        "Обратный шаг: tanh(0.8×0,6 + 0,7×0,178 + 0.1) = 0,607"
+      ]
+    },
+    {
+      "test": "LSTM gate contributions",
+      "observed": "g = tanh(0.8×0,1 + 0,7×0,014 + 0.1) = 0,188\ncₜ = 0,983×0,026 + 0,019×0,188 = 0,025 + 0,004 = 0,029\nhₜ = 0,51×tanh(0,029) = 0,015"
+    },
+    {
+      "test": "GRU gate contributions",
+      "observed": "n = tanh(0.8×0,6 + 0,7×(0,021×0,003) + 0.1) = 0,523\nhₜ = 0,987×0,003 + (1−0,987)×0,523\n= 0,003 + 0,007 = 0,01"
+    },
+    {
+      "test": "Transformer decoder causal weights",
+      "observed": "scoreⱼ = Q1 · Kⱼ / √2\nα = softmax(score) = [1, 0, 0]; Σα = 1"
+    },
+    {
+      "test": "Transformer source changes cross output",
+      "before": "Итог блока: по 4 признака для 3 позиций\n-0,2\t0,48\t-1,5\t1,22\n0,2\t0,11\t-1,55\t1,24\n1,24\t-0,93\t-1,03\t0,72",
+      "observed": "Итог блока: по 4 признака для 3 позиций\n-0,49\t0,71\t-1,38\t1,16\n-0,11\t0,36\t-1,51\t1,26\n1,17\t-0,91\t-1,07\t0,81"
+    },
+    {
+      "test": "Transformer single head/position scale",
+      "observed": "scoreⱼ = Q1 · Kⱼ / √4\nα = softmax(score) = [0,194, 0,535, 0,271]; Σα = 1"
+    },
+    {
+      "test": "optimizer momentum/betas/settings reset/narrow keyboard",
+      "observed": "Градиент перед последним шагом g = [-3, 12]\nИзменение параметров Δθ = [0,36, -1,44]\nvₜ = μvₜ₋₁ + gₜ; θₜ = θₜ₋₁ − ηvₜ"
+    },
+    {
+      "test": "XOR chart includes non-multiple-of-ten current step",
+      "observed": "Шаг 101 · BCE 0,0334 · верных классов 4/4",
+      "chart": "Потеря L в зависимости от Шаг оптимизатораСредняя BCE: 13 точек. Текущие значения также приведены рядом с графиком.0,7400,3750,50101Шаг оптимизатораПотеря L"
+    },
+    {
+      "test": "XOR SGD switch resets optimizer state",
+      "observed": "Шаг 1 · BCE 0,70564 · верных классов 1/4"
+    }
+  ],
+  "mobile390": [
+    {
+      "route": "Карта обучения",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Нейрон и слои",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Функции потерь",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Обратный проход",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Оптимизаторы",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Сеть целиком",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Семейства сетей",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "route": "Источники и границы",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "family": "CNN",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "family": "RNN",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "family": "LSTM",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "family": "GRU",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "family": "Transformer",
+      "client": 375,
+      "scroll": 375,
+      "width": 390
+    }
+  ],
+  "mobile320": [
+    {
+      "route": "Карта обучения",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Нейрон и слои",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Функции потерь",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Обратный проход",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Оптимизаторы",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Сеть целиком",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Семейства сетей",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "route": "Источники и границы",
+      "client": 305,
+      "scroll": 305,
+      "width": 320
+    }
+  ],
+  "console": []
+}

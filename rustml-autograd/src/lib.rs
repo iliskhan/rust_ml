@@ -1,22 +1,21 @@
 //! # RustML Autograd
 //!
 //! Автоматическое дифференцирование для RustML.
-//! 
+//!
 //! Этот crate предоставляет:
 //! - Variable для tracking градиентов
 //! - Computational graph representation
 //! - Forward и backward pass execution
 //! - Memory management для градиентов
 
-pub mod variable;
-pub mod graph;
+mod graph;
 pub mod ops;
 pub mod scalar;
+pub mod variable;
 
 // Re-export main types
+pub use scalar::{IntoScalar, Scalar};
 pub use variable::Variable;
-pub use graph::{Node, GraphNode, ComputationGraph};
-pub use scalar::{Scalar, IntoScalar};
 
 /// Current version of RustML Autograd
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

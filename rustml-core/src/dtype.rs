@@ -2,41 +2,62 @@
 //!
 //! Определяет поддерживаемые типы данных и их свойства.
 
-use num_traits::{Float, Zero, One};
+use num_traits::{Float, One, Zero};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
 /// Trait для data types в tensors
-pub trait DType: 
-    Copy + Clone + Send + Sync + fmt::Debug + fmt::Display + 'static +
-    Zero + One + 
-    std::ops::Add<Output = Self> + std::ops::Sub<Output = Self> + 
-    std::ops::Mul<Output = Self> + std::ops::Div<Output = Self>
+pub trait DType:
+    Copy
+    + Clone
+    + Send
+    + Sync
+    + fmt::Debug
+    + fmt::Display
+    + 'static
+    + Zero
+    + One
+    + std::ops::Add<Output = Self>
+    + std::ops::Sub<Output = Self>
+    + std::ops::Mul<Output = Self>
+    + std::ops::Div<Output = Self>
 {
     /// Size in bytes
     const SIZE: usize;
-    
+
     /// Type name для debugging
     const NAME: &'static str;
-    
+
     /// Zero value для данного типа
     fn zero() -> Self;
-    
+
     /// One value для данного типа
     fn one() -> Self;
-    
+
     /// Check if value is finite (для floating point)
     fn is_finite(&self) -> bool;
+
+    /// Checked addition. Integers return `None` on overflow; floats use IEEE 754.
+    fn checked_add(self, rhs: Self) -> Option<Self>;
+
+    /// Checked subtraction. Integers return `None` on overflow; floats use IEEE 754.
+    fn checked_sub(self, rhs: Self) -> Option<Self>;
+
+    /// Checked multiplication. Integers return `None` on overflow; floats use IEEE 754.
+    fn checked_mul(self, rhs: Self) -> Option<Self>;
+
+    /// Checked division. Integers reject zero and overflow; floats use IEEE 754.
+    fn checked_div(self, rhs: Self) -> Option<Self>;
 }
 
 /// Floating point DType trait
 pub trait FloatDType: DType + Float {
     /// Not-a-Number value
     fn nan() -> Self;
-    
+
     /// Positive infinity
     fn infinity() -> Self;
-    
+
     /// Negative infinity  
     fn neg_infinity() -> Self;
 }
@@ -48,107 +69,233 @@ pub trait FloatDType: DType + Float {
 impl DType for f32 {
     const SIZE: usize = 4;
     const NAME: &'static str = "f32";
-    
+
     #[inline]
-    fn zero() -> Self { 0.0 }
-    
+    fn zero() -> Self {
+        0.0
+    }
+
     #[inline]
-    fn one() -> Self { 1.0 }
-    
+    fn one() -> Self {
+        1.0
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { f32::is_finite(*self) }
+    fn is_finite(&self) -> bool {
+        f32::is_finite(*self)
+    }
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        Some(self + rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        Some(self - rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        Some(self * rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        Some(self / rhs)
+    }
 }
 
 impl FloatDType for f32 {
     #[inline]
-    fn nan() -> Self { f32::NAN }
-    
+    fn nan() -> Self {
+        f32::NAN
+    }
+
     #[inline]
-    fn infinity() -> Self { f32::INFINITY }
-    
+    fn infinity() -> Self {
+        f32::INFINITY
+    }
+
     #[inline]
-    fn neg_infinity() -> Self { f32::NEG_INFINITY }
+    fn neg_infinity() -> Self {
+        f32::NEG_INFINITY
+    }
 }
 
 impl DType for f64 {
     const SIZE: usize = 8;
     const NAME: &'static str = "f64";
-    
+
     #[inline]
-    fn zero() -> Self { 0.0 }
-    
+    fn zero() -> Self {
+        0.0
+    }
+
     #[inline]
-    fn one() -> Self { 1.0 }
-    
+    fn one() -> Self {
+        1.0
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { f64::is_finite(*self) }
+    fn is_finite(&self) -> bool {
+        f64::is_finite(*self)
+    }
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        Some(self + rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        Some(self - rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        Some(self * rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        Some(self / rhs)
+    }
 }
 
 impl FloatDType for f64 {
     #[inline]
-    fn nan() -> Self { f64::NAN }
-    
+    fn nan() -> Self {
+        f64::NAN
+    }
+
     #[inline]
-    fn infinity() -> Self { f64::INFINITY }
-    
+    fn infinity() -> Self {
+        f64::INFINITY
+    }
+
     #[inline]
-    fn neg_infinity() -> Self { f64::NEG_INFINITY }
+    fn neg_infinity() -> Self {
+        f64::NEG_INFINITY
+    }
 }
 
 impl DType for i32 {
     const SIZE: usize = 4;
     const NAME: &'static str = "i32";
-    
+
     #[inline]
-    fn zero() -> Self { 0 }
-    
+    fn zero() -> Self {
+        0
+    }
+
     #[inline]
-    fn one() -> Self { 1 }
-    
+    fn one() -> Self {
+        1
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { true } // integers всегда finite
+    fn is_finite(&self) -> bool {
+        true
+    } // integers всегда finite
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        self.checked_add(rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        self.checked_sub(rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        self.checked_mul(rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        self.checked_div(rhs)
+    }
 }
 
 impl DType for i64 {
     const SIZE: usize = 8;
     const NAME: &'static str = "i64";
-    
+
     #[inline]
-    fn zero() -> Self { 0 }
-    
+    fn zero() -> Self {
+        0
+    }
+
     #[inline]
-    fn one() -> Self { 1 }
-    
+    fn one() -> Self {
+        1
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { true }
+    fn is_finite(&self) -> bool {
+        true
+    }
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        self.checked_add(rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        self.checked_sub(rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        self.checked_mul(rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        self.checked_div(rhs)
+    }
 }
 
 impl DType for u32 {
     const SIZE: usize = 4;
     const NAME: &'static str = "u32";
-    
+
     #[inline]
-    fn zero() -> Self { 0 }
-    
+    fn zero() -> Self {
+        0
+    }
+
     #[inline]
-    fn one() -> Self { 1 }
-    
+    fn one() -> Self {
+        1
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { true }
+    fn is_finite(&self) -> bool {
+        true
+    }
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        self.checked_add(rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        self.checked_sub(rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        self.checked_mul(rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        self.checked_div(rhs)
+    }
 }
 
 impl DType for u64 {
     const SIZE: usize = 8;
     const NAME: &'static str = "u64";
-    
+
     #[inline]
-    fn zero() -> Self { 0 }
-    
+    fn zero() -> Self {
+        0
+    }
+
     #[inline]
-    fn one() -> Self { 1 }
-    
+    fn one() -> Self {
+        1
+    }
+
     #[inline]
-    fn is_finite(&self) -> bool { true }
+    fn is_finite(&self) -> bool {
+        true
+    }
+
+    fn checked_add(self, rhs: Self) -> Option<Self> {
+        self.checked_add(rhs)
+    }
+    fn checked_sub(self, rhs: Self) -> Option<Self> {
+        self.checked_sub(rhs)
+    }
+    fn checked_mul(self, rhs: Self) -> Option<Self> {
+        self.checked_mul(rhs)
+    }
+    fn checked_div(self, rhs: Self) -> Option<Self> {
+        self.checked_div(rhs)
+    }
 }
 
 /// Enum для runtime type information
@@ -174,7 +321,7 @@ impl DataType {
             DataType::U64 => u64::SIZE,
         }
     }
-    
+
     /// Get type name
     pub fn name(&self) -> &'static str {
         match self {
@@ -206,7 +353,7 @@ mod tests {
         assert_eq!(<f32 as DType>::zero(), 0.0);
         assert_eq!(<f32 as DType>::one(), 1.0);
         assert!(<f32 as DType>::zero().is_finite());
-        
+
         // Test i32
         assert_eq!(i32::SIZE, 4);
         assert_eq!(i32::NAME, "i32");
@@ -214,14 +361,14 @@ mod tests {
         assert_eq!(<i32 as DType>::one(), 1);
         assert!(<i32 as DType>::zero().is_finite());
     }
-    
+
     #[test]
     fn test_float_dtype() {
         assert!(<f32 as FloatDType>::nan().is_nan());
         assert!(<f32 as FloatDType>::infinity().is_infinite());
         assert!(!<f32 as FloatDType>::nan().is_finite());
     }
-    
+
     #[test]
     fn test_data_type_enum() {
         assert_eq!(DataType::F32.size(), 4);

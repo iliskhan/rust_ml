@@ -1,0 +1,13 @@
+{
+  "title": "Углубление учебника RustML",
+  "language": "ru",
+  "updated_at": "2026-10-11T07:18:00+03:00",
+  "focus": "Готово в основном проекте · запуск .\\learn.cmd",
+  "steps": [
+    {"id":"research","title":"Исследование и карта курса","status":"done","result":"Первичные источники и явная карта покрытия","evidence":["learning-lab/research: transformers.md, ux.md, curriculum.md; карта из 24 тем"]},
+    {"id":"math","title":"Математические основы","status":"done","result":"30 понятий и 14 типов демонстраций","evidence":["Численные тесты, граф предпосылок, поиск и переход к пределу проверены"]},
+    {"id":"transformer","title":"Transformer подробно","status":"done","result":"8 разделов с вычислениями и визуализациями","evidence":["MHA/GQA/MQA, RoPE, нормы, cross-attention, KV-cache и sampling; 10 численных тестов"]},
+    {"id":"ux","title":"Углубление и возврат","status":"done","result":"Параметры, прокрутка и фокус сохраняются","evidence":["Desktop и mobile: вложенные темы, назад, Escape; XOR останавливается при погружении"]},
+    {"id":"qa","title":"Независимая проверка","status":"done","result":"54 теста, сборка, desktop/320/390 прошли","evidence":["Console error/warn: 0; 48 защищённых файлов Rust совпадают по SHA256","Полный протокол: learning-lab/evidence/EXPANSION.md"]}
+  ]
+}

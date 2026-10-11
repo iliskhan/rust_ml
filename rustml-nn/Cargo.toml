@@ -2,11 +2,15 @@
 name = "rustml-nn"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
-description.workspace = true
+description = "Planned neural-network components for the educational RustML library"
 keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+
+[package.metadata.docs.rs]
+all-features = true

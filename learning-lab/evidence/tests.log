@@ -1,0 +1,31 @@
+$ node --test tests/*.test.ts
+✔ Dense preserves the orientation of weights and applies bias before activation (2.5844ms)
+✔ Conv2D uses cross-correlation and sums channels; padding, dilation and stride affect shape (0.4743ms)
+✔ Pooling selects complete windows, preserving max and average semantics (0.2649ms)
+✔ RNN reuses its previous state; zero recurrent weight removes history (0.317ms)
+✔ LSTM independently retains cell state, writes candidate and exposes gated tanh (0.3754ms)
+✔ GRU update gate means retention; reset acts before the candidate transform (0.2897ms)
+✔ Attention uniform scores average values; causal mask excludes future positions (0.4461ms)
+✔ LayerNorm has zero mean and unit variance within epsilon; constant features stay finite (0.2017ms)
+✔ Transformer has finite normalized outputs and 1/2 proper attention heads (1.3501ms)
+✔ Causal decoder cannot see a changed future token; cross-attention responds to source (0.8534ms)
+✔ активации: известные значения, производная по входу и ReLU в нуле (1.0891ms)
+✔ Linear: два образца, три выхода и транспонированная раскладка весов (1.1128ms)
+✔ MSE: среднее, вклад каждого элемента и множитель 2/n (0.3494ms)
+✔ BCE: ручные вероятности и производные по p и z (0.3223ms)
+✔ BCE-logits остается конечной на ±1000; вероятностная BCE не скрывает бесконечность (0.2143ms)
+✔ общий узел: два пути суммируются перед продолжением backward (1.324ms)
+✔ центральная разность не меняет параметры и проверяет известный полином (0.259ms)
+✔ SGD и momentum: два ручных шага без изменения старого состояния (0.5665ms)
+✔ Adam: bias correction и epsilon вне квадратного корня (0.3226ms)
+✔ квадратичная поверхность имеет неравные кривизны (0.2904ms)
+✔ сеть 2→4→1: детерминированный seed, нейтральная сеть, все 17 градиентов (1.9099ms)
+✔ Adam действительно обучает XOR на нескольких seed за 3000 шагов (123.7502ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 307.2471

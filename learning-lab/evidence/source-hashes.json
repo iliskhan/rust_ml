@@ -1,0 +1,46 @@
+[
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\App.tsx",
+    "Hash": "8EEA613D2D3CEC7E2621F5C921DE3041D3EA8459F77D135B6B09D98CD68631B2"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\ArchitectureLesson.tsx",
+    "Hash": "436375ECE9718C89F732531E297BA3856A7A00614DE6E0786CFCE6AE0C5F50D3"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\architectures.ts",
+    "Hash": "E76EB9A07C661A152A6E6705A30A355D0C80EE06ECE4B90C547A41F9B3C3AA67"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\Experiments.tsx",
+    "Hash": "601AF43E0DB63CBF487C88CAF0C51EBA1CC29B55386071A6F7EC192AEB678CF2"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\Foundations.tsx",
+    "Hash": "D043EEB3960934F8154B4B770A7EE3D2130D2A6D468C8376AF36C8EFB34A66F2"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\main.tsx",
+    "Hash": "81DF18E0D166E771FAB98938D62CF02D971BC58C08BB368BB1D035A45B3B06CA"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\math.ts",
+    "Hash": "7417FAE9CA3F9052EBCDEDD84B6A7FD34F48F235DBAFCD9B83AE578609375943"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\styles.css",
+    "Hash": "17B702007A6C0702E062D313B3C7EB9A9F185FFEBF82EB5035744E34B0CDF1B4"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\src\\ui.tsx",
+    "Hash": "40E911048362EC1D97F64DE5C21EF3061352DFE825FEBACE1ACF601F40A02FD3"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\tests\\architectures.test.ts",
+    "Hash": "091199298AA5487CD516FAA0318DFB4327AEC2F935E0CDDAE201B7BBB6F814FD"
+  },
+  {
+    "Path": "C:\\Users\\lomaster\\.codex\\worktrees\\3061\\rust_ml\\learning-lab\\tests\\math.test.ts",
+    "Hash": "814BE4A6C99AE3114963B611DAE4452ECEEB943A9C4743610ED7F8AB96404D9C"
+  }
+]

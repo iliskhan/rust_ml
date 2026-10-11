@@ -2,6 +2,7 @@
 name = "rustml-core"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -16,5 +17,8 @@ serde = { workspace = true, features = ["derive"] }
 
 [features]
 default = []
-cuda = []    # CUDA backend support
-opencl = []  # OpenCL backend support
+cuda = []    # Reserved device kind; no CUDA backend is implemented.
+opencl = []  # Reserved device kind; no OpenCL backend is implemented.
+
+[package.metadata.docs.rs]
+all-features = true

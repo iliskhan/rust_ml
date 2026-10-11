@@ -20,19 +20,19 @@ pub enum DeviceKind {
 pub trait Device: Send + Sync + fmt::Debug {
     /// Получить тип устройства
     fn kind(&self) -> DeviceKind;
-    
+
     /// Проверить доступность устройства
     fn is_available(&self) -> bool;
-    
+
     /// Получить имя устройства
     fn name(&self) -> &str;
-    
+
     /// Синхронизация устройства (важно для GPU)
     fn synchronize(&self) -> crate::Result<()>;
 }
 
 /// CPU device implementation
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct Cpu {
     name: String,
 }
@@ -46,19 +46,25 @@ impl Cpu {
     }
 }
 
+impl Default for Cpu {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Device for Cpu {
     fn kind(&self) -> DeviceKind {
         DeviceKind::Cpu
     }
-    
+
     fn is_available(&self) -> bool {
         true // CPU всегда доступен
     }
-    
+
     fn name(&self) -> &str {
         &self.name
     }
-    
+
     fn synchronize(&self) -> crate::Result<()> {
         Ok(()) // CPU операции синхронны
     }
@@ -92,8 +98,9 @@ mod tests {
         assert!(device.is_available());
         assert_eq!(device.name(), "CPU");
         assert!(device.synchronize().is_ok());
+        assert_eq!(Cpu::default().name(), device.name());
     }
-    
+
     #[test]
     fn test_device_kind_display() {
         assert_eq!(DeviceKind::Cpu.to_string(), "cpu");

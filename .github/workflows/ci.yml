@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  learning-lab:
+    name: Learning lab / Node 24
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: learning-lab
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
+      - name: Install pinned pnpm
+        run: npm install --global pnpm@11.25.0
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Numerical tests
+        run: pnpm test
+      - name: Typecheck and production build
+        run: pnpm build
+
+  validate:
+    name: Rust 1.87 / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: rustup toolchain install 1.87.0 --profile minimal --component rustfmt --component clippy
+      - name: Formatting
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+      - name: Debug tests and doctests
+        run: cargo test --workspace --all-features --locked
+      - name: Release tests and doctests
+        run: cargo test --workspace --all-features --release --locked
+      - name: Documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo doc --workspace --all-features --no-deps --locked
+      - name: Run tensor example
+        run: cargo run -p rustml-tensor --example basic_tensor_ops --locked
+      - name: Run autograd example
+        run: cargo run -p rustml-autograd --example autograd_test --locked
+      - name: Run milestone checks
+        run: cargo run -p rustml-autograd --example milestone_check --locked
+      - name: Run scalar example
+        run: cargo run -p rustml-autograd --example scalar_demo --locked
+
+  stable:
+    name: Current stable compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install current stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Test on current stable
+        run: cargo +stable test --workspace --all-features --locked

@@ -1,20 +1,20 @@
 //! # RustML Tensor
 //!
 //! Tensor operations and data structures for RustML.
-//! 
+//!
 //! This crate provides:
 //! - Tensor data structure с type safety
 //! - Basic arithmetic operations
 //! - Indexing и slicing
 //! - Broadcasting rules
 
-pub mod tensor;
-pub mod shape;
 pub mod ops;
+pub mod shape;
+pub mod tensor;
 
 // Re-export main types
+pub use shape::{Dimension, Shape};
 pub use tensor::Tensor;
-pub use shape::{Shape, Dimension};
 
 /// Current version of RustML Tensor
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

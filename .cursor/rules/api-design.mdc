@@ -1,60 +1,13 @@
 ---
 alwaysApply: true
 ---
-# 🎨 RustML - API Design Principles
+# RustML — API
 
-## Core Design Philosophy
-Создаем API который:
-- **Type-safe** на уровне компиляции
-- **Ergonomic** для пользователей с Python/PyTorch background
-- **Performance-first** без жертв в safety
-
-## Essential Traits Pattern
-```rust
-// Всегда используй этот паттерн для core abstractions
-pub trait Device: Send + Sync {
-    type Buffer;
-    fn allocate(&self, size: usize) -> Self::Buffer;
-}
-
-pub trait DType: Copy + Clone + Send + Sync + 'static {
-    const SIZE: usize;
-    const NAME: &'static str;
-}
-```
-
-## Builder Pattern для конфигураций
-```rust
-// Сложные объекты создаем через builders
-pub struct ModelBuilder<T> {
-    layers: Vec<Box<dyn Layer<T>>>,
-    optimizer: Option<Box<dyn Optimizer<T>>>,
-}
-
-impl<T> ModelBuilder<T> {
-    pub fn add_layer(mut self, layer: impl Layer<T> + 'static) -> Self {
-        self.layers.push(Box::new(layer));
-        self
-    }
-}
-```
-
-## Consistency Rules
-- **Единый стиль** parameter ordering: `(input, weights, bias)`
-- **Predictable return types**: Result<Tensor<T>, Error> для операций
-- **Chainable APIs** где логично (builder pattern)
-
-## Memory Management APIs
-- `view()` для readonly доступа без копирования
-- `into_owned()` для получения owned tensor
-- `share()` для Arc-wrapped версии
-
-## Error Handling Strategy
-- Domain-specific error types для каждого модуля
-- Clear error messages с предложениями по исправлению
-- No panics в public API - только в internal debugging
-
-## Generic Design
-- Generic over data types где возможно: `Tensor<T: DType>`
-- Feature flags для optional backends: `[features] cuda = ["dep:cudarc"]`
-- Backend abstraction через traits, не concrete types
+- Сначала поддерживаем текущий учебный CPU-сценарий; новые traits/builders появляются под реальное использование.
+- Tensor хранит данные; Variable владеет tracking/grad. Не дублируем requires_grad в Tensor.
+- Shapes динамические: сначала проверяем rank, затем индексы и совместимость размерностей.
+- Fallible операции возвращают существующий rustml_core::Result; ошибки чисел и форм не маскируем.
+- У infallible convenience constructors явно документируем Panics и предлагаем try_ альтернативу.
+- Clone/borrow/view документируем по реальным копиям памяти, без обещания zero-copy из-за одной ссылки.
+- Публичные примеры должны компилироваться. Изменение контракта требует обновить README, guide и тесты.
+- Не копируем предполагаемые API из планов в реализацию без проверки текущих типов.

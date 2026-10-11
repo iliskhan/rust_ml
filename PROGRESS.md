@@ -1,201 +1,213 @@
-# 🗺️ Прогресс разработки RustML
+# Прогресс RustML
 
-**Дата последнего обновления:** 8 января 2026
+Обновлено: 2026-10-11 07:16 Europe/Moscow. Учебная цель и порядок развития — [PLAN.md](PLAN.md).
+Этот файл — текущий checkpoint; результаты прошлых запусков не заменяют проверку изменённого кода.
 
----
+## Текущая задача и результат
 
-## 📍 **ВЫ ЗДЕСЬ** → Milestone 3 в процессе (Задача 3.2)
+### Углубление учебника — проверено, 2026-10-11
 
----
+Новый запрос: подробный Transformer и варианты, понятные объяснения, исследование UX,
+связанные математические основы с возвратом к прежнему месту и состоянию эксперимента.
+Три исполнителя Astra ultra подготовили математические основы, Transformer и навигацию;
+четвёртый Astra ultra независимо проверил итоговый код. Основной агент объединил части,
+повторил общие проверки и осмотрел реальный интерфейс. Rust-ядро не менялось.
 
-## 🎯 Milestones - Общий прогресс
+| Этап расширения | Статус | Критерий |
+|---|---|---|
+| Исследование и карта курса | Готово | Первичные источники записаны в research; покрытие явно размечено |
+| Математические основы | Готово | 30 понятий, 14 типов демонстраций; численные тесты и реальный UI проверены |
+| Transformer подробно | Готово | 8 разделов; MHA/GQA/MQA, RoPE, нормы, cache и генерация проверены |
+| Рекурсивная навигация и UX | Готово | Состояние, точная прокрутка, фокус, пауза обучения и mobile подтверждены |
+| Независимая приёмка | Готово | 54 tests, typecheck/build, desktop/320/390; 48 защищённых файлов совпадают |
 
+Исходный интерфейс снят в `learning-lab/evidence/expansion-before-overview.png`.
+Рабочая среда и checkout те же, что при интеграции ниже; изменения незакоммичены.
+В `learning-lab/` повторно прошли `pnpm test` (54/54), `pnpm build` (strict typecheck + Vite).
+Отдельная загрузка Transformer убрала предупреждение о размере chunk без новых зависимостей.
+Production-проверка выполнена на порту 5182; основной запуск по-прежнему `.\learn.cmd`, порт 5180.
+Все 10 основных страниц и 8 разделов Transformer проверены на 320 px, Transformer также на 390 px;
+горизонтального overflow страницы нет, console error/warn — 0. Сохранение настроек и возврат
+проверены на desktop и mobile, в том числе через производную к пределу.
+Отчёт, скриншоты, логи и SHA256: [learning-lab/evidence/EXPANSION.md](learning-lab/evidence/EXPANSION.md).
+
+Границы остаются явными: состояние до перезагрузки вкладки; 8 уровней одного пути; обучается XOR,
+остальные модели — небольшие численные демонстрации. Карта содержит 24 темы (13 интерактивных,
+3 разбора, 8 направлений продолжения), а не все опубликованные архитектуры. VAE/GAN/diffusion/GNN/RL
+пока ведут к первичным материалам, без локальных лабораторий. Следующий необязательный этап —
+выбрать одно из этих направлений для полноценной главы; обязательных блокеров текущего расширения нет.
+
+### Интеграция учебника — 2026-10-11
+
+Пользователь разрешил перенос `learning-lab/` из worktree в основной checkout и удобный запуск.
+Исходная точка: 51 файл основного checkout сохранён в SHA256-снимке сессии; прежние Rust-исправления
+остаются незакоммиченными. Перенесены 42 файла учебника, без dependency/build caches.
+После переноса хеши 48 прежних файлов совпали; изменены только корневые README/PROGRESS и CI.
+Rust-исходники, Cargo manifests/lockfile, прежние тесты и настройки сохранены побайтно.
+
+| Этап интеграции | Статус | Критерий |
+|---|---|---|
+| Сохранность Rust и перенос | Готово | Хеши 48 файлов совпадают; 12 файлов src/tests/lock учебника совпадают с источником |
+| Удобный запуск и документация | Готово | learn.cmd, Node 24+, pnpm 11.25.0, отдельная JS-проверка CI |
+| Проверки Rust и учебника | Готово | Rust 52+5 debug/release, fmt/Clippy/rustdoc; web 22 tests + typecheck/build |
+| Проверка браузера и итог | Готово | Main preview 5180, XOR 4/4, causal mask, 320 px, console без ошибок |
+
+Запуск из корня: `.\learn.cmd`. Он устанавливает зависимости по lockfile, запускает loopback-сервер
+и открывает браузер; другой порт — `.\learn.cmd --port 5181`. Скрипт проверен из каталога вне repository.
+Занятый порт завершает запуск с code 1 и не трогает работающий сервер. Текущий сервер основного
+checkout: `http://127.0.0.1:5180/`, owned exec session 57009. Исходный worktree сохранён.
+
+Проверки интеграции выполнены 2026-10-11 в основном checkout (master поверх 9e6606a, изменения
+незакоммичены): команды Rust из таблицы ниже повторены для debug/release, fmt, strict Clippy и rustdoc.
+В `learning-lab/` выполнены `pnpm install --frozen-lockfile`, `pnpm test`, `pnpm build` (включает typecheck).
+Node 24.19.0 / pnpm 11.25.0; lockfile не изменился. Browser-проверки: XOR после 3000 шагов, seed42,
+Adam eta=.03 дал BCE 1.02e-4 и 4/4; causal Q1=[1;0;0]; при viewport320 clientWidth=scrollWidth=305.
+Скриншоты и подробности — [learning-lab/evidence/INTEGRATION.md](learning-lab/evidence/INTEGRATION.md).
+Новый CI job настроен для web tests/build, GitHub запуск пока не выполнялся.
+
+При локальной установке sandbox не смог обратиться к npm registry; установка прошла с разрешённым
+сетевым доступом. Запуск esbuild из sandbox завершался Access denied для родительского каталога;
+тот же launcher с разрешённым запуском вне sandbox работает. Глобальные настройки не менялись.
+В проверочных командах использовался bundled Node/pnpm через временный PATH; обычному пользователю
+достаточно Node 24+ и pnpm 11.25.0 в PATH. Установленные caches игнорируются вложенным .gitignore.
+
+Результаты предыдущих этапов ниже сохраняются как проверенная история до интеграции.
+
+Подтверждённые дефекты CPU-ядра исправлены, решения сверены с первичными источниками Rust/ML.
+Пользователь явно разрешил реализацию исправлений. Новые NN/GPU-возможности Rust-библиотеки
+не входили в исправление; первая версия интерактивного учебника создана отдельным чатом,
+затем по запросу пользователя перенесена в основной проект с сохранением исправлений ядра.
+
+| Этап | Статус | Проверенный результат |
+|---|---|---|
+| Исследование практик | Готово | Первичные источники и границы рекомендаций записаны в PLAN.md |
+| Tensor/core | Готово | Broadcasting, формы, checked integer arithmetic, устройства и регрессии |
+| Autograd | Готово | Однократный обход DAG, безопасные изменения, gradient checks f64 |
+| Настройки и документация | Готово | Facade, конфигурация CI, закреплённый toolchain, lockfile, достоверные примеры |
+| Общая локальная проверка | Готово | Debug/release, doctests, examples, fmt, strict Clippy, rustdoc |
+
+## Checkout и окружение
+
+- Каталог: `C:/Users/lomaster/Desktop/dev/rust_ml`.
+- Ветка: `master`; исходный commit: `9e6606aceacd9cf684996073499141b0fcd32028`.
+- Перед исправлениями рабочее дерево было чистым; результат находится в незакоммиченных изменениях поверх этого commit.
+- Проверено 2026-10-11 на Windows x86_64 MSVC, rustc/cargo 1.87.0.
+- Toolchain разработки: 1.87.0; это проверенный минимум проекта, не самая новая stable.
+- Cargo-зависимости для итоговых проверок взяты из локального cache с `--locked --offline`.
+- Локальные результаты не доказывают выполнение GitHub CI, Linux или самой новой stable: эти jobs только настроены.
+
+## Что исправлено
+
+- Формы выравниваются справа без вычитания `usize` с underflow; broadcasting учитывает нулевые оси.
+- Все четыре поэлементных оператора действительно расширяют совместимые формы через ndarray.
+- Размеры формы, ограничения layout/bytes, integer arithmetic и integer matmul проверяются до небезопасного результата.
+  Добавлены `try_zeros`/`try_ones`; удобные constructors имеют документированный panic-контракт.
+- Операции сохраняют device metadata и отклоняют недоступные/неподдерживаемые вычислители.
+- Variable clone разделяет одно значение и градиент; отслеживание находится только в Variable с floating dtype.
+- Backward обходит уникальные узлы DAG, складывает новые вклады, сокращает broadcast-градиент до исходной формы.
+  Повторный backward не распространяет заново ранее накопленные градиенты.
+- Мутация данных и tracking доступна только уникальному листу; захваченные графом значения защищены.
+  `detach()` создаёт независимую переменную.
+- Независимое ревью нашло дополнительный случай unavailable seed/leaf: теперь оба устройства проверяются
+  до записи градиента. Регрессии проверяют сохранение как пустого, так и уже накопленного градиента.
+- Facade реэкспортирует рабочий API; шаблонные NN-функции и публичный неработающий graph scaffolding удалены.
+- Добавлены лицензии, CI, lockfile и фиксированный toolchain; убраны неиспользуемые зависимости.
+- README, план, учебное руководство и правила проекта приведены к реальным возможностям.
+
+Изменения API: Tensor больше не содержит requires_grad; Variable требует FloatDType;
+`data_mut` и `set_requires_grad` возвращают Result и требуют уникального leaf.
+Пользовательские реализации DType должны предоставить checked arithmetic.
+
+## Итоговые проверки
+
+Все команды ниже завершились с exit code 0 на указанном выше checkout после исправления устройств.
+
+| Команда | Результат |
+|---|---|
+| `cargo fmt --all -- --check` | Прошла |
+| `cargo clippy --workspace --all-targets --all-features --locked --offline -- -D warnings` | Без предупреждений |
+| `cargo test --workspace --all-features --locked --offline` | 52 unit/integration tests и 5 doctests; 0 ignored |
+| `cargo test --workspace --all-features --release --locked --offline` | Те же 52 tests и 5 doctests прошли |
+| `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps --locked --offline` | Все пять crates; без предупреждений |
+| `cargo run -p rustml-tensor --example basic_tensor_ops --locked --offline` | Main выполнен, assertions прошли |
+| `cargo run -p rustml-autograd --example autograd_test --locked --offline` | Main выполнен, assertions прошли |
+| `cargo run -p rustml-autograd --example milestone_check --locked --offline` | Main выполнен, assertions прошли |
+| `cargo run -p rustml-autograd --example scalar_demo --locked --offline` | Main выполнен, assertions прошли |
+| `git diff --check` | Нет whitespace errors; Git сообщает только настройку будущего LF→CRLF |
+
+Значимые регрессии: конечные разности f64 для общего broadcast-графа; повторный backward;
+цепь из 30 удвоений с 31 уникальным узлом; пустые оси и scalar shapes; переполнения всех
+поддерживаемых integer widths; неверный seed; alias/mutation/detach; недоступные устройства.
+Это не измерение покрытия и не доказательство отсутствия всех ошибок.
+
+Локальные журналы этой сессии: каталог
+`C:/Users/lomaster/.codex/visualizations/2026/10/11/01a128c0-1c6b-71f1-a9b2-e8bdef9e4f32/work/`,
+файлы `final-debug.log`, `final-release.log`, `final-clippy.log`, `final-rustdoc.log`, `final-examples.log`.
+Они не часть переносимого repository; команды выше позволяют воспроизвести проверку.
+
+## Ограничения и следующий шаг
+
+1. Следующая реализация: autograd matmul → MSE → Linear → SGD → обучение `y = 2x + 1`.
+2. GPU, NN-слои, higher-order derivatives, model serialization и performance claims не заявлены.
+3. Перед публикацией crates сделать README/examples локальными для каждого пакета и проверить архивы:
+   facade сейчас включает `../../README.md`, а examples tensor/autograd лежат в общем каталоге.
+   `cargo package/publish` и docs.rs build не выполнялись; workspace не равен готовому пакету.
+4. Обход backward итеративный, но разрушение исключительно глубокой цепи Arc не заявлено stack-safe.
+   Конкурентный backward вместе с zero_grad/мутацией не является поддержанным учебным сценарием.
+
+## Интерактивный учебник: происхождение и текущий запуск
+
+- Чат: «Интерактивный учебник RustML», id `01a128d7-dd64-7982-8d30-febcf5522fcb` (host local).
+- Исходный worktree: `C:/Users/lomaster/.codex/worktrees/3061/rust_ml`.
+- При создании исполнитель работал только в `learning-lab/`. Последующий перенос в основной checkout
+  явно разрешён пользователем; текущий каталог — `C:/Users/lomaster/Desktop/dev/rust_ml/learning-lab`.
+- Требования: русский React/TypeScript учебник, реальные браузерные вычисления, визуальные объяснения
+  оптимизаторов/loss/backprop/training и Dense/CNN/RNN/LSTM/GRU/Transformer.
+- Поддерживаемые варианты должны быть перечислены; расширение через простой registry и параметры.
+  Нельзя обещать все существующие архитектуры как уже готовые или выдавать схему за расчёт.
+- Критерии: numerical tests, build/typecheck, реальные desktop/mobile browser проверки и README запуска.
+- Первая версия завершена и принята 2026-10-11 06:19 Europe/Moscow. Checkout по-прежнему detached
+  на `9e6606aceacd9cf684996073499141b0fcd32028`; `git status --short` показывает только `?? learning-lab/`.
+  Tracked Rust и корневые документы исходного worktree не изменены. Проверки переноса приведены выше.
+- Исполнитель выполнил `pnpm typecheck`, `pnpm test`, `pnpm build`: 22 теста прошли, production bundle создан.
+  Среда: Windows, Node 24.19.0, pnpm 11.25.0. Итоговые журналы — `learning-lab/evidence/VALIDATION.md`,
+  `tests.log`, `build.log`; координатор прочитал их и подтвердил совпадение SHA256 всех 11 файлов
+  исходников/тестов с `source-hashes.json`. Повторные сборки координатор не запускал.
+- Проверены математические примеры и градиенты всех 17 параметров XOR конечными разностями.
+  При seed 42, Adam eta=0.03 и 3000 шагах production-пример дал 4/4 и BCE 0.0001015905.
+  Исполнитель проверил desktop/390/320 px и отсутствие console error/warn;
+  координатор дополнительно открыл текущую страницу и осмотрел desktop и сохранённый mobile attention screenshot.
+- Независимая read-only проверка кода Dense/CNN/RNN/LSTM/GRU/Transformer существенных ошибок не нашла.
+  Работают малые forward-демонстрации и перечисленные варианты; Conv1D/3D, некоторые другие варианты
+  и обучение больших моделей не реализованы. Точные границы — `learning-lab/docs/architectures.md`.
+- Текущий preview основного проекта: `http://127.0.0.1:5180/`. Повторный запуск из корня:
+  `.\learn.cmd` (Node 24+, pnpm 11.25.0); исходный порт5177 относится к прежнему worktree.
+  Все инструкции и дальнейшее развитие — в README/PROGRESS самого учебника.
+- Пользователь разрешил исходному чату отвечать на необходимые вопросы исполнителя по лучшим практикам.
+- Heartbeat «Сопровождение учебника RustML», automation id `rustml`, остановлен после приёмки:
+  tool подтвердил `PAUSED` 2026-10-11 06:19 Europe/Moscow. Обязательных незавершённых этапов нет.
+
+## Условные особенности среды
+
+В sandbox rustup proxy завершался ошибкой удаления `rustup-init.exe`. Для проверок использовался
+установленный toolchain напрямую, без изменения глобальной установки:
+
+```powershell
+$toolchain = 'C:/Users/lomaster/.rustup/toolchains/stable-x86_64-pc-windows-msvc/bin'
+$env:PATH = "$toolchain;$env:PATH"
+$env:RUSTC = "$toolchain/rustc.exe"
+$env:RUSTDOC = "$toolchain/rustdoc.exe"
+$env:RUSTUP_TOOLCHAIN = 'stable-x86_64-pc-windows-msvc'
+& "$toolchain/cargo.exe" test --workspace --all-features --locked --offline
 ```
-ФАЗА 1: Восстановление Rust
-├─ 1.1 Основы языка             [████████████████████] 100% ✅
-├─ 1.2 Продвинутые концепции    [████████████░░░░░░░░]  60% 🔄 (в процессе изучения)
-└─ 1.3 Экосистема для ML        [████████░░░░░░░░░░░░]  40% 🔄 (частично, по ходу)
 
-ФАЗА 2: Основы библиотеки
-├─ Milestone 1: Базовые тензоры                    ✅ ЗАВЕРШЕН
-├─ Milestone 2: Автоматическое дифференцирование   ✅ ЗАВЕРШЕН
-├─ Milestone 3: Базовые NN слои                    🔄 В ПРОЦЕССЕ
-├─ Milestone 4: Обучение моделей                   ⬜ Не начат
-└─ Milestone 5: GPU поддержка                      ⬜ Не начат
+Это обход ограничения среды, не требование проекта. Он перестаёт быть нужен, когда обычный
+`cargo -V` работает в этом окружении. Не меняйте глобальные Git-настройки ради sandbox:
+для чтения этого checkout достаточно `git -c safe.directory=C:/Users/lomaster/Desktop/dev/rust_ml ...`.
 
-ФАЗА 3: Расширенные возможности
-├─ Milestone 6: Recurrent Networks                 ⬜ Не начат
-├─ Milestone 7: Convolutional Networks             ⬜ Не начат
-└─ Milestone 8: Data Loading                       ⬜ Не начат
+## История
 
-ФАЗА 4: Производственные возможности
-└─ (пока не начата)
-```
-
----
-
-## ✅ Что уже сделано
-
-### 🎉 Milestone 1: Базовые тензоры (месяц 1-2)
-**Статус:** ✅ **ЗАВЕРШЕН**  
-**Когда:** Октябрь 2025
-
-**Реализовано:**
-- ✅ Создание тензоров (`zeros`, `ones`, `from_vec`)
-- ✅ Арифметические операции (`+`, `-`, `*`, `/`)
-- ✅ Broadcasting rules
-- ✅ Shape manipulation
-- ✅ Type-safe API (f32, f64, i32, i64, u32, u64)
-
-**Статистика:**
-- 4 crates: `rustml-core`, `rustml-tensor`, `rustml-autograd`, `rustml`
-- 24+ unit tests ✅
-- 1 integration test ✅
-- 1 working example ✅
-
----
-
-### 🎉 Milestone 2: Автоматическое дифференцирование (месяц 3-4)
-**Статус:** ✅ **ЗАВЕРШЕН**  
-**Когда:** Октябрь 2025
-
-**Реализовано:**
-- ✅ Computational graph
-- ✅ Forward pass
-- ✅ Backward pass (chain rule)
-- ✅ Gradient computation
-- ✅ Variable operations: `+`, `*`, `scalar+`
-
-**Математика проверена:**
-- ✅ d(a + b)/da = 1
-- ✅ d(a * b)/da = b
-- ✅ d(x²)/dx = 2x
-- ✅ d(x³)/dx = 3x²
-
-**Статистика:**
-- 37 passing tests ✅
-- 3 working examples ✅
-- 0 compilation errors ✅
-
----
-
-## 🔄 В процессе
-
-### 🎯 Milestone 3: Базовые NN слои (месяц 5-6)
-**Статус:** 🔄 **В ПРОЦЕССЕ**  
-**Начат:** Январь 2026
-
-**Прогресс задач:**
-```
-✅ Задача 3.1: Matmul для Tensor       — ГОТОВО!
-   - Реализовано матричное умножение с нуля (три вложенных цикла)
-   - Добавлен transpose() для матриц
-   - 3 новых теста (matmul_2x2, matmul_2x3_3x2, matmul_dimension_error)
-   - 1 новый тест для transpose
-
-⏳ Задача 3.2: MatMulOp для autograd   ← ТЫ ЗДЕСЬ
-   - Нужно добавить градиенты для matmul
-   - ∂L/∂A = grad_output @ Bᵀ
-   - ∂L/∂B = Aᵀ @ grad_output
-
-⬜ Задача 3.3: Module trait
-⬜ Задача 3.4: Linear layer
-⬜ Задача 3.5: Activation functions
-⬜ Задача 3.6: Loss functions
-```
-
-**Изученная математика:**
-- ✅ Матричное умножение: C[i][j] = Σₖ A[i][k] × B[k][j]
-- ✅ Транспонирование: Aᵀ[j][i] = A[i][j]
-- ⏳ Градиенты matmul: ∂L/∂A = grad @ Bᵀ, ∂L/∂B = Aᵀ @ grad
-
-**Критерий готовности:**
-```rust
-let linear = Linear::new(784, 128);
-let x = Variable::randn([32, 784]);  // batch of 32
-let out = linear.forward(&x);
-assert_eq!(out.shape(), [32, 128]);
-
-// Backward pass должен обновить веса
-out.backward();
-assert!(linear.weight().grad().is_some());
-```
-
----
-
-## 📊 Общая статистика проекта
-
-### Код:
-- **Crates:** 5 (core, tensor, autograd, nn, main)
-- **Исходные файлы:** 15+ `.rs` файлов
-- **Строк кода:** ~1700+ LOC
-- **Тесты:** 40+ passing tests (20 в tensor, 12+ в autograd, 8 в core)
-
-### Документация:
-- ✅ `PLAN.md` - общий план
-- ✅ `LEARNING_GUIDE.md` - разбор реализации
-- ✅ `MILESTONE_STATUS.md` - детальный статус
-- ✅ `PROGRESS.md` - этот файл (прогресс)
-- ✅ `.cursor/rules/` - 8 файлов с правилами разработки
-
-### Примеры:
-- ✅ `basic_tensor_ops.rs` - тензорные операции
-- ✅ `autograd_test.rs` - автоматическое дифференцирование
-- ✅ `milestone_check.rs` - проверка критериев
-- ✅ `scalar_demo.rs` - scalar operations
-
----
-
-## 🎓 Режим обучения
-
-**Формат:** Ты пишешь код, AI объясняет и направляет
-
-**Для каждой задачи:**
-- 📐 Математическая теория
-- 💻 Rust концепции
-- 🎯 Конкретная задача
-- 💡 Подсказки
-- ✅ Критерии проверки
-
-**Подробности:** см. `.cursor/rules/teaching-mode.md`
-
----
-
-## 📅 История изменений
-
-| Дата | Событие |
-|------|---------|
-| 2026-01-08 | 🔄 Начат Milestone 3 - реализован matmul и transpose |
-| 2025-11-02 | ✅ Создан файл отслеживания прогресса |
-| 2025-11-02 | ✅ Добавлен teaching-mode.md |
-| 2025-10-26 | ✅ Завершен Milestone 2 (Autograd) |
-| 2025-10-25 | ✅ Завершен Milestone 1 (Tensors) |
-| 2025-10-24 | 🎬 Начало проекта - создан план |
-
----
-
-## 🚀 Быстрые команды
-
-```bash
-# Запустить все тесты
-cargo test
-
-# Запустить конкретный пример
-cargo run --example basic_tensor_ops
-cargo run --example autograd_test
-cargo run --example milestone_check
-
-# Проверить код
-cargo check
-
-# Сборка релиза
-cargo build --release
-```
-
----
-
-**📍 ТЕКУЩИЙ ЭТАП:** Milestone 3 - Neural Network Layers (в процессе)  
-**🎯 СЛЕДУЮЩИЙ ШАГ:** Задача 3.2 - Добавить MatMulOp в autograd с градиентами
-
-**Прогресс:** matmul ✅ → transpose ✅ → MatMulOp ⏳ → Module trait → Linear layer
-
+- 2025-10: созданы tensor и первые операции autograd.
+- 2026-01-08: добавлены CPU matmul и transpose.
+- 2026-10-11: выполнены ревью, исправления ядра и настройки, исследование практик и локальная проверка;
+  отдельно запущена разработка интерактивного учебника.

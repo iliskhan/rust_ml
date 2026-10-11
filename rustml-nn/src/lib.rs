@@ -1,14 +1,4 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+//! Planned neural-network layers and optimizers for RustML.
+//!
+//! This crate currently has no neural-network API. CPU tensors and automatic
+//! differentiation are available through `rustml-tensor` and `rustml-autograd`.

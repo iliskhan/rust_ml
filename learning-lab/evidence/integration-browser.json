@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:5180/#architectures",
+  "xor": "3000 steps, BCE 1.02e-4, 4/4",
+  "causalMask": [
+    1,
+    0,
+    0
+  ],
+  "viewportWidth": 320,
+  "documentWidths": {
+    "client": 305,
+    "scroll": 305
+  },
+  "console": []
+}

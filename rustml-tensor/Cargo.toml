@@ -2,6 +2,7 @@
 name = "rustml-tensor"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -10,11 +11,13 @@ keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
-rustml-core = { path = "../rustml-core" }
+rustml-core = { path = "../rustml-core", version = "0.1.0" }
 ndarray.workspace = true
-num-traits.workspace = true
 serde = { workspace = true, features = ["derive"] }
 
 [[example]]
 name = "basic_tensor_ops"
 path = "../examples/basic_tensor_ops.rs"
+
+[package.metadata.docs.rs]
+all-features = true

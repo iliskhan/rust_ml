@@ -2,6 +2,7 @@
 name = "rustml"
 version.workspace = true
 edition.workspace = true
+rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -10,3 +11,9 @@ keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+rustml-core = { path = "../rustml-core", version = "0.1.0" }
+rustml-tensor = { path = "../rustml-tensor", version = "0.1.0" }
+rustml-autograd = { path = "../rustml-autograd", version = "0.1.0" }
+
+[package.metadata.docs.rs]
+all-features = true

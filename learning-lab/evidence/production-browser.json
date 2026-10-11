@@ -1,0 +1,7 @@
+{
+  "checkedAtUTC": "2026-10-11T03:09:52.246Z",
+  "url": "http://127.0.0.1:5178/#architectures",
+  "xor": "Шаг 3000 · BCE 1.02e-4 · верных классов 4/4",
+  "mask": "scoreⱼ = Q1 · Kⱼ / √2\nα = softmax(score) = [1; 0; 0]; Σα = 1",
+  "console": []
+}

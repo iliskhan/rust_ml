@@ -1,0 +1,135 @@
+{
+  "checkedAt": "2026-10-11T07:16:10.9182888+03:00",
+  "checkout": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml",
+  "revision": "9e6606aceacd9cf684996073499141b0fcd32028",
+  "files": [
+    {
+      "path": "learning-lab/tests\\architectures.test.ts",
+      "sha256": "091199298AA5487CD516FAA0318DFB4327AEC2F935E0CDDAE201B7BBB6F814FD"
+    },
+    {
+      "path": "learning-lab/tests\\content-links.test.ts",
+      "sha256": "6DB95D6925C469FAC5313900DD97A4AA29F3C57A9AD276C1743386099AF048CA"
+    },
+    {
+      "path": "learning-lab/tests\\conceptMath.test.ts",
+      "sha256": "B47F026F46FDDB0D9B074BC55E151F3693D34F58EFB4DA1B80D8C6A579DC97D9"
+    },
+    {
+      "path": "learning-lab/tests\\curriculum.test.ts",
+      "sha256": "476D738C834ABB1E5D3B500BDCE34E79969F1F99B7553DDED2DB0FF4AB0234DF"
+    },
+    {
+      "path": "learning-lab/tests\\learning-navigation.test.ts",
+      "sha256": "60F37CDB44EFB0990EE5CCED6B255121303EC5914734804A1E7E33889E1D00C5"
+    },
+    {
+      "path": "learning-lab/src\\conceptMath.ts",
+      "sha256": "B52CB297052F0387FD783BF1F06A8D0F7AA795596C221C919036DB0C9160B100"
+    },
+    {
+      "path": "learning-lab/src\\ConceptLesson.tsx",
+      "sha256": "F05E69F29D32721B0F6E849DAD7D9EDCBB6BCAF2AA094A707B5B8EFA99A61E2A"
+    },
+    {
+      "path": "learning-lab/src\\concept-lessons.css",
+      "sha256": "E587F0224CDC0AF24E7CF02F07DF974B18C0F48538E084725F3A14F1662A65E9"
+    },
+    {
+      "path": "learning-lab/src\\architectures.ts",
+      "sha256": "E76EB9A07C661A152A6E6705A30A355D0C80EE06ECE4B90C547A41F9B3C3AA67"
+    },
+    {
+      "path": "learning-lab/src\\ArchitectureLesson.tsx",
+      "sha256": "D67C9155530A8B1F702E49F7077F71D4B8A0955E6A6E6217E73E780D68C25AE6"
+    },
+    {
+      "path": "learning-lab/src\\App.tsx",
+      "sha256": "E1AD94A240424240E02C24F628CD8309359530EC2F94736680BB0A2D278834AF"
+    },
+    {
+      "path": "learning-lab/tests\\math.test.ts",
+      "sha256": "814BE4A6C99AE3114963B611DAE4452ECEEB943A9C4743610ED7F8AB96404D9C"
+    },
+    {
+      "path": "learning-lab/src\\CurriculumView.tsx",
+      "sha256": "E10B3F173BE624E9FCD17DDCB9C02CB9EAA1102E03FAABD0FFED8A55BB2F4318"
+    },
+    {
+      "path": "learning-lab/src\\curriculum.ts",
+      "sha256": "8197CC05102D6F933DE4064A47179220BFEB972A77723B852205B99873A2D6A2"
+    },
+    {
+      "path": "learning-lab/src\\concepts.ts",
+      "sha256": "A15DEB530D4F9605A87A022F3BE77C78BDD3498592D88BB66978E031685060BE"
+    },
+    {
+      "path": "learning-lab/src\\Experiments.tsx",
+      "sha256": "C78B637F1C18178C3EF6C375B7C1E0297EE68ABF4CDEAAEC54F5FE17D39FE9D2"
+    },
+    {
+      "path": "learning-lab/src\\Foundations.tsx",
+      "sha256": "08F4FCB8924BA87F82C4F823D600405B6D7718A494A10897F74D58BD205AEB7C"
+    },
+    {
+      "path": "learning-lab/tests\\transformerMath.test.ts",
+      "sha256": "7BA1DC75DCF42417146731D48D1B76CDCF9D512ECFEC01DBF1F3545C6DBC2669"
+    },
+    {
+      "path": "learning-lab/src\\math.ts",
+      "sha256": "7417FAE9CA3F9052EBCDEDD84B6A7FD34F48F235DBAFCD9B83AE578609375943"
+    },
+    {
+      "path": "learning-lab/src\\main.tsx",
+      "sha256": "81DF18E0D166E771FAB98938D62CF02D971BC58C08BB368BB1D035A45B3B06CA"
+    },
+    {
+      "path": "learning-lab/src\\learning-navigation.ts",
+      "sha256": "FEFCC45CB50B535EBBC404A8B3B515D16A946961790567EA49632F5B45F297E5"
+    },
+    {
+      "path": "learning-lab/src\\learning-context.tsx",
+      "sha256": "876B6B9BBB1A1B61A9E446A7DE83028CADDA3E32B92912549B6754A95012F434"
+    },
+    {
+      "path": "learning-lab/src\\KnowledgeExplorer.tsx",
+      "sha256": "BB94453384C7FE81A57F2E26D3F011ADEFE30C605EB943E57B8D5B95C2A5D577"
+    },
+    {
+      "path": "learning-lab/src\\TransformerCourse.tsx",
+      "sha256": "27CA3E3263C3DF4485E734561EE2AE060E7F5501FDF197496D87608CA64601A1"
+    },
+    {
+      "path": "learning-lab/src\\transformer-course.css",
+      "sha256": "47322FB6C81A799F626F086086EC87CD7BC785E4DF209DD423C0F1CD395742AC"
+    },
+    {
+      "path": "learning-lab/src\\styles.css",
+      "sha256": "05F434BDBB0D0D3E9712F1BA1163BA66A578CCC0E2614708DC7567EBA8056B50"
+    },
+    {
+      "path": "learning-lab/src\\transformerMath.ts",
+      "sha256": "3FD1B6E56A7A8B1F80A884C5C83CD12A16C09319D725A9FABE5C7726DFD3B758"
+    },
+    {
+      "path": "learning-lab/src\\ui.tsx",
+      "sha256": "40E911048362EC1D97F64DE5C21EF3061352DFE825FEBACE1ACF601F40A02FD3"
+    },
+    {
+      "path": "learning-lab/package.json",
+      "sha256": "FE8AB0C31CD2569464CA395915820A702BE6E6E86D4B02DF6F7BBDF86A067A5A"
+    },
+    {
+      "path": "learning-lab/pnpm-lock.yaml",
+      "sha256": "9DC1C2581F8A0EFE761139D12C35CCF130C26C65157C5DEAF117CEA85531AF8F"
+    },
+    {
+      "path": "learning-lab/tsconfig.json",
+      "sha256": "8046C2431C82F4DC00357C806010C6BAACAEBA949095F6FFD9D380F09D6B2F71"
+    },
+    {
+      "path": "learn.cmd",
+      "sha256": "3FC912B590762AF20E42A39C44EDC751192A9B3F8F84B8A2B979332020CC37B4"
+    }
+  ]
+}

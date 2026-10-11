@@ -6,10 +6,10 @@ use crate::Device;
 pub trait Backend: Send + Sync + std::fmt::Debug {
     /// Имя backend'а
     fn name(&self) -> &str;
-    
+
     /// Поддерживаемые устройства
     fn supported_devices(&self) -> Vec<crate::DeviceKind>;
-    
+
     /// Проверить совместимость с устройством
     fn supports_device(&self, device: &dyn Device) -> bool {
         self.supported_devices().contains(&device.kind())
@@ -30,7 +30,7 @@ impl Backend for CpuBackend {
     fn name(&self) -> &str {
         "CPU"
     }
-    
+
     fn supported_devices(&self) -> Vec<crate::DeviceKind> {
         vec![crate::DeviceKind::Cpu]
     }
@@ -48,18 +48,18 @@ impl BackendRegistry {
         let mut registry = Self {
             backends: Vec::new(),
         };
-        
+
         // Регистрируем CPU backend по умолчанию
         registry.register(Box::new(CpuBackend::new()));
-        
+
         registry
     }
-    
+
     /// Зарегистрировать новый backend
     pub fn register(&mut self, backend: Box<dyn Backend>) {
         self.backends.push(backend);
     }
-    
+
     /// Найти backend для устройства
     pub fn find_backend(&self, device: &dyn Device) -> Option<&dyn Backend> {
         self.backends
@@ -67,7 +67,7 @@ impl BackendRegistry {
             .find(|backend| backend.supports_device(device))
             .map(|b| b.as_ref())
     }
-    
+
     /// Получить все доступные backends
     pub fn available_backends(&self) -> &[Box<dyn Backend>] {
         &self.backends
@@ -90,16 +90,16 @@ mod tests {
         let backend = CpuBackend::new();
         assert_eq!(backend.name(), "CPU");
         assert_eq!(backend.supported_devices(), vec![crate::DeviceKind::Cpu]);
-        
+
         let cpu_device = Cpu::new();
         assert!(backend.supports_device(&cpu_device));
     }
-    
+
     #[test]
     fn test_backend_registry() {
         let registry = BackendRegistry::new();
         assert_eq!(registry.available_backends().len(), 1);
-        
+
         let cpu_device = Cpu::new();
         let backend = registry.find_backend(&cpu_device);
         assert!(backend.is_some());

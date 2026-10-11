@@ -1,335 +1,83 @@
-# 🦀 RustML - План разработки ML библиотеки на Rust
+# План RustML
 
-## 📋 Обзор проекта
+Обновлено: 2026-10-11. Текущие результаты проверок — [PROGRESS.md](PROGRESS.md).
+Цель — изучить Rust и устройство ML через небольшую CPU-библиотеку с проверяемой математикой.
+Готовность определяется работающим сценарием и тестами, а не количеством crates или сроком в месяцах.
 
-**Цель:** Создать полнофункциональную библиотеку машинного обучения на Rust, аналогичную TensorFlow/PyTorch
+## 1. Надёжное ядро — проверено 2026-10-11
 
-**Целевая аудитория:** Разработчики, желающие использовать ML с производительностью и безопасностью Rust
+- Исправить broadcasting разных рангов, скаляров и пустых осей.
+- Определить проверяемые размеры форм и арифметику integer tensors.
+- Обрабатывать каждый узел autograd один раз за backward, суммируя все вклады.
+- Сделать идентичность Variable и ограничения мутаций согласованными.
+- Проверить производные конечными разностями на f64 и отдельными регрессиями.
+- Обеспечить публичный вход через rustml, исполняемую документацию и CI.
 
-**Ключевые принципы:**
-- Type safety через систему типов Rust
-- Zero-copy операции где возможно
-- Memory efficiency для больших моделей
-- Built-in parallelism
-- Hardware abstraction (CPU/GPU)
+Критерий завершения: регрессии, debug/release, doctests, примеры, fmt, strict Clippy и rustdoc проходят.
+Эти проверки выполнены локально на Windows; команды, окружение и границы записаны в checkpoint.
 
----
+## 2. Первая обучаемая модель — следующий этап
 
-## 📚 ФАЗА 1: Восстановление и углубление знаний Rust (4-6 недель)
+1. Добавить autograd для matmul: `dA = grad @ Bᵀ`, `dB = Aᵀ @ grad`.
+2. Добавить нужные для MSE операции и редукции с проверкой производных.
+3. Реализовать Linear; параметры должны сохранять связь между значениями и градиентами Variable.
+4. Сделать минимальный шаг SGD, используя безопасное изменение leaf-параметров после освобождения графа.
+5. Обучить `y = 2x + 1` на фиксированных данных.
 
-### 1.1 Основы языка (неделя 1-2)
-**Критичные концепции:**
-- **Ownership, borrowing, lifetimes** - критично для работы с тензорами без копирования
-- **Trait system** - основа полиморфизма в библиотеке  
-- **Error handling** (Result, Option) - обязательно для численных вычислений
-- **Generic types** - типы данных для тензоров разной размерности
-- **Modules и crates** - организация большой библиотеки
+Критерий: ошибка уменьшается, веса приближаются к ожидаемым, градиенты имеют формы параметров,
+последовательные шаги обучения не используют устаревший граф. Backward вычисляет градиенты;
+SGD обновляет веса. Готовность этого этапа сейчас не заявлена.
 
-**Практические задания:**
-- Реализовать простой Vec3/Matrix struct с операциями
-- Создать trait для математических операций
-- Написать error types для ML операций
+## 3. Небольшой MLP
 
-### 1.2 Продвинутые концепции (неделя 3-4)
-**Углубленное изучение:**
-- **Unsafe Rust** - для оптимизированных операций с памятью
-- **Макросы** - для создания DSL (Domain Specific Language)
-- **Async/await** - для параллельных вычислений и I/O
-- **Performance profiling** - критично для ML
-- **Memory management** - управление большими массивами данных
+После работающего обучения: ReLU, несколько Linear-слоёв и компактная задача классификации.
+Проектировать Module/Sequential на основании этого сценария; заранее расширяемый framework не нужен.
+Проверять ошибки входных форм и численную устойчивость новой loss-функции.
 
-**Практические задания:**
-- Написать unsafe код для быстрых matrix операций
-- Создать макросы для определения NN архитектур
-- Профилирование производительности с Criterion
+## 4. Отложенные темы
 
-### 1.3 Экосистема для ML (неделя 5-6)
-**Ключевые crates:**
-- **ndarray** - многомерные массивы (аналог NumPy)
-- **rayon** - параллелизм данных
-- **candle-core** - изучение существующих ML решений
-- **tch** (PyTorch bindings) - понимание интеграции с C++
-- **BLAS/LAPACK** биндинги - линейная алгебра
+- Сериализация модели и воспроизводимая случайная инициализация.
+- CNN, RNN, attention и загрузка данных — по одной учебной задаче.
+- Профилирование CPU, затем обоснованные оптимизации.
+- Реальный второй backend, GPU и distributed training — только после потребности и измерений.
+- Higher-order derivatives, mixed precision, DSL, макросы и builders не считаются реализованными.
+- Перед публикацией crates: сделать README и примеры самодостаточными внутри каждого пакета,
+  проверить `cargo package` и изолированную сборку архивов. Сейчас facade включает корневой README,
+  а tensor/autograd используют примеры из общего каталога workspace; публикация не проверялась.
 
-**Анализ конкурентов:**
-- Изучить архитектуру Candle
-- Понять подходы в Burn
-- Проанализировать SmartCore
+## Инженерные решения
 
----
+- Сохраняем существующее разделение core/tensor/autograd/nn/facade.
+- Используем ndarray и стандартные контейнеры; новые зависимости добавляем под конкретную задачу.
+- Tensor отвечает за числа; Variable — за tracking и градиент.
+- Floating dtype обязателен для autograd; integer tensor arithmetic имеет явную checked-политику.
+- Матрицы имеют динамические формы, поэтому их совместимость проверяется во время исполнения.
+- CPU — единственный реализованный вычислитель. Backend registry и GPU enum не доказывают GPU-поддержку.
+- Изменение shared/non-leaf Variable отклоняется. Это простой выбранный контракт;
+  полноценные version counters и in-place autograd пока не нужны.
+- Не обещаем zero-copy только из-за `&Tensor`: проверяем реальные выделения и клонирование.
+- Lockfile хранится в Git. Rust 1.87 — проверяемый минимум и фиксированный toolchain разработки,
+  а не утверждение о самой новой версии компилятора. Обновления проходят отдельную проверку.
 
-## 🏗 ФАЗА 2: Архитектура библиотеки "RustML" (2-3 недели)
+## Исследование первичных источников — 2026-10-11
 
-### 2.1 Структура проекта
-```
-rustml/
-├── Cargo.toml              # Root workspace
-├── README.md               # Документация проекта
-├── CONTRIBUTING.md         # Гайдлайны для контрибьюторов
-├── rustml-core/            # Основные типы и traits
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── tensor/         # Tensor implementation
-│   │   ├── device/         # Device abstraction
-│   │   ├── dtype/          # Data types
-│   │   └── error/          # Error handling
-│   └── Cargo.toml
-├── rustml-tensor/          # Tensor operations
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── ops/            # Mathematical operations
-│   │   ├── indexing/       # Slicing и indexing
-│   │   └── broadcast/      # Broadcasting rules
-│   └── Cargo.toml
-├── rustml-autograd/        # Automatic differentiation
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── graph/          # Computational graph
-│   │   ├── backward/       # Backward pass
-│   │   └── variable/       # Variable with gradients
-│   └── Cargo.toml
-├── rustml-nn/              # Neural network layers
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── layers/         # NN layers
-│   │   ├── activations/    # Activation functions
-│   │   ├── loss/           # Loss functions
-│   │   └── init/           # Weight initialization
-│   └── Cargo.toml
-├── rustml-optim/           # Optimizers
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── sgd.rs
-│   │   ├── adam.rs
-│   │   └── scheduler/      # Learning rate scheduling
-│   └── Cargo.toml
-├── rustml-data/            # Data loading and preprocessing
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── dataset/        # Dataset abstractions
-│   │   ├── transform/      # Data transformations
-│   │   └── loader/         # Data loaders
-│   └── Cargo.toml
-├── rustml-vision/          # Computer vision
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── models/         # Pre-trained models
-│   │   └── transforms/     # Image transformations
-│   └── Cargo.toml
-├── rustml-nlp/             # Natural Language Processing
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── tokenizers/     # Text tokenization
-│   │   └── embeddings/     # Word embeddings
-│   └── Cargo.toml
-├── rustml-gpu/             # GPU backends
-│   ├── src/
-│   │   ├── lib.rs
-│   │   ├── cuda/           # CUDA implementation
-│   │   └── opencl/         # OpenCL implementation
-│   └── Cargo.toml
-├── rustml/                 # Main crate (re-exports)
-│   ├── src/
-│   │   └── lib.rs
-│   └── Cargo.toml
-├── examples/               # Примеры использования
-├── benchmarks/             # Performance benchmarks
-└── tests/                  # Integration tests
-```
+| Источник | Что применяем и где предел |
+|---|---|
+| [PyTorch: autograd mechanics](https://docs.pytorch.org/docs/2.14/notes/autograd.html) | Сохранение данных forward и контроль мутаций. Запрет мутации shared Variable — наше более простое решение; полная совместимость с PyTorch не заявлена. |
+| [PyTorch: broadcasting](https://docs.pytorch.org/docs/2.14/notes/broadcasting.html) | Выравнивание осей справа и расширение единичных осей. |
+| [Tensor.sum_to_size](https://docs.pytorch.org/docs/main/generated/torch.Tensor.sum_to_size.html) | Суммирование градиента до исходной формы. Это также следует из правила цепочки при повторном использовании элемента. |
+| [PyTorch: gradcheck](https://docs.pytorch.org/docs/main/generated/torch.autograd.gradcheck.gradcheck.html) | Центральные конечные разности на f64 и гладких входах. Они дополняют, но не заменяют граничные регрессии. |
+| [Cargo: CI](https://doc.rust-lang.org/cargo/guide/continuous-integration.html) | Проверка MSRV, тесты и чистые предупреждения; закрепляем toolchain строгого lint-job, чтобы новые lint не меняли результат незаметно. |
+| [Cargo: lockfile](https://doc.rust-lang.org/cargo/guide/cargo-toml-vs-cargo-lock.html) | Воспроизводимые зависимости workspace; обновления проверяем отдельно. |
+| [Cargo: test targets](https://doc.rust-lang.org/cargo/commands/cargo-test.html#target-selection) | `--all-targets` не включает doctests. Основной запуск без этого флага; примеры запускаются отдельно. |
+| [docs.rs metadata](https://docs.rs/about/metadata) | Настройки находятся в `[package.metadata.docs.rs]` каждого crate. |
 
-### 2.2 Ключевые traits и типы
-```rust
-// Основные абстракции
-pub trait Device: Send + Sync {}
-pub trait DType: Copy + Clone + Send + Sync {}
-pub trait Backend: Send + Sync {}
+Обратный топологический обход с накоплением вкладов выбран из правила цепочки и структуры DAG.
+Это инженерное решение для устранения повторного обхода путей, а не утверждение, что другой
+фреймворк требует точно таких же Rust-типов. Исследование не является сертификацией библиотеки;
+источники и локальные тесты не заменяют будущие проверки новых возможностей.
 
-// Tensor system
-pub struct Tensor<T: DType, D: Device> { ... }
-pub trait TensorOps<T: DType> { ... }
+## Учебный цикл
 
-// Neural networks
-pub trait Module {
-    type Input;
-    type Output;
-    fn forward(&self, input: Self::Input) -> Self::Output;
-}
-
-// Autograd
-pub struct Variable<T> {
-    data: Tensor<T>,
-    grad: Option<Tensor<T>>,
-    requires_grad: bool,
-}
-```
-
----
-
-## 🚀 ФАЗА 3: Поэтапная реализация (6-12 месяцев)
-
-### 3.1 Milestone 1: Базовые тензоры (месяц 1-2)
-**Цели:**
-- [x] Система типов для тензоров
-- [x] Базовые арифметические операции (+, -, *, /)
-- [x] Индексирование и slicing
-- [x] Broadcasting rules (как в NumPy)
-- [x] Сериализация/десериализация
-
-**Критерии готовности:**
-```rust
-let a = Tensor::zeros([2, 3]);
-let b = Tensor::ones([2, 3]);
-let c = &a + &b;  // Broadcasting и ownership
-assert_eq!(c.shape(), [2, 3]);
-```
-
-### 3.2 Milestone 2: Автоматическое дифференцирование (месяц 3-4)
-**Цели:**
-- [x] Computational graph representation
-- [x] Forward pass execution
-- [x] Backward pass и gradient computation
-- [x] Memory management для градиентов
-- [x] Higher-order derivatives support
-
-**Критерии готовности:**
-```rust
-let x = Variable::new(Tensor::from([2.0]), true);
-let y = &x * &x + 3.0;
-y.backward();
-assert_eq!(x.grad().unwrap().item(), 4.0); // dy/dx = 2x = 4
-```
-
-### 3.3 Milestone 3: Базовые NN слои (месяц 5-6)
-**Цели:**
-- [x] Linear/Dense слои с параметрами
-- [x] Activation functions (ReLU, Sigmoid, Tanh)
-- [x] Loss functions (MSE, CrossEntropy)
-- [x] Basic optimizers (SGD, Adam)
-- [x] Model serialization
-
-**Критерии готовности:**
-```rust
-let model = Sequential::new()
-    .add(Linear::new(784, 128))
-    .add(ReLU::new())
-    .add(Linear::new(128, 10));
-    
-let loss = model.forward(input).cross_entropy(target);
-loss.backward();
-optimizer.step();
-```
-
-### 3.4 Milestone 4: Convolutional слои (месяц 7-8)
-**Цели:**
-- [x] Conv1D, Conv2D implementations
-- [x] Pooling operations (Max, Avg)
-- [x] Batch normalization
-- [x] Dropout для регуляризации
-
-### 3.5 Milestone 5: Продвинутые возможности (месяц 9-12)
-**Цели:**
-- [x] RNN/LSTM/GRU implementations
-- [x] Attention mechanisms
-- [x] GPU backend (CUDA/OpenCL)
-- [x] Distributed training support
-
----
-
-## 🎯 ПРАКТИЧЕСКИЕ ПРОЕКТЫ ДЛЯ КАЖДОГО ЭТАПА
-
-### Этап 1: Mnist Classifier
-- Простая fully-connected сеть
-- Обучение на MNIST
-- Валидация архитектуры
-
-### Этап 2: CNN for CIFAR-10
-- Convolutional layers
-- Data augmentation
-- Model checkpointing
-
-### Этап 3: Transfer Learning
-- Pre-trained models
-- Fine-tuning
-- Feature extraction
-
-### Этап 4: Transformer
-- Self-attention
-- Positional encoding
-- Text classification
-
----
-
-## 📊 МЕТРИКИ УСПЕХА
-
-### Производительность
-- **Benchmark против PyTorch** на стандартных задачах
-- **Memory usage** - сравнение потребления памяти
-- **Training speed** - время обучения моделей
-
-### Качество кода
-- **Test coverage** > 80%
-- **Documentation coverage** > 90%
-- **Zero unsafe code** в public API
-
-### Usability
-- **API ergonomics** - простота использования
-- **Error messages** - понятные сообщения об ошибках
-- **Examples** - рабочие примеры для каждого компонента
-
----
-
-## 🔄 ИТЕРАТИВНЫЙ ПРОЦЕСС
-
-1. **Design** - проектирование API
-2. **Implement** - базовая реализация
-3. **Test** - unit и integration тесты
-4. **Benchmark** - измерение производительности
-5. **Optimize** - улучшение performance
-6. **Document** - документация и примеры
-7. **Review** - code review и рефакторинг
-
----
-
-## 📚 РЕСУРСЫ ДЛЯ ИЗУЧЕНИЯ
-
-### Книги
-- "Programming Rust" (2nd edition)
-- "Rust for Rustaceans"
-- "Zero To Production In Rust"
-
-### Проекты для изучения
-- **Candle** - ML framework на Rust
-- **Burn** - deep learning framework
-- **ndarray** - N-dimensional arrays
-- **nalgebra** - linear algebra
-
-### Статьи и ресурсы
-- Rust Performance Book
-- The Rustonomicon (unsafe Rust)
-- Rust API Guidelines
-
----
-
-## ⚠️ ВОЗМОЖНЫЕ ПРОБЛЕМЫ И РЕШЕНИЯ
-
-### Проблема: Сложность borrow checker с тензорами
-**Решение:** Использование Arc/Rc для shared ownership, cow patterns
-
-### Проблема: Performance overhead
-**Решение:** Профилирование с perf, оптимизация hot paths, unsafe код где нужно
-
-### Проблема: GPU integration
-**Решение:** Абстракция через traits, постепенная реализация backends
-
----
-
-## 🎯 КОНЕЧНАЯ ЦЕЛЬ
-
-Создать production-ready ML библиотеку, которая:
-- Конкурирует по производительности с PyTorch/TensorFlow
-- Обеспечивает type safety на уровне компиляции
-- Имеет ergonomic API
-- Поддерживает современные ML подходы
-- Готова для использования в продакшене
-
-**Примерный timeline:** 12-18 месяцев до первой stable версии
+Математика → маленькая реализация → независимая проверка → объяснение результата → следующий шаг.
+Начинать с unsafe, SIMD, обязательной многопоточности или десятков будущих crates не требуется.
