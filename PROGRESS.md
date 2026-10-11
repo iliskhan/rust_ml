@@ -1,9 +1,34 @@
 # Прогресс RustML
 
-Обновлено: 2026-10-11 19:48 Europe/Moscow. Учебная цель и порядок развития — [PLAN.md](PLAN.md).
+Обновлено: 2026-10-11 22:48 Europe/Moscow. Учебная цель и порядок развития — [PLAN.md](PLAN.md).
 Этот файл — текущий checkpoint; результаты прошлых запусков не заменяют проверку изменённого кода.
 
 ## Текущая задача и результат
+
+### Сохраняемые опыты и учебная практика — проверено, 2026-10-11 22:48 Europe/Moscow
+
+Начало с чистого `fd19da780d8bb3800853894d8f3af6c2b97c40c5` в worktree6209,
+ветка `codex/ui-ux-learning-lab`; предыдущий push подтверждён в чате.
+Три агента реализовали Boundary saving/comparison, attention geometry/practice
+и foundational action tasks в раздельных файлах; root — поиск, интеграцию,
+браузер и мобильные исправления. Новых зависимостей нет; Rust и math core не менялись.
+Пять направлений приняты:192/192 теста, typecheck и build PASS
+(Node24.19.0 / pnpm11.25.0 / Vite7.3.7; финальная сборка около22:43 MSK).
+Два независимых review без подтверждённых кодовых дефектов. Настоящий IAB:
+desktop1280, mobile320, reflow640; JSON скачан и импортирован; повреждённый
+формат отклонён без замены current/A/B. После восстановления A100 следующий шаг
+даёт ту же пробу0.2750037843055549; reload сохраняет101/A100/B101 на паузе.
+Практика ReLU/MSE/backprop/causal, search→concept→lesson с точным focus/scroll,
+пауза обучения, клавиатурный выбор ключей и прокрутка A/B проверены.
+В сравнении Adam/SGD при одинаковых seed42, сети2→8→8→1, η.02 и100 шагах
+validation BCE соответственно0.128654/0.528794; это один опыт, не общий рейтинг.
+Mobile исправления подтверждены screenshots: карты A/B207.6px вместо99.8px,
+деления attention≈11.37screenpx. Console warn/error0 после восстановления IAB.
+Полноценный screen-reader, text-only zoom200% и живые начинающие не проверялись;
+границы и сценарий исследования — в [приёмке](learning-lab/evidence/learning-upgrades/README.md).
+Один раз инструмент потерял браузерную сессию при скачивании; повторный export/import
+прошёл, результат до повтора не засчитывался. Следующий шаг: commit/push и сверка
+local/remoteSHA; итог root сообщает в чате. Merge и deploy не входят в задачу.
 
 ### UI/UX Learning Lab — проверено, 2026-10-11 19:48 Europe/Moscow
 
@@ -23,9 +48,9 @@ root интегрировал изменения и исправил два за
 319 tracked-файлов вне UI/doc allowlist неизменны, включая математику, Rust,
 dependencies/toolchain/CI/tests. Исходники после final review не менялись.
 [Приёмка, before/after и пределы проверки](learning-lab/evidence/ui-ux/README.md).
-Следующий шаг этого checkpoint: commit, обычный push своей ветки, сверка remoteSHA
-и clean. Результат Git delivery root сообщает в завершении чата; merge не входит
-в эту задачу. Этот checkpoint не утверждает, что push уже выполнен.
+Git delivery этого предыдущего этапа завершён: `fd19da780d8bb3800853894d8f3af6c2b97c40c5`,
+обычный push ветки `codex/ui-ux-learning-lab`, local/remoteSHA совпали; это база
+текущей задачи выше. Merge не выполнялся.
 
 ### Разбор чисел и скрытые признаки MLP — реализация принята, 2026-10-11
 

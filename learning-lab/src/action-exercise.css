@@ -1,0 +1,18 @@
+.action-exercise {
+  margin-block: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line, #bac8c1);
+  border-radius: 14px;
+  background: var(--paper, #fffefa);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.action-exercise h3 { margin-block: .4rem .7rem; }
+.action-exercise .button-row { flex-wrap: wrap; }
+.action-exercise button { max-width: 100%; white-space: normal; }
+.action-exercise summary { cursor: pointer; }
+.action-exercise :is(button, summary):focus-visible { outline: 3px solid var(--accent, #27694e); outline-offset: 3px; }
+@media (max-width: 380px) {
+  .action-exercise { padding: .8rem; }
+  .action-exercise .button-row button { width: 100%; }
+}

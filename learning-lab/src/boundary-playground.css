@@ -1,4 +1,28 @@
 .boundary-playground>.eyebrow{margin-bottom:8px}
+.boundary-playground .boundary-save-status{font-size:12px;margin-top:10px;color:#3c614b}
+.boundary-playground .boundary-saved{margin-top:16px;border:1px solid #d8dfd1;border-radius:8px;padding:12px 15px;background:#fbfbf6}
+.boundary-saved>summary{line-height:1.6}
+.boundary-saved>summary>span{display:block;font-size:12px;font-weight:400;color:#53624d}
+.boundary-saved .button-row{gap:8px;flex-wrap:wrap}
+.boundary-saved button,.boundary-error button{min-height:44px;padding:9px 12px;font-size:13px}
+.boundary-import-input{display:none}
+.boundary-slot-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.boundary-slot-controls>div{min-width:0;border:1px solid #dce1d6;border-radius:6px;padding:12px}
+.boundary-slot-controls h4{margin:0;font-size:15px}
+.boundary-slot-controls .note{margin-top:7px;font-size:12px}
+.boundary-comparison-table{max-width:100%;overflow-x:auto;margin:18px 0}
+.boundary-comparison-table table{width:100%;border-collapse:collapse;font-size:12px;line-height:1.5}
+.boundary-comparison-table caption{text-align:left;font-weight:600;color:var(--deep);margin-bottom:10px}
+.boundary-comparison-table th,.boundary-comparison-table td{padding:9px 10px;text-align:left;vertical-align:top;border-bottom:1px solid #dce1d6;font-variant-numeric:tabular-nums}
+.boundary-comparison-table th{font-weight:600;color:var(--deep)}
+.boundary-comparison-table thead{background:#eff3e9}
+.boundary-comparison-maps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.boundary-comparison-map{margin:0;min-width:0}
+.boundary-comparison-map figcaption{font-weight:600;font-size:13px;color:var(--deep);margin-bottom:8px}
+.boundary-comparison-map svg{display:block;width:100%;max-width:320px;height:auto;margin:auto}
+.boundary-comparison-map text{font:11px "Segoe UI",Arial,sans-serif;fill:#233d30}
+.boundary-comparison-warning{padding:10px 12px;border-left:3px solid #b88f71;background:#f6f0e5}
+@media(max-width:560px){.boundary-slot-controls{grid-template-columns:1fr}.boundary-playground .boundary-saved{padding:10px 12px}.boundary-comparison-table th,.boundary-comparison-table td{padding:8px 5px}.boundary-comparison-map figcaption{font-size:12px}.boundary-comparison-maps{grid-template-columns:1fr;gap:20px}.boundary-comparison-map text{font-size:14px}}
 .boundary-playground #boundary-experiment,.boundary-playground #network-representations{scroll-margin-top:20px}
 .boundary-playground .boundary-setup{margin-top:18px;padding:12px 15px;border:1px solid #d8dfd1;border-radius:8px;background:#f8f9f3}
 .boundary-setup>summary{width:100%;line-height:1.6}

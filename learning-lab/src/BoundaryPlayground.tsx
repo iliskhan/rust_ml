@@ -1,72 +1,41 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
-import { boundaryLossGradient, boundaryMetrics, boundaryParameterCount, createBoundaryParameters, makeBoundaryDataset, predictBoundary, type BoundaryConfig, type BoundaryDataset, type BoundaryKind } from './boundaryNetworkMath';
+import { boundaryMetrics, boundaryParameterCount, predictBoundary, type BoundaryConfig, type BoundaryKind } from './boundaryNetworkMath';
+import { advanceBoundaryExperiment as advance, boundaryFileLimit, boundaryStepLimit as stepLimit, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryStorage, restoreBoundaryRun, saveBoundaryRun, writeBoundaryStorage, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
+import { BoundaryComparison } from './BoundaryComparison';
 import { probabilityGrid } from './decisionBoundaryMath';
 import { HiddenRepresentations } from './HiddenRepresentations';
 import { ConceptLink, LearningActivity, useLearningActive } from './learning-context';
-import { createOptimizerState, optimizerStep, type Activation, type OptimizerKind, type OptimizerState } from './math';
+import { type Activation, type OptimizerKind } from './math';
 import { Scene3D, type SceneLine, type Vec3 } from './ThreeD';
 import { Chart, fmt, Range } from './ui';
 import './boundary-playground.css';
 
-type Settings = { kind: BoundaryKind; seed: number; config: BoundaryConfig; method: OptimizerKind; lr: number };
-type HistoryPoint = { step: number; train: number; validation: number };
-type Experiment = { settings: Settings; dataset: BoundaryDataset; optimizer: OptimizerState; history: HistoryPoint[]; auto: boolean; remaining: number; error: string | null };
-const initialSettings: Settings = { kind: 'moons', seed: 42, config: { layers: [{ width: 8, activation: 'tanh' }, { width: 8, activation: 'tanh' }] }, method: 'adam', lr: .02 };
 const kinds: Record<BoundaryKind, string> = { circles: 'Круги', moons: 'Полумесяцы', spiral: 'Спираль' };
-const segments = 32, stepLimit = 4000;
+const segments = 32;
 const targetColors = ['#27669a', '#26724b'];
 const regionColors = ['#e0ecf4', '#c6dfd0'];
 const boundaryColor = '#8c411d', probeColor = '#694799';
 
-function lossPoint(optimizer: OptimizerState, settings: Settings, dataset: BoundaryDataset): HistoryPoint {
-  return { step: optimizer.step, train: boundaryMetrics(optimizer.params, settings.config, dataset.train).loss,
-    validation: boundaryMetrics(optimizer.params, settings.config, dataset.validation).loss };
-}
-
-function createExperiment(settings: Settings): Experiment {
-  const dataset = makeBoundaryDataset(settings.kind, settings.seed);
-  const optimizer = createOptimizerState(createBoundaryParameters(settings.config, settings.seed));
-  return { settings, dataset, optimizer, history: [lossPoint(optimizer, settings, dataset)], auto: false, remaining: 0, error: null };
-}
-
-// Bound affine sums for every input in [0,1]², including places outside the samples.
-function checkDomain(params: number[], config: BoundaryConfig) {
-  let bounds = [1, 1], offset = 0;
-  for (const layer of [...config.layers, { width: 1, activation: 'sigmoid' }]) {
-    const inputs = bounds.length, bias = offset + inputs * layer.width;
-    const next = Array.from({ length: layer.width }, (_, j) => {
-      const bound = bounds.reduce((sum, value, i) => sum + Math.abs(params[offset + j * inputs + i]) * value, Math.abs(params[bias + j]));
-      if (!Number.isFinite(bound)) throw new Error('Переполнение на области входов');
-      return layer.activation === 'relu' ? bound : 1;
-    });
-    offset = bias + layer.width;
-    bounds = next;
-  }
-}
-
-function advance(experiment: Experiment, count: number): Experiment {
-  const { settings, dataset } = experiment;
-  const steps = Math.min(count, stepLimit - experiment.optimizer.step);
-  try {
-    let optimizer = experiment.optimizer;
-    for (let i = 0; i < steps; i++) {
-      const { grad } = boundaryLossGradient(optimizer.params, settings.config, dataset.train);
-      optimizer = optimizerStep(optimizer, grad, settings.method, { lr: settings.lr });
-      if (![...optimizer.params, ...optimizer.m, ...optimizer.v].every(Number.isFinite)) throw new Error('Неконечное значение');
-    }
-    checkDomain(optimizer.params, settings.config);
-    const point = lossPoint(optimizer, settings, dataset);
-    return { ...experiment, optimizer, history: [...experiment.history, point], remaining: Math.max(0, experiment.remaining - steps), auto: experiment.auto && optimizer.step < stepLimit };
-  } catch {
-    return { ...experiment, auto: false, remaining: 0, error: 'Обучение остановлено: расчёт вышел за численный диапазон. Сохранены последние корректные веса. Уменьшите скорость обучения или нажмите «Сброс».' };
-  }
+function readInitialWorkspace() {
+  try { return { saved: readBoundaryStorage(window.localStorage), error: null }; }
+  catch (error) { return { saved: null, error: error instanceof Error ? error.message : 'Хранилище браузера недоступно.' }; }
 }
 
 export function BoundaryPlayground() {
   const id = useId(), active = useLearningActive();
-  const [experiment, setExperiment] = useState(() => createExperiment(initialSettings));
-  const [threshold, setThreshold] = useState(.5);
-  const [probe, setProbe] = useState<[number, number]>([.5, .5]);
+  const [initial] = useState(readInitialWorkspace);
+  const [experiment, setExperiment] = useState(() => initial.saved ? restoreBoundaryRun(initial.saved.current) : createExperiment(initialSettings));
+  const [threshold, setThreshold] = useState(initial.saved?.current.threshold ?? .5);
+  const [probe, setProbe] = useState<[number, number]>(initial.saved?.current.probe ?? [.5, .5]);
+  const [slots, setSlots] = useState<BoundarySlots>(initial.saved?.slots ?? { A: null, B: null });
+  const [saveEnabled, setSaveEnabled] = useState(!initial.error);
+  const [saveAttempt, setSaveAttempt] = useState(0);
+  const [storageError, setStorageError] = useState(initial.error);
+  const [storageStatus, setStorageStatus] = useState(initial.error ? 'Опыт открыт без восстановления. Автосохранение остановлено; прежняя локальная запись не изменена.' : 'Сохранение ещё не выполнено.');
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [fileStatus, setFileStatus] = useState(initial.saved ? 'Локальный опыт и A/B восстановлены. Обучение на паузе.' : '');
+  const [importing, setImporting] = useState(false);
+  const importInput = useRef<HTMLInputElement>(null);
   const [probabilityColors, setProbabilityColors] = useState(false);
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [projection, setProjection] = useState(true);
@@ -76,6 +45,19 @@ export function BoundaryPlayground() {
   const { config } = settings;
   const busy = experiment.auto || experiment.remaining > 0;
   const atLimit = optimizer.step >= stepLimit;
+
+  useEffect(() => {
+    if (!saveEnabled) return;
+    try {
+      writeBoundaryStorage(window.localStorage, saveBoundaryRun(experiment, threshold, probe), slots);
+      setStorageError(null);
+      setStorageStatus('Текущий опыт и A/B сохранены в этом браузере. После перезагрузки обучение будет на паузе.');
+    } catch (error) {
+      setStorageError(error instanceof Error ? error.message : 'Хранилище браузера недоступно.');
+      setStorageStatus('Текущие изменения не сохранены локально. Экспорт JSON доступен.');
+      setSaveEnabled(false);
+    }
+  }, [experiment, threshold, probe, slots, saveEnabled, saveAttempt]);
 
   useEffect(() => {
     if (!active) setExperiment(current => current.auto || current.remaining ? { ...current, auto: false, remaining: 0 } : current);
@@ -109,6 +91,41 @@ export function BoundaryPlayground() {
       : { ...current, auto: false, remaining: Math.min(count, stepLimit - current.optimizer.step) });
   }
 
+  function loadRun(run: SavedBoundaryRun, source: string) {
+    setExperiment(restoreBoundaryRun(run));
+    setThreshold(run.threshold);
+    setProbe([...run.probe]);
+    setFileError(null);
+    setFileStatus(`${source}: восстановлены веса, состояние оптимизатора, история, порог и проба. Обучение на паузе.`);
+  }
+  function exportFile() {
+    try {
+      const content = encodeBoundaryWorkspace(saveBoundaryRun(experiment, threshold, probe), slots);
+      const url = URL.createObjectURL(new Blob([content], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url; link.download = `rustml-boundary-step-${optimizer.step}.json`; link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setFileError(null);
+      setFileStatus('JSON текущего опыта и A/B подготовлен для скачивания. Завершение сохранения файла зависит от браузера.');
+    } catch {
+      setFileError('Не удалось подготовить файл экспорта. Текущий опыт и A/B сохранены в памяти страницы.');
+    }
+  }
+  async function importFile(file: File) {
+    setImporting(true);
+    setFileError(null);
+    try {
+      if (file.size > boundaryFileLimit) throw new Error('Файл слишком большой: максимум 2 МиБ.');
+      const imported = decodeBoundaryWorkspace(await file.text());
+      loadRun(imported.current, 'Файл импортирован');
+      setSlots(imported.slots);
+      setSaveEnabled(true);
+      setSaveAttempt(attempt => attempt + 1);
+    } catch (error) {
+      setFileError(`Импорт отменён; текущий опыт и A/B не заменены. ${error instanceof Error ? error.message : 'Не удалось прочитать файл.'}`);
+    } finally { setImporting(false); }
+  }
+
   const grid = useMemo(() => probabilityGrid((a, b) => predictBoundary(optimizer.params, config, [a, b]), threshold, segments), [optimizer.params, config, threshold]);
   const scores = useMemo(() => ({ train: boundaryMetrics(optimizer.params, config, dataset.train, threshold),
     validation: boundaryMetrics(optimizer.params, config, dataset.validation, threshold) }), [optimizer.params, config, dataset, threshold]);
@@ -140,13 +157,29 @@ export function BoundaryPlayground() {
     <span className="eyebrow">Лаборатория · данные, сеть, обучение</span>
     <h3 id="boundary-experiment" tabIndex={-1}>Лаборатория границ: данные и сеть</h3>
     <p>Запустите 100 шагов и посмотрите, как меняется граница классов — коричневая линия на карте.</p>
+    <p className="note boundary-save-status" role="status">{storageStatus}</p>
+    {storageError && <div className="boundary-error" role="alert"><p>Локальная копия не обновлена: {storageError} Текущий опыт доступен в памяти страницы; сохраните JSON перед закрытием.</p><button onClick={() => { setSaveEnabled(true); setSaveAttempt(attempt => attempt + 1); }}>Сохранить текущий опыт локально</button></div>}
+    <details className="boundary-saved">
+      <summary>Сохранение, файлы и сравнение A/B<span>A: {slots.A ? `шаг ${slots.A.optimizer.step}` : 'пусто'} · B: {slots.B ? `шаг ${slots.B.optimizer.step}` : 'пусто'}</span></summary>
+      <p className="note">Автосохранение хранит настройки, точные веса и состояние оптимизатора, историю, порог и пробу только в этом браузере. JSON переносит текущий опыт и оба слота; импорт заменит их после проверки файла. Данные никуда не отправляются. Очистка данных браузера удалит локальную копию.</p>
+      <div className="button-row"><button onClick={exportFile}>Экспорт JSON</button><button disabled={importing} onClick={() => importInput.current?.click()}>{importing ? 'Чтение файла…' : 'Импорт JSON'}</button></div>
+      <input ref={importInput} className="boundary-import-input" type="file" accept=".json,application/json" aria-label="JSON текущего опыта и A/B" disabled={importing} onChange={event => { const file = event.target.files?.[0]; event.target.value = ''; if (file) void importFile(file); }} />
+      {fileError && <p className="boundary-error" role="alert">{fileError}</p>}
+      {fileStatus && <p className="note" role="status">{fileStatus}</p>}
+      <div className="boundary-slot-controls">{(['A', 'B'] as const).map(name => <div key={name}><h4>Опыт {name}</h4><p className="note">{slots[name] ? `${kinds[slots[name].settings.kind]} · seed ${slots[name].settings.seed} · шаг ${slots[name].optimizer.step}` : 'Слот пока пуст.'}</p>
+        <div className="button-row"><button disabled={importing} onClick={() => { setSlots(current => ({ ...current, [name]: saveBoundaryRun(experiment, threshold, probe) })); setFileError(null); setFileStatus(`В слот ${name} скопирован текущий опыт на шаге ${optimizer.step}. Дальнейшее обучение его не меняет.`); }}>{slots[name] ? `Обновить ${name}` : `Сохранить в ${name}`}</button>
+          <button disabled={!slots[name] || importing} onClick={() => { const run = slots[name]; if (run) loadRun(run, `Опыт ${name}`); }}>Загрузить {name}</button>
+          <button disabled={!slots[name] || importing} onClick={() => { setSlots(current => ({ ...current, [name]: null })); setFileStatus(`Слот ${name} очищен. Текущий опыт не изменился.`); }}>Очистить {name}</button></div>
+      </div>)}</div>
+      <BoundaryComparison slots={slots} />
+    </details>
 
     <details className="boundary-setup">
       <summary>Данные и сеть: {kinds[settings.kind]} · {architecture}<span>Изменение настроек начнёт новый опыт</span></summary>
       <p className="note boundary-reset-note">Любая настройка ниже сбрасывает шаг, веса и историю. Тот же seed воспроизводит данные и стартовые веса выбранной архитектуры. Порог, проба и ракурс сохраняются.</p>
       <div className="boundary-settings">
         <label>Набор данных<select value={settings.kind} onChange={event => changeSettings({ kind: event.target.value as BoundaryKind })}>{Object.entries(kinds).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
-        <label>Seed · случайный старт<select value={settings.seed} onChange={event => changeSettings({ seed: Number(event.target.value) })}>{[42, 7, 1337].map(seed => <option key={seed}>{seed}</option>)}</select></label>
+        <label>Seed · случайный старт<select value={settings.seed} onChange={event => changeSettings({ seed: Number(event.target.value) })}>{Array.from(new Set([42, 7, 1337, settings.seed])).map(seed => <option key={seed}>{seed}</option>)}</select></label>
         <label>Скрытых слоёв<select value={config.layers.length} onChange={event => changeSettings({ config: { layers: Array.from({ length: Number(event.target.value) }, (_, i) => config.layers[i] ?? { width: 8, activation: 'tanh' }) } })}>{[0, 1, 2, 3].map(count => <option key={count} value={count}>{count}{count === 0 ? ' · линейный логит' : ''}</option>)}</select></label>
         <label>Оптимизатор<select value={settings.method} onChange={event => changeSettings({ method: event.target.value as OptimizerKind })}><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam">Adam</option></select></label>
       </div>
@@ -171,7 +204,7 @@ export function BoundaryPlayground() {
             <button aria-describedby={`${id}-reset-help`} onClick={() => setExperiment(current => createExperiment(current.settings))}>Сброс</button>
           </div>
           <p className="note boundary-run-status" role="status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}. {atLimit ? 'Достигнут предел. Сброс начинает новый опыт.' : experiment.auto ? 'Автообучение идёт.' : experiment.remaining ? `Осталось ${experiment.remaining} шагов выбранного запуска.` : 'Обучение на паузе.'}</p>
-          <p className="note boundary-reset-help" id={`${id}-reset-help`}>Сброс вернёт начальные веса и шаг 0, очистит историю.</p>
+          <p className="note boundary-reset-help" id={`${id}-reset-help`}>Сброс вернёт начальные веса и шаг 0, очистит историю. Слоты A/B, порог и проба сохранятся.</p>
           {error && <p className="boundary-error" role="alert">{error}</p>}
         </div>
         <figure className="boundary-map-figure" aria-labelledby={`${id}-map-caption`}>

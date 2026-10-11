@@ -4,6 +4,7 @@ import { NetworkLesson, OptimizerLesson } from './Experiments';
 import { CurriculumView } from './CurriculumView';
 import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './learning-context';
 import { KnowledgeExplorer } from './KnowledgeExplorer';
+import { ConceptSearch } from './ConceptSearch';
 
 const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
@@ -40,6 +41,7 @@ export function App() {
 }
 
 function LearningShell() {
+  const [searchOpen, setSearchOpen] = useState(false);
   const [lesson, setLesson] = useState(getLesson);
   const [visited, setVisited] = useState(() => [getLesson().id]);
   const main = useRef<HTMLElement>(null);
@@ -59,6 +61,7 @@ function LearningShell() {
       previousRoute.current = next.id;
       routeChanged.current = true;
       closeExplorer.current();
+      setSearchOpen(false);
       setLesson(next);
       setVisited(ids => ids.includes(next.id) ? ids : [...ids, next.id]);
     };
@@ -79,13 +82,13 @@ function LearningShell() {
   const index = lessons.indexOf(lesson);
   return <>
     <a className="skip-link" href="#content" onClick={e => { e.preventDefault(); main.current?.focus(); }}>Перейти к уроку</a>
-    <header className="site-header"><a className="brand" href="#map" aria-label="RustML: карта обучения"><span className="brand-mark">r<span>·</span></span><span>RustML<small>Лаборатория нейросетей</small></span></a><span className="header-note">Сначала понять. Затем посчитать.</span><a className="header-link" href="#sources">О проекте ↗</a></header>
+    <header className="site-header"><a className="brand" href="#map" aria-label="RustML: карта обучения"><span className="brand-mark">r<span>·</span></span><span>RustML<small>Лаборатория нейросетей</small></span></a><span className="header-note">Сначала понять. Затем посчитать.</span><div className="header-actions"><ConceptSearch open={searchOpen} onOpenChange={setSearchOpen} lessonId={lesson.id} /><a className="header-link" href="#sources">О проекте ↗</a></div></header>
     <div className="app-layout"><aside className="sidebar"><span className="eyebrow sidebar-label">Учебник / навигация</span><nav className="desktop-lesson-nav" aria-label="Уроки">{lessonGroups.map(group => <div className="nav-group" key={group}><span className="nav-group-title">{group}</span>{lessons.filter(item => item.group === group).map(l => <a key={l.id} href={`#${l.id}`} aria-current={lesson.id === l.id ? 'page' : undefined}><span className="nav-number" aria-hidden="true">{String(lessons.indexOf(l) + 1).padStart(2, '0')}</span><span>{l.title}</span>{lesson.id === l.id && <span className="nav-arrow" aria-hidden="true">→</span>}</a>)}</div>)}</nav><label className="mobile-lesson-nav">Открыть раздел<select value={lesson.id} onChange={event => navigate(event.target.value)}>{lessonGroups.map(group => <optgroup key={group} label={group}>{lessons.filter(item => item.group === group).map(l => <option key={l.id} value={l.id}>{l.title}</option>)}</optgroup>)}</select></label><div className="sidebar-note"><span className="status-dot" />Ваш эксперимент — на месте<p>Уроки и настройки сохраняются при переходах в этой вкладке.</p><a href="#curriculum">Выбрать маршрут →</a></div></aside>
     <main id="content" className="main-content" ref={main} tabIndex={-1}>
       <div className="lesson-header"><span className="eyebrow">{index === 0 ? 'От первого нейрона до внимания' : lesson.group}</span><h1 tabIndex={-1}>{lesson.title}</h1><p className="lesson-subtitle">{lesson.hint}</p></div>
-      {visited.map(id => { const item = lessons.find(entry => entry.id === id)!; const Component = item.component; return <div key={id} className="lesson-body" data-lesson={id} hidden={id !== lesson.id}><LearningActivity active={id === lesson.id && !navigation.path.length}><Suspense fallback={<section className="panel" role="status"><p>Загружаем раздел «{item.title}»…</p></section>}><Component /></Suspense></LearningActivity></div>; })}
+      {visited.map(id => { const item = lessons.find(entry => entry.id === id)!; const Component = item.component; return <div key={id} className="lesson-body" data-lesson={id} hidden={id !== lesson.id}><LearningActivity active={id === lesson.id && !navigation.path.length && !searchOpen}><Suspense fallback={<section className="panel" role="status"><p>Загружаем раздел «{item.title}»…</p></section>}><Component /></Suspense></LearningActivity></div>; })}
       {index > 0 && index < lessons.length - 1 && <div className="lesson-next"><span>Следующий раздел</span><a href={`#${lessons[index + 1].id}`}>{lessons[index + 1].title} →</a></div>}
-      <footer>RustML Learning Lab · расчёты в вашем браузере<p>Настройки экспериментов сохраняются в этой вкладке до перезагрузки страницы.</p></footer>
+      <footer>RustML Learning Lab · расчёты в вашем браузере<p>Лаборатория границ сохраняется в этом браузере и загружается на паузе. Остальные опыты сохраняются в этой вкладке до перезагрузки.</p></footer>
     </main></div>
     <KnowledgeExplorer lessonTitle={lesson.title} />
   </>;
@@ -119,7 +122,7 @@ function Overview() {
 function Sources() {
   return <>
     <p className="lesson-intro">Здесь маленькие модели раскрывают механизм. TypeScript использует числа IEEE 754 двойной точности; расчёты не заменяют реализацию и проверку промышленного ML-фреймворка.</p>
-    <section className="panel"><h3>Как учиться и возвращаться к основам</h3><p><a href="#curriculum">Маршрут с нуля</a> связывает предпосылки и разделы учебника. Незнакомый термин открывается поверх текущего урока: например, <ConceptLink concept="gradient">градиент</ConceptLink> ведёт к <ConceptLink concept="derivative">производной</ConceptLink> и её основам. Внутри разбора можно идти глубже и возвращаться по пути.</p><p>Открытые уроки и понятия сохраняют свои настройки и прокрутку в этой вкладке до перезагрузки страницы. Это временное состояние в браузере: нет аккаунта, сохранения на сервере или восстановления после reload. Автоматические эксперименты при уходе из урока ставятся на паузу.</p></section>
+    <section className="panel"><h3>Как учиться и возвращаться к основам</h3><p><a href="#curriculum">Маршрут с нуля</a> связывает предпосылки и разделы учебника. Незнакомый термин открывается поверх текущего урока: например, <ConceptLink concept="gradient">градиент</ConceptLink> ведёт к <ConceptLink concept="derivative">производной</ConceptLink> и её основам. Внутри разбора можно идти глубже и возвращаться по пути.</p><p>Открытые уроки и понятия сохраняют свои настройки и прокрутку в этой вкладке до перезагрузки страницы. Лаборатория границ дополнительно сохраняет текущий опыт и сравнение A/B локально между перезагрузками; JSON-файл позволяет перенести их. Остальные уроки и разборы используют временное состояние вкладки. Аккаунта и сохранения на сервере нет. Автоматические эксперименты при уходе из урока ставятся на паузу.</p></section>
     <section className="panel"><h3>Первичные источники</h3><ul className="source-list">
       <li><a href="https://docs.pytorch.org/docs/stable/notes/autograd.html" target="_blank" rel="noreferrer">PyTorch: Autograd mechanics ↗</a><p>Граф операций, накопление градиентов и соглашения в недифференцируемых точках.</p></li>
       <li><a href="https://docs.pytorch.org/docs/stable/notes/gradcheck.html" target="_blank" rel="noreferrer">PyTorch: Gradcheck mechanics ↗</a><p>Сравнение аналитической производной с численной оценкой.</p></li>

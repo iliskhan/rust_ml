@@ -6,6 +6,8 @@ import { AnalyzeNumbers, ConceptLink } from './learning-context'
 import { Scene3D } from './ThreeD'
 import { functionSurface, neuronHeight, mseHeight } from './lessonSceneMath'
 import { LessonOutline, focusLessonSection } from './LessonOutline'
+import { ActionExercise } from './ActionExercise'
+import { NEURON_PRACTICE_START, MSE_PRACTICE_START, BACKPROP_PRACTICE_START, checkNeuronPractice, checkMsePractice, checkBackpropPractice } from './actionExerciseMath'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
@@ -60,6 +62,13 @@ export function NeuronLesson() {
         <p className="note">Локальная производная da/dz = {fmt(derivative)}: насколько изменится выход при малом изменении z.</p>
       </section>
     </div>
+    <ActionExercise title="Включите ReLU одним смещением"
+      goal="Изменяя только b, получите выход a > 0. Сохраните входы, веса и ReLU из начальных условий."
+      startingConditions="x₁ = 1, x₂ = 2, w₁ = 1, w₂ = −1, b = 0; активация ReLU. Начальный выход a = 0."
+      hint="Сумма без смещения равна 1·1 + 2·(−1) = −1. Выход станет положительным, когда −1 + b > 0."
+      onStart={() => { const start = NEURON_PRACTICE_START; setX1(start.x1); setX2(start.x2); setW1(start.w1); setW2(start.w2); setBias(start.bias); setKind(start.kind) }}
+      check={() => checkNeuronPractice({ x1, x2, w1, w2, bias, kind })}
+      stateKey={JSON.stringify([x1, x2, w1, w2, bias, kind])} />
     <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: два входа и высота ответа нейрона</summary>
       <p>Выберите место по двум входам. Высота показывает, что ответит нейрон именно там. Меняйте веса и смещение выше: наклон и граница реакции меняются. ReLU делает сгиб, а sigmoid и tanh плавно выходят на плато.</p>
       {sceneOpened && <Scene3D title="Поверхность ответа одного нейрона" description="Каждая точка имеет координаты x₁, x₂ и вычисленный выход a=activation(w₁x₁+w₂x₂+b). Третья ось — выход, а не новый вход." axes={[{label:'Вход x₁',min:-3,max:3},{label:'Вход x₂',min:-3,max:3},{label:'Выход a',min:kind==='tanh'?-1:0,max:kind==='relu'?Math.max(1,3*Math.abs(w1)+3*Math.abs(w2)+bias):1}]} surfaces={[{name:activationNames[kind],rows:functionSurface([-3,3],[-3,3],(a,b)=>neuronHeight(a,b,w1,w2,bias,kind))}]} points={[{name:'Текущие входы',position:[x1,x2,output]}]} />}
@@ -129,6 +138,12 @@ export function LossLesson() {
         <p className="note">Большой промах штрафуется сильнее: ошибка 2 даёт квадрат 4, ошибка 1 — квадрат 1. Линии соединяют только три показанных примера.</p>
       </section>
     </div>
+    <ActionExercise title="Снизьте MSE одним предсказанием"
+      goal="Измените только ŷ₃, чтобы MSE стала меньше 0,2. Сохраните ŷ₁ = 0,5 и ŷ₂ = 2,5."
+      startingConditions="ŷ = [0,5; 2,5; 2], цели y = [1; 2; 3]. Начальная MSE = 0,5."
+      hint="У первых двух предсказаний квадраты ошибок по 0,25. Чтобы их сумма вместе с третьим вкладом была меньше 0,6, третий квадрат ошибки должен стать меньше 0,1."
+      onStart={() => setPredictions([...MSE_PRACTICE_START])}
+      check={() => checkMsePractice(predictions)} stateKey={JSON.stringify(predictions)} />
     <details className="panel" onToggle={event => { if (event.currentTarget.open) setSceneOpened(true); }}><summary>3D: чаша MSE для двух предсказаний</summary>
       <p>Двигаем первые два предсказания, третье удерживаем на его текущем значении. Внизу чаши первые два попали в цели 1 и 2. Если третье всё ещё ошибается, высота внизу останется больше нуля.</p>
       {sceneOpened && <Scene3D title="Срез MSE по двум предсказаниям" description="Высота ((ŷ₁−1)²+(ŷ₂−2)²+(ŷ₃−3)²)/3. ŷ₃ берётся из ползунка выше и фиксируется во всём срезе. Это два предсказания и потеря, не поверхность всех весов сети." axes={[{label:'Предсказание ŷ₁',min:-1,max:5},{label:'Предсказание ŷ₂',min:-1,max:5},{label:'MSE',min:0,max:mseHeight(5,-1,predictions[2])}]} surfaces={[{name:'MSE · третье предсказание фиксировано',rows:functionSurface([-1,5],[-1,5],(a,b)=>mseHeight(a,b,predictions[2]))}]} points={[{name:'Текущие предсказания',position:[predictions[0],predictions[1],squared.loss]},{name:'Минимум этого среза',position:[1,2,mseHeight(1,2,predictions[2])]}]} />}
@@ -265,6 +280,12 @@ export function BackpropLesson() {
       {step === 3 && <div className="formula">∂L/∂q = вклад квадрата + вклад тождества<br />= {fmt(parts.square)} + ({fmt(parts.identity)}) = {fmt(gradients.q)}<br />∂L/∂w = (∂L/∂q)·x = ({fmt(gradients.q)})·({fmt(x)}) = {fmt(gradients.w)}<br />∂L/∂x = (∂L/∂q)·w = ({fmt(gradients.q)})·({fmt(w)}) = {fmt(gradients.x)}</div>}
       <details><summary>Почему складываем, а не перезаписываем?</summary><p>Для суммы p = u + v обе локальные производные равны 1. Изменение q меняет и u = q², и v = q. Правило цепочки для двух путей даёт dL/dq = (dL/dp)·(2q + 1). Если записать последний вклад вместо накопления, одна ветвь исчезнет и вычисление станет неверным.</p><p>Обратный проход начинается с ∂L/∂L = 1 и идёт от результата к входам. До передачи градиента дальше все зависимые узлы должны внести свой вклад.</p></details>
     </section>
+    <ActionExercise title="Уменьшите потерю и разберите оба пути"
+      goal="Подберите только вес w так, чтобы L < 0,05 при x = 1,2 и y = 1. После изменения веса дойдите до шага 4 разбора графа."
+      startingConditions="x = 1,2, w = 0,8, y = 1 и шаг 1. Начальная L ≈ 0,3886."
+      hint="В начальной точке ∂L/∂w ≈ 3,0891 > 0: небольшой шаг против градиента уменьшает w. Затем используйте «Следующий шаг», чтобы увидеть сумму двух вкладов."
+      onStart={() => { const start = BACKPROP_PRACTICE_START; setX(start.x); setW(start.w); setTarget(start.target); setStep(start.step) }}
+      check={() => checkBackpropPractice({ x, w, target, step })} stateKey={JSON.stringify([x, w, target, step])} />
     <section className="panel">
       <h3>Проверка конечной разностью</h3>
       <p>Независимо оценим наклон: немного увеличим и уменьшим параметр, каждый раз пересчитаем весь прямой проход. Остальные параметры остаются фиксированными.</p>

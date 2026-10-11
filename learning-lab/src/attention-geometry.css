@@ -1,0 +1,24 @@
+.attention-geometry { border-top: 1px solid var(--tc-border); padding-top: .8rem; }
+.attention-geometry-plot { display: block; width: min(100%, 400px); height: auto; margin: .8rem auto; overflow: visible; }
+.attention-geometry-plot text { fill: currentColor; font: 12px system-ui, sans-serif; }
+.attention-geometry-grid line { stroke: currentColor; opacity: .13; }
+.attention-geometry-grid text { font-size: 10px; }
+.attention-geometry-axis { stroke: currentColor; stroke-width: 1; }
+.attention-geometry-axis text { stroke: none; }
+.attention-geometry-key { stroke: #287f80; stroke-width: 1.5; fill: var(--panel, white); }
+.attention-geometry-key text { stroke: none; font-weight: 650; }
+.attention-geometry-key.is-selected { stroke-width: 3; }
+.attention-geometry-key.is-masked { stroke-dasharray: 4 3; stroke: #797979; }
+.attention-geometry-key.is-masked path { stroke-dasharray: none; }
+.attention-geometry-result { stroke: #b65324; stroke-width: 2.5; fill: #b65324; }
+.attention-geometry-result text { stroke: none; font-weight: 750; }
+.attention-geometry-hull { fill: #287f8015; stroke: #287f80; stroke-width: 1; stroke-dasharray: 3 3; }
+.attention-geometry-keys { flex-wrap: wrap; }
+.attention-geometry-keys button { min-height: 44px; }
+.attention-geometry .tc-table-scroll:focus-visible { outline: 2px solid var(--tc-accent); outline-offset: 2px; }
+.tc-action-practice { margin-block: 1rem; padding: 1rem; border: 1px solid var(--tc-border); border-radius: .6rem; }
+.tc-action-practice p { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .attention-geometry-plot text { font-size: 16px; }
+  .attention-geometry-grid text { font-size: 16px; }
+}
