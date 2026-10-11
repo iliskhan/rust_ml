@@ -1,8 +1,8 @@
 {
   "title": "Настраиваемые границы решений",
   "language": "ru",
-  "updated_at": "2026-10-11T16:36:48.5137992+03:00",
-  "focus": "Commit и обычный push master",
+  "updated_at": "2026-10-11T16:38:52.3326618+03:00",
+  "focus": "Проверено и отправлено в origin/master",
   "steps": [
     {
       "id": "baseline",
@@ -45,8 +45,12 @@
     {
       "id": "deliver",
       "title": "Commit и push",
-      "status": "in_progress",
-      "result": "Отправляю проверенные файлы в origin/master"
+      "status": "done",
+      "result": "Код366877e отправлен; remote SHA совпал",
+      "evidence": [
+        "366877e3ee8136c008431c545498805d725b9c93 local/remote совпали; рабочее дерево чистое",
+        "Все80 source/config SHA повторно совпали после push"
+      ]
     }
   ]
 }
