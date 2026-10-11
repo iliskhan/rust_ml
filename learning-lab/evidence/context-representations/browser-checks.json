@@ -1,0 +1,198 @@
+[
+  {
+    "name": "mlp nested snapshot and standalone isolation",
+    "snapshotRetained": true,
+    "standaloneX1": "2.1"
+  },
+  {
+    "camera": "36",
+    "focus": "Разобрать мои числа ↗",
+    "layer": "1",
+    "name": "mlp return focus and selections",
+    "probe": "V007",
+    "step": "100"
+  },
+  {
+    "name": "automatic training paused by snapshot",
+    "openedStep": "110",
+    "returnedStep": "110",
+    "autoButton": true
+  },
+  {
+    "name": "mobile320 settled scroll return",
+    "before": {
+      "x": 0,
+      "y": 378.3999938964844
+    },
+    "after": {
+      "focus": "векторов↗",
+      "x": 0,
+      "y": 378.3999938964844
+    }
+  },
+  {
+    "name": "neuron exact custom numbers",
+    "outputs": [
+      4.88,
+      5.38,
+      0.9999575368557014
+    ],
+    "rows": [
+      [
+        1.1,
+        0.8,
+        0.8800000000000001
+      ],
+      [
+        2,
+        2,
+        4
+      ]
+    ]
+  },
+  {
+    "name": "neuron mobile source state and scroll",
+    "before": {
+      "sliders": [
+        "16",
+        "8",
+        "8",
+        "0.02",
+        "0.5",
+        "0.3734211325652221",
+        "0.6307760328664351",
+        "35",
+        "25",
+        "1",
+        "0.03",
+        "0.5",
+        "0.5",
+        "0.5",
+        "1.1",
+        "2",
+        "0.8",
+        "2",
+        "0.5"
+      ],
+      "y": 1325.5999755859375
+    },
+    "after": {
+      "focus": "Разобрать мои числа ↗",
+      "sliders": [
+        "16",
+        "8",
+        "8",
+        "0.02",
+        "0.5",
+        "0.3734211325652221",
+        "0.6307760328664351",
+        "35",
+        "25",
+        "1",
+        "0.03",
+        "0.5",
+        "0.5",
+        "0.5",
+        "1.1",
+        "2",
+        "0.8",
+        "2",
+        "0.5"
+      ],
+      "y": 1325.5999755859375
+    }
+  },
+  {
+    "name": "ordinary concept clears source snapshot",
+    "visibleSnapshots": 0,
+    "standaloneX1": "2.1"
+  },
+  {
+    "firstInput": 1.2,
+    "name": "same concept new snapshot replaces previous"
+  },
+  {
+    "name": "attention depth3 snapshot return",
+    "equal": true
+  },
+  {
+    "after": {
+      "focus": "Разобрать мои числа ↗",
+      "stepButton": "4. Softmax",
+      "temperature": "2.7",
+      "y": 2193.60009765625
+    },
+    "before": {
+      "stepButton": "4. Softmax",
+      "temperature": "2.7",
+      "y": 2193.60009765625
+    },
+    "name": "attention source focus scroll step",
+    "overflow": false
+  },
+  {
+    "kind": "dot-product",
+    "name": "attention dot product selected key",
+    "outputs": [
+      1
+    ],
+    "rows": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  {
+    "name": "mobile390 hidden 3D and controls",
+    "overflow": false,
+    "rangeWidths": [
+      303.6000061035156,
+      303.6000061035156,
+      303.6000061035156
+    ],
+    "scene": "Слой 3: h1, h2, h3"
+  },
+  {
+    "figures": [
+      "Граница решений в 3D",
+      "Поверхность ответа XOR"
+    ],
+    "name": "old XOR after 300 steps, new MLP independent",
+    "newStep": "0",
+    "oldStatus": [
+      "Шаг 300 · BCE 0,00522 · верных классов 4/4"
+    ],
+    "overflow": false
+  },
+  {
+    "name": "Final nowrap CSS mobile320",
+    "width": 320,
+    "overflow": false,
+    "numericWhiteSpace": "nowrap"
+  },
+  {
+    "name": "Numerical table and hidden-map selection",
+    "tableSelected": "V008",
+    "hiddenMapSelected": "T001",
+    "sharedProbe": true
+  },
+  {
+    "name": "Final desktop/reset/console",
+    "width": 1050,
+    "height": 668,
+    "overflow": false,
+    "warningsErrors": 0,
+    "sourceStep": 100,
+    "probe": "V007",
+    "hiddenLayer": 2,
+    "legacyXorStep": 300,
+    "legacyXorCorrect": "4/4"
+  }
+]

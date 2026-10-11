@@ -75,6 +75,23 @@ test('3D: all geometry types share depth ordering, with rear points behind surfa
   assert.equal(primitives[0].name, 'front');
 });
 
+test('3D: sample class and split markers survive normalization and depth sorting', () => {
+  const points = [
+    { name: 'train zero', position: [0, 20, 50] as Vec3, color: '#27669a' },
+    { name: 'validation one', position: [1, 25, 75] as Vec3, shape: 'triangle' as const, hollow: true, color: '#26724b' },
+  ];
+  const { primitives } = buildSceneGeometry({ axes, points });
+  const sorted = sortByDepth(primitives, 35, 25);
+  const original = sorted.find(point => point.name === 'train zero')!;
+  const validation = sorted.find(point => point.name === 'validation one')!;
+  assert.equal(original.shape, undefined);
+  assert.equal(original.hollow, undefined);
+  assert.equal(validation.shape, 'triangle');
+  assert.equal(validation.hollow, true);
+  assert.equal(validation.color, '#26724b');
+  assert.deepEqual(validation.vertices, [[.5, .5, .5]]);
+});
+
 test('3D: geometry does not bridge invalid line samples and explicitly counts omissions', () => {
   const geometry = buildSceneGeometry({ axes,
     surfaces: [{ name: 'plane', rows: [[[-2, 10, 0], [2, 10, 0]], [[-2, 30, 100], [2, 30, 100]]] }],

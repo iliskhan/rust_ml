@@ -86,7 +86,11 @@ export default function Scene3D({ title, description, axes, surfaces = [], lines
               return <path key={index} d={projectedPath(primitive.vertices)} fill="none" stroke={primitive.color} strokeWidth="2.3" pathLength={length || .001} strokeDasharray={primitive.dashed ? '.06 .04' : undefined} strokeDashoffset={primitive.dashed ? -(primitive.lineDistance ?? 0) : undefined} />;
             }
             const position = project(primitive.vertices[0]);
-            return <circle key={index} cx={position.x} cy={position.y} r="4.5" fill={primitive.color} stroke="var(--paper)" strokeWidth="1.3"><title>{primitive.name}</title></circle>;
+            const fill = primitive.hollow ? 'var(--paper)' : primitive.color;
+            const stroke = primitive.hollow ? primitive.color : 'var(--paper)';
+            return primitive.shape === 'triangle'
+              ? <path key={index} d={`M${position.x},${position.y - 5.5}l5,9h-10Z`} fill={fill} stroke={stroke} strokeWidth="1.3"><title>{primitive.name}</title></path>
+              : <circle key={index} cx={position.x} cy={position.y} r="4.5" fill={fill} stroke={stroke} strokeWidth="1.3"><title>{primitive.name}</title></circle>;
           })}
           {axes.map((axis, index) => {
             const endpoint = [...origin] as [number, number, number]; endpoint[index] = 1;
@@ -127,7 +131,7 @@ export default function Scene3D({ title, description, axes, surfaces = [], lines
     {camera.zoom > 1 && <p className="scene3d-note">При увеличении часть сцены может выйти за рамку. «Сбросить вид» вернёт её целиком.</p>}
     {(geometry.outside > 0 || geometry.invalid > 0) && <p className="scene3d-note" role="status">За диапазоном осей: {geometry.outside} исходных координат. Линии и поверхности отсечены на границах; внешние точки скрыты.{geometry.invalid > 0 && ` Неконечных координат пропущено: ${geometry.invalid}.`}</p>}
     {showLegend && <ul className="scene3d-legend" aria-label="Легенда 3D-сцены">{legend.map((item, i) => <li key={i}>
-      <svg viewBox="0 0 24 16" width="24" height="16" aria-hidden="true">{item.kind === 'surface' ? <rect x="4" y="3" width="16" height="10" fill={item.color} fillOpacity=".7" /> : item.kind === 'line' ? <line x1="1" x2="23" y1="8" y2="8" stroke={item.color} strokeWidth="2.5" strokeDasharray={'dashed' in item && item.dashed ? '5 3' : undefined} /> : <circle cx="12" cy="8" r="4" fill={item.color} />}</svg>
+      <svg viewBox="0 0 24 16" width="24" height="16" aria-hidden="true">{item.kind === 'surface' ? <rect x="4" y="3" width="16" height="10" fill={item.color} fillOpacity=".7" /> : item.kind === 'line' ? <line x1="1" x2="23" y1="8" y2="8" stroke={item.color} strokeWidth="2.5" strokeDasharray={'dashed' in item && item.dashed ? '5 3' : undefined} /> : 'shape' in item && item.shape === 'triangle' ? <path d="M12,2l6,11H6Z" fill={'hollow' in item && item.hollow ? 'var(--paper)' : item.color} stroke={item.color} /> : <circle cx="12" cy="8" r="4" fill={'hollow' in item && item.hollow ? 'var(--paper)' : item.color} stroke={item.color} />}</svg>
       <span>{item.name}{'dashed' in item && item.dashed ? ' · пунктир' : ''}</span></li>)}</ul>}
     {points.length > 0 && !geometry.error && <details className="scene3d-data"><summary>Координаты отмеченных точек ({Math.min(24, points.length)}{points.length > 24 ? ` из ${points.length}` : ''})</summary>
       <div className="scene3d-table-wrap"><table><caption>Исходные значения до масштабирования осей. {points.length > 24 ? 'Показаны первые 24 точки.' : 'Все отмеченные точки.'}</caption><thead><tr><th scope="col">Точка</th>{axisNames.map(name => <th scope="col" key={name}>{name}</th>)}<th scope="col">В диапазоне</th></tr></thead><tbody>{points.slice(0, 24).map((point, i) => {

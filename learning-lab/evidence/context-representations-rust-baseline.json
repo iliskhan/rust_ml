@@ -1,0 +1,114 @@
+[
+  {
+    "path": "Cargo.toml",
+    "sha256": "4cbad5503e1f40fba23cd9cf7ac5ebfb6ba47684fc5d126b29d9b577a20ea9da"
+  },
+  {
+    "path": "examples/autograd_test.rs",
+    "sha256": "bd5887e1e68ea4ce398fca93739acd9a51bda0cfc2c95a939e82ba7bd4d99cad"
+  },
+  {
+    "path": "examples/basic_tensor_ops.rs",
+    "sha256": "dfac025269707cb1f5bb4a0cd9b4d1e72e133cc81e14b2802b18770594474eed"
+  },
+  {
+    "path": "examples/milestone_check.rs",
+    "sha256": "598ac76171a809b88778e50049eba997917ea30e8cdb6bc748f92cc1e8fd4f8c"
+  },
+  {
+    "path": "examples/scalar_demo.rs",
+    "sha256": "cf18c9392f8b24d4fcc80d519cd5a141a848af9b7602b9c35bd2f120c1e55555"
+  },
+  {
+    "path": "rustml-autograd/Cargo.toml",
+    "sha256": "9dd97460e2defe65ad6565bb6493bd2d6a9a524a6244894f0bd18d7c44951af4"
+  },
+  {
+    "path": "rustml-autograd/src/graph.rs",
+    "sha256": "7ecf6b4d0e60cac1ef4176b68178e8daa0fad4ea9cdc0c45398e63c146d3855d"
+  },
+  {
+    "path": "rustml-autograd/src/lib.rs",
+    "sha256": "d6d4f95834196753c7e3a7f50b38cb95cd2664e45930d622bba9b67d29de37be"
+  },
+  {
+    "path": "rustml-autograd/src/ops.rs",
+    "sha256": "4b9eb009e9570d58fbb25f76e90781f351522055af2abdb4ad1e641eba279fe8"
+  },
+  {
+    "path": "rustml-autograd/src/scalar.rs",
+    "sha256": "0556af863dfd7027887b0130aa2dea6d5c46a3dd0d4f7ec98c129bc0cfa62fdd"
+  },
+  {
+    "path": "rustml-autograd/src/variable.rs",
+    "sha256": "138b680dde9e909856c7b9f468876b9ae92a3c6b2d0187aa888aa0719ab3bfb0"
+  },
+  {
+    "path": "rustml-autograd/tests/gradients.rs",
+    "sha256": "a23f05a36710ba764f9085537ebf547f6c2ea90e6c3dcd4b9b7a73c8d1498264"
+  },
+  {
+    "path": "rustml-core/Cargo.toml",
+    "sha256": "91cf01e54f1ec3eb890bc5641e439c56d6ebc5901baf98fc4eeafe2fe93c9b1a"
+  },
+  {
+    "path": "rustml-core/src/backend.rs",
+    "sha256": "e13647d7ef22414a350243a85ead4363e4370a98a0f39dcbfae46ac02cd42bda"
+  },
+  {
+    "path": "rustml-core/src/device.rs",
+    "sha256": "6f2b965536a69a612c96197a5f1b7f843db831baf67bfc3e522ea9c45500037e"
+  },
+  {
+    "path": "rustml-core/src/dtype.rs",
+    "sha256": "5e70eb16ecb5d9a785cdc984627de303cdca4030b846efd4cc90582936b27725"
+  },
+  {
+    "path": "rustml-core/src/error.rs",
+    "sha256": "f58aeeeb7a1c5c6702ec22ad3fa9d8ad54ebeb0aa7345e768a4b1881f70fc61c"
+  },
+  {
+    "path": "rustml-core/src/lib.rs",
+    "sha256": "bd1db6c6e9b5566fcc24e9ef9c614b891be954e1a6da8a77fda89dab6633d5bc"
+  },
+  {
+    "path": "rustml-nn/Cargo.toml",
+    "sha256": "fec3f2bf61562fd287b637a7c729162b7349f0ef51ae72f589f89cb47bc77689"
+  },
+  {
+    "path": "rustml-nn/src/lib.rs",
+    "sha256": "c12e74a1f6d95b625f52775f735c94dd43ca4d128783f77faf093fbcb6c8242f"
+  },
+  {
+    "path": "rustml-tensor/Cargo.toml",
+    "sha256": "4a8c36f3b41e2bf2cd22a475e68bc5f6c099be5252b97c0424c50adb8fd80bd9"
+  },
+  {
+    "path": "rustml-tensor/src/lib.rs",
+    "sha256": "5889743cbc46c4855c941e27a9bbd4e277c94b0983966008db668c8e273c9091"
+  },
+  {
+    "path": "rustml-tensor/src/ops.rs",
+    "sha256": "9952a8e4f20ddd768c13293754a84141fab1a659b00f1ae9c8c528f17be84360"
+  },
+  {
+    "path": "rustml-tensor/src/shape.rs",
+    "sha256": "28e1bb5c7d5ea20e176155e90ec3afa3d753721a48247c96d8094bc2f9c7b2d4"
+  },
+  {
+    "path": "rustml-tensor/src/tensor.rs",
+    "sha256": "df7b4fe99b0412edf14bacaaa172de860957eb446a576d26fc94fa9a10e64dc7"
+  },
+  {
+    "path": "rustml/Cargo.toml",
+    "sha256": "cada2ca7fb29f575de30c4e2dc5560088994a92adbbefd690671f068ad74d755"
+  },
+  {
+    "path": "rustml/src/lib.rs",
+    "sha256": "fdde962b36cffe2936e69553778c13f6b1ad895d8b778a3a7b407c0de765de86"
+  },
+  {
+    "path": "rustml/tests/public_api.rs",
+    "sha256": "f56f22b218205d3fa7a68a83f701d2af5e21e741e41ad34895a617115425bc31"
+  }
+]

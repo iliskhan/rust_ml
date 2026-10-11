@@ -2,9 +2,10 @@ import { useLayoutEffect, useRef } from 'react';
 import { ConceptLesson } from './ConceptLesson';
 import { getConcept } from './concepts';
 import { LearningActivity, useLearning } from './learning-context';
+import { SnapshotAnalysis } from './SnapshotAnalysis';
 
 export function KnowledgeExplorer({ lessonTitle }: { lessonTitle: string }) {
-  const { navigation, frames, positions, focusTargets, returnFocus, close, back, jump } = useLearning();
+  const { navigation, snapshot, frames, positions, focusTargets, returnFocus, close, back, jump } = useLearning();
   const dialog = useRef<HTMLDialogElement>(null);
   const breadcrumbs = useRef<HTMLElement>(null);
   const originScroll = useRef(0);
@@ -67,6 +68,7 @@ export function KnowledgeExplorer({ lessonTitle }: { lessonTitle: string }) {
     <div className="explorer-viewport">{navigation.visited.map(id => <section key={id} ref={element => { if (element) frames.current.set(id, element); else frames.current.delete(id); }} hidden={id !== current} className="explorer-frame" aria-labelledby={`concept-heading-${id}`}>
       <LearningActivity active={id === current}>
         <div className="explorer-title"><h2 id={`concept-heading-${id}`} tabIndex={-1}>{getConcept(id)?.title ?? id}</h2><p>Нажмите на незнакомое понятие, чтобы разобрать его глубже. Этот шаг останется на месте.</p></div>
+        {snapshot && (id === snapshot.kind ? <><SnapshotAnalysis snapshot={snapshot} /><h3 className="snapshot-independent">Самостоятельный пример понятия</h3></> : <p className="snapshot-preserved">Числа из «{snapshot.origin}» сохранены. Вернитесь по пути к «{getConcept(snapshot.kind)?.title.split(':')[0]}», чтобы продолжить их разбор.</p>)}
         <ConceptLesson id={id} />
       </LearningActivity>
     </section>)}</div>

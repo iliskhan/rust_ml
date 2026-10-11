@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { activate, activationDerivative, linear, mse, bceProbability, bceLogit, sharedGraph, finiteDifference } from './math'
 import type { Activation } from './math'
 import { Range, Chart, Exercise, fmt } from './ui'
-import { ConceptLink } from './learning-context'
+import { AnalyzeNumbers, ConceptLink } from './learning-context'
 import { Scene3D } from './ThreeD'
 import { functionSurface, neuronHeight, mseHeight } from './lessonSceneMath'
 
@@ -53,6 +53,7 @@ export function NeuronLesson() {
           <tr><th scope="row">Сумма + смещение: z</th><td>{fmt(z)}</td></tr>
         </tbody></table>
         <p className="result">a = {activationNames[kind]}({fmt(z)}) = <strong>{fmt(output)}</strong></p>
+        <AnalyzeNumbers snapshot={{ kind: 'dot-product', origin: 'Нейрон и слои', detail: `Один нейрон: входы → взвешенная сумма → ${activationNames[kind]}`, inputs: [x1, x2], weights: [w1, w2], bias, activation: kind }} />
         <p className="note">Локальная производная da/dz = {fmt(derivative)}: насколько изменится выход при малом изменении z.</p>
       </section>
     </div>

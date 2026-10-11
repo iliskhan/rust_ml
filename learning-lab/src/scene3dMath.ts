@@ -3,7 +3,7 @@ export type SceneAxis = { label: string; min: number; max: number };
 export type SceneAxes = readonly [SceneAxis, SceneAxis, SceneAxis];
 export type SceneSurface = { name: string; rows: readonly (readonly Vec3[])[]; color?: string; opacity?: number };
 export type SceneLine = { name: string; points: readonly Vec3[]; color?: string; dashed?: boolean };
-export type ScenePoint = { name: string; position: Vec3; color?: string };
+export type ScenePoint = { name: string; position: Vec3; color?: string; shape?: 'circle' | 'triangle'; hollow?: boolean };
 export type Scene3DProps = {
   title: string;
   description: string;
@@ -96,6 +96,8 @@ export type ScenePrimitive = {
   opacity?: number;
   dashed?: boolean;
   lineDistance?: number;
+  shape?: ScenePoint['shape'];
+  hollow?: boolean;
 };
 
 export function buildSceneGeometry({ axes, surfaces = [], lines = [], points = [] }: Pick<Scene3DProps, 'axes' | 'surfaces' | 'lines' | 'points'>) {
@@ -144,7 +146,8 @@ export function buildSceneGeometry({ axes, surfaces = [], lines = [], points = [
   points.forEach((point, index) => {
     const position = normalize(point.position);
     if (position && inCube(position)) primitives.push({ kind: 'point', vertices: [position], name: point.name,
-      color: point.color ?? sceneColors[(surfaces.length + lines.length + index) % sceneColors.length] });
+      color: point.color ?? sceneColors[(surfaces.length + lines.length + index) % sceneColors.length],
+      shape: point.shape, hollow: point.hollow });
   });
   return { primitives, outside, invalid };
 }

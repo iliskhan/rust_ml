@@ -1,0 +1,11 @@
+.analyze-numbers{font-weight:600;border-color:#61927a;background:#eaf2e8;margin-block:10px}
+.snapshot-analysis{border:1px solid #7ca58c;border-left:4px solid #367454;border-radius:9px;padding:20px;margin-bottom:25px;background:#f0f6ed;min-width:0}
+.snapshot-analysis h3{margin:5px 0 8px}.snapshot-analysis p{font-size:14px}
+.snapshot-eyebrow{font-size:11px!important;text-transform:uppercase;letter-spacing:.09em;font-weight:700;color:#326849}
+.snapshot-detail{font-weight:600}.snapshot-steps{padding-left:22px;font-size:14px}.snapshot-steps li+li{margin-top:9px}
+.snapshot-analysis output,.snapshot-formula,.snapshot-table td{font-family:Consolas,"SFMono-Regular",monospace;overflow-wrap:anywhere}
+.snapshot-analysis output{font-weight:700}.snapshot-formula{margin-top:14px;font-size:13px!important}
+.snapshot-table{max-width:100%;overflow-x:auto;margin:16px 0;overscroll-behavior-inline:contain}
+.snapshot-table table{min-width:500px}.snapshot-table th,.snapshot-table td{vertical-align:top}.snapshot-table th{min-width:5ch}.snapshot-table td{white-space:nowrap;overflow-wrap:normal}
+.snapshot-independent{font-size:17px;margin:23px 0 14px}.snapshot-preserved{font-size:12px!important;margin-top:12px!important;color:#326849}
+@media(max-width:560px){.snapshot-analysis{padding:16px 13px}.snapshot-table table{min-width:460px}.snapshot-analysis h3{font-size:18px}}

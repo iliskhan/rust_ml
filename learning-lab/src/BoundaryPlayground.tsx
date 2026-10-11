@@ -1,6 +1,7 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { boundaryLossGradient, boundaryMetrics, boundaryParameterCount, createBoundaryParameters, makeBoundaryDataset, predictBoundary, type BoundaryConfig, type BoundaryDataset, type BoundaryKind } from './boundaryNetworkMath';
 import { probabilityGrid } from './decisionBoundaryMath';
+import { HiddenRepresentations } from './HiddenRepresentations';
 import { ConceptLink, LearningActivity, useLearningActive } from './learning-context';
 import { createOptimizerState, optimizerStep, type Activation, type OptimizerKind, type OptimizerState } from './math';
 import { Scene3D, type SceneLine, type Vec3 } from './ThreeD';
@@ -177,9 +178,9 @@ export function BoundaryPlayground() {
               {grid.rows.flatMap((row, i) => row.map(([a, b, p], j) => <rect key={`${i}-${j}`} data-x={a} data-y={b} data-probability={p} x={x(a - .5 / segments)} y={y(b + .5 / segments)} width={(right - left) / segments + .3} height={(bottom - top) / segments + .3} fill={probabilityColors ? `hsl(153 32% ${97 - p * 54}%)` : regionColors[Number(p >= threshold)]} />))}
               {[.25, .5, .75].map(t => <g key={t} className="boundary-map-grid"><line x1={x(t)} x2={x(t)} y1={top} y2={bottom} /><line x1={left} x2={right} y1={y(t)} y2={y(t)} /></g>)}
               <path className="boundary-contour" d={boundaryPath} />
-              {samples.map(({ input, target, validation }, index) => <g key={index} data-x={input[0]} data-y={input[1]} data-target={target} data-split={validation ? 'validation' : 'train'} fill={validation ? '#fffefa' : targetColors[target]} stroke={targetColors[target]} strokeWidth={validation ? 1.6 : 1}>
+              {samples.map(({ input, target, validation }, index) => <g key={index} data-sample-id={`${validation ? 'V' : 'T'}${String(validation ? index - dataset.train.length + 1 : index + 1).padStart(3, '0')}`} data-x={input[0]} data-y={input[1]} data-target={target} data-split={validation ? 'validation' : 'train'} fill={validation ? '#fffefa' : targetColors[target]} stroke={targetColors[target]} strokeWidth={validation ? 1.6 : 1} onClick={event => { event.stopPropagation(); setProbe([...input]); }}>
                 {target === 0 ? <circle cx={x(input[0])} cy={y(input[1])} r={validation ? 3.7 : 2.8} /> : <path d={`M${x(input[0])},${y(input[1]) - 4}l3.7,6.5h-7.4Z`} />}
-                <title>{validation ? 'Проверка' : 'Обучение'} · цель {target} · вход [{input.map(value => fmt(value, 3)).join('; ')}]</title>
+                <title>{validation ? 'V' : 'T'}{String(validation ? index - dataset.train.length + 1 : index + 1).padStart(3, '0')} · {validation ? 'Проверка' : 'Обучение'} · цель {target} · вход [{input.map(value => fmt(value, 3)).join('; ')}]</title>
               </g>)}
               <path className="boundary-crosshair" d={`M${left},${y(probe[1])}H${right}M${x(probe[0])},${top}V${bottom}`} />
             </g>
@@ -214,6 +215,8 @@ export function BoundaryPlayground() {
         </div>
       </div>
     </div>
+
+    <HiddenRepresentations params={optimizer.params} config={config} dataset={dataset} probe={probe} onProbeChange={setProbe} step={optimizer.step} source={`${kinds[settings.kind]} · seed ${settings.seed}`} />
 
     <div className="boundary-loss"><h4>Уменьшается ли ошибка на новых точках?</h4>
       <Chart series={[{ name: 'Обучение · train', points: history.map(point => ({ x: point.step, y: point.train })), color: '#27694e' }, { name: 'Проверка · validation', points: history.map(point => ({ x: point.step, y: point.validation })), color: '#b75d24', dashed: true }]} xLabel="Шаг обучения" yLabel="Средняя потеря BCE" xDomain={[0, Math.max(1, optimizer.step)]} yDomain={[0, Math.max(.1, ...history.flatMap(point => [point.train, point.validation])) * 1.1]} />

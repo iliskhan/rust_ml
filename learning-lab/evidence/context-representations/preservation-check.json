@@ -1,0 +1,18 @@
+{
+  "baseline": "d358291586a728d2b396850acbd43f6402c1dbe9",
+  "checkedAt": "2026-10-11T16:14:35.7165230Z",
+  "uniqueBaselineFiles": 83,
+  "authorizedExistingSourceChanges": [
+    "learning-lab/src/BoundaryPlayground.tsx",
+    "learning-lab/src/Foundations.tsx",
+    "learning-lab/src/KnowledgeExplorer.tsx",
+    "learning-lab/src/Scene3D.tsx",
+    "learning-lab/src/TransformerCourse.tsx",
+    "learning-lab/src/boundaryNetworkMath.ts",
+    "learning-lab/src/learning-context.tsx",
+    "learning-lab/src/scene3dMath.ts"
+  ],
+  "protectedUnchangedFiles": 75,
+  "rustBaselineUnchangedFiles": 28,
+  "hashMismatches": 0
+}

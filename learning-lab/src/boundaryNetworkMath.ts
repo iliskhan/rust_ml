@@ -146,6 +146,35 @@ export function predictBoundary(params: number[], config: BoundaryConfig, input:
   return activate(forward(params, layers, input).logit, 'sigmoid');
 }
 
+export type BoundaryTrace = {
+  readonly input: readonly [number, number];
+  /** a⁰ = 2x−1, followed by every hidden vector and the scalar sigmoid output. */
+  readonly activations: readonly (readonly number[])[];
+  /** One z vector per hidden layer, followed by the scalar output logit. */
+  readonly preactivations: readonly (readonly number[])[];
+  readonly logit: number;
+  readonly probability: number;
+};
+
+/** Checked, independent arrays from the same forward pass used in prediction/training. */
+export function traceBoundary(params: number[], config: BoundaryConfig, input: [number, number]): BoundaryTrace {
+  const layers = checkedModel(params, config);
+  checkInput(input);
+  const trace = forward(params, layers, input);
+  return { ...trace, input: [...input], probability: trace.activations.at(-1)![0] };
+}
+
+/** Copies one row of W and its bias so a numerical explanation cannot edit the model. */
+export function boundaryNeuronParameters(params: number[], config: BoundaryConfig, layerIndex: number, neuron: number) {
+  const layers = checkedModel(params, config);
+  const layer = layers[layerIndex];
+  if (!Number.isInteger(layerIndex) || !layer || !Number.isInteger(neuron) || neuron < 0 || neuron >= layer.width) {
+    throw new RangeError('Boundary: неизвестный слой или нейрон');
+  }
+  return { weights: params.slice(layer.offset + neuron * layer.inputs, layer.offset + (neuron + 1) * layer.inputs),
+    bias: params[layer.bias + neuron], activation: layer.activation };
+}
+
 /** Mean BCE from logits, with gradients for every weight and bias in the same flat layout. */
 export function boundaryLossGradient(params: number[], config: BoundaryConfig, data: BoundarySample[]) {
   const layers = checkedModel(params, config);
