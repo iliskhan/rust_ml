@@ -3,7 +3,9 @@
 Checkout: `C:/Users/lomaster/.codex/worktrees/6209/rust_ml`, ветка
 `codex/ui-ux-learning-lab`, чистая исходная ревизия
 `9a5680cdbc52f1ad72ebb7b0f17c390e2a2748bc`.
-Ниже проверены изменения этой задачи; итоговый commit и совпадение remote — в чате.
+Код и приёмка отправлены commit `fbd22aed35f49776543ad627b225c7f50ae1617d`;
+local/remote SHA совпали2026-10-12 02:18 Europe/Moscow. Последующий
+документальный checkpoint не меняет проверенный код; его SHA — в чате.
 
 ## Результат и границы
 
