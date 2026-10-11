@@ -1,10 +1,14 @@
-export type ConceptDemo = 'function' | 'derivative' | 'gradient' | 'chain' | 'vector' | 'matrix' | 'probability' | 'exponential' | 'softmax' | 'normalization' | 'loss' | 'rate' | 'backprop' | 'overfitting';
+import { advancedConcepts, advancedSources } from './advancedConcepts.ts';
+
+export type AdvancedConceptDemo = 'gaussian' | 'kl' | 'reparameterization' | 'variational' | 'adversarial' | 'noise' | 'score' | 'graph' | 'discount' | 'bellman';
+export type ConceptDemo = 'function' | 'derivative' | 'gradient' | 'chain' | 'vector' | 'matrix' | 'probability' | 'exponential' | 'softmax' | 'normalization' | 'loss' | 'rate' | 'backprop' | 'overfitting' | AdvancedConceptDemo;
 export type Concept = {
   id: string; title: string; prerequisites: string[]; idea: string; example: string;
   observe: string; formal: string; limits: string; demo?: ConceptDemo; source: string;
 };
 
 export const conceptSources: Record<string, { title: string; url: string }> = {
+  ...advancedSources,
   calculus: { title: 'MIT OCW · производная и правило цепочки', url: 'https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/pages/1.-differentiation/' },
   gradient: { title: 'MIT OCW · частные производные и градиент', url: 'https://ocw.mit.edu/courses/18-02sc-multivariable-calculus-fall-2010/pages/2.-partial-derivatives/' },
   algebra: { title: 'Dive into Deep Learning · линейная алгебра', url: 'https://d2l.ai/chapter_preliminaries/linear-algebra.html' },
@@ -261,6 +265,7 @@ export const concepts: Concept[] = [
     formal: 'Precision=TP/(TP+FP), recall=TP/(TP+FN), accuracy=(TP+TN)/N. TP — верные положительные ответы, FP — ложные. Для нулевого знаменателя нужно заранее определить соглашение; cross-entropy оценивает ещё и уверенность.',
     limits: 'Небольшой test даёт шумную оценку. Нужны проверки по значимым группам, устойчивость к сдвигу данных и, если используется вероятность, калибровка. Игрушечный XOR не заменяет эти проверки.',
   },
+  ...advancedConcepts,
 ];
 
 export function getConcept(id: string) { return concepts.find(concept => concept.id === id); }

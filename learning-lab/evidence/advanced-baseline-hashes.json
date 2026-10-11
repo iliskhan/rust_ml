@@ -1,0 +1,558 @@
+{
+  "commit": "009a58bb525e437da7a1cd5f9dfd73b70fcffcb5",
+  "checkedAt": "2026-10-11T08:45:20.5092569+03:00",
+  "files": [
+    {
+      "path": ".cursor/rules/api-design.mdc",
+      "sha256": "E3C38912614103513371129B67915684DFBB0A75AE397193F660B0D746AB8E96"
+    },
+    {
+      "path": ".cursor/rules/documentation.mdc",
+      "sha256": "BA00EBD46ABAF006F25D21DA5F4D64BF585ED90C282A5FC11A2CFA95F393D2FF"
+    },
+    {
+      "path": ".cursor/rules/ml-specific.mdc",
+      "sha256": "35798C8E75F9C2B69A0A1664F4BAD52B6B95403215F1699F3A55BCF1AFFF1EF5"
+    },
+    {
+      "path": ".cursor/rules/performance.mdc",
+      "sha256": "6721D954A9E83BA05C335D6DAC798F7976EE914E3A0B7A093BAEE89DDDE9262A"
+    },
+    {
+      "path": ".cursor/rules/project-structure.mdc",
+      "sha256": "4D375A8FEEAF3B7C09325F77EFA7AABADD589399EEA40144C195F99217E2DEE0"
+    },
+    {
+      "path": ".cursor/rules/rust-coding-standards.mdc",
+      "sha256": "451B41300665985C98DBE5DAEE2B79C3DB94C9F2D333365F164D048633B550AB"
+    },
+    {
+      "path": ".cursor/rules/teaching-mode.mdc",
+      "sha256": "8D047D24A087A1ED12DC372D01898EE3FFCB58CC114B45A89D95529529B75C85"
+    },
+    {
+      "path": ".cursor/rules/testing.mdc",
+      "sha256": "F7B0C749D6E6DC0F2CEFE98FDB726EF6AE945D96F560FECD1B9E691D9105A344"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "EF9F3216564BD6B19DF3ADDFBAB02883AB70F5EC7C4FF3C967EDEE63FE689E96"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "1F1B6597FA55EEB40C7565F15E23C8C4CA1B78B4ABE49D1DE23F2C434940ABA7"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "751C293596BDB331F2A2AF9DF327C118B1F3EF6BAEC263FF3863AC4CF7D24B50"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "4CBAD5503E1F40FBA23CD9CF7AC5EBFB6BA47684FC5D126B29D9B577A20EA9DA"
+    },
+    {
+      "path": "FUTURE_API_IMPROVEMENTS.md",
+      "sha256": "851A8C7D9BE0ADEBC85D2D13009B8E91459EE06F408BD983D4CB76B993C61134"
+    },
+    {
+      "path": "LEARNING_GUIDE.md",
+      "sha256": "4E013E308D760372C36FB741C7F9B4579E453F2F0B27F70DFBEE331A4BFC4506"
+    },
+    {
+      "path": "LICENSE-APACHE",
+      "sha256": "4B18E0A457D8BCFB711EC7C830DE6AB15E171E3311CA111E642CD2973D1C5AD4"
+    },
+    {
+      "path": "LICENSE-MIT",
+      "sha256": "7C452DD5B9D4A11AEFB2D746C8ABB67DD8C218B9310BD809AA72166F3F4DB008"
+    },
+    {
+      "path": "MILESTONE_STATUS.md",
+      "sha256": "F48C59A03F3D661E133324D66AD2F4D4D1D080DD83065034909DE5455FAD040B"
+    },
+    {
+      "path": "PLAN.md",
+      "sha256": "E8D179ED1E261A69DE929A341A7806A3E0E86727347945E417E5A18D283FD67A"
+    },
+    {
+      "path": "PROGRESS.md",
+      "sha256": "15154A9C1A45FC74E5528EFD5C0ED63537D3079194A44AF35578E684286F4FA0"
+    },
+    {
+      "path": "README.md",
+      "sha256": "5124F5B5A38B53417DC19FD8F52B18652D6FBDCE77A9BCEF5BA45562114036D4"
+    },
+    {
+      "path": "examples/autograd_test.rs",
+      "sha256": "BD5887E1E68EA4CE398FCA93739ACD9A51BDA0CFC2C95A939E82BA7BD4D99CAD"
+    },
+    {
+      "path": "examples/basic_tensor_ops.rs",
+      "sha256": "DFAC025269707CB1F5BB4A0CD9B4D1E72E133CC81E14B2802B18770594474EED"
+    },
+    {
+      "path": "examples/milestone_check.rs",
+      "sha256": "598AC76171A809B88778E50049EBA997917EA30E8CDB6BC748F92CC1E8FD4F8C"
+    },
+    {
+      "path": "examples/scalar_demo.rs",
+      "sha256": "CF18C9392F8B24D4FCC80D519CD5A141A848AF9B7602B9C35BD2F120C1E55555"
+    },
+    {
+      "path": "learn.cmd",
+      "sha256": "3FC912B590762AF20E42A39C44EDC751192A9B3F8F84B8A2B979332020CC37B4"
+    },
+    {
+      "path": "learning-lab/.gitignore",
+      "sha256": "A670E485E4692499488B7828D75919886EABCE58E8D5A1C8458C436C8A4EB926"
+    },
+    {
+      "path": "learning-lab/PROGRESS.md",
+      "sha256": "AD4AD1FA8850D676911F074291B4ABEA9679E23D2E23F5F505742255BCC0A3DD"
+    },
+    {
+      "path": "learning-lab/README.md",
+      "sha256": "50189FBE7DAB8BCBC8670337EF4775C2A19DC3FF55291A3E7AC73A175F1A5D0C"
+    },
+    {
+      "path": "learning-lab/docs/architectures.md",
+      "sha256": "E26FC85BC46F167752255AE97CFEF83570173802F049ED281F235FA4DB65D5AA"
+    },
+    {
+      "path": "learning-lab/docs/foundations-note.md",
+      "sha256": "471EEE518C0905CD0A07DE3EAEA0F510D2E28A93B554B8B073F8833830E3B7C7"
+    },
+    {
+      "path": "learning-lab/docs/math-notes.md",
+      "sha256": "DF675BBE18A17F471B91FDDCB9564899513EEC27BE84007E6E1A5F07F47356AB"
+    },
+    {
+      "path": "learning-lab/evidence/EXPANSION.md",
+      "sha256": "645C17410FC0593377F3D993EE83311BF00E289D02E7B50200EE65B66BA68FB3"
+    },
+    {
+      "path": "learning-lab/evidence/INTEGRATION.md",
+      "sha256": "5AFD7042AE452CBD6500FFFF649AEE3FA952C4B63F52929A02E965348241FE54"
+    },
+    {
+      "path": "learning-lab/evidence/VALIDATION.md",
+      "sha256": "A98BCE1AA03021A2E4C83231F67407AEC1AA701B2556699FDD1CA4B69A002F02"
+    },
+    {
+      "path": "learning-lab/evidence/browser-checks.json",
+      "sha256": "2E17557CFAC498C9FE0204402CB198C4FEF4FFC772060CF2B8FE56C812E50830"
+    },
+    {
+      "path": "learning-lab/evidence/build.log",
+      "sha256": "90F894F71412A391FD181CB2E2F18B625855D5DD1A5588C2517AC90E62A80B2C"
+    },
+    {
+      "path": "learning-lab/evidence/desktop-cnn.jpg",
+      "sha256": "A5BCB9420C825FF8D48737D6441A7AD282251CBC403B7C5AB61A968ED897EFB9"
+    },
+    {
+      "path": "learning-lab/evidence/desktop-map.jpg",
+      "sha256": "A11C0F87A5B1B02D1AA1228EEB4B3ADCA57EBD19740867AFB8CBFE3EA5C52171"
+    },
+    {
+      "path": "learning-lab/evidence/desktop-neuron.jpg",
+      "sha256": "0CC95B0684C92B5D8EB49BB33052DF666B5EFF36F7419B846083CD64EC7C8D50"
+    },
+    {
+      "path": "learning-lab/evidence/desktop-transformer.jpg",
+      "sha256": "60362B071560300B65A875A0F6CAAE557D2A184A4BD557FAA4C5B732105203E0"
+    },
+    {
+      "path": "learning-lab/evidence/desktop-xor-trained.jpg",
+      "sha256": "CA66167B00455CD06B05FC8CCA73755D3A95DB9F034D9822B282F757CB9FD97C"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-after-overview.png",
+      "sha256": "BC259EF4D01CF963460368EE6AAC0A3A6B7EA71C76422A4061462E78637E760B"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-attention-desktop.png",
+      "sha256": "977605142822972F944FA7B59E4650F855C6A56DC38FE1F578807F868286E609"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-attention-mobile320.png",
+      "sha256": "51B2226D91C64E49213D28C8594C072D80EAE615541607320DC47829CC12C058"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-before-overview.png",
+      "sha256": "A7157C3F08BD420976672CA59D6914B675FE6D4D17C259DE3D1244F9262EE38A"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-before-transformer.png",
+      "sha256": "2E82F5089E42336F0571A0423850A6A40068EC5718633601E131B35130EFC849"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-browser.json",
+      "sha256": "FE271A52BA486F47E3713C9C99117F01D0D25AA7F0F0A1C92EC0E475093A438A"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-build.log",
+      "sha256": "A8DA627BA6ECCCA04C0CB3946734CD7689AFBC65FE64DB77F1E25FC5C62B4C88"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-derivative-desktop.png",
+      "sha256": "1C17A9A6ACEAEC3F93ADECAD1917413F80D83A35AC2FCABCAAD10F06B42579BA"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-derivative-mobile320.png",
+      "sha256": "0709D814CA8636607DFAD20E28A3E9771B63F6ACD285EAECE572A42177B6DC42"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-derivative-plot-mobile320.png",
+      "sha256": "285738A4568DBC670C1AF8C12E43762A8E6DD7CAB0BDB5E5A2C94950AECDE91A"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-final-transformer.png",
+      "sha256": "4B8808855E178B262A274BA3AA75B23F2A1F6078F492C6DC5307867DD27C5EC8"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-rope-desktop.png",
+      "sha256": "F758D3489D70F4FEE3D970B5308BD2EF6D4367926B44386EFF1EA505FFF02A43"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-rope-mobile390.png",
+      "sha256": "D7796E619606CE433836417911482CD644EE7BB36775830D12C2CBD28C9F7AA3"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-rust-preservation.json",
+      "sha256": "521D53FBAE4714BB7371FA43F3C2C2F885D575057A1B955F77060904D0FE7769"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-source-hashes.json",
+      "sha256": "D32CE7E49B282E1ADD6E15B8458D7D83FE4F51E981623B38A6F7970541AD8F20"
+    },
+    {
+      "path": "learning-lab/evidence/expansion-tests.log",
+      "sha256": "AB33752AAEB5EE4B4929830FEBC73BC64574CAE94835B78D62AA2CE9329E2744"
+    },
+    {
+      "path": "learning-lab/evidence/integration-browser.json",
+      "sha256": "71BC8A478BDCA173FD9842FE0A2A85B9FA2A8DB189DCDFE46A7C11D0BF5451CA"
+    },
+    {
+      "path": "learning-lab/evidence/integration-mobile.png",
+      "sha256": "5059C3532BEEC2809C9366DF3D6D42A03587D69B0186E1F2DCFB80BC78100256"
+    },
+    {
+      "path": "learning-lab/evidence/integration-xor.png",
+      "sha256": "74242513FA6F2BBABBAE4DECAEF9C612DC1C0F24082F8CE80B8C0EFEEAF15D59"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-attention-diagram.jpg",
+      "sha256": "6895AD34F5278234C64A2D9AF14722B7ACA5011A478CB4833286EFD55851C2E2"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-backprop-diagram.jpg",
+      "sha256": "32E40CB3D31C752B4003420C05336650A60293F21DD4C687048EF29179A92062"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-backprop.jpg",
+      "sha256": "54F2BD89F4848A103914E5BC99D2D8B059A27E2C01DA775B289540426AC53CAD"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-dense-diagram.jpg",
+      "sha256": "C7AFEAA55F66D961E742115D4B7BC46A118714123BCEBB414E7A0471F4B02E64"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-map.jpg",
+      "sha256": "118EE5D8CCEDC77FB98799F8E82D9684869227F3D4B97AF675FAB188B19A07AB"
+    },
+    {
+      "path": "learning-lab/evidence/mobile-transformer.jpg",
+      "sha256": "5854100CF45DDFC59FD200CA6772A7D97F0F3310F95CB1BCC4E2E1C2D9572985"
+    },
+    {
+      "path": "learning-lab/evidence/numerical-results.json",
+      "sha256": "938A8FC9DBDB2A9D9EA4CD023B9F35193654F1BBB2781714951DE27B005D215A"
+    },
+    {
+      "path": "learning-lab/evidence/production-browser.json",
+      "sha256": "67108E8FB7C3F7DC78E24A8F6B87AEE7AA4560DBECF37CE90956333722B68D95"
+    },
+    {
+      "path": "learning-lab/evidence/source-hashes.json",
+      "sha256": "A11E57EAB5DFF6A1E123AB4F10EF5CFA7E2924AD4D0D2BDDEE5E8DC4C1FC8FFA"
+    },
+    {
+      "path": "learning-lab/evidence/tests.log",
+      "sha256": "AAC81AF8FBE45D6E63ECDDD5934BE158BDA6339FFB66FD7FA78C427AE87B9834"
+    },
+    {
+      "path": "learning-lab/index.html",
+      "sha256": "BC16F4EDFCC43290747B0B8EE1FDBE370BBE01E7013F1D5F37F97528F1AFF474"
+    },
+    {
+      "path": "learning-lab/package.json",
+      "sha256": "FE8AB0C31CD2569464CA395915820A702BE6E6E86D4B02DF6F7BBDF86A067A5A"
+    },
+    {
+      "path": "learning-lab/pnpm-lock.yaml",
+      "sha256": "9DC1C2581F8A0EFE761139D12C35CCF130C26C65157C5DEAF117CEA85531AF8F"
+    },
+    {
+      "path": "learning-lab/pnpm-workspace.yaml",
+      "sha256": "D7626A1B6FD8A138506EAFF942DC78BDF73E759B7114834D7D9EDB8D30C0D4D7"
+    },
+    {
+      "path": "learning-lab/research/curriculum.md",
+      "sha256": "D8AC932DC3D4E2910AFD138F50506934058E84266D46B2AC551A0A635BAC3255"
+    },
+    {
+      "path": "learning-lab/research/transformers.md",
+      "sha256": "26B0D82B497DF356ACDD9D40F968CC7718ACF5CD454C3408020924740A845DC6"
+    },
+    {
+      "path": "learning-lab/research/ux.md",
+      "sha256": "81A20CC0D6F8EC57D597B65BDF7AE0CBA181453B28BC69C73CEA99F560AAC21C"
+    },
+    {
+      "path": "learning-lab/scripts/numerical-summary.mjs",
+      "sha256": "3565EB0E96264B0E1682010AA797ECD0BB5E6BC0CCC1B945EA163BCFCFF85ABE"
+    },
+    {
+      "path": "learning-lab/src/App.tsx",
+      "sha256": "E1AD94A240424240E02C24F628CD8309359530EC2F94736680BB0A2D278834AF"
+    },
+    {
+      "path": "learning-lab/src/ArchitectureLesson.tsx",
+      "sha256": "D67C9155530A8B1F702E49F7077F71D4B8A0955E6A6E6217E73E780D68C25AE6"
+    },
+    {
+      "path": "learning-lab/src/ConceptLesson.tsx",
+      "sha256": "F05E69F29D32721B0F6E849DAD7D9EDCBB6BCAF2AA094A707B5B8EFA99A61E2A"
+    },
+    {
+      "path": "learning-lab/src/CurriculumView.tsx",
+      "sha256": "E10B3F173BE624E9FCD17DDCB9C02CB9EAA1102E03FAABD0FFED8A55BB2F4318"
+    },
+    {
+      "path": "learning-lab/src/Experiments.tsx",
+      "sha256": "C78B637F1C18178C3EF6C375B7C1E0297EE68ABF4CDEAAEC54F5FE17D39FE9D2"
+    },
+    {
+      "path": "learning-lab/src/Foundations.tsx",
+      "sha256": "08F4FCB8924BA87F82C4F823D600405B6D7718A494A10897F74D58BD205AEB7C"
+    },
+    {
+      "path": "learning-lab/src/KnowledgeExplorer.tsx",
+      "sha256": "BB94453384C7FE81A57F2E26D3F011ADEFE30C605EB943E57B8D5B95C2A5D577"
+    },
+    {
+      "path": "learning-lab/src/TransformerCourse.tsx",
+      "sha256": "27CA3E3263C3DF4485E734561EE2AE060E7F5501FDF197496D87608CA64601A1"
+    },
+    {
+      "path": "learning-lab/src/architectures.ts",
+      "sha256": "E76EB9A07C661A152A6E6705A30A355D0C80EE06ECE4B90C547A41F9B3C3AA67"
+    },
+    {
+      "path": "learning-lab/src/concept-lessons.css",
+      "sha256": "E587F0224CDC0AF24E7CF02F07DF974B18C0F48538E084725F3A14F1662A65E9"
+    },
+    {
+      "path": "learning-lab/src/conceptMath.ts",
+      "sha256": "B52CB297052F0387FD783BF1F06A8D0F7AA795596C221C919036DB0C9160B100"
+    },
+    {
+      "path": "learning-lab/src/concepts.ts",
+      "sha256": "A15DEB530D4F9605A87A022F3BE77C78BDD3498592D88BB66978E031685060BE"
+    },
+    {
+      "path": "learning-lab/src/curriculum.ts",
+      "sha256": "8197CC05102D6F933DE4064A47179220BFEB972A77723B852205B99873A2D6A2"
+    },
+    {
+      "path": "learning-lab/src/learning-context.tsx",
+      "sha256": "876B6B9BBB1A1B61A9E446A7DE83028CADDA3E32B92912549B6754A95012F434"
+    },
+    {
+      "path": "learning-lab/src/learning-navigation.ts",
+      "sha256": "FEFCC45CB50B535EBBC404A8B3B515D16A946961790567EA49632F5B45F297E5"
+    },
+    {
+      "path": "learning-lab/src/main.tsx",
+      "sha256": "81DF18E0D166E771FAB98938D62CF02D971BC58C08BB368BB1D035A45B3B06CA"
+    },
+    {
+      "path": "learning-lab/src/math.ts",
+      "sha256": "7417FAE9CA3F9052EBCDEDD84B6A7FD34F48F235DBAFCD9B83AE578609375943"
+    },
+    {
+      "path": "learning-lab/src/styles.css",
+      "sha256": "05F434BDBB0D0D3E9712F1BA1163BA66A578CCC0E2614708DC7567EBA8056B50"
+    },
+    {
+      "path": "learning-lab/src/transformer-course.css",
+      "sha256": "47322FB6C81A799F626F086086EC87CD7BC785E4DF209DD423C0F1CD395742AC"
+    },
+    {
+      "path": "learning-lab/src/transformerMath.ts",
+      "sha256": "3FD1B6E56A7A8B1F80A884C5C83CD12A16C09319D725A9FABE5C7726DFD3B758"
+    },
+    {
+      "path": "learning-lab/src/ui.tsx",
+      "sha256": "40E911048362EC1D97F64DE5C21EF3061352DFE825FEBACE1ACF601F40A02FD3"
+    },
+    {
+      "path": "learning-lab/tests/architectures.test.ts",
+      "sha256": "091199298AA5487CD516FAA0318DFB4327AEC2F935E0CDDAE201B7BBB6F814FD"
+    },
+    {
+      "path": "learning-lab/tests/conceptMath.test.ts",
+      "sha256": "B47F026F46FDDB0D9B074BC55E151F3693D34F58EFB4DA1B80D8C6A579DC97D9"
+    },
+    {
+      "path": "learning-lab/tests/content-links.test.ts",
+      "sha256": "6DB95D6925C469FAC5313900DD97A4AA29F3C57A9AD276C1743386099AF048CA"
+    },
+    {
+      "path": "learning-lab/tests/curriculum.test.ts",
+      "sha256": "476D738C834ABB1E5D3B500BDCE34E79969F1F99B7553DDED2DB0FF4AB0234DF"
+    },
+    {
+      "path": "learning-lab/tests/learning-navigation.test.ts",
+      "sha256": "60F37CDB44EFB0990EE5CCED6B255121303EC5914734804A1E7E33889E1D00C5"
+    },
+    {
+      "path": "learning-lab/tests/math.test.ts",
+      "sha256": "814BE4A6C99AE3114963B611DAE4452ECEEB943A9C4743610ED7F8AB96404D9C"
+    },
+    {
+      "path": "learning-lab/tests/transformerMath.test.ts",
+      "sha256": "7BA1DC75DCF42417146731D48D1B76CDCF9D512ECFEC01DBF1F3545C6DBC2669"
+    },
+    {
+      "path": "learning-lab/tsconfig.json",
+      "sha256": "8046C2431C82F4DC00357C806010C6BAACAEBA949095F6FFD9D380F09D6B2F71"
+    },
+    {
+      "path": "learning-lab/work/curriculum-progress.md",
+      "sha256": "FFBEF41DE4F47457D52A71318E1F2B6D8781C23C0839615F5F4B14A901FBE643"
+    },
+    {
+      "path": "learning-lab/work/progress.json",
+      "sha256": "52F0E786D1C7BE443C1BE2E2D8EE942AF141AC4EED8705F66361FE192C7A82AC"
+    },
+    {
+      "path": "learning-lab/work/transformer-progress.md",
+      "sha256": "97BC792F69A7589A71179559AB383062B6ED3D1CC67E0B6CCBB94AA30005C599"
+    },
+    {
+      "path": "learning-lab/work/ux-progress.md",
+      "sha256": "7A6CA07860C7F4C619EBA38D54A8408FB76C4409401D3751DB10C8443B911E51"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "C2BF30DFD270E308AE5A80B76A5695F4DA86A420597F535E0ED9B9C64341DD5F"
+    },
+    {
+      "path": "rustml-autograd/Cargo.toml",
+      "sha256": "9DD97460E2DEFE65AD6565BB6493BD2D6A9A524A6244894F0BD18D7C44951AF4"
+    },
+    {
+      "path": "rustml-autograd/src/graph.rs",
+      "sha256": "7ECF6B4D0E60CAC1EF4176B68178E8DAA0FAD4EA9CDC0C45398E63C146D3855D"
+    },
+    {
+      "path": "rustml-autograd/src/lib.rs",
+      "sha256": "D6D4F95834196753C7E3A7F50B38CB95CD2664E45930D622BBA9B67D29DE37BE"
+    },
+    {
+      "path": "rustml-autograd/src/ops.rs",
+      "sha256": "4B9EB009E9570D58FBB25F76E90781F351522055AF2ABDB4AD1E641EBA279FE8"
+    },
+    {
+      "path": "rustml-autograd/src/scalar.rs",
+      "sha256": "0556AF863DFD7027887B0130AA2DEA6D5C46A3DD0D4F7EC98C129BC0CFA62FDD"
+    },
+    {
+      "path": "rustml-autograd/src/variable.rs",
+      "sha256": "138B680DDE9E909856C7B9F468876B9AE92A3C6B2D0187AA888AA0719AB3BFB0"
+    },
+    {
+      "path": "rustml-autograd/tests/gradients.rs",
+      "sha256": "A23F05A36710BA764F9085537EBF547F6C2EA90E6C3DCD4B9B7A73C8D1498264"
+    },
+    {
+      "path": "rustml-core/.gitignore",
+      "sha256": "F61C42065F048EA8FA74560CDB2CE376CA780B0904950DF8B77D7A1156185C7F"
+    },
+    {
+      "path": "rustml-core/Cargo.toml",
+      "sha256": "91CF01E54F1EC3EB890BC5641E439C56D6EBC5901BAF98FC4EEAFE2FE93C9B1A"
+    },
+    {
+      "path": "rustml-core/src/backend.rs",
+      "sha256": "E13647D7EF22414A350243A85EAD4363E4370A98A0F39DCBFAE46AC02CD42BDA"
+    },
+    {
+      "path": "rustml-core/src/device.rs",
+      "sha256": "6F2B965536A69A612C96197A5F1B7F843DB831BAF67BFC3E522EA9C45500037E"
+    },
+    {
+      "path": "rustml-core/src/dtype.rs",
+      "sha256": "5E70EB16ECB5D9A785CDC984627DE303CDCA4030B846EFD4CC90582936B27725"
+    },
+    {
+      "path": "rustml-core/src/error.rs",
+      "sha256": "F58AEEEB7A1C5C6702EC22AD3FA9D8AD54EBEB0AA7345E768A4B1881F70FC61C"
+    },
+    {
+      "path": "rustml-core/src/lib.rs",
+      "sha256": "BD1DB6C6E9B5566FCC24E9EF9C614B891BE954E1A6DA8A77FDA89DAB6633D5BC"
+    },
+    {
+      "path": "rustml-nn/Cargo.toml",
+      "sha256": "FEC3F2BF61562FD287B637A7C729162B7349F0EF51AE72F589F89CB47BC77689"
+    },
+    {
+      "path": "rustml-nn/src/lib.rs",
+      "sha256": "C12E74A1F6D95B625F52775F735C94DD43CA4D128783F77FAF093FBCB6C8242F"
+    },
+    {
+      "path": "rustml-tensor/.gitignore",
+      "sha256": "F61C42065F048EA8FA74560CDB2CE376CA780B0904950DF8B77D7A1156185C7F"
+    },
+    {
+      "path": "rustml-tensor/Cargo.toml",
+      "sha256": "4A8C36F3B41E2BF2CD22A475E68BC5F6C099BE5252B97C0424C50ADB8FD80BD9"
+    },
+    {
+      "path": "rustml-tensor/src/lib.rs",
+      "sha256": "5889743CBC46C4855C941E27A9BBD4E277C94B0983966008DB668C8E273C9091"
+    },
+    {
+      "path": "rustml-tensor/src/ops.rs",
+      "sha256": "9952A8E4F20DDD768C13293754A84141FAB1A659B00F1AE9C8C528F17BE84360"
+    },
+    {
+      "path": "rustml-tensor/src/shape.rs",
+      "sha256": "28E1BB5C7D5EA20E176155E90EC3AFA3D753721A48247C96D8094BC2F9C7B2D4"
+    },
+    {
+      "path": "rustml-tensor/src/tensor.rs",
+      "sha256": "DF7B4FE99B0412EDF14BACAAA172DE860957EB446A576D26FC94FA9A10E64DC7"
+    },
+    {
+      "path": "rustml/.gitignore",
+      "sha256": "F61C42065F048EA8FA74560CDB2CE376CA780B0904950DF8B77D7A1156185C7F"
+    },
+    {
+      "path": "rustml/Cargo.toml",
+      "sha256": "CADA2CA7FB29F575DE30C4E2DC5560088994A92ADBBEFD690671F068AD74D755"
+    },
+    {
+      "path": "rustml/src/lib.rs",
+      "sha256": "FDDE962B36CFFE2936E69553778C13F6B1AD895D8B778A3A7B407C0DE765DE86"
+    },
+    {
+      "path": "rustml/tests/public_api.rs",
+      "sha256": "F56F22B218205D3FA7A68A83F701D2AF5E21E741E41AD34895A617115425BC31"
+    }
+  ]
+}

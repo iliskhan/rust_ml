@@ -7,6 +7,11 @@ import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './
 import { KnowledgeExplorer } from './KnowledgeExplorer';
 
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
+const VAECourse = lazy(() => import('./VAECourse').then(module => ({ default: module.VAECourse })));
+const GANCourse = lazy(() => import('./GANCourse').then(module => ({ default: module.GANCourse })));
+const DiffusionCourse = lazy(() => import('./DiffusionCourse').then(module => ({ default: module.DiffusionCourse })));
+const GNNCourse = lazy(() => import('./GNNCourse').then(module => ({ default: module.GNNCourse })));
+const RLCourse = lazy(() => import('./RLCourse').then(module => ({ default: module.RLCourse })));
 
 const lessons = [
   { id: 'map', title: 'Карта обучения', group: 'Ориентиры', hint: 'Связать части в одну систему', component: Overview },
@@ -18,6 +23,11 @@ const lessons = [
   { id: 'network', title: 'Сеть целиком', group: 'Основы на практике', hint: 'Обучить и разобрать свою сеть на XOR', component: NetworkLesson },
   { id: 'architectures', title: 'Семейства сетей', group: 'Дальше и глубже', hint: 'Dense, CNN, RNN, LSTM, GRU, Transformer', component: ArchitectureLesson },
   { id: 'transformer', title: 'Transformer по шагам', group: 'Дальше и глубже', hint: 'От токенов к вниманию и предсказанию', component: TransformerCourse },
+  { id: 'vae', title: 'VAE: скрытый код', group: 'Генерация', hint: 'Реконструкция, распределение и вариационная граница', component: VAECourse },
+  { id: 'gan', title: 'GAN: игра двух сетей', group: 'Генерация', hint: 'Генератор, различитель и их настоящее обучение', component: GANCourse },
+  { id: 'diffusion', title: 'Diffusion: из шума', group: 'Генерация', hint: 'Зашумление, denoiser и обратные шаги', component: DiffusionCourse },
+  { id: 'gnn', title: 'GNN: сеть на графе', group: 'Графы и действия', hint: 'Сообщения между узлами и обучение GCN', component: GNNCourse },
+  { id: 'rl', title: 'RL: учиться действовать', group: 'Графы и действия', hint: 'Награды, Bellman, Q-learning и градиент политики', component: RLCourse },
   { id: 'sources', title: 'Источники и границы', group: 'Справка', hint: 'Где упрощения и что читать дальше', component: Sources },
 ];
 const lessonGroups = [...new Set(lessons.map(lesson => lesson.group))];
@@ -121,6 +131,6 @@ function Sources() {
       <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noreferrer">W3C WAI: доступный модальный диалог ↗</a> · <a href="https://www.w3.org/WAI/people-use-web/tools-techniques/presentation/" target="_blank" rel="noreferrer">Представление и постепенное раскрытие ↗</a><p>Основа навигации по понятиям: фокус, возврат, инертный фон и доступ к подробностям по запросу.</p></li>
       <li><a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html" target="_blank" rel="noreferrer">PyTorch: LSTM ↗</a> · <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.GRU.html" target="_blank" rel="noreferrer">GRU ↗</a> · <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html" target="_blank" rel="noreferrer">Conv2d ↗</a><p>Современные соглашения для затворов, свёрток и форм данных.</p></li>
     </ul></section>
-    <section className="panel"><h3>Что реализовано и где границы</h3><p>Нейрон, Linear, активации, MSE, BCE, граф с общим узлом, SGD, momentum и Adam считают настоящие формулы. Сеть XOR выполняет полный forward/backward/update на четырёх примерах; лаборатория семейств показывает прямой проход малых конфигураций. <a href="#transformer">Отдельный курс Transformer</a> разбивает механизм на последовательные шаги с вычислениями, а <a href="#curriculum">карта предпосылок</a> помогает разобрать нужную математику.</p><p>Нет обучения больших архитектур, GPU, загрузки произвольных моделей или интеграции с Rust. Конкретные реализованные варианты и схемы расширения перечислены в лаборатории архитектур. Различные версии RNN, нормализации и оптимизаторов могут использовать иные соглашения.</p><p>Успех на игрушечной задаче не гарантирует сходимость или обобщение. Полный список исходников и команды проверок находятся в README учебника.</p></section>
+    <section className="panel"><h3>Что реализовано и где границы</h3><p>Нейрон, Linear, активации, MSE, BCE, граф с общим узлом, SGD, momentum и Adam считают настоящие формулы. XOR выполняет полный forward/backward/update; лаборатория семейств показывает малые прямые проходы. <a href="#transformer">Transformer по шагам</a> раскрывает внимание, позиции и варианты. <a href="#vae">VAE</a>, <a href="#gan">GAN</a>, <a href="#diffusion">diffusion</a> и <a href="#gnn">GCN</a> обучают небольшие модели; <a href="#rl">RL</a> содержит настоящие эпизоды Q-learning и точное обновление маленькой политики. <a href="#curriculum">Карта предпосылок</a> помогает разобрать математику.</p><p>Нет обучения больших архитектур, GPU, загрузки произвольных моделей или интеграции с Rust. Генеративные примеры одномерны; результаты показывают механизм, а не качество генерации изображений. Варианты с работающими вычислениями и варианты с объяснением явно разделены внутри глав.</p><p>Успех на игрушечной задаче не гарантирует сходимость или обобщение. Первичные статьи и точные ограничения находятся в каждой главе; команды проверок — в README учебника.</p></section>
   </>;
 }

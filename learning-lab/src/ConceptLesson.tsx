@@ -1,9 +1,10 @@
-import { useId, useState } from 'react';
+import { lazy, Suspense, useId, useState } from 'react';
 import { ConceptLink } from './learning-context';
 import { conceptSources, getConcept, type ConceptDemo } from './concepts';
 import { Chart, Range, fmt } from './ui';
 import { bernoulli, chainSquare, crossEntropyLogits, descent1D, dotProduct, finiteDifference, linear, mse, normalize, quadratic, regressionErrors, regressionPrediction, regressionTrain, regressionValidation, secant, sharedGraph, stableSoftmax } from './conceptMath';
 import './concept-lessons.css';
+const AdvancedConceptExperiment = lazy(() => import('./AdvancedConceptLesson').then(module => ({ default: module.AdvancedConceptExperiment })));
 
 const samples = (min: number, max: number, fn: (x: number) => number) => Array.from({ length: 101 }, (_, i) => { const x = min + (max - min) * i / 100; return { x, y: fn(x) }; });
 const vectorText = (values: number[]) => `(${values.map(v => fmt(v)).join('; ')})`;
@@ -40,6 +41,16 @@ function ConceptExperiment({ kind }: { kind: ConceptDemo }) {
     case 'rate': return <RateDemo />;
     case 'backprop': return <BackpropDemo />;
     case 'overfitting': return <OverfittingDemo />;
+    case 'gaussian':
+    case 'kl':
+    case 'reparameterization':
+    case 'variational':
+    case 'adversarial':
+    case 'noise':
+    case 'score':
+    case 'graph':
+    case 'discount':
+    case 'bellman': return <Suspense fallback={<p role="status">Загружаем эксперимент…</p>}><AdvancedConceptExperiment kind={kind} /></Suspense>;
   }
 }
 

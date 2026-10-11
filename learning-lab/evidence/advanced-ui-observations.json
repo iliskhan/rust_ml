@@ -1,0 +1,650 @@
+{
+  "production": "http://127.0.0.1:5182/",
+  "baseline": "009a58bb525e437da7a1cd5f9dfd73b70fcffcb5",
+  "mobile320": [
+    {
+      "chapter": "vae",
+      "section": "0",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "VAE: скрытый код",
+        "1. Замысел — Кодировать не точку, а распределение"
+      ],
+      "title": "VAE: скрытый код",
+      "width": 320
+    },
+    {
+      "chapter": "vae",
+      "section": "1",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "VAE: скрытый код",
+        "2. Вычисление — От случайного z к ELBO и градиентам",
+        "w"
+      ],
+      "title": "VAE: скрытый код",
+      "width": 320
+    },
+    {
+      "chapter": "vae",
+      "section": "2",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "VAE: скрытый код",
+        "3. Обучение — Шесть параметров учатся на 64 числах"
+      ],
+      "title": "VAE: скрытый код",
+      "width": 320
+    },
+    {
+      "chapter": "vae",
+      "section": "3",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "VAE: скрытый код",
+        "4. Генерация — Новые примеры и путь между ними"
+      ],
+      "title": "VAE: скрытый код",
+      "width": 320
+    },
+    {
+      "chapter": "vae",
+      "section": "4",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "VAE: скрытый код",
+        "5. Границы — β-VAE, другие варианты и честные ограничения"
+      ],
+      "title": "VAE: скрытый код",
+      "width": 320
+    },
+    {
+      "chapter": "gan",
+      "section": "0",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GAN: игра двух сетей",
+        "1. Игра — Генератор предлагает, дискриминатор различает"
+      ],
+      "title": "GAN: игра двух сетей",
+      "width": 320
+    },
+    {
+      "chapter": "gan",
+      "section": "1",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GAN: игра двух сетей",
+        "2. Градиенты — Две цели и два разных обратных прохода",
+        "Non-saturating: −log D(fake)"
+      ],
+      "title": "GAN: игра двух сетей",
+      "width": 320
+    },
+    {
+      "chapter": "gan",
+      "section": "2",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GAN: игра двух сетей",
+        "3. Обучение — Чередование настоящих обновлений весов",
+        "Non-saturating"
+      ],
+      "title": "GAN: игра двух сетей",
+      "width": 320
+    },
+    {
+      "chapter": "gan",
+      "section": "3",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GAN: игра двух сетей",
+        "4. Разнообразие — Почему один удачный пример ещё не победа"
+      ],
+      "title": "GAN: игра двух сетей",
+      "width": 320
+    },
+    {
+      "chapter": "gan",
+      "section": "4",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GAN: игра двух сетей",
+        "5. Варианты — Conditional GAN, WGAN и границы модели"
+      ],
+      "title": "GAN: игра двух сетей",
+      "width": 320
+    },
+    {
+      "chapter": "diffusion",
+      "section": "0",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "Diffusion: из шума",
+        "1. Шум — Как данные превращаются в шум",
+        "Линейное β: 0,001 → 0,18"
+      ],
+      "title": "Diffusion: из шума",
+      "width": 320
+    },
+    {
+      "chapter": "diffusion",
+      "section": "1",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "Diffusion: из шума",
+        "2. Обучение — Сеть учится предсказывать добавленный шум",
+        "Линейное β: 0,001 → 0,18"
+      ],
+      "title": "Diffusion: из шума",
+      "width": 320
+    },
+    {
+      "chapter": "diffusion",
+      "section": "2",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "Diffusion: из шума",
+        "3. Один шаг — Что именно делает обратный шаг DDPM",
+        "Линейное β: 0,001 → 0,18",
+        "Наша сеть · 2250 обновлений"
+      ],
+      "title": "Diffusion: из шума",
+      "width": 320
+    },
+    {
+      "chapter": "diffusion",
+      "section": "3",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "Diffusion: из шума",
+        "4. Генерация — DDPM, DDIM и новые данные из шума",
+        "Линейное β: 0,001 → 0,18",
+        "DDIM · η=0, без нового шума",
+        "Наша обучаемая сеть · 2250 обновлений"
+      ],
+      "title": "Diffusion: из шума",
+      "width": 320
+    },
+    {
+      "chapter": "diffusion",
+      "section": "4",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "Diffusion: из шума",
+        "5. Условие — Guidance, score и переход к изображениям",
+        "Линейное β: 0,001 → 0,18",
+        "Правая группа · среднее +1,5"
+      ],
+      "title": "Diffusion: из шума",
+      "width": 320
+    },
+    {
+      "chapter": "gnn",
+      "section": "0",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GNN: сеть на графе",
+        "1. Граф и признаки",
+        "C"
+      ],
+      "title": "GNN: сеть на графе",
+      "width": 320
+    },
+    {
+      "chapter": "gnn",
+      "section": "1",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GNN: сеть на графе",
+        "2. Одно сообщение",
+        "C"
+      ],
+      "title": "GNN: сеть на графе",
+      "width": 320
+    },
+    {
+      "chapter": "gnn",
+      "section": "2",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GNN: сеть на графе",
+        "3. Обучить GCN",
+        "C"
+      ],
+      "title": "GNN: сеть на графе",
+      "width": 320
+    },
+    {
+      "chapter": "gnn",
+      "section": "3",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GNN: сеть на графе",
+        "4. Глубина и порядок",
+        "C"
+      ],
+      "title": "GNN: сеть на графе",
+      "width": 320
+    },
+    {
+      "chapter": "gnn",
+      "section": "4",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "GNN: сеть на графе",
+        "5. GAT и GraphSAGE",
+        "C"
+      ],
+      "title": "GNN: сеть на графе",
+      "width": 320
+    },
+    {
+      "chapter": "rl",
+      "section": "0",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "RL: учиться действовать",
+        "1. Среда и награды",
+        "↑ вверх"
+      ],
+      "title": "RL: учиться действовать",
+      "width": 320
+    },
+    {
+      "chapter": "rl",
+      "section": "1",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "RL: учиться действовать",
+        "2. Планирование Беллмана",
+        "↑ вверх"
+      ],
+      "title": "RL: учиться действовать",
+      "width": 320
+    },
+    {
+      "chapter": "rl",
+      "section": "2",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "RL: учиться действовать",
+        "3. Обучить Q-таблицу"
+      ],
+      "title": "RL: учиться действовать",
+      "width": 320
+    },
+    {
+      "chapter": "rl",
+      "section": "3",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "RL: учиться действовать",
+        "4. Учить политику"
+      ],
+      "title": "RL: учиться действовать",
+      "width": 320
+    },
+    {
+      "chapter": "rl",
+      "section": "4",
+      "documentWidth": 305,
+      "overflow": [],
+      "selected": [
+        "RL: учиться действовать",
+        "5. DQN, actor–critic, PPO"
+      ],
+      "title": "RL: учиться действовать",
+      "width": 320
+    }
+  ],
+  "finalMobile390": [
+    {
+      "chapter": "vae",
+      "section": "0",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "vae",
+      "section": "1",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "vae",
+      "section": "2",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "vae",
+      "section": "3",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "vae",
+      "section": "4",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gan",
+      "section": "0",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gan",
+      "section": "1",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gan",
+      "section": "2",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gan",
+      "section": "3",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gan",
+      "section": "4",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "diffusion",
+      "section": "0",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "diffusion",
+      "section": "1",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "diffusion",
+      "section": "2",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "diffusion",
+      "section": "3",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "diffusion",
+      "section": "4",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gnn",
+      "section": "0",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gnn",
+      "section": "1",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gnn",
+      "section": "2",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gnn",
+      "section": "3",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "gnn",
+      "section": "4",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "rl",
+      "section": "0",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "rl",
+      "section": "1",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "rl",
+      "section": "2",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "rl",
+      "section": "3",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    },
+    {
+      "chapter": "rl",
+      "section": "4",
+      "invalid": false,
+      "scrollWidth": 375,
+      "width": 390
+    }
+  ],
+  "math320": [
+    {
+      "id": "gaussian",
+      "current": [
+        "p(1) = 0,242; дисперсия σ² = 1. Плотность может быть больше 1. Вероятность интервала — площадь под кривой, а вероятность одной точной точки здесь равна нулю."
+      ],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-gaussian",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "kl-divergence",
+      "current": [],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-kl-divergence",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "reparameterization",
+      "current": [],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-reparameterization",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "elbo",
+      "current": [
+        "log p(x) = -2,461. Разрыв log p(x) − ELBO = 3,203696 = KL(q ‖ posterior). При точном posterior разрыв равен нулю с точностью вычислений."
+      ],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-elbo",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "adversarial-game",
+      "current": [],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-adversarial-game",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "noise-schedule",
+      "current": [],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-noise-schedule",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "score-function",
+      "current": [
+        "score = ∂log p(x)/∂x = −(x−μ)/σ² = 1. Справа от центра знак отрицательный, слева положительный. Стрелка градиента указывает к большей плотности; это не вероятность и не готовый шаг генерации."
+      ],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-score-function",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "graph",
+      "current": [],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-graph",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "discounted-return",
+      "current": [
+        "G = 1 + γ·2 + γ²·10 = 1 + 2 + 10 = 13. Здесь три шага, поэтому γ=1 допустимо. Для бесконечного горизонта требуются дополнительные условия."
+      ],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-discounted-return",
+      "width": 304.8000183105469
+    },
+    {
+      "id": "bellman-equation",
+      "current": [
+        "Ожидаемая ценность этого действия = 1·4,6 + 0·0 = 4,6. V — заданная оценка продолжения, а не ещё одна немедленная награда. Здесь оцениваем одно действие; максимум по действиям нужен в оптимальном Q."
+      ],
+      "experiments": 1,
+      "invalid": false,
+      "scrollWidth": 305,
+      "title": "concept-heading-bellman-equation",
+      "width": 304.8000183105469
+    }
+  ],
+  "returnBefore": {
+    "focus": "Уравнение Беллмана↗",
+    "scroll": 422.3999938964844
+  },
+  "returnAfter": {
+    "scroll": 422.3999938964844,
+    "focus": "Уравнение Беллмана↗"
+  },
+  "training": {
+    "vae": {
+      "steps": 100,
+      "nll": 0.795,
+      "kl": 0.712,
+      "objective": 1.507
+    },
+    "gan": {
+      "d": 100,
+      "g": 50,
+      "ld": 1.306,
+      "lg": 0.805,
+      "w1": 0.446
+    },
+    "diffusion": {
+      "pausedStep": 2250,
+      "checkStep": 2200,
+      "mse": 0.328
+    },
+    "gcn": {
+      "steps": 200,
+      "loss": 0.01344,
+      "initial": 0.58621
+    },
+    "q": {
+      "episodes": 200,
+      "evaluationEpisodes": 100,
+      "goal": 100,
+      "trap": 0,
+      "timeLimit": 0,
+      "meanReturn": 0.4717
+    },
+    "policy": {
+      "steps": 20,
+      "theta": 2.29266,
+      "expectedReward": 0.87157
+    }
+  }
+}

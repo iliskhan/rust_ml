@@ -1,0 +1,10 @@
+# VAE / GAN — отдельный checkpoint
+
+- Checkout: `C:/Users/lomaster/Desktop/dev/rust_ml`, branch/revision at initial read: `9e6606aceacd9cf684996073499141b0fcd32028`; base may advance while root records prior work. This agent does not stage or commit.
+- Scope: only new `src/VAECourse.tsx`, `src/GANCourse.tsx`, `src/vaeGanMath.ts`, `src/vae-gan.css`, `tests/vaeGanMath.test.ts`, `research/vae-gan.md`, this note. No existing shared files changed.
+- 2026-10-11: pure numerical module implemented; 12 numerical tests pass under bundled Node24 using `node --test tests/vaeGanMath.test.ts`. All 6 VAE parameter derivatives and 13 parameters of each GAN network checked by central differences; both generator objectives checked. Exact linear-Gaussian ELBO identity checked independently.
+- VAE and GAN components complete (five sections each, shared training state, manual deterministic bounded batches, generation/interpolation). CSS fully scoped to `.vae-course` / `.gan-course`.
+- Real observed GAN instability: with 2 D updates, eta=0.03, sample W1 rises at 500 generator steps despite correct gradients. No monotonic claim; default eta=0.06 shows improvement at 50/500 steps with intervening oscillation. Regression test checks the verified eta=0.06, not a fabricated loss curve.
+- 2026-10-11 08:51 MSK: `pnpm typecheck` passed with both chapters; `research/vae-gan.md` records primary sources, local derivations, numerical decisions and the full allowed-horizon stress checks. VAE: 9 combinations beta×eta for 2000 steps; GAN: both objectives × D:G=1/5 × eta=.005/.1 to 2000 total updates. All finite. No existing module or dependency touched.
+- Full shared-worktree `pnpm test` observed 90 pass / 2 fail during parallel root integration because `concepts.ts` used extensionless `./advancedConcepts` under Node24. Root notified; no shared edit made by this agent.
+- Next: root integration/build/rendered desktop/mobile QA, with nested glossary state preservation checks. No visual pass claimed by this agent. Components export `VAECourse` and `GANCourse` by name; root can integrate immediately. No hidden timers or background work.

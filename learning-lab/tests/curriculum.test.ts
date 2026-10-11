@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { concepts, conceptSources, getConcept } from '../src/concepts.ts';
 import { curriculum, curriculumGroups, studyRoutes, topicsForRoute } from '../src/curriculum.ts';
+import { MAX_CONCEPT_DEPTH } from '../src/learning-navigation.ts';
 
 test('required concepts exist and every advertised page has real content and an attributed source', () => {
   const required = ['function', 'slope', 'limit', 'derivative', 'partial-derivative', 'gradient', 'chain-rule', 'vector', 'matrix', 'dot-product', 'probability', 'exponential', 'logarithm', 'softmax', 'normalization', 'loss', 'cross-entropy', 'learning-rate', 'backpropagation'];
@@ -29,6 +30,13 @@ test('prerequisite graph has no cycles and includes gradient → derivative → 
   assert.ok(getConcept('derivative')!.prerequisites.includes('limit'));
 });
 
+test('every prerequisite chain fits the supported return stack', () => {
+  function depth(id: string): number {
+    return 1 + Math.max(0, ...getConcept(id)!.prerequisites.map(depth));
+  }
+  for (const concept of concepts) assert.ok(depth(concept.id) <= MAX_CONCEPT_DEPTH, `Unreachable deepest prerequisite of ${concept.id}`);
+});
+
 test('rendered experiment references and demo kinds resolve', () => {
   const source = readFileSync(new URL('../src/ConceptLesson.tsx', import.meta.url), 'utf8');
   for (const match of source.matchAll(/concept="([a-z-]+)"/g)) assert.ok(getConcept(match[1]), `Broken concept link ${match[1]}`);
@@ -37,7 +45,7 @@ test('rendered experiment references and demo kinds resolve', () => {
 });
 
 test('curriculum destinations are real, all levels are honest and routes are nonempty', () => {
-  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer']);
+  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
   const groups = new Set(curriculumGroups.map(group => group.id));
   assert.equal(new Set(curriculum.map(topic => topic.id)).size, curriculum.length);
   for (const topic of curriculum) {
@@ -52,10 +60,16 @@ test('curriculum destinations are real, all levels are honest and routes are non
   for (const group of groups) assert.ok(curriculum.some(topic => topic.group === group), `Empty group ${group}`);
 });
 
-test('extended curriculum explicitly includes modern directions without claiming implementations', () => {
-  for (const id of ['residual', 'text-representations', 'transfer', 'autoencoder-vae', 'gan', 'diffusion', 'gnn', 'rl']) {
+test('remaining directions are marked as continuations and implemented chapters have destinations', () => {
+  for (const id of ['residual', 'text-representations', 'transfer']) {
     const topic = curriculum.find(item => item.id === id);
     assert.equal(topic?.coverage, 'next', id);
+    assert.ok(topic?.source?.title);
+  }
+  for (const [id, lesson] of [['autoencoder-vae', 'vae'], ['gan', 'gan'], ['diffusion', 'diffusion'], ['gnn', 'gnn'], ['rl', 'rl']]) {
+    const topic = curriculum.find(item => item.id === id);
+    assert.equal(topic?.coverage, 'interactive');
+    assert.equal(topic?.lesson, lesson);
     assert.ok(topic?.source?.title);
   }
 });

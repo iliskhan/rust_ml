@@ -12,7 +12,7 @@ export const studyRoutes: { id: StudyRoute; label: string; description: string }
   { id: 'beginner', label: 'Начать с нуля', description: 'Входы и веса → потеря → производная → один шаг обучения → XOR.' },
   { id: 'training', label: 'Понять обучение', description: 'Градиенты, оптимизаторы, данные и проверка качества на новых примерах.' },
   { id: 'transformer', label: 'Дойти до Transformer', description: 'Векторы → матрицы → вероятности → attention → Transformer и варианты.' },
-  { id: 'beyond', label: 'После базового курса', description: 'Что изучать дальше и какие семейства пока не реализованы в этой лаборатории.' },
+  { id: 'beyond', label: 'После базового курса', description: 'Генерация, графы и действия: пять работающих глав и явно отмеченные дальнейшие направления.' },
 ];
 export const curriculumGroups = [
   { id: 'math', title: 'Математические кирпичики', description: 'Открывайте только то, что сейчас непонятно; каждый разбор ведёт к своим основаниям.' },
@@ -20,7 +20,7 @@ export const curriculumGroups = [
   { id: 'learning', title: 'Как сеть учится', description: 'Прямой проход → потеря → градиенты → обновление весов. Полный цикл можно запустить на XOR.' },
   { id: 'families', title: 'Архитектуры и их предположения', description: 'Разные связи подходят для разных структур данных: таблиц, сеток, последовательностей.' },
   { id: 'quality', title: 'Обучение и оценка', description: 'Сравнивайте численный успех на train с полезностью на новых данных.' },
-  { id: 'beyond', title: 'За пределами текущей лаборатории', description: 'Короткие ориентиры и первичные материалы. Полных локальных реализаций этих направлений здесь нет.' },
+  { id: 'beyond', title: 'Генерация, графы и действия', description: 'Малые модели с настоящими вычислениями и обучением; оставшиеся продолжения обозначены отдельно.' },
 ];
 
 export const curriculum: CurriculumTopic[] = [
@@ -100,26 +100,26 @@ export const curriculum: CurriculumTopic[] = [
     summary: 'Предобученные признаки можно использовать с новой выходной головой или продолжить обучение части либо всех весов на новой задаче.',
     example: 'Заморозьте признаки классификатора изображений и обучите только новый последний слой; затем сравните с осторожным дообучением всего стека.',
     limit: 'Нет загрузки предобученных весов или fine-tuning. Сходство доменов и независимая оценка остаются важны.', concepts: ['learning-rate', 'train-validation-test'], source: { title: 'PyTorch · Transfer Learning tutorial', url: 'https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html' } },
-  { id: 'autoencoder-vae', title: 'Автоэнкодеры и VAE', group: 'beyond', coverage: 'next', routes: ['beyond'],
+  { id: 'autoencoder-vae', title: 'Автоэнкодеры и VAE', group: 'beyond', coverage: 'interactive', routes: ['beyond'], lesson: 'vae', lessonLabel: 'Исследовать VAE',
     summary: 'Автоэнкодер учится восстанавливать вход из промежуточного представления. VAE вводит распределение скрытого кода и обучает вероятностную модель через вариационную границу.',
     example: 'В VAE код можно записать z=μ+σ·ε, ε из стандартного нормального распределения: случайность отделяется от обучаемых μ и σ.',
-    limit: 'Ни реконструкция, ни обучение VAE здесь не реализованы. Требуются нормальное распределение, KL-дивергенция и ELBO.', concepts: ['probability', 'expectation', 'loss'], source: { title: 'Kingma & Welling · Auto-Encoding Variational Bayes', url: 'https://arxiv.org/abs/1312.6114' } },
-  { id: 'gan', title: 'GAN: генератор и различитель', group: 'beyond', coverage: 'next', routes: ['beyond'],
+    limit: 'Одномерный линейный Gaussian VAE: 6 параметров, реальное обучение, реконструкция и генерация. Точный ELBO разбирается в отдельной Gaussian-модели; β≠1 меняет стандартную цель. Изображения и большие модели не реализованы.', concepts: ['gaussian', 'latent-variable', 'kl-divergence', 'elbo', 'reparameterization'], source: { title: 'Kingma & Welling · Auto-Encoding Variational Bayes', url: 'https://arxiv.org/abs/1312.6114' } },
+  { id: 'gan', title: 'GAN: генератор и различитель', group: 'beyond', coverage: 'interactive', routes: ['beyond'], lesson: 'gan', lessonLabel: 'Исследовать GAN',
     summary: 'Генератор создаёт примеры, различитель учится отличать их от данных. Обучение связывает две меняющиеся модели вместо одной фиксированной функции потерь.',
     example: 'Успех генератора делает задачу различителя сложнее; низкая loss одного участника не является достаточной метрикой качества выборок.',
-    limit: 'Игра, обучение и оценка генерации не реализованы; возможен коллапс мод и неустойчивость оптимизации.', concepts: ['probability', 'loss', 'learning-rate'], source: { title: 'Goodfellow и др. · Generative Adversarial Networks', url: 'https://arxiv.org/abs/1406.2661' } },
-  { id: 'diffusion', title: 'Диффузионные модели', group: 'beyond', coverage: 'next', routes: ['beyond'],
+    limit: 'Две сети 1→4→1 обучаются на одномерных данных; доступны minimax и non-saturating с раздельными обновлениями D/G. Низкая loss не доказывает качество генерации; WGAN и conditional GAN объясняются как продолжения.', concepts: ['adversarial-game', 'cross-entropy', 'gradient', 'learning-rate'], source: { title: 'Goodfellow и др. · Generative Adversarial Networks', url: 'https://arxiv.org/abs/1406.2661' } },
+  { id: 'diffusion', title: 'Диффузионные модели', group: 'beyond', coverage: 'interactive', routes: ['beyond'], lesson: 'diffusion', lessonLabel: 'Исследовать diffusion',
     summary: 'При обучении пример зашумляют на выбранном уровне и учат модель предсказывать связанное с шумом направление восстановления. При генерации выполняют последовательность обратных шагов.',
     example: 'Сеть получает зашумлённое изображение и номер шага t; без знания уровня шума одна и та же картинка может требовать разных обновлений.',
-    limit: 'Процесс шума, обучение denoiser и sampling здесь не реализованы. Разные параметризации предсказывают ε, x₀, velocity или другие связанные величины.', concepts: ['probability', 'loss', 'normalization'], source: { title: 'Ho и др. · Denoising Diffusion Probabilistic Models', url: 'https://arxiv.org/abs/2006.11239' } },
-  { id: 'gnn', title: 'Графовые нейросети', group: 'beyond', coverage: 'next', routes: ['beyond'],
+    limit: 'Одномерный MLP учится предсказывать ε; DDPM и DDIM выполняют обратные шаги. Короткое расписание ограничено для учебной модели; CFG использует отдельно отмеченный аналитический oracle, а не обученную условную сеть. Изображения не генерируются.', concepts: ['noise-schedule', 'gaussian', 'score-function', 'conditional-expectation'], source: { title: 'Ho и др. · Denoising Diffusion Probabilistic Models', url: 'https://arxiv.org/abs/2006.11239' } },
+  { id: 'gnn', title: 'Графовые нейросети', group: 'beyond', coverage: 'interactive', routes: ['beyond'], lesson: 'gnn', lessonLabel: 'Исследовать GNN',
     summary: 'Узлы обмениваются сообщениями по рёбрам и агрегируют соседние признаки. Структура связей становится частью входа.',
     example: 'У атома можно объединить признаки соседних атомов и затем обновить его состояние. Сумма соседей не должна зависеть от порядка перечисления рёбер.',
-    limit: 'Графовые слои и обучение не реализованы. GCN — один вариант семейства; нормализация соседей и выразительность требуют отдельного разбора.', concepts: ['matrix', 'normalization'], source: { title: 'Kipf & Welling · Graph Convolutional Networks', url: 'https://arxiv.org/abs/1609.02907' } },
-  { id: 'rl', title: 'Обучение с подкреплением', group: 'beyond', coverage: 'next', routes: ['beyond'],
+    limit: 'Работают агрегация, нормализованная матрица, малый GCN с masked cross-entropy и обучение весов. GAT и GraphSAGE показывают отдельные forward-примеры; это не обучение всех семейств на большом датасете.', concepts: ['graph', 'adjacency-matrix', 'message-passing', 'matrix'], source: { title: 'Kipf & Welling · Graph Convolutional Networks', url: 'https://arxiv.org/abs/1609.02907' } },
+  { id: 'rl', title: 'Обучение с подкреплением', group: 'beyond', coverage: 'interactive', routes: ['beyond'], lesson: 'rl', lessonLabel: 'Исследовать RL',
     summary: 'Агент выбирает действия, получает награды и меняет будущие наблюдения. Цель — ожидаемая накопленная награда, а не только совпадение с готовой меткой.',
     example: 'Действие с меньшей немедленной наградой может открыть путь к большей будущей. Поэтому важно определить горизонт и коэффициент дисконтирования.',
-    limit: 'Среда, policy/value-сети и RL-алгоритмы не реализованы. Последовательные зависимые данные и исследование действий требуют отдельного курса.', concepts: ['expectation', 'probability', 'gradient'], source: { title: 'OpenAI Spinning Up · Key Concepts in RL', url: 'https://spinningup.openai.com/en/latest/spinningup/rl_intro.html' } },
+    limit: 'Конечная среда, Bellman/value iteration, настоящие Q-learning episodes с отдельной оценкой и точный градиент бинарной политики. DQN/PPO/actor-critic объясняются без заявления об их обучении. Terminal и time limit различаются.', concepts: ['markov-chain', 'policy', 'q-value', 'bellman-equation', 'policy-gradient'], source: { title: 'OpenAI Spinning Up · Key Concepts in RL', url: 'https://spinningup.openai.com/en/latest/spinningup/rl_intro.html' } },
 ];
 
 export function topicsForRoute(route: StudyRoute) { return curriculum.filter(topic => route === 'all' || topic.routes.includes(route)); }

@@ -1,10 +1,25 @@
 # RustML Learning Lab — состояние
 
-Обновлено 2026-10-11 07:16 Europe/Moscow. Учебник находится в основном проекте:
+Обновлено 2026-10-11 09:25 Europe/Moscow. Учебник находится в основном проекте:
 `C:/Users/lomaster/Desktop/dev/rust_ml/learning-lab`. План интеграции и проверки всего проекта —
 [../PROGRESS.md](../PROGRESS.md); `work/progress.json` — краткая проекция состояния учебника.
 
-## Готово
+## Новые VAE / GAN / diffusion / GNN / RL
+
+Пять глав по 5 разделов интегрированы и проверены; Git-передача — заключительный этап.
+51 связанное понятие, 24 типа математических демонстраций; 24 темы карты курса:
+18 interactive, 3 reading, 3 next. Настоящее обучение малых моделей, return-stack,
+источники и ограничения описаны в README и [evidence/ADVANCED.md](evidence/ADVANCED.md).
+
+Последняя проверка: 102 tests PASS, production build без предупреждений,
+desktop/320/390; все 25 новых разделов, 10 новых math-experiments, прежние уроки
+и 8 разделов Transformer проверены root в настоящем браузере. Console error/warn: 0.
+GNN-диаграмма исправлена после mobile QA; имена 18px, признаки 12px без уменьшения.
+Rust debug/release 52+5, fmt/clippy/rustdoc и CI examples PASS; 52 защищённых файла
+совпадают с отдельно отправленным checkpoint `009a58bb525e437da7a1cd5f9dfd73b70fcffcb5`.
+Точный итог Git-передачи фиксируется в корневом PROGRESS после remote verification.
+
+## Ранее проверенное расширение
 
 Расширение математики/Transformer и рекурсивное изучение предпосылок реализованы и проверены.
 Основной checkpoint — корневой PROGRESS. Рабочие заметки исполнителей — `work/ux-progress.md`,

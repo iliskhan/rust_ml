@@ -1,0 +1,69 @@
+:is(.gnn-course, .rl-course) { --gr-accent: #356b59; --gr-border: #c8d4c5; --gr-soft: #eff4e9; }
+:is(.gnn-course, .rl-course) .gr-intro { max-width: 82ch; font-size: .94rem; }
+:is(.gnn-course, .rl-course) .gr-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin-block: 1rem; }
+:is(.gnn-course, .rl-course) .gr-tabs button { font-size: .83rem; padding: .45rem .7rem; }
+:is(.gnn-course, .rl-course) .gr-mobile-nav { display: none; }
+:is(.gnn-course, .rl-course) .gr-heading { margin-block: 1.2rem .8rem; }
+:is(.gnn-course, .rl-course) .gr-heading > span { font-size: .82rem; color: var(--gr-accent); }
+:is(.gnn-course, .rl-course) .gr-heading h2 { margin-top: .2rem; font-size: clamp(1.2rem, 2vw, 1.6rem); scroll-margin-top: 1rem; }
+:is(.gnn-course, .rl-course) p { line-height: 1.75; }
+:is(.gnn-course, .rl-course) .gr-idea { font-size: 1.05rem; max-width: 85ch; }
+:is(.gnn-course, .rl-course) .gr-prompt { margin-top: 1rem; padding: .8rem 1rem; border-left: 3px solid var(--gr-accent); background: var(--gr-soft); border-radius: 0 .5rem .5rem 0; }
+:is(.gnn-course, .rl-course) .gr-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; margin-block: 1.2rem; }
+:is(.gnn-course, .rl-course) .gr-columns > * { min-width: 0; }
+:is(.gnn-course, .rl-course) .panel { padding: clamp(.8rem, 1.7vw, 1.4rem); }
+:is(.gnn-course, .rl-course) .panel h3 { font-size: 1.08rem; }
+:is(.gnn-course, .rl-course) label:has(> select) { margin-block: .75rem; }
+:is(.gnn-course, .rl-course) .range-control { margin-block: .8rem; }
+:is(.gnn-course, .rl-course) .gr-check { display: flex; flex-direction: row; align-items: center; gap: .6rem; margin-block: .8rem; }
+:is(.gnn-course, .rl-course) .gr-check input { width: 1.1rem; height: 1.1rem; accent-color: var(--gr-accent); }
+:is(.gnn-course, .rl-course) .gr-graph-frame { width: 100%; min-width: 0; margin-block: 1rem; }
+:is(.gnn-course, .rl-course) .gr-graph { display: block; width: 100%; height: auto; }
+:is(.gnn-course, .rl-course) .gr-graph text { fill: #233d30; font-family: inherit; }
+:is(.gnn-course, .rl-course) .gr-node-name { font-size: 18px; font-weight: 650; }
+:is(.gnn-course, .rl-course) .gr-node-value { font-size: 12px; paint-order: stroke; stroke: #fffefa; stroke-width: 4px; stroke-linejoin: round; }
+:is(.gnn-course, .rl-course) .gr-scroll { width: 100%; max-width: 100%; overflow-x: auto; margin-block: .8rem; }
+:is(.gnn-course, .rl-course) .gr-table { width: 100%; border-collapse: collapse; font-size: .8rem; font-variant-numeric: tabular-nums; }
+:is(.gnn-course, .rl-course) .gr-table caption { text-align: left; font-size: .83rem; font-weight: 600; padding-bottom: .5rem; line-height: 1.5; }
+:is(.gnn-course, .rl-course) .gr-table th, :is(.gnn-course, .rl-course) .gr-table td { border: 1px solid var(--gr-border); padding: .45rem; text-align: center; white-space: nowrap; }
+:is(.gnn-course, .rl-course) .gr-table th { font-weight: 600; }
+:is(.gnn-course, .rl-course) .gr-family-table td { white-space: normal; min-width: 11rem; }
+:is(.gnn-course, .rl-course) .panel h4 { font-size: .95rem; margin-bottom: .7rem; }
+:is(.gnn-course, .rl-course) .gr-adjacency td { padding: .16rem; }
+:is(.gnn-course, .rl-course) .gr-adjacency button { padding: .25rem; min-width: 2rem; min-height: 2rem; width: 100%; font-size: .8rem; }
+:is(.gnn-course, .rl-course) .gr-answer { padding: .7rem .9rem; background: var(--gr-soft); border-radius: .5rem; margin-block: .8rem; }
+:is(.gnn-course, .rl-course) .gr-steps { padding-left: 1.4rem; font-size: .95rem; }
+:is(.gnn-course, .rl-course) .gr-steps li + li { margin-top: .65rem; }
+:is(.gnn-course, .rl-course) .gr-navigation { display: flex; justify-content: space-between; gap: .7rem; margin-block: 1.4rem; }
+:is(.gnn-course, .rl-course) .gr-navigation button { font-size: .85rem; }
+:is(.gnn-course, .rl-course) .exercise { margin-top: 1.2rem; }
+:is(.gnn-course, .rl-course) .gr-sources ul { padding-left: 1.2rem; font-size: .9rem; }
+:is(.gnn-course, .rl-course) .gr-sources li + li { margin-top: .6rem; }
+:is(.gnn-course, .rl-course) .rl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; margin-block: 1rem; }
+:is(.gnn-course, .rl-course) .rl-grid button { min-height: 5.2rem; min-width: 0; padding: .35rem .2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.3; gap: .15rem; background: #f3f7ed; color: #233d30; border-color: #b6c7ae; font-variant-numeric: tabular-nums; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-goal { background: #dcead1; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-pit { background: #f8e5d7; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-on-path { box-shadow: inset 0 0 0 2px #987535; }
+:is(.gnn-course, .rl-course) .rl-grid button[aria-pressed="true"] { outline: 3px solid #356b59; outline-offset: 0; color: #233d30; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-cell-id { font-size: .66rem; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-cell-value { font-size: .82rem; }
+:is(.gnn-course, .rl-course) .rl-grid .rl-cell-action { font-size: 1.25rem; font-weight: 600; }
+:is(.gnn-course, .rl-course) .rl-path { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; font-size: .88rem; }
+:is(.gnn-course, .rl-course) .rl-probability { display: flex; height: 2.4rem; overflow: hidden; border-radius: .45rem; margin-block: .8rem; color: #fff; font-size: .8rem; }
+:is(.gnn-course, .rl-course) .rl-probability span { display: flex; align-items: center; justify-content: center; min-width: 0; }
+:is(.gnn-course, .rl-course) .rl-probability span:first-child { background: #9c6035; }
+:is(.gnn-course, .rl-course) .rl-probability span:last-child { background: #356b59; }
+@media (max-width: 900px) { :is(.gnn-course, .rl-course) .gr-columns { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+:is(.gnn-course, .rl-course) .gr-tabs { display: none; }
+:is(.gnn-course, .rl-course) .gr-mobile-nav { display: flex; margin-block: 1rem; }
+:is(.gnn-course, .rl-course) .gr-mobile-nav select { width: 100%; }
+:is(.gnn-course, .rl-course) .gr-prompt { padding: .65rem .8rem; font-size: .92rem; }
+:is(.gnn-course, .rl-course) .gr-idea { font-size: .98rem; }
+:is(.gnn-course, .rl-course) .gr-table th, :is(.gnn-course, .rl-course) .gr-table td { padding: .35rem; }
+:is(.gnn-course, .rl-course) .gr-adjacency td { padding: .1rem; }
+:is(.gnn-course, .rl-course) .gr-adjacency button { min-width: 1.9rem; }
+:is(.gnn-course, .rl-course) .gr-navigation button { padding: .5rem; font-size: .78rem; }
+:is(.gnn-course, .rl-course) .rl-grid { gap: .25rem; }
+:is(.gnn-course, .rl-course) .rl-grid button { min-height: 4.5rem; }
+}
