@@ -71,8 +71,9 @@ curriculum, документация и приёмка. Старые уроки 
 
 Этапы 1–4 выполнены: все 16 лабораторий встроены, 331/331 тестов, TypeScript/build,
 настоящий 1280×720/320×800 и исправления Flow/checkbox проверены.
-Этап 5: доказательства сохранены в `learning-lab/evidence/frontier-expansion/README.md`;
-commit/push и совпадение SHA — оставшийся шаг доставки.
+Этап 5 выполнен: доказательства в `learning-lab/evidence/frontier-expansion/README.md`;
+code commit `2be6a31406d8f8b9ec1d12f6c273206136a0f692` отправлен обычным push,
+local/remote SHA совпали. Все пять этапов принятого пакета завершены.
 
 #### Основание принятого объёма
 
