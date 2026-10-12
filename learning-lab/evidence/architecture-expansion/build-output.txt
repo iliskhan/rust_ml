@@ -1,0 +1,67 @@
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 139 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                            0.72 kB │ gzip:   0.46 kB
+dist/assets/PredictionExperiment-B-ouzq6A.css              0.67 kB │ gzip:   0.31 kB
+dist/assets/BpttLab-Vwhuq9Xh.css                           0.73 kB │ gzip:   0.34 kB
+dist/assets/PolicyVarianceLab-BqrzEzZ4.css                 0.79 kB │ gzip:   0.43 kB
+dist/assets/CnnShiftLab-C6ICMWu9.css                       0.83 kB │ gzip:   0.41 kB
+dist/assets/TokenAdaptationLabs-tKlAFgH7.css               1.00 kB │ gzip:   0.43 kB
+dist/assets/AdvancedArchitecturesCourse-CDETFP40.css       1.21 kB │ gzip:   0.47 kB
+dist/assets/VisionRoutingLabs-UujcTVo3.css                 1.29 kB │ gzip:   0.51 kB
+dist/assets/TinyTransformerLab-BANYyGyX.css                1.30 kB │ gzip:   0.47 kB
+dist/assets/TransformerCourse-Zruz3Qt8.css                 1.47 kB │ gzip:   0.54 kB
+dist/assets/CnnTrainingLab-B4VVRVv2.css                    1.51 kB │ gzip:   0.51 kB
+dist/assets/transformer-visual-experiments-WNNxxAQe.css    1.51 kB │ gzip:   0.63 kB
+dist/assets/TransformerHeadLab-D0P2-yIJ.css                1.52 kB │ gzip:   0.54 kB
+dist/assets/Scene3D-07YGMzQb.css                           2.68 kB │ gzip:   0.98 kB
+dist/assets/vae-gan-3IchR_o_.css                           3.51 kB │ gzip:   0.89 kB
+dist/assets/DecisionBoundaryLesson-C_h8fpur.css            4.16 kB │ gzip:   1.24 kB
+dist/assets/DiffusionCourse-CDXWXHcs.css                   4.87 kB │ gzip:   1.24 kB
+dist/assets/gnn-rl-4FBr7wD1.css                            5.98 kB │ gzip:   1.45 kB
+dist/assets/transformer-course-Hsgk7oNS.css                8.05 kB │ gzip:   2.14 kB
+dist/assets/NetworkFlow3D-2qKLzVXY.css                     9.93 kB │ gzip:   2.46 kB
+dist/assets/BoundaryPlayground-CGa3Arcr.css               14.02 kB │ gzip:   3.12 kB
+dist/assets/index-aMdt38Y5.css                            42.77 kB │ gzip:   9.36 kB
+dist/assets/transformer-visual-experiments-DmNcInlY.js     1.36 kB │ gzip:   0.79 kB
+dist/assets/spatialSceneMath-DXzxr9rV.js                   1.61 kB │ gzip:   0.92 kB
+dist/assets/PredictionExperiment-Darlh_n0.js               1.82 kB │ gzip:   0.93 kB
+dist/assets/decisionBoundaryMath-B4N-BAaY.js               2.70 kB │ gzip:   1.32 kB
+dist/assets/scene3dMath-B0VK_gBr.js                        2.88 kB │ gzip:   1.43 kB
+dist/assets/AdvancedArchitecturesCourse-DuPoBsdJ.js        5.09 kB │ gzip:   2.03 kB
+dist/assets/vaeGanMath-C0Vp19Xo.js                         5.74 kB │ gzip:   2.52 kB
+dist/assets/NormalizationGeometryLab-D35nDKZl.js           5.95 kB │ gzip:   2.65 kB
+dist/assets/generativeSceneMath-CMlwrVhv.js                6.38 kB │ gzip:   2.81 kB
+dist/assets/RnnGradientGeometry-q2RpVaY7.js                6.67 kB │ gzip:   2.90 kB
+dist/assets/ResidualGradientLab-CPYtaU5F.js                7.49 kB │ gzip:   2.69 kB
+dist/assets/PolicyVarianceLab-b8SWW3yc.js                  8.99 kB │ gzip:   3.52 kB
+dist/assets/Scene3D-_FJXZz5K.js                            9.21 kB │ gzip:   3.90 kB
+dist/assets/HeadGeometryLab-CMT3D8UZ.js                    9.55 kB │ gzip:   3.93 kB
+dist/assets/CnnShiftLab-BuHGO4Cj.js                       11.20 kB │ gzip:   4.37 kB
+dist/assets/AdvancedConceptLesson-D5dpWEwL.js             15.55 kB │ gzip:   4.99 kB
+dist/assets/TransformerHeadLab-B7SQ_sTX.js                15.93 kB │ gzip:   5.65 kB
+dist/assets/DecisionBoundaryLesson-D3dslzlC.js            15.95 kB │ gzip:   5.69 kB
+dist/assets/BpttLab-D7mHjltq.js                           17.44 kB │ gzip:   6.38 kB
+dist/assets/CnnTrainingLab-D-r7WYVq.js                    17.63 kB │ gzip:   6.26 kB
+dist/assets/EfficientSequenceLabs-Dx7OX4rM.js             19.50 kB │ gzip:   7.72 kB
+dist/assets/TinyTransformerLab-CZGkLpFU.js                22.28 kB │ gzip:   7.68 kB
+dist/assets/VisionRoutingLabs-DyogA2Tk.js                 26.94 kB │ gzip:   8.86 kB
+dist/assets/NetworkFlow3D-CaT_U5ZY.js                     27.10 kB │ gzip:   9.00 kB
+dist/assets/TokenAdaptationLabs-BVN-QG0p.js               31.70 kB │ gzip:  10.50 kB
+dist/assets/VAECourse-BKwA0f8s.js                         37.41 kB │ gzip:  11.60 kB
+dist/assets/ArchitectureLesson-CeKHhyNl.js                39.78 kB │ gzip:  13.20 kB
+dist/assets/GNNCourse-C4nneYmk.js                         40.87 kB │ gzip:  13.37 kB
+dist/assets/GANCourse-B4LkftBu.js                         40.90 kB │ gzip:  12.14 kB
+dist/assets/RLCourse-DdCj57ct.js                          48.24 kB │ gzip:  14.80 kB
+dist/assets/DiffusionCourse-CfUJuhJn.js                   52.75 kB │ gzip:  15.58 kB
+dist/assets/TransformerCourse-nMzV00Ke.js                 76.63 kB │ gzip:  23.33 kB
+dist/assets/BoundaryPlayground-Y2Dj66Yq.js                87.38 kB │ gzip:  27.86 kB
+dist/assets/index-CSOLs7n4.js                            508.30 kB │ gzip: 154.31 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.30s

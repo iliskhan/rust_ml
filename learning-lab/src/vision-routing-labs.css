@@ -1,0 +1,19 @@
+.vision-routing-lab { display: grid; gap: 1.25rem; margin-top: 2rem; min-width: 0; }
+.vision-routing-lab .lesson-intro { margin-bottom: 0; }
+.vision-routing-lab .panel, .vision-routing-lab .lab-grid > *, .vision-routing-lab details { min-width: 0; }
+.vision-routing-lab .lab-grid { margin-bottom: 0; }
+.vr-grids { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; min-width: 0; }
+.vr-grids > * { min-width: 0; }
+.vr-table-scroll { max-width: 100%; overflow-x: auto; margin-block: .75rem; }
+.vision-routing-lab .data-table { width: 100%; table-layout: auto; }
+.vision-routing-lab .data-table caption { text-align: left; padding-bottom: .5rem; overflow-wrap: anywhere; }
+.vision-routing-lab .data-table td { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.vr-matrix th, .vr-matrix td { text-align: center; }
+.vr-matrix button { padding: .35rem; min-width: 2.75rem; min-height: 2.75rem; white-space: nowrap; }
+.vr-matrix .vr-marked { background: var(--soft); font-weight: 700; box-shadow: inset 0 0 0 1px var(--green); }
+.vision-routing-lab .button-row { flex-wrap: wrap; }
+.vision-routing-lab .button-row button { max-width: 100%; white-space: normal; }
+.vision-routing-lab p, .vision-routing-lab .formula, .vision-routing-lab summary { overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .vision-routing-lab .data-table th, .vision-routing-lab .data-table td { padding: .4rem .2rem; }
+}

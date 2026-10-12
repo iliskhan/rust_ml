@@ -1,0 +1,17 @@
+.tiny-transformer-lab { min-width: 0; overflow-wrap: anywhere; }
+.tiny-transformer-lab .tiny-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; align-items: start; }
+.tiny-transformer-lab .tiny-columns > * { min-width: 0; }
+.tiny-transformer-lab .tiny-flow { display: flex; flex-wrap: wrap; gap: .6rem; margin-block: 1rem; }
+.tiny-transformer-lab .tiny-flow span { padding: .7rem; border: 1px solid var(--tc-border, #c5d6d5); border-radius: .5rem; }
+.tiny-transformer-lab .tiny-select { display: grid; gap: .5rem; margin-block: .8rem; }
+.tiny-transformer-lab select { width: 100%; min-width: 0; max-width: 100%; }
+.tiny-transformer-lab .tiny-table-scroll { max-width: 100%; overflow-x: auto; margin-block: 1rem; }
+.tiny-transformer-lab table { width: 100%; font-variant-numeric: tabular-nums; }
+.tiny-transformer-lab caption { text-align: left; font-weight: 600; padding-block: .5rem; }
+.tiny-transformer-lab th, .tiny-transformer-lab td { text-align: left; vertical-align: top; padding: .55rem; }
+.tiny-transformer-lab td { white-space: nowrap; }
+.tiny-transformer-lab button { max-width: 100%; white-space: normal; }
+.tiny-transformer-lab .formula { overflow-wrap: anywhere; white-space: normal; }
+.tiny-transformer-lab details { margin-block: 1.1rem; }
+.tiny-transformer-lab summary { cursor: pointer; font-weight: 600; }
+@media (max-width: 850px) { .tiny-transformer-lab .tiny-columns { grid-template-columns: 1fr; } }

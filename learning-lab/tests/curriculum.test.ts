@@ -45,7 +45,7 @@ test('rendered experiment references and demo kinds resolve', () => {
 });
 
 test('curriculum destinations are real, all levels are honest and routes are nonempty', () => {
-  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
+  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'advanced', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
   const groups = new Set(curriculumGroups.map(group => group.id));
   assert.equal(new Set(curriculum.map(topic => topic.id)).size, curriculum.length);
   for (const topic of curriculum) {
@@ -60,10 +60,11 @@ test('curriculum destinations are real, all levels are honest and routes are non
   for (const group of groups) assert.ok(curriculum.some(topic => topic.group === group), `Empty group ${group}`);
 });
 
-test('remaining directions are marked as continuations and implemented chapters have destinations', () => {
-  for (const id of ['text-representations', 'transfer']) {
+test('implemented architecture directions have destinations and sources', () => {
+  for (const id of ['text-representations', 'transfer', 'full-transformer', 'gated-ffn', 'vit', 'moe', 'mla', 'online-attention', 'state-space', 'image-denoisers']) {
     const topic = curriculum.find(item => item.id === id);
-    assert.equal(topic?.coverage, 'next', id);
+    assert.equal(topic?.coverage, 'interactive', id);
+    assert.equal(topic?.lesson, 'advanced', id);
     assert.ok(topic?.source?.title);
   }
   for (const [id, lesson] of [['residual', 'transformer'], ['autoencoder-vae', 'vae'], ['gan', 'gan'], ['diffusion', 'diffusion'], ['gnn', 'gnn'], ['rl', 'rl']]) {

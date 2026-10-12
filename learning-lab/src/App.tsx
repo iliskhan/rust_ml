@@ -8,6 +8,7 @@ import { ConceptSearch } from './ConceptSearch';
 
 const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
+const AdvancedArchitecturesCourse = lazy(() => import('./AdvancedArchitecturesCourse').then(module => ({ default: module.AdvancedArchitecturesCourse })));
 const VAECourse = lazy(() => import('./VAECourse').then(module => ({ default: module.VAECourse })));
 const GANCourse = lazy(() => import('./GANCourse').then(module => ({ default: module.GANCourse })));
 const DiffusionCourse = lazy(() => import('./DiffusionCourse').then(module => ({ default: module.DiffusionCourse })));
@@ -24,6 +25,7 @@ const lessons = [
   { id: 'network', title: 'Сеть целиком', group: 'Основы на практике', hint: 'Границы решений, скрытые признаки и XOR', component: NetworkLesson },
   { id: 'architectures', title: 'Семейства сетей', group: 'Дальше и глубже', hint: 'Dense, CNN, RNN, LSTM, GRU, Transformer', component: ArchitectureLesson },
   { id: 'transformer', title: 'Transformer по шагам', group: 'Дальше и глубже', hint: 'От токенов к вниманию и предсказанию', component: TransformerCourse },
+  { id: 'advanced', title: 'Новые архитектуры', group: 'Дальше и глубже', hint: 'Полный Transformer, BPE, LoRA, ViT, MoE, MLA, SSM и DiT', component: AdvancedArchitecturesCourse },
   { id: 'vae', title: 'VAE: скрытый код', group: 'Генерация', hint: 'Реконструкция, распределение и вариационная граница', component: VAECourse },
   { id: 'gan', title: 'GAN: игра двух сетей', group: 'Генерация', hint: 'Генератор, различитель и их настоящее обучение', component: GANCourse },
   { id: 'diffusion', title: 'Diffusion: из шума', group: 'Генерация', hint: 'Зашумление, denoiser и обратные шаги', component: DiffusionCourse },

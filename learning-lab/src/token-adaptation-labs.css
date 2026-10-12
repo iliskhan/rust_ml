@@ -1,0 +1,14 @@
+.token-adaptation-lab > p { margin: 14px 0 20px; }
+.token-adaptation-lab textarea { width: 100%; min-width: 0; resize: vertical; font: inherit; color: var(--deep); background: #fffefa; border: 1px solid #bfcbb9; border-radius: 6px; padding: 10px; line-height: 1.6; }
+.token-adaptation-lab select { width: 100%; }
+.token-lab-table { max-width: 100%; overflow-x: auto; margin: 15px 0; }
+.token-lab-table .data-table { width: 100%; }
+.token-lab-table th, .token-lab-table td { white-space: nowrap; }
+.token-lab-table code { white-space: pre; }
+.token-lab-tokens { display: flex; flex-wrap: wrap; gap: 7px; }
+.token-lab-tokens code { background: var(--soft); padding: 4px 7px; border-radius: 4px; white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; }
+.token-lab-decoded { white-space: pre-wrap; overflow-wrap: anywhere; }
+.token-adaptation-lab .button-row { margin-top: 16px; }
+.token-adaptation-lab .formula { overflow-wrap: anywhere; }
+.token-adaptation-lab ol { padding-left: 22px; overflow-wrap: anywhere; }
+@media (max-width: 560px) { .token-adaptation-lab textarea { font-size: 16px; } .token-lab-table { font-size: 12px; } }
