@@ -1,5 +1,35 @@
 # Прогресс RustML
 
+### Передача в три новых чата — 2026-10-13
+
+Пользователь попросил перенести работу в новый основной чат и запустить отдельные
+чаты для регистрации/входа Supabase и отслеживания прогресса. Передача сохраняет
+существующие PLAN.md/PROGRESS.md как авторитетные документы; секретные значения
+в новые prompts не передаются. Созданный владельцем project ref: `phnjcmahugetofwvnbto`.
+Backend ещё не подключён и не проверен: browser tool дважды отклонил чтение dashboard
+из-за saved permission block для supabase.com. Ошибка самого Supabase не наблюдалась.
+
+Причина запросов прав Git проверена непосредственно: обычный sandbox `git add`
+получил Permission denied на `.git/index.lock`; вне sandbox команда прошла.
+Sandbox process работает как `CodexSandboxOffline`, обычный Windows user — `lomaster`.
+Профиль разрешений команд и browser permissions независимы. Новый чат не доказывает
+устранение этих ограничений. Постоянное разрешение на commit/push основного branch
+явно сохранено в AGENTS.md, commit `a3a1946`; дополнительные вопросы о намерении
+commit/push main/master не нужны, обязательную sandbox escalation нельзя обходить.
+
+Перед передачей проверены документы/JSON, commit `7f5cfd09def8b5bdc308514fbb6f770ae7b7ef40`
+обычно pushed, local/remote master SHA совпали. Runtime срез публичной публикации
+не изменился; полный предыдущий suite422/422 и hosted desktop/mobile proofs применимы
+в обозначенных границах. Новые Auth/Progress проверки ещё не выполнялись.
+Не включать посторонний untracked `.codex-remote-attachments/` в commit.
+
+Разделение файлов записано в PLAN.md. В общей local копии авторы не меняют ветку,
+не правят чужие файлы и сериализуют Git через эксклюзивный FileShare.None handle
+`work/practice-coordination/git.lock` на время add/commit/push/SHA verification;
+чужие staged изменения не коммитят. Основной чат интегрирует общие UI/migrations
+после окончания авторов и затем проводит общий suite и настоящую браузерную приёмку.
+Статус learner grading остаётся disabled; успешная самопроверка не означает server pass.
+
 ### Внедрение практики — checkpoint 2026-10-13, 00:54 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, текущая ветка `master`,
