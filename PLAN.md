@@ -204,3 +204,16 @@ text-only zoom200% и исследование с живыми новичкам�
 Этапы: baseline/контракты → контекстный разбор и MLP параллельно → независимое review,
 численные тесты и настоящий desktop/mobile → checkpoint, commit, обычный push и
 сверка remote SHA. Состояние и доказательства — в PROGRESS.md. Rust сохраняется.
+
+## Обучение output head Transformer — 2026-10-12
+
+Делегированный независимый модуль в worktree transformer-output-head/rust_ml,
+база 490162fb8fb4c6ec8ff29cb6d7b640caf790431d. Авторитетные этапы этой задачи:
+(1) изоляция и чтение текущего backbone/teacher forcing;
+(2) output head W[2,6]+b[6], stable CE, p-onehot, masked mean и UI;
+(3) независимые примеры, finite differences, regression tests, typecheck/build/review;
+(4) отдельные code/doc commits, обычный push, сверка SHA, handoff родителю.
+Этапы1–3 проверены в рамках модуля. Реальный UI desktop/mobile/320px/200%/клавиатура
+остаётся за родителем после интеграции; он не считается пройденным здесь.
+Работающая генерация, общие math/UI и Rust сохранены. Новых dependencies нет.
+Точный handoff: [work/transformer-head-progress.md](work/transformer-head-progress.md).

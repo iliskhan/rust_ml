@@ -498,3 +498,36 @@ $env:RUSTUP_TOOLCHAIN = 'stable-x86_64-pc-windows-msvc'
 - 2026-01-08: добавлены CPU matmul и transpose.
 - 2026-10-11: выполнены ревью, исправления ядра и настройки, исследование практик и локальная проверка;
   отдельно запущена разработка интерактивного учебника.
+
+### Output head Transformer — готов к интеграции, 2026-10-12 06:24 Europe/Moscow
+
+Отдельный managed worktree:
+C:/Users/lomaster/.codex/worktrees/transformer-output-head/rust_ml,
+ветка codex/transformer-output-head-lab, база490162fb8fb4c6ec8ff29cb6d7b640caf790431d.
+Реализован самостоятельный TransformerHeadLab без required props; обучаются только
+12W и6bias над фиксированными h из текущего toyLanguageForward. Вход[0,1,2,4],
+next-token цели[1,2,4,5]. Causal RoPE/attention/residual/embeddings неизменны.
+Маска loss меняет только учитываемые позиции; padding в этой последовательности нет.
+
+На этой копии Node24.19.0/pnpm11.25.0: 10 новых математических tests PASS,
+общий pnpm test202/202 PASS, pnpm typecheck PASS, pnpm build PASS;
+дополнительно standalone Vite build(write:false,input:src/TransformerHeadLab.tsx) PASS,
+потому что родитель ещё не подключил компонент в TransformerCourse.
+Finite differences всех18параметров для full/masked mean; независимые scalar logits/CE,
+large logits/underflow, сдвиг targets, causal, формы/nonfinite, frozen inputs и simultaneousSGD.
+20шагов SGD приη=.1: L1.5851169345333105 ->1.0039712986654914,
+Δ.5811456358678191; детерминизм и неизменность backbone подтверждены тестами.
+Независимый read-only review: конкретных findings нет. Источники и команды в handoff.
+
+UIбраузер не запускался по поручению родителя: desktop/mobile/320px/200%/клавиатура
+PENDING для интеграции. Narrator не запускать: ранее отменён пользователем.
+Родителю: import { TransformerHeadLab } from './TransformerHeadLab';
+поставить <TransformerHeadLab /> после teacher-forcing блока GenerationLesson.
+Уточнить старую локальную фразу «обновление весов не запускаются» и общий текст
+«веса не обучались», ограничив их исходными forward-демо. Эти общие файлы здесь не менялись.
+Доставка code/doc отдельными коммитами выполняется следующим шагом; SHA сообщаются в чате.
+
+Код output head зафиксирован отдельным commit `9e15a770aaa48680a19302b7d96db863653a6d04`.
+После последней правки текста component bundle повторно PASS. Математика/tests неизменны
+после202/202PASS. Этот checkpoint и PLAN/handoff фиксируются отдельным doc commit;
+результат push и точная проверка remoteSHA — в финальном сообщении делегированного чата.
