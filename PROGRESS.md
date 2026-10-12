@@ -6,6 +6,13 @@
 чаты для регистрации/входа Supabase и отслеживания прогресса. Передача сохраняет
 существующие PLAN.md/PROGRESS.md как авторитетные документы; секретные значения
 в новые prompts не передаются. Созданный владельцем project ref: `phnjcmahugetofwvnbto`.
+Попытка create_thread для Auth отвергнута до создания: «MCP tool call requires approval,
+but approval policy is never». Ни одного нового чата/ID не создано, обход не выполнялся.
+Полные briefs сохранены и проверены как локальные ignored task artifacts:
+`work/practice-chat-handoff/main.txt`, `auth.txt`, `progress.txt`. Их нужно передать
+соответствующим новым локальным чатам проекта после разрешённого создания.
+Checkpoint до этого уточнения: `5fecf49abf68fdf9c7ccd193b450e76a70404aec`,
+обычный push и local/remote master SHA match подтверждены. Новых source изменений нет.
 Backend ещё не подключён и не проверен: browser tool дважды отклонил чтение dashboard
 из-за saved permission block для supabase.com. Ошибка самого Supabase не наблюдалась.
 
