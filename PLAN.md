@@ -64,8 +64,10 @@ Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-imp
 
 Полный inventory реализован: 83 units и 51 mathematical concepts; общий suite
 422/422 PASS. Полный SQL seed:12403 assertions PASS; production/UI/typecheck/build проверены.
-Текущий шаг — commit/push и проверка Actions.
-Бесплатная hosted-публикация ждёт вход GitHub и выбора Supabase Free project.
+Реализация отправлена в commit `76693f6`; локальный и remote SHA совпали.
+Текущий шаг — исправить CI runtime setup и проверить новый Actions run.
+Pages build прошёл, deploy вернул HTTP 404 с указанием проверить включение Pages.
+Бесплатная hosted-публикация ждёт вход GitHub/настройки Pages и выбора Supabase Free project.
 Самопроверка в браузере
 не является серверным освоением. Исполнение learner-кода остаётся закрытым,
 пока не проверены изоляция и бесплатный доступный runner. Бесплатный frontend

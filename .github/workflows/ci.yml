@@ -29,8 +29,15 @@ jobs:
         run: npm install --global pnpm@11.25.0
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Prepare authored Python and Rust checks
+        run: |
+          rustup toolchain install 1.87.0 --profile minimal
+          echo "PRACTICE_RUSTC=$(rustup which --toolchain 1.87.0 rustc)" >> "$GITHUB_ENV"
+          echo "PRACTICE_PYTHON=$(command -v python3)" >> "$GITHUB_ENV"
       - name: Numerical tests
         run: pnpm test
+        env:
+          PRACTICE_VERIFY_ALL_LANGUAGES: '1'
       - name: Typecheck and production build
         run: pnpm build
 

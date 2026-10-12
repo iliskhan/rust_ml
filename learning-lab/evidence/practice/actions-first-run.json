@@ -1,0 +1,47 @@
+{
+  "checked_at_utc": "2026-10-12T15:16:00Z",
+  "revision": "76693f6993dfbe04884e0d9d1bffe44a4c8aa6f4",
+  "ci": {
+    "run_id": 38268066995,
+    "job_id": 114875200270,
+    "conclusion": "failure",
+    "tests": 422,
+    "pass": 415,
+    "fail": 3,
+    "skipped": 4,
+    "observations": [
+      "rustup proxy initiated 1.87.0 installation during test execution",
+      "component installation conflicts: bin/cargo, rust-std libaddr2line, bin/rust-gdb"
+    ],
+    "repair": "Install Rust 1.87.0 before the tests, export direct rustc and python3 paths, enable full language audit",
+    "repair_validation": "Awaiting new CI push"
+  },
+  "pages": {
+    "run_id": 38268067306,
+    "build_job_id": 114875201446,
+    "build_conclusion": "success",
+    "verified_log_lines": [
+      "2026-10-12T15:09:17.8164784Z ℹ tests 422",
+      "2026-10-12T15:09:17.8165233Z ℹ pass 422",
+      "2026-10-12T15:09:17.8165442Z ℹ fail 0",
+      "2026-10-12T15:09:17.8165878Z ℹ skipped 0",
+      "2026-10-12T15:09:30.9747045Z \u001b[32m✓ built in 2.64s\u001b[39m",
+      "2026-10-12T15:09:31.0552026Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run]",
+      "2026-10-12T15:09:31.0751458Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_2]",
+      "2026-10-12T15:09:31.0759360Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_3]",
+      "2026-10-12T15:09:31.0765164Z ##[start-action display=Upload artifact;id=__actions_upload-pages-artifact.upload-artifact]",
+      "2026-10-12T15:09:31.2697163Z With the provided path, there will be 1 file uploaded",
+      "2026-10-12T15:09:32.1611157Z Uploaded bytes 608708",
+      "2026-10-12T15:09:32.2193786Z SHA256 digest of uploaded artifact zip is 422d1b856fcf4d68bf63b00b497ff2ff045e7749df90c6d89e9cad637efc074f",
+      "2026-10-12T15:09:32.2195158Z Finalizing artifact upload",
+      "2026-10-12T15:09:32.4881601Z Artifact github-pages has been successfully uploaded! Final size is 608708 bytes. Artifact ID is 11755307728",
+      "2026-10-12T15:09:32.5012139Z ##[end-action id=__actions_upload-pages-artifact.upload-artifact;outcome=success;conclusion=success;duration_ms=1424]"
+    ],
+    "deploy_job_id": 114875585648,
+    "deploy_conclusion": "failure",
+    "http_status": 404,
+    "observed_message": "Failed to create deployment; Ensure GitHub Pages has been enabled",
+    "settings_read": false,
+    "hosted_verified": false
+  }
+}

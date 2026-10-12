@@ -1,9 +1,11 @@
 # Прогресс RustML
 
-### Внедрение практики — checkpoint 2026-10-12, 18:06 MSK
+### Внедрение практики — checkpoint 2026-10-12, 18:14 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-implementation`,
-база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Изменения пока не committed.
+база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Реализация committed и pushed:
+`76693f6993dfbe04884e0d9d1bffe44a4c8aa6f4`; `git ls-remote` подтвердил совпадение SHA.
+Сейчас есть локальная правка CI runtime setup и checkpoint; ожидает commit/push.
 Rust-ядро не менялось. Исходный checkout `worktrees/6209` не затронут.
 
 - Собран полный каталог: 83 исходные учебные темы, 51 математическое понятие и два
@@ -45,13 +47,22 @@ Rust-ядро не менялось. Исходный checkout `worktrees/6209` 
   3.12.14, 17:34 MSK; прямой rustc1.87 из stable toolchain
   (rustup shim требует недоступное скачивание).
 - GitHub Pages workflow и base `/rust_ml/` подготовлены. Repo public, connector
-  подтвердил push/admin права; browser GitHub не авторизован, Pages не включены.
-  Supabase проект/URL ещё не выбран. Hosted frontend/backend не заявляются рабочими.
+  подтвердил push/admin права; browser GitHub не авторизован. Actions run `38268067306`:
+  build job `114875201446` полностью PASS (языки, tests, build, artifact); deploy
+  `114875585648` получил HTTP404 с указанием проверить включение Pages. Само состояние
+  настройки Pages без входа не прочитано. Supabase проект/URL ещё не выбран.
+  Hosted frontend/backend не заявляются рабочими.
+- CI run `38268066995`, learning-lab job `114875200270`: 415 PASS / 3 FAIL / 4 SKIP.
+  Три Rust checks вызвали auto-install отсутствующего 1.87.0 через rustup proxy;
+  log содержит конфликты установки `bin/cargo`, rust-std и `bin/rust-gdb`.
+  До тестов добавлена последовательная установка toolchain и абсолютные Python3/rustc
+  paths, как в прошедшем Pages build; включены все языковые проверки.
+  Исправленный CI ещё не запущен. Rust-ядро не изменялось.
 - Grading disabled: ни браузер, ни SQL не выдают pass без изолированного runner.
   Piston public API с 2026-02-15 требует авторизации по README; бесплатный произвольный
   Python/Rust runner пока не подтверждён. Платных ресурсов не создавали.
 
-Следующий шаг: commit/push и сверка SHA, затем проверка фактического Actions run.
+Следующий шаг: commit/push исправления CI и сверка SHA, затем новый Actions run.
 Для реальной публикации
 нужны обычный GitHub login/Pages Actions и выбранный Supabase Free project.
 

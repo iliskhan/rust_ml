@@ -58,7 +58,17 @@ Codex IAB; dev `127.0.0.1:5194`, итоговая production-сборка с pro
 не проверялся: пользователь ранее исключил озвучивание. Таблицы и screenshots отражают
 проверенные сценарии, не сертификацию доступности или полное покрытие всех UI-состояний.
 
-## Границы
+## GitHub Actions
+
+Реализация `76693f6993dfbe04884e0d9d1bffe44a4c8aa6f4` pushed, remote SHA совпал.
+Publish run `38268067306`: build job `114875201446` PASS, включая все языковые тесты,
+production build и artifact. Deploy job `114875585648` вернул HTTP404 и сообщение
+проверить включение Pages; состояние настройки без входа не прочитано.
+CI run `38268066995`: learning-lab `114875200270` FAIL при auto-install Rust1.87,
+с конфликтами общих файлов. В CI добавлены предварительная установка и точные paths;
+новый запуск исправленного workflow ожидает push. Релевантные выдержки: `actions-first-run.json`.
+
+## Непроверенные внешние условия
 
 Hosted Supabase JWT/Auth/PostgREST, GitHub OAuth redirect, многопроцессные SQL races
 и Pages deployment ещё не проверены. SQL использует реальный PostgreSQL engine и
