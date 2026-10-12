@@ -5,6 +5,25 @@
 
 ## Текущая задача и результат
 
+### Mini-batch и L2 — код проверен, UI ожидает интеграции, 2026-10-12 06:26 Europe/Moscow
+
+Отдельный managed worktree `C:/Users/lomaster/.codex/worktrees/minibatch-l2/rust_ml`,
+ветка `codex/minibatch-l2`, база `490162fb8fb4c6ec8ff29cb6d7b640caf790431d`.
+Код только в boundarymath/experiment/Playground/Comparison/CSS и boundarytests.
+Batch 1..96, λ 0..1, три seed, rawBCE/L2/objective, реальные бюджеты и целевые эпохи.
+JSON v2 и миграция v1; permutation/cursor восстанавливаются по step и seed эпохи,
+полный пакет сохраняет legacy arithmetic. Current/A/B проверяются до записи/import.
+В этой копии `pnpm test` 204/204, `pnpm typecheck`, `pnpm build` PASS
+(Node 24.19.0 / pnpm 11.25.0 / Vite 7.3.7). Финальный rerun после guard v1 и исправления
+warning A/B прошёл. Исходники соответствуют code commit `6d13646327f5524e3a3909f1d79dc31236a8de4e`.
+Независимый core review без findings: все batch sizes и точный restore→next step;
+в UI logic review найдено и исправлено неверное утверждение про единственное отличие λ.
+Логи: `work/minibatch-tests.log`, `work/minibatch-build.log`. Git diff --check PASS.
+UI desktop/mobile 320px, keyboard, CSS 200% — pending координатору; здесь browser/server
+не запускались по заданию. Rust/dependencies/прочая математика не менялись.
+Код и документы разделены; обычный push и точные local/remote SHA подтверждаются в финале чата.
+Подробности, источники и следующий шаг: [handoff](work/minibatch-progress.md).
+
 ### Доступность — исправления проверены; озвучивание пропущено, 2026-10-12
 
 База `9a5680cdbc52f1ad72ebb7b0f17c390e2a2748bc`, чистый worktree6209,
