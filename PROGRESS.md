@@ -5,7 +5,7 @@
 
 ## Текущая задача и результат
 
-### Обучение CNN-фильтра — модуль проверен, UI у родителя, 2026-10-12 06:28 Europe/Moscow
+### Обучение CNN-фильтра — модуль отправлен, UI у родителя, 2026-10-12 06:31 Europe/Moscow
 
 Изолированный checkout `C:/Users/lomaster/.codex/worktrees/cnn-filter-training/rust_ml`,
 ветка `codex/cnn-filter-training`, база `490162fb8fb4c6ec8ff29cb6d7b640caf790431d`.
@@ -44,8 +44,12 @@ UI desktop/mobile/320px/200% текста и клавиатура — PENDING у
 Запуск серверов/браузера/Narrator запрещён границами делегирования и не выполнялся.
 Точное подключение и сценарий проверки расширенного Range —
 [work/cnn-training-progress.md](work/cnn-training-progress.md).
-Следующий шаг доставки: отдельный docs commit, обычный push текущей ветки
-и сверка local/remote SHA; точные SHA и результат будут в финальном сообщении.
+Code commit и отдельный docs commit `eb2b854183966a9b44f5f1764d564ca91d527f26`
+отправлены обычным push. В06:31 local HEAD и `git ls-remote --heads origin
+refs/heads/codex/cnn-filter-training` совпали на `eb2b854`; worktree был чистым.
+Этот финальный документальный checkpoint фиксирует доставку; его SHA сообщается
+в чате. Следующий шаг родителя: cherry-pick только code commit, добавить компонент
+в CNN и выполнить настоящие UI-проверки. Численная приёмка модуля завершена.
 
 ### Доступность — исправления проверены; озвучивание пропущено, 2026-10-12
 

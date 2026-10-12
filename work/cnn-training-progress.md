@@ -1,6 +1,6 @@
 # CNN training — checkpoint
 
-Обновлено: 2026-10-12 06:28 Europe/Moscow.
+Обновлено: 2026-10-12 06:31 Europe/Moscow.
 План задачи хранится в PLAN.md; эта записка — подробный handoff модуля.
 
 - Worktree: `C:/Users/lomaster/.codex/worktrees/cnn-filter-training/rust_ml`.
@@ -39,9 +39,11 @@ node --input-type=module -e 'import { build } from "vite"; await build({ configF
   tarball; причина устранена выбором существующего cache из .modules.yaml базы.
 - UI desktop/mobile/320px/CSS200%/клавиатура: PENDING у родителя после интеграции.
   В этой задаче не управлять браузером, не запускать серверы и Narrator.
-- Следующий шаг доставки: docs commit и обычный push; проверить совпадение SHA.
-  Code/docs SHA и итоговое состояние Git будут в финальном сообщении.
-  Следующий шаг родителя: cherry-pick только code commit, интеграция и настоящий UI.
+- Доставка: code commit и отдельный docs commit
+  `eb2b854183966a9b44f5f1764d564ca91d527f26` отправлены обычным push.
+  В06:31 local/remote SHA совпали на eb2b854; worktree был чистым.
+  SHA этого финального документального checkpoint сообщается в чате.
+- Следующий шаг родителя: cherry-pick только code commit, интеграция и настоящий UI.
 
 Первичные источники проверены web 2026-10-12:
 

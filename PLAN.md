@@ -59,8 +59,9 @@ Stride/dilation=1, padding=0; старый forward-demo и Rust сохраняю
 Авторитетный порядок этой задачи: отдельный checkout и изучение базы →
 математика/UI и независимые численные примеры → regression/typecheck/build,
 отдельная сборка компонента и независимое review → отдельные code/docs commits,
-обычный push, сверка SHA и handoff родителю. Первые три этапа проверены;
-доставка фиксируется финальным сообщением. Доказательства — PROGRESS.md и
+обычный push, сверка SHA и handoff родителю. Все четыре этапа выполнены;
+code/handoff доставлены обычным push, local/remote `eb2b854` совпали.
+SHA финального документального checkpoint сообщается в чате. Доказательства — PROGRESS.md и
 [handoff](work/cnn-training-progress.md).
 
 Интеграцию `<CnnTrainingLab />` после `<CnnLab />` в `family === 'cnn'`
