@@ -1,8 +1,10 @@
-import { useState, type ReactNode } from 'react';
+import { lazy, Suspense, useState, type ReactNode } from 'react';
 import { Range, fmt } from './ui';
 import { TOY_VOCAB } from './transformerMath';
 import { HEAD_SEQUENCE, headSgdStep, headTrainingTrace, initialHeadParameters, transformerHeadBatch } from './transformerHeadMath';
 import './transformer-head-lab.css';
+
+const HeadGeometryLab = lazy(() => import('./HeadGeometryLab').then(module => ({ default: module.HeadGeometryLab })));
 
 function HeadTable({ label, children }: { label: string; children: ReactNode }) {
   return <div className="th-table-scroll" role="region" aria-label={`${label}. Прокручиваемая таблица`} tabIndex={0}>
@@ -145,6 +147,7 @@ export function TransformerHeadLab() {
       </p>}
       <p>Максимальная разница фиксированных h: {fmt(hiddenDifference, 8)}. Улучшение на одном тексте не доказывает качество на новых текстах.</p>
     </section>
+    <Suspense fallback={<p role="status">Загружается геометрия выходной головы…</p>}><HeadGeometryLab parameters={parameters} hidden={batch.hidden} targets={batch.targets} mask={active} rate={rate} steps={steps} onTrainOne={() => train(1)} /></Suspense>
     <details><summary>Границы и источники</summary>
       <p>Backbone взят из toyLanguageForward текущего курса: одна attention-голова, два признака, RoPE и residual.
         FFN и нормализация опущены. Обратное распространение через attention не выполняется; embeddings и W не связаны общими параметрами.</p>

@@ -2,6 +2,7 @@ import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type Mous
 import { boundaryBatchIndices, boundaryBatchProgress, boundaryL2, boundaryMetrics, boundaryParameterCount, predictBoundary, type BoundaryConfig, type BoundaryKind } from './boundaryNetworkMath';
 import { advanceBoundaryExperiment as advance, boundaryFileLimit, boundaryStepLimit as stepLimit, boundaryStepsToEpoch, boundaryTrainingSettings, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryStorage, restoreBoundaryRun, saveBoundaryRun, writeBoundaryStorage, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
 import { BoundaryComparison } from './BoundaryComparison';
+import { BoundaryDiagnostics } from './BoundaryDiagnostics';
 import { probabilityGrid } from './decisionBoundaryMath';
 import { HiddenRepresentations } from './HiddenRepresentations';
 import { ConceptLink, LearningActivity, useLearningActive } from './learning-context';
@@ -273,6 +274,10 @@ export function BoundaryPlayground() {
         </div>
       </div>
     </div>
+
+    <BoundaryDiagnostics params={optimizer.params} config={config} dataset={dataset} threshold={threshold} step={optimizer.step}
+      batchSize={training.batchSize} batchSeed={training.batchSeed} lambda={training.lambda} source={`${kinds[settings.kind]} · seed ${settings.seed}`}
+      onProbeChange={setProbe} onThresholdExperiment={value => { setExperiment(current => ({ ...current, auto: false, remaining: 0 })); setThreshold(value); }} />
 
     <div id="network-representations" tabIndex={-1} role="region" aria-label="Скрытые представления сети">
       <HiddenRepresentations params={optimizer.params} config={config} dataset={dataset} probe={probe} onProbeChange={setProbe} step={optimizer.step} source={`${kinds[settings.kind]} · seed ${settings.seed}`} />

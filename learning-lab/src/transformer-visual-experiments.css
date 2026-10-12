@@ -1,0 +1,20 @@
+.tv-lab { margin-block: 1rem; min-width: 0; }
+.tv-lab > summary { font-weight: 700; }
+.tv-lab .tv-controls, .tv-lab .tv-scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 1rem; margin-block: 1rem; }
+.tv-lab .tv-scroll { overflow-x: auto; max-width: 100%; margin-block: 1rem; }
+.tv-lab table { border-collapse: collapse; width: 100%; }
+.tv-lab th, .tv-lab td { padding: .45rem; text-align: left; border-bottom: 1px solid var(--line, #ccc); }
+.tv-lab .tv-map { display: block; width: 100%; max-width: 480px; height: auto; }
+.tv-lab .tv-map text { font-size: 12px; fill: currentColor; }
+.tv-lab .tv-map .tv-map-point-label { font-weight: 600; paint-order: stroke; stroke: var(--paper, white); stroke-width: 3px; stroke-linejoin: round; }
+.tv-lab .tv-legend { display: flex; flex-wrap: wrap; gap: .6rem; }
+.tv-lab .tv-selected { background: rgba(40,127,128,.13); }
+.tv-lab .tv-backward { padding: 1rem; border: 2px solid #287f80; border-radius: 8px; overflow-wrap: anywhere; }
+.tv-lab .tv-gradient-fork { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .5rem; margin: 1rem 0; text-align: center; }
+.tv-lab .tv-gradient-fork figcaption, .tv-lab .tv-fork-wide { grid-column: 1 / -1; }
+.tv-lab .tv-gradient-fork figcaption { font-weight: 600; margin-bottom: .4rem; }
+.tv-lab .tv-fork-node { border: 1px solid #287f80; border-radius: 6px; padding: .55rem .3rem; background: var(--paper, white); min-width: 0; }
+.tv-lab .tv-fork-arrow { color: #287f80; font-size: 1.5rem; line-height: 1; }
+.tv-lab label select { display: block; width: 100%; }
+.tv-lab .formula { overflow-wrap: anywhere; }
+@media (max-width: 540px) { .tv-lab th, .tv-lab td { font-size: .86rem; } }

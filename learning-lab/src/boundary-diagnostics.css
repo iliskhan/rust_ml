@@ -1,0 +1,17 @@
+.boundary-diagnostics { margin-block: 1.5rem; }
+.boundary-diagnostics > details { margin-block: 1rem; }
+.boundary-diagnostics label:has(> select) { display: grid; gap: .4rem; margin-block: .8rem; }
+.boundary-diagnostics select { width: 100%; min-width: 0; }
+.boundary-diagnostic-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 1rem; }
+.boundary-confusion-map { display: block; width: 100%; height: auto; max-width: 440px; font: 12px system-ui; }
+.boundary-confusion-map [role=button] { cursor: pointer; }
+.boundary-confusion-map [role=button]:focus { outline: none; stroke: #111; stroke-width: 4; }
+.boundary-outcome-legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; font-size: .88rem; }
+.boundary-diagnostic-table { width: 100%; overflow-x: auto; margin-block: 1rem; }
+.boundary-diagnostic-table table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.boundary-diagnostic-table th, .boundary-diagnostic-table td { padding: .55rem; border: 1px solid #cad5ce; text-align: left; }
+.boundary-diagnostic-table caption { text-align: left; padding-block: .5rem; }
+.boundary-diagnostic-table button { white-space: nowrap; }
+.boundary-diagnostic-table button[aria-pressed=true] { outline: 3px solid #527c65; outline-offset: 1px; }
+.boundary-point-readout { overflow-wrap: anywhere; }
+@media (max-width: 650px) { .boundary-diagnostic-grid { grid-template-columns: minmax(0, 1fr); } }

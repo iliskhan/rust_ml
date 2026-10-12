@@ -116,7 +116,9 @@ export default function Scene3D({ title, description, axes, surfaces = [], lines
       </svg>}
     </div>
     <ul className="scene3d-axis-key">{axes.map((axis, i) => <li key={i}><strong>{axisNames[i]}</strong> — {axis.label}: {fmt(axis.min)}…{fmt(axis.max)}</li>)}</ul>
-    <p className="scene3d-note">Оси масштабируются независимо. По видимым углам и длинам нельзя сравнивать исходные величины.</p>
+    <p className="scene3d-note">{axes.every(axis => axis.max - axis.min === axes[0].max - axes[0].min)
+      ? 'Масштаб единицы одинаков на всех осях. Проекция на экран искажает видимые длины и углы; сравнивайте исходные числа.'
+      : 'Оси масштабируются независимо. По видимым углам и длинам нельзя сравнивать исходные величины.'}</p>
     <div className="scene3d-controls">
       <Range label="Поворот, °" value={camera.yaw} min={-180} max={180} step={1} onChange={yaw => setCamera(current => ({ ...current, yaw }))} />
       <Range label="Наклон, °" value={camera.pitch} min={-85} max={90} step={1} onChange={pitch => setCamera(current => ({ ...current, pitch }))} />

@@ -1,0 +1,12 @@
+.cnn-shift-lab { min-width: 0; }
+.cnn-shift-matrices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 1rem; margin-block: 1rem; }
+.cnn-shift-grid-scroll { min-width: 0; max-width: 100%; overflow-x: auto; }
+.cnn-shift-grid-scroll .data-table { width: 100%; font-size: .8rem; }
+.cnn-shift-grid-scroll .data-table td { text-align: center; white-space: nowrap; }
+.cnn-shift-grid-scroll .data-table th { white-space: nowrap; }
+.cnn-shift-grid-scroll .data-table button { min-height: 32px; min-width: 30px; padding: .2rem; background: transparent; color: inherit; }
+.cnn-shift-grid-scroll .cnn-shift-marked { outline: 2px solid #287f80; outline-offset: -2px; font-weight: 700; }
+.cnn-shift-lab .formula { overflow-wrap: anywhere; }
+.cnn-shift-scale span { padding: .1rem .3rem; border-radius: .2rem; }
+.cnn-shift-positive { background: rgba(39, 105, 78, .28); }
+.cnn-shift-negative { background: rgba(183, 93, 36, .28); }

@@ -1,0 +1,8 @@
+.prediction-experiment { margin-block: 1rem; padding-block: .6rem; border-block: 1px solid var(--line); min-width: 0; }
+.prediction-experiment fieldset { border: 0; padding: 0; min-width: 0; }
+.prediction-experiment legend { font-weight: 600; margin-bottom: .6rem; }
+.prediction-experiment fieldset label { display: flex; flex-direction: row; align-items: flex-start; gap: .6rem; margin-block: .5rem; overflow-wrap: anywhere; }
+.prediction-experiment input[type="radio"] { width: 1.1rem; height: 1.1rem; flex: 0 0 auto; margin-top: .2rem; }
+.prediction-experiment dl { margin-block: .7rem; }
+.prediction-experiment dt { font-weight: 600; }
+.prediction-experiment dd { margin: .25rem 0 .6rem; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }

@@ -8,6 +8,7 @@ import { cnnSpatialTrace } from './spatialSceneMath';
 
 const BpttLab = lazy(() => import('./BpttLab').then(module => ({ default: module.BpttLab })));
 const CnnTrainingLab = lazy(() => import('./CnnTrainingLab').then(module => ({ default: module.CnnTrainingLab })));
+const CnnShiftLab = lazy(() => import('./CnnShiftLab').then(module => ({ default: module.CnnShiftLab })));
 type ArchitectureFamily = (typeof architectureFamilies)[number]['id'];
 
 function useDiagramWidth() {
@@ -85,6 +86,7 @@ const CnnChannelScene = memo(function CnnChannelScene({ trace, channels, open: _
 function CnnLab() {
   const [stride, setStride] = useState(1), [padding, setPadding] = useState(0), [dilation, setDilation] = useState(1), [channels, setChannels] = useState(1), [scale, setScale] = useState(1), [scan, setScan] = useState(0), [pooling, setPooling] = useState<'max' | 'average'>('max');
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
+  const [shiftOpen, setShiftOpen] = useState(false), [shiftVisited, setShiftVisited] = useState(false);
   const input = Array.from({ length: channels }, (_, c) => Array.from({ length: 5 }, (_, y) => Array.from({ length: 5 }, (_, x) => c ? (x + y) % 2 : x < 2 ? 0 : 1)));
   const filter = [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]].map(row => row.map(v => v * scale));
   const kernels = [Array.from({ length: channels }, () => filter)];
@@ -107,7 +109,12 @@ function CnnLab() {
       <details onToggle={event => { setSceneOpen(event.currentTarget.open); if (event.currentTarget.open) setSceneVisited(true); }}><summary>3D: каналы и выбранное окно свёртки</summary>{sceneVisited && <CnnChannelScene trace={spatial} channels={channels} open={sceneOpen} />}</details>
       <Matrix label={`ReLU → ${pooling} pooling 2×2`} values={pool2d(result.output[0].map(row => row.map(x => Math.max(0, x))), 2, pooling)} />
       <details><summary>Варианты CNN и форма данных</summary><table className="data-table"><thead><tr><th>Операция</th><th>Данные без batch</th><th>Здесь</th></tr></thead><tbody><tr><td>Conv1D</td><td>C×L: звук, временной ряд</td><td>Только схема расширения</td></tr><tr><td>Conv2D</td><td>C×H×W: изображение</td><td>Численный расчёт</td></tr><tr><td>Conv3D</td><td>C×D×H×W: объём, видео</td><td>Только схема расширения</td></tr></tbody></table><p>В 1D сумма идёт по одной пространственной оси, в 3D — по трём. Формула размера применяется отдельно к каждой оси. В этом прямом проходе groups=1, один выходной канал и bias=0. Переключатель «Обучить фильтр» открывает отдельный опыт с обновлением весов.</p></details>
-    </section></div><Exercise question="Что меняется при увеличении dilation с 1 до 2 у ядра 3×3?" options={['Весов становится 25', 'Охват становится 5×5, весов остаётся 9 на входной канал', 'Pooling отключается']} correct={1} explanation="Между соседними весами появляется промежуток: эффективный размер d×(k−1)+1 = 5. Самих весов по-прежнему 3×3." /></>;
+    </section></div>
+    <details className="panel" onToggle={event => { setShiftOpen(event.currentTarget.open); if (event.currentTarget.open) setShiftVisited(true); }}>
+      <summary>Опыт: сдвиг входа, stride и эквивариантность CNN</summary>
+      {shiftVisited && <Suspense fallback={<p role="status">Загружается опыт сдвига CNN…</p>}><CnnShiftLab open={shiftOpen} /></Suspense>}
+    </details>
+    <Exercise question="Что меняется при увеличении dilation с 1 до 2 у ядра 3×3?" options={['Весов становится 25', 'Охват становится 5×5, весов остаётся 9 на входной канал', 'Pooling отключается']} correct={1} explanation="Между соседними весами появляется промежуток: эффективный размер d×(k−1)+1 = 5. Самих весов по-прежнему 3×3." /></>;
 }
 
 function Sequence({ values, selected, onSelect, label = 'h' }: { values: number[]; selected: number; onSelect: (i: number) => void; label?: string }) {

@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { ActionExercise } from './ActionExercise';
 import { ConceptLink } from './learning-context';
 import { Chart, Range, fmt } from './ui';
 import { bptt, trainBptt } from './bpttMath';
 import './bptt-lab.css';
+
+const RnnGradientGeometry = lazy(() => import('./RnnGradientGeometry').then(module => ({ default: module.RnnGradientGeometry })));
 
 const initialInput = [0.8, -0.4, 0.6, 0.1];
 const initialWeights = { wx: 0.8, wh: 0.7, b: 0.1 };
@@ -20,6 +22,7 @@ export function BpttLab() {
   const [firstWeights, setFirstWeights] = useState<typeof initialWeights | null>(null);
   const [usedRequiredEta, setUsedRequiredEta] = useState(true);
   const [error, setError] = useState('');
+  const [geometryOpen, setGeometryOpen] = useState(false), [geometryVisited, setGeometryVisited] = useState(false);
   const trace = bptt(lab.input, lab.weights, lab.target, lab.h0);
   const selectedIndex = lab.input.length - processed;
   const row = trace.steps[selectedIndex];
@@ -137,6 +140,12 @@ export function BpttLab() {
         Нулевой градиент на логарифмической оси не рисуется; его точное значение есть в таблице после раскрытия.
         Этот график показывает весь рассчитанный backward. Подставьте Wh=0: ранние состояния потеряют влияние на loss.</p>
     </section>
+    <details className="panel" onToggle={event => { setGeometryOpen(event.currentTarget.open); if (event.currentTarget.open) setGeometryVisited(true); }}>
+      <summary>Опыт: локальный множитель градиента, плоский срез и 3D</summary>
+      {geometryVisited && <Suspense fallback={<p role="status">Загружается геометрия RNN…</p>}>
+        <RnnGradientGeometry t={row.t} x={row.x} previous={row.previous} weights={lab.weights} open={geometryOpen} />
+      </Suspense>}
+    </details>
     <section className="panel"><h3>Обновить общие веса настоящим SGD</h3>
       <Range label="Размер шага η" value={eta} min={0.001} max={0.2} step={0.001} onChange={setEta} />
       <div className="button-row">

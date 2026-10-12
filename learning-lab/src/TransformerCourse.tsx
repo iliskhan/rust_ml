@@ -15,6 +15,9 @@ import { ropePairPath, ropePairPoint } from './spatialSceneMath';
 import { AttentionGeometry } from './AttentionGeometry';
 import { selfAttentionChallenge } from './attentionGeometryMath';
 
+const NormalizationGeometryLab = lazy(() => import('./NormalizationGeometryLab').then(module => ({ default: module.NormalizationGeometryLab })));
+const ResidualGradientLab = lazy(() => import('./ResidualGradientLab').then(module => ({ default: module.ResidualGradientLab })));
+
 const vec = (values: number[], digits = 2) => `[${values.map(x => fmt(x, digits)).join('; ')}]`;
 const percent = (x: number) => `${fmt(x * 100, 1)}%`;
 const TOKEN_LABELS = ['кот', 'ест', 'рыбу'];
@@ -174,6 +177,7 @@ function BlockLesson() {
       <Grid label="Четырёхмерные шаги" values={[x, trace.branchInput, trace.ffn.output, trace.sum, trace.output]} rows={['исходный x', 'вход FFN', 'выход FFN', skip ? 'x + FFN' : 'FFN без residual', 'выход подслоя']} /><Grid label="Внутри FFN: шесть скрытых признаков" values={[trace.ffn.beforeActivation, trace.ffn.hidden]} rows={['xW₁ + b₁', 'после ReLU']} /><p className="tc-observation">{placement === 'pre' ? 'Нормализованный вектор входит только в ветку FFN; прямой residual несёт исходный x.' : 'FFN получает исходный x; после сложения нормализуется весь результат.'}</p><p className="note">Это численный FFN-подслой, без attention. В полном блоке свой residual обычно окружает и attention, и FFN; нельзя заменить эти два сложения одним в конце блока.</p>
     </section></div>
     <details><summary>Формулы, матрицы и варианты FFN</summary><p className="formula">LN(x)ᵢ = γᵢ(xᵢ−μ) / √(mean((x−μ)²)+ε) + βᵢ<br />RMSNorm(x)ᵢ = γᵢ xᵢ / √(mean(x²)+ε)<br />Здесь γ=1, β=0, ε=0.00001; средние считаются по 4 признакам одной позиции.</p><p>Pre/Post задаёт место операции, а LayerNorm/RMSNorm — саму операцию. Это независимые решения. Pre-norm часто используют вместе с отдельной финальной нормализацией после всех блоков; её здесь нет. Реальные γ и β обучаются. RMSNorm не центрирует вектор.</p><p className="formula">FFN(x)=ReLU(xW₁ + 0.1)W₂; W₁:4×6, W₂:6×4, b₂=0.</p><Grid label="W₁" values={FFN_WEIGHTS.first} /><Grid label="W₂" values={FFN_WEIGHTS.second} /><p>ReLU обнуляет отрицательные числа. В моделях встречаются GELU и SwiGLU. Вариант SwiGLU умножает ветку SiLU(xW_gate) на другую ветку xW_up, затем проецирует вниз. Здесь он только описан; переключатель нормы не превращает ReLU в SwiGLU. Все позиции в одном FFN используют общие веса.</p></details>
+    <Suspense fallback={<p role="status">Загружаются опыты нормы и residual…</p>}><NormalizationGeometryLab /><ResidualGradientLab /></Suspense>
     <Exercise question="По чему считается LayerNorm в этом блоке?" options={['По четырём признакам одной позиции', 'По всем токенам сразу', 'Только по максимальному значению']} correct={0} explanation="Обычный Transformer нормирует последнюю ось признаков отдельно для каждой позиции, а не смешивает её статистику со всеми токенами." />
   </>;
 }

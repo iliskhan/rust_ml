@@ -61,12 +61,12 @@ test('curriculum destinations are real, all levels are honest and routes are non
 });
 
 test('remaining directions are marked as continuations and implemented chapters have destinations', () => {
-  for (const id of ['residual', 'text-representations', 'transfer']) {
+  for (const id of ['text-representations', 'transfer']) {
     const topic = curriculum.find(item => item.id === id);
     assert.equal(topic?.coverage, 'next', id);
     assert.ok(topic?.source?.title);
   }
-  for (const [id, lesson] of [['autoencoder-vae', 'vae'], ['gan', 'gan'], ['diffusion', 'diffusion'], ['gnn', 'gnn'], ['rl', 'rl']]) {
+  for (const [id, lesson] of [['residual', 'transformer'], ['autoencoder-vae', 'vae'], ['gan', 'gan'], ['diffusion', 'diffusion'], ['gnn', 'gnn'], ['rl', 'rl']]) {
     const topic = curriculum.find(item => item.id === id);
     assert.equal(topic?.coverage, 'interactive');
     assert.equal(topic?.lesson, lesson);
