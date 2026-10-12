@@ -50,17 +50,23 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     if (pending.generation !== authGeneration || pending.stored !== storage.getItem(storageKey) || pending.verifier !== storage.getItem(`${storageKey}:pkce`)) throw changedAccount()
   }
   const persist = (value: CloudAuthSession | null) => {
-    if (value) storage.setItem(storageKey, JSON.stringify(value)); else storage.removeItem(storageKey)
+    if (value) {
+      const encoded = JSON.stringify(value)
+      if (storage.getItem(storageKey) !== encoded) storage.setItem(storageKey, encoded)
+    } else storage.removeItem(storageKey)
     session = value
     return value
   }
   const acceptSession = (value: CloudAuthSession & { expires_in?: number }) => {
-    if (!value.access_token || !value.refresh_token || !value.user?.id) throw new PracticeCloudError('Сервер не вернул сессию.', 'invalid_session')
+    if (typeof value?.access_token !== 'string' || !value.access_token || typeof value.refresh_token !== 'string' || !value.refresh_token || typeof value.user?.id !== 'string' || !value.user.id) throw new PracticeCloudError('Сервер не вернул сессию.', 'invalid_session')
+    const expiresAt = value.expires_at ?? Math.floor(Date.now() / 1000) + (value.expires_in ?? 3600)
+    if (!Number.isFinite(expiresAt)) throw new PracticeCloudError('Сервер не вернул срок сессии.', 'invalid_session')
     return persist({ access_token: value.access_token, refresh_token: value.refresh_token,
-      expires_at: value.expires_at ?? Math.floor(Date.now() / 1000) + (value.expires_in ?? 3600), user: value.user })!
+      expires_at: expiresAt, user: { id: value.user.id, ...(typeof value.user.email === 'string' ? { email: value.user.email } : {}) } })!
   }
   async function request<T>(path: string, init: RequestInit = {}, authenticated = false): Promise<T> {
     let owner: string | undefined
+    const generation = authGeneration
     if (authenticated) {
       const previousOwner = session?.user.id
       session = readSession()
@@ -73,24 +79,43 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
           method: 'POST', body: JSON.stringify({ refresh_token: session.refresh_token })
         }).then(value => {
           const current = readSession()
-          if (current?.user.id !== refreshing.user.id || current.refresh_token !== refreshing.refresh_token) throw changedAccount()
+          if (generation !== authGeneration || current?.user.id !== refreshing.user.id || current.refresh_token !== refreshing.refresh_token) throw changedAccount()
+          if (value.user?.id !== refreshing.user.id) throw new PracticeCloudError('Сервер вернул другую сессию. Войдите снова.', 'invalid_session')
           acceptSession(value)
-        }).catch(error => { if (error instanceof PracticeCloudError && error.code === 'unauthenticated' && readSession()?.user.id === refreshing.user.id) persist(null); throw error }).finally(() => { refreshInFlight = null })
+        }).catch(error => { if (error instanceof PracticeCloudError && error.code === 'unauthenticated' && generation === authGeneration && readSession()?.refresh_token === refreshing.refresh_token) persist(null); throw error }).finally(() => { refreshInFlight = null })
         await refreshInFlight
-        if (readSession()?.user.id !== owner) throw changedAccount()
+        if (generation !== authGeneration || readSession()?.user.id !== owner) throw changedAccount()
       }
     }
     const headers: Record<string, string> = { apikey: publishableKey, 'Content-Type': 'application/json' }
     if (authenticated && session) headers.Authorization = `Bearer ${session.access_token}`
+    const requestToken = session?.access_token
     let response: Response
     try { response = await requestFetch(`${url}${path}`, { ...init, headers: { ...headers, ...init.headers } }) }
-    catch { throw new PracticeCloudError('Сеть недоступна. Код остаётся в редакторе; скачайте файл.', 'network_error') }
-    if (authenticated && readSession()?.user.id !== owner) throw changedAccount()
+    catch { throw new PracticeCloudError(path.startsWith('/auth/') ? 'Сеть недоступна. Повторите подключение позже.' : 'Сеть недоступна. Код остаётся в редакторе; скачайте файл.', 'network_error') }
+    if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
     const body = await response.json().catch(() => null)
-    if (authenticated && readSession()?.user.id !== owner) throw changedAccount()
+    if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
     if (!response.ok) {
       // Only map known server codes. Raw SQL/Auth bodies can contain sensitive context.
       const hint = typeof body?.message === 'string' ? body.message : ''
+      const authCode = path.startsWith('/auth/') ? body?.code ?? body?.error_code : undefined
+      const authMessages: Record<string, string> = {
+        invalid_credentials: 'Неверный email или пароль.',
+        email_not_confirmed: 'Подтвердите email по ссылке в письме, затем войдите снова.',
+        weak_password: 'Пароль не соответствует требованиям проекта. Выберите более длинный и надёжный пароль.',
+        signup_disabled: 'Регистрация в этом проекте пока отключена.',
+        email_provider_disabled: 'Вход по email в этом проекте пока отключён.',
+        over_email_send_rate_limit: 'Лимит писем достигнут. Повторите позже.',
+        over_request_rate_limit: 'Слишком много запросов. Повторите позже.',
+        otp_expired: 'Ссылка или код подтверждения истекли. Запросите новое письмо.',
+        flow_state_not_found: 'Ссылка входа недействительна. Начните вход заново.',
+        flow_state_expired: 'Ссылка входа истекла. Начните вход заново.',
+      }
+      if (typeof authCode === 'string' && authMessages[authCode]) throw new PracticeCloudError(authMessages[authCode], authCode, response.status)
+      const expired = response.status < 500 && response.status !== 429 && (response.status === 401 || ['refresh_token_not_found', 'refresh_token_already_used', 'session_not_found', 'session_expired', 'bad_jwt'].includes(authCode))
+      if (expired && path === '/auth/v1/user' && generation === authGeneration && readSession()?.access_token === requestToken) persist(null)
+      if (expired && path.startsWith('/auth/')) throw new PracticeCloudError('Сессия истекла. Войдите снова.', 'unauthenticated', response.status)
       const code = hint.includes('draft_conflict') ? 'draft_conflict' : hint.includes('grading_unavailable') ? 'grading_unavailable' : response.status === 401 ? 'unauthenticated' : 'cloud_error'
       const message = code === 'draft_conflict' ? 'Облачный черновик уже изменился. Загрузите его перед сохранением.' :
         code === 'grading_unavailable' ? 'Серверная проверка пока недоступна.' : code === 'unauthenticated' ? 'Сессия истекла. Войдите снова.' :
@@ -98,6 +123,49 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       throw new PracticeCloudError(message, code, code === 'draft_conflict' ? 409 : response.status)
     }
     return body as T
+  }
+  const redirectUrl = (redirectTo: string) => {
+    const redirect = new URL(redirectTo)
+    if (redirect.origin !== globalThis.location.origin || redirect.search || redirect.hash || redirect.username || redirect.password) throw new PracticeCloudError('Redirect должен вести на текущий сайт без параметров.', 'invalid_redirect')
+    return redirect.href
+  }
+  async function preparePKCE(pending: ReturnType<typeof beginSignIn>, redirectTo: string) {
+    const redirect = redirectUrl(redirectTo)
+    const verifier = Array.from(crypto.getRandomValues(new Uint8Array(32)), b => b.toString(16).padStart(2, '0')).join('')
+    const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)))
+    const challenge = btoa(String.fromCharCode(...digest)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+    assertSignIn(pending)
+    storage.setItem(`${storageKey}:pkce`, verifier)
+    pending.verifier = verifier
+    return { redirect, challenge }
+  }
+  const passwordCredentials = (email: string, password: string) => {
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail || !trimmedEmail.includes('@') || !password) throw new PracticeCloudError('Укажите email и пароль.', 'invalid_credentials')
+    return { email: trimmedEmail, password }
+  }
+  async function confirmationRequest(email: string, password: string | undefined, redirectTo: string) {
+    const credentials = password === undefined ? { email: email.trim(), type: 'signup' } : passwordCredentials(email, password)
+    if (!credentials.email || !credentials.email.includes('@')) throw new PracticeCloudError('Укажите email.', 'invalid_credentials')
+    const pending = beginSignIn()
+    const { redirect, challenge } = await preparePKCE(pending, redirectTo)
+    try {
+      const value = await request<CloudAuthSession | CloudAuthSession['user']>(`/auth/v1/${password === undefined ? 'resend' : 'signup'}?${new URLSearchParams({ redirect_to: redirect })}`, {
+        method: 'POST', body: JSON.stringify({ ...credentials, code_challenge: challenge, code_challenge_method: 's256' })
+      })
+      assertSignIn(pending)
+      if (password === undefined) return null
+      if (value && 'access_token' in value) {
+        const accepted = acceptSession(value)
+        storage.removeItem(`${storageKey}:pkce`)
+        return accepted
+      }
+      if (!value || typeof value.id !== 'string' || !value.id) throw new PracticeCloudError('Сервер не вернул результат регистрации.', 'invalid_session')
+      return null
+    } catch (error) {
+      if (pending.generation === authGeneration && pending.verifier === storage.getItem(`${storageKey}:pkce`)) storage.removeItem(`${storageKey}:pkce`)
+      throw error
+    }
   }
   const rpc = <T>(name: string, body: object) => request<T>(`/rest/v1/rpc/${name}`, { method: 'POST', body: JSON.stringify(body) }, true)
   async function getSession(id: string): Promise<CloudSession> {
@@ -114,13 +182,22 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     async restoreSession(): Promise<CloudAuthSession | null> {
       session = readSession()
       if (!session) return null
-      try {
-        const user = await request<CloudAuthSession['user']>('/auth/v1/user', {}, true)
-        const current = readSession()
-        if (!current || current.user.id !== user.id) throw changedAccount()
-        return persist({ ...current, user })
-      } catch (error) { if (error instanceof PracticeCloudError && error.code === 'unauthenticated') persist(null); throw error }
+      const user = await request<CloudAuthSession['user']>('/auth/v1/user', {}, true)
+      const current = readSession()
+      if (!current || current.user.id !== user?.id) throw changedAccount()
+      return persist({ ...current, user: { id: user.id, ...(typeof user.email === 'string' ? { email: user.email } : {}) } })
     },
+    async signInWithPassword(email: string, password: string) {
+      const credentials = passwordCredentials(email, password)
+      const pending = beginSignIn()
+      const value = await request<CloudAuthSession>('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify(credentials) })
+      assertSignIn(pending)
+      const accepted = acceptSession(value)
+      storage.removeItem(`${storageKey}:pkce`)
+      return accepted
+    },
+    signUpWithPassword(email: string, password: string, redirectTo: string) { return confirmationRequest(email, password, redirectTo) },
+    async resendConfirmation(email: string, redirectTo: string) { await confirmationRequest(email, undefined, redirectTo) },
     sendEmailCode(email: string) { return request('/auth/v1/otp', { method: 'POST', body: JSON.stringify({ email, create_user: true }) }) },
     async verifyEmailCode(email: string, token: string) {
       const pending = beginSignIn()
@@ -130,20 +207,14 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     },
     async signInWithGitHub(redirectTo: string) {
       const pending = beginSignIn()
-      const redirect = new URL(redirectTo)
-      if (redirect.origin !== globalThis.location.origin || redirect.search || redirect.hash) throw new PracticeCloudError('Redirect должен вести на текущий сайт без параметров.', 'invalid_redirect')
-      const verifier = Array.from(crypto.getRandomValues(new Uint8Array(32)), b => b.toString(16).padStart(2, '0')).join('')
-      const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)))
-      const challenge = btoa(String.fromCharCode(...digest)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-      assertSignIn(pending)
-      storage.setItem(`${storageKey}:pkce`, verifier)
-      const query = new URLSearchParams({ provider: 'github', redirect_to: redirect.href, code_challenge: challenge, code_challenge_method: 's256' })
+      const { redirect, challenge } = await preparePKCE(pending, redirectTo)
+      const query = new URLSearchParams({ provider: 'github', redirect_to: redirect, code_challenge: challenge, code_challenge_method: 's256' })
       globalThis.location.assign(`${url}/auth/v1/authorize?${query}`)
     },
     async completeOAuth(code: string) {
       const pending = beginSignIn()
       const verifier = storage.getItem(`${storageKey}:pkce`)
-      if (!verifier) throw new PracticeCloudError('Начните вход заново в этом браузере.', 'missing_verifier')
+      if (!verifier) throw new PracticeCloudError('Откройте ссылку в браузере, где начали вход. Если email уже подтверждён, войдите с email и паролем.', 'missing_verifier')
       const response = await request<CloudAuthSession>('/auth/v1/token?grant_type=pkce', { method: 'POST', body: JSON.stringify({ auth_code: code, code_verifier: verifier }) })
       assertSignIn(pending)
       if (storage.getItem(`${storageKey}:pkce`) !== verifier) throw changedAccount()
@@ -151,12 +222,13 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       storage.removeItem(`${storageKey}:pkce`)
       return value
     },
-    async signOut() {
+    async signOut(expectedOwner?: string) {
       ++authGeneration
-      const owner = session?.user.id
-      if (readSession()?.user.id === owner) storage.removeItem(`${storageKey}:pkce`)
-      try { if (session) await request('/auth/v1/logout', { method: 'POST' }, true) }
-      finally { if (readSession()?.user.id === owner) persist(null); else session = readSession() }
+      const current = readSession()
+      if ((expectedOwner ?? session?.user.id) !== current?.user.id) { session = current; throw changedAccount() }
+      storage.removeItem(`${storageKey}:pkce`)
+      persist(null)
+      if (current) await request('/auth/v1/logout?scope=local', { method: 'POST', headers: { Authorization: `Bearer ${current.access_token}` } })
     },
     async catalog(filter?: { releaseKey: string; exerciseKey: string; language: CloudLanguage }) {
       const query = new URLSearchParams({

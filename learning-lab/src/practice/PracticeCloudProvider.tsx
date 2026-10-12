@@ -1,11 +1,12 @@
 import { createContext, lazy, Suspense, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
-import { createPracticeCloud, type CloudAuthSession, type PracticeCloud } from './cloud';
+import { createPracticeCloud, PracticeCloudError, type CloudAuthSession, type PracticeCloud } from './cloud';
+import { PracticeAccountPanel, type PracticeAccountPanelProps } from './account/PracticeAccountPanel';
 import type { SaveCloudDraft, LoadCloudDraft } from './PracticePanel';
 import type { PracticeScope } from './local-progress';
 import { browserPracticeStore } from './local-progress';
 const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ default: module.PracticePanel })));
 
-type AccountState = { cloud: PracticeCloud | null; user: CloudAuthSession['user'] | null; status: string; busy: boolean; signIn: () => Promise<void>; signOut: () => Promise<void>; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft };
+type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft };
 const AccountContext = createContext<AccountState | null>(null);
 
 export function PracticeCloudProvider({ children }: { children: ReactNode }) {
@@ -17,41 +18,93 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
   });
   const [user, setUser] = useState<CloudAuthSession['user'] | null>(null);
   const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
+  const [confirmationEmail, setConfirmationEmail] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const busyRef = useRef(true);
+  const ownerRef = useRef<string | null>(null);
   const cloudDrafts = useRef(new Map<string, { sessionId: string; revision: number; source: string }>());
   const restore = useRef<Promise<CloudAuthSession | null> | null>(null);
   const authEpoch = useRef(0);
+  const redirectTo = () => `${window.location.origin}${window.location.pathname}`;
+  function applySession(session: CloudAuthSession | null) {
+    const next = session?.user ?? null;
+    if (ownerRef.current !== (next?.id ?? null)) cloudDrafts.current.clear();
+    ownerRef.current = next?.id ?? null;
+    setUser(previous => previous?.id === next?.id && previous?.email === next?.email ? previous : next);
+  }
+  function authError(value: unknown) { setStatus(''); setError(value instanceof Error ? value.message : 'Не удалось подключить аккаунт.'); }
   useEffect(() => {
     if (!cloud) return;
     let active = true;
-    const sync = (event: StorageEvent) => {
-      if (event.key !== null && event.key !== cloud.storageKey) return;
-      const epoch = ++authEpoch.current;
-      setUser(null); cloudDrafts.current.clear(); setBusy(true);
-      void cloud.restoreSession().then(session => {
-        if (active && authEpoch.current === epoch) setUser(session?.user ?? null);
-      }).catch(error => { if (active && authEpoch.current === epoch) setStatus(error instanceof Error ? error.message : 'Аккаунт изменился.'); })
-        .finally(() => { if (active && authEpoch.current === epoch) setBusy(false); });
+    let syncing = false;
+    async function sync(storageChange = false) {
+      if (!cloud || (!storageChange && (syncing || busyRef.current))) return;
+      let changed = false;
+      try { changed = (cloud.session?.user.id ?? null) !== ownerRef.current; }
+      catch (value) { authError(value); applySession(null); return; }
+      const epoch = storageChange ? ++authEpoch.current : authEpoch.current;
+      if (changed) { applySession(null); busyRef.current = true; setBusy(true); }
+      syncing = true;
+      try {
+        const session = await cloud.restoreSession();
+        if (active && epoch === authEpoch.current) {
+          applySession(session);
+          setError('');
+          if (changed) { setConfirmationEmail(null); setStatus(session ? 'Аккаунт подключён.' : 'Вы вышли из аккаунта. Локальная практика доступна.'); }
+        }
+      } catch (value) {
+        if (active && epoch === authEpoch.current) {
+          authError(value);
+          if (value instanceof PracticeCloudError && ['unauthenticated', 'account_changed', 'invalid_session'].includes(value.code)) applySession(null);
+        }
+      } finally {
+        syncing = false;
+        if (active && epoch === authEpoch.current && changed) { busyRef.current = false; setBusy(false); }
+      }
+    }
+    const storageSync = (event: StorageEvent) => {
+      if (event.key === null || event.key === cloud.storageKey) {
+        // A different tab's auth change also cancels any pending local login.
+        busyRef.current = false; setBusy(false);
+        void sync(true);
+      }
     };
-    window.addEventListener('storage', sync);
-    return () => { active = false; window.removeEventListener('storage', sync); };
+    const foreground = () => { if (document.visibilityState === 'visible') void sync(); };
+    const timer = window.setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+      try { if (cloud.session && cloud.session.expires_at < Date.now() / 1000 + 30) void sync(); }
+      catch (value) { authError(value); applySession(null); }
+    }, 30_000);
+    window.addEventListener('storage', storageSync);
+    window.addEventListener('focus', foreground);
+    document.addEventListener('visibilitychange', foreground);
+    return () => {
+      active = false; window.clearInterval(timer);
+      window.removeEventListener('storage', storageSync); window.removeEventListener('focus', foreground);
+      document.removeEventListener('visibilitychange', foreground);
+    };
   }, [cloud]);
   useEffect(() => {
     if (!cloud) return;
     let active = true;
     const epoch = authEpoch.current;
-    const code = new URLSearchParams(window.location.search).get('code');
+    const params = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const code = params.get('code');
+    const callbackError = params.has('error') || hashParams.has('error');
     restore.current ??= code ? cloud.completeOAuth(code) : cloud.restoreSession();
-    setBusy(true);
+    busyRef.current = true; setBusy(true);
     restore.current.then(session => {
       if (!active || epoch !== authEpoch.current) return;
-      setUser(session?.user ?? null);
+      applySession(session);
+      if (callbackError) { setError('Подтверждение или вход не завершены. Запросите новое письмо или повторите вход.'); return; }
       setStatus(session ? 'Аккаунт подключён. Черновики сохраняются в облако по вашей команде.' : 'Войдите, чтобы сохранять черновики в аккаунте.');
-    }).catch(error => { if (active && epoch === authEpoch.current) setStatus(error instanceof Error ? error.message : 'Не удалось подключить аккаунт.'); })
+    }).catch(value => { if (active && epoch === authEpoch.current) authError(value); })
       .finally(() => {
         if (!active || epoch !== authEpoch.current) return;
-        setBusy(false);
-        if (code) {
+        busyRef.current = false; setBusy(false);
+        if (code || callbackError) {
           window.history.replaceState(null, '', `${window.location.pathname}#practice`);
           window.dispatchEvent(new HashChangeEvent('hashchange'));
         }
@@ -59,19 +112,47 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     return () => { active = false; };
   }, [cloud]);
   async function signIn() {
-    if (!cloud) return;
-    setBusy(true);
+    if (!cloud || busyRef.current) return;
+    busyRef.current = true; setBusy(true); setError(''); setStatus('Открываем вход через GitHub…'); setConfirmationEmail(null);
     const epoch = ++authEpoch.current;
-    try { await cloud.signInWithGitHub(`${window.location.origin}${window.location.pathname}`); }
-    catch (error) { if (epoch === authEpoch.current) { setStatus(error instanceof Error ? error.message : 'Вход не выполнен.'); setBusy(false); } }
+    try { await cloud.signInWithGitHub(redirectTo()); }
+    catch (value) { if (epoch === authEpoch.current) { authError(value); busyRef.current = false; setBusy(false); } }
+  }
+  async function passwordAuth(email: string, password: string, signingUp: boolean) {
+    if (!cloud || busyRef.current) return;
+    const epoch = ++authEpoch.current;
+    busyRef.current = true; setBusy(true); setError(''); setConfirmationEmail(null); setStatus(signingUp ? 'Создаём аккаунт…' : 'Входим…');
+    try {
+      const session = signingUp ? await cloud.signUpWithPassword(email, password, redirectTo()) : await cloud.signInWithPassword(email, password);
+      if (epoch !== authEpoch.current) return;
+      applySession(session);
+      setConfirmationEmail(session ? null : email.trim());
+      setStatus(session ? 'Аккаунт подключён. Черновики сохраняются в облако по вашей команде.' : 'Запрос регистрации принят. Если требуется подтверждение, проверьте email.');
+    } catch (value) {
+      if (epoch === authEpoch.current) {
+        authError(value);
+        if (value instanceof PracticeCloudError && value.code === 'email_not_confirmed') setConfirmationEmail(email.trim());
+      }
+    } finally { if (epoch === authEpoch.current) { busyRef.current = false; setBusy(false); } }
+  }
+  async function resendConfirmation(email: string) {
+    if (!cloud || busyRef.current) return;
+    const epoch = ++authEpoch.current;
+    busyRef.current = true; setBusy(true); setError(''); setStatus('Запрашиваем новое письмо…');
+    try {
+      await cloud.resendConfirmation(email, redirectTo());
+      if (epoch === authEpoch.current) setStatus('Запрос принят. Используйте ссылку из последнего письма, если оно придёт.');
+    } catch (value) { if (epoch === authEpoch.current) authError(value); }
+    finally { if (epoch === authEpoch.current) { busyRef.current = false; setBusy(false); } }
   }
   async function signOut() {
-    if (!cloud) return;
-    setBusy(true);
+    if (!cloud || busyRef.current) return;
+    busyRef.current = true; setBusy(true); setError(''); setStatus('Выходим…'); setConfirmationEmail(null);
     const epoch = ++authEpoch.current;
-    try { await cloud.signOut(); }
-    catch (error) { if (epoch === authEpoch.current) setStatus(error instanceof Error ? error.message : 'Сервер не подтвердил выход.'); }
-    finally { if (epoch === authEpoch.current) { setUser(null); cloudDrafts.current.clear(); setBusy(false); } }
+    applySession(null);
+    try { await cloud.signOut(user?.id); if (epoch === authEpoch.current) setStatus('Вы вышли из аккаунта в этом браузере. Локальная практика доступна.'); }
+    catch (value) { if (epoch === authEpoch.current) { setStatus(value instanceof PracticeCloudError && value.code === 'account_changed' ? 'Аккаунт изменился. Обновите страницу, чтобы открыть его черновики.' : 'Локальный выход выполнен; сервер не подтвердил завершение сессии.'); setError(value instanceof Error ? value.message : 'Сервер не подтвердил выход.'); } }
+    finally { if (epoch === authEpoch.current) { busyRef.current = false; setBusy(false); } }
   }
   async function saveDraft(scope: PracticeScope, source: string): Promise<string> {
     const epoch = authEpoch.current;
@@ -118,7 +199,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     cloudDrafts.current.set(`${user.id}/${variant.id}`, { sessionId: remote.id, revision: remote.draft.revision, source: remote.draft.source });
     return remote.draft.source;
   }
-  return <AccountContext.Provider value={{ cloud, user, status, busy, signIn, signOut, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined }}>{children}</AccountContext.Provider>;
+  return <AccountContext.Provider value={{ cloud, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined }}>{children}</AccountContext.Provider>;
 }
 
 export function PracticeSection({ lessonId, topicId }: { lessonId: string; topicId?: string }) {
@@ -128,15 +209,6 @@ export function PracticeSection({ lessonId, topicId }: { lessonId: string; topic
 
 export function PracticeAccount() {
   const account = useContext(AccountContext);
-  return <section className="panel practice-account" aria-labelledby="practice-account-title">
-    <h2 id="practice-account-title">Ваши черновики и аккаунт</h2>
-    <p>Без входа задания, черновики, открытая помощь и история вопросов сохраняются в этом браузере. Аккаунт позволяет вручную сохранить код в облаке.</p>
-    <p>Гостевые и личные черновики хранятся отдельно. Чтобы перенести гостевой код, скачайте его перед входом и вставьте в выбранный личный черновик.</p>
-    {!account?.cloud ? <p className="note">Облачное сохранение на этом сайте ещё не настроено. Локальная практика доступна; скачайте код, чтобы перенести его на другое устройство.</p> : <>
-      {account.user ? <p>Вы вошли: {account.user.email || 'аккаунт GitHub'}</p> : <p>Войдите через GitHub для сохранения в аккаунте.</p>}
-      <button type="button" disabled={account.busy} onClick={() => void (account.user ? account.signOut() : account.signIn())}>{account.busy ? 'Подключаем…' : account.user ? 'Выйти из аккаунта' : 'Войти через GitHub'}</button>
-      <p role="status">{account.status}</p>
-    </>}
-    <p className="note">Серверная оценка кода пока недоступна. Локальная самопроверка не подтверждает освоение темы на сервере.</p>
-  </section>;
+  if (!account) return null;
+  return <PracticeAccountPanel {...account} cloudAvailable={Boolean(account.cloud)} />;
 }
