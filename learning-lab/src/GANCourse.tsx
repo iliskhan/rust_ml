@@ -1,3 +1,5 @@
+import { PracticeSection } from './practice/PracticeCloudProvider';
+import { practiceChapter } from './practice/placement';
 import { useId, useRef, useState } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
@@ -208,7 +210,7 @@ export function GANCourse() {
       <Exercise question="Если рядом с BCE-GAN нарисовать расстояние W₁ между выборками, он станет WGAN?" options={['Да, имя графика определяет модель', 'Нет: нужно изменить цель и ограничения critic', 'Да, если число W₁ уменьшается']} correct={1} explanation="Диагностика только измеряет результат. WGAN определяется способом обучения critic и генератора с Lipschitz-ограничением, которого у нашего BCE-дискриминатора нет." />
     </div>
 
-    <div className="vg-chapter-actions"><button disabled={chapter === 0} onClick={() => move(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === SECTIONS.length - 1} onClick={() => move(chapter + 1)}>Следующий раздел →</button></div>
+    <PracticeSection lessonId="gan" topicId={practiceChapter('gan', chapter)} /><div className="vg-chapter-actions"><button disabled={chapter === 0} onClick={() => move(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === SECTIONS.length - 1} onClick={() => move(chapter + 1)}>Следующий раздел →</button></div>
     <details className="vg-sources"><summary>Первичные источники и воспроизводимость</summary><ul>
       <li><a href="https://arxiv.org/abs/1406.2661">Goodfellow et al. — Generative Adversarial Nets</a>: minimax, чередование шагов и non-saturating-цель; идеальное равновесие при достаточной мощности моделей.</li>
       <li><a href="https://arxiv.org/abs/1411.1784">Mirza & Osindero — Conditional Generative Adversarial Nets</a>: условие на входах обеих сетей.</li>

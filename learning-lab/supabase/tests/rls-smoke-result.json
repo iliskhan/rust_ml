@@ -1,0 +1,39 @@
+{
+  "timestamp_utc": "2026-10-12T15:08:01.325Z",
+  "timezone": "Europe/Moscow",
+  "checkout": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml",
+  "revision": "212a6ef4d3baebb83b41bd20a53a069f4358a2e4",
+  "working_tree": true,
+  "node": "v24.19.0",
+  "engine": "PostgreSQL 17.5 on aarch64-unknown-linux-gnu, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit",
+  "command": "node learning-lab/supabase/tests/rls-smoke.mjs work/backend-smoke/node_modules/@electric-sql/pglite/dist/index.js learning-lab/supabase/tests/rls-smoke-result.json",
+  "release": "2026-10-v1",
+  "catalog": {
+    "topics": 136,
+    "requirements": 276,
+    "exercises": 412,
+    "variants": 1236
+  },
+  "requirements": {
+    "required": 276,
+    "independent": 136,
+    "pass": 140
+  },
+  "public_fixtures": 758,
+  "migration_sha256": {
+    "202610120001_practice.sql": "9f443fc365c4cd33c8688c7641106b1066176f0e06cac66e71e72097b1494983",
+    "202610120002_practice_rpc.sql": "c7853af6abb5dd0eac535d83cc897640cfe8c3ad4fdcf8fff1f864c85ff63a6e",
+    "202610120003_anchor_content.sql": "e8686b2c2de9313bdae282494d8b5c38ab32cb814e765ee16ca8b8963d85fa83"
+  },
+  "checks": 12403,
+  "result": "PASS",
+  "verified": [
+    "fresh schema migrations",
+    "complete catalog/requirement mapping",
+    "every variant starter/public fixture/help/bundle digest",
+    "two-owner RLS and CAS",
+    "immutable published release/content/private bundles",
+    "disabled grading and zero attempts"
+  ],
+  "boundary": "PostgreSQL WASM; auth.uid stub; hosted JWT/Auth/PostgREST, provider redirects and concurrent multi-process locks not tested"
+}

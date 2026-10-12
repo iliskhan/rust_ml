@@ -1,6 +1,22 @@
 # Запуск кода и достоверная проверка практики
 
-Статус: подробный проект, без внедрения и развёртывания. Дата проверки внешней документации: 2026-10-12, Europe/Moscow. Исходный checkout: `C:/Users/lomaster/.codex/worktrees/6209/rust_ml`, ревизия `827b443`.
+Статус: целевой проект runner/API; текущая реализация сохраняет черновики через Auth/PostgREST и SQL RPC, grading отключён. Hosted развёртывание ожидает доступа. Дата проверки внешней документации: 2026-10-12, Europe/Moscow. Исходная спецификация: checkout `C:/Users/lomaster/.codex/worktrees/6209/rust_ml`, ревизия `827b443`. Реализация: `codex/practice-implementation` от `212a6ef`.
+
+Внедрённый draft путь не требует Edge gateway: Supabase Auth проверяет JWT,
+PostgREST устанавливает `auth.uid()`, функции проверяют владение и CAS revision.
+Это проверено локально с `auth.uid` stub, ещё не с hosted Auth/JWT. Без runner
+`practice_submit` возвращает `grading_unavailable`; browser quiz не выдаёт серверный pass.
+Описание ниже относится к будущему исполнению кода.
+
+Бесплатный production runner для произвольного Python/Rust не подтверждён.
+[Piston README](https://github.com/engineer-man/piston) сообщает, что с 15 февраля 2026
+public API требует авторизации по решению владельца для образовательного использования.
+[Workers Free limits](https://developers.cloudflare.com/workers/platform/limits/)
+ограничивают CPU запроса 10 ms и память 128 MB. Вывод о непригодности этого профиля
+для общего Python/Rust runner основан на документированных лимитах, не на замере
+нашего compiler workload. GitHub Actions не используется как production learner runner:
+[условия сервиса](https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features)
+ограничивают serverless application workloads. Платные ресурсы не создавались.
 
 Соседние документы определяют учебные шаги и схему Supabase. Здесь описан путь от редактора до серверного результата: API, очередь, изоляция Python/JavaScript/Rust, численная проверка и восстановление после сбоев. Пользователь выбирает основной язык; решения на остальных языках дают отдельные достижения. Сервер хранит успешность каждого языка, а учебный прогресс вычисляет по выбранному основному языку. [Модель данных](practice-data-model.md), [проект SQL](practice-schema.sql), [учебный проект](practice-system.md).
 

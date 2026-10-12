@@ -5,6 +5,7 @@ import type { Activation, TransformerMode } from './architectures';
 import { ConceptLink, LearningActivity } from './learning-context';
 import { Scene3D, type Vec3 } from './ThreeD';
 import { cnnSpatialTrace } from './spatialSceneMath';
+import { PracticeSection } from './practice/PracticeCloudProvider';
 
 const BpttLab = lazy(() => import('./BpttLab').then(module => ({ default: module.BpttLab })));
 const CnnTrainingLab = lazy(() => import('./CnnTrainingLab').then(module => ({ default: module.CnnTrainingLab })));
@@ -190,6 +191,7 @@ function FamilyPanel({ family }: { family: ArchitectureFamily }) {
     {trainingVisited && <div hidden={!training}><LearningActivity active={training}>
       <Suspense fallback={<p role="status">Загружаем лабораторию обучения…</p>}>{family === 'cnn' ? <CnnTrainingLab /> : <BpttLab />}</Suspense>
     </LearningActivity></div>}
+    <PracticeSection lessonId="architectures" topicId={training ? (family === 'cnn' ? 'unit.architecture.cnn-training' : 'unit.architecture.bptt') : `unit.architecture.${family}`} />
   </>;
 }
 

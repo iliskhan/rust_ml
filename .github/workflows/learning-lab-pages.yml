@@ -1,0 +1,61 @@
+name: Publish learning lab
+
+on:
+  push:
+    branches: [codex/practice-implementation]
+    paths: [learning-lab/**, .github/workflows/learning-lab-pages.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: learning-lab-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: learning-lab
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
+      - run: npm install --global pnpm@11.25.0
+      - run: pnpm install --frozen-lockfile
+      - name: Prepare authored Python and Rust checks
+        run: |
+          rustup toolchain install 1.87.0 --profile minimal
+          echo "PRACTICE_RUSTC=$(rustup which --toolchain 1.87.0 rustc)" >> "$GITHUB_ENV"
+          echo "PRACTICE_PYTHON=$(command -v python3)" >> "$GITHUB_ENV"
+      - run: pnpm test
+        env:
+          PRACTICE_VERIFY_ALL_LANGUAGES: '1'
+      - name: Build for project Pages
+        run: pnpm build
+        env:
+          VITE_BASE_PATH: /rust_ml/
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: learning-lab/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: publish

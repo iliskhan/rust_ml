@@ -1,0 +1,30 @@
+✔ advanced/frontiers inventory: 26 real units, 78 granular formative exercises and 234 language references (7.1021ms)
+✔ all 234 public fixtures execute trusted javascript references (111.0887ms)
+✔ all 234 public fixtures execute trusted python references (113.9246ms)
+✔ all 234 public fixtures execute trusted rust references (921.5827ms)
+✔ local backward: independent forward finite differences, including residual paths, stop-gradient and freeze conventions (695.4819ms)
+✔ existing mechanisms agree: BPE non-overlap, SiLU derivative, ViT order, addressed memory, speculative law and spline basis (69.594ms)
+✔ online recurrence: many keys agrees with independently normalized full exponentials and order permutations (1242.4706ms)
+✔ geometry and rendering: xyz rotations/translations/reflections, conserved center and homogeneous split (139.1083ms)
+✔ remaining formula properties: symmetric CE, flow endpoints, patch effect, quantization error, masks, frozen EMA and training targets (248.0516ms)
+✔ all three language references reject malformed inputs plus all constrained domains (604.6281ms)
+✔ MoE ties include signed zero consistently in all three languages (460.4351ms)
+✔ all 21 exact advancedConcepts IDs have 63 authored guided/A/B math exercises with three languages (8.5873ms)
+✔ all 189 public fixtures execute trusted author javascript references (104.4355ms)
+✔ all 189 public fixtures execute trusted author python references (112.6271ms)
+✔ all 189 public fixtures execute trusted author rust references (918.3593ms)
+✔ Gaussian mechanisms: source agreement, density normalization quadrature, standardization Jacobian, KL asymmetry and score finite differences (161.4934ms)
+✔ probability primitives: Bayes weighted masses, latent-axis sums, likelihood duplication and exact ELBO posterior KL gap (140.754ms)
+✔ pathwise and policy derivatives: fixed randomness finite differences and stable non-saturating GAN objectives (681.6494ms)
+✔ sample summary and forward noise: pairwise variance oracle, constant shift and cumulative products (66.83ms)
+✔ graph conventions: neighbours, incoming adjacency, simultaneous update and node permutation equivariance (132.8143ms)
+✔ Markov/RL: distribution conservation, two steps, finite return shift, terminal reward, policy ties and Bellman contraction (233.8932ms)
+✔ all three languages reject malformed and constrained-domain inputs (1353.58ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4824.0002

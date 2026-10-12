@@ -1,0 +1,10 @@
+{
+  "mode": "200% CSS text stress test, not native browser zoom",
+  "source": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\work\\practice-pages-dist\\rust_ml",
+  "output": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\work\\practice-reflow-02\\rust_ml",
+  "css_files": 26,
+  "declarations_changed": 406,
+  "absolute_sizes_doubled": 414,
+  "root_font_size": "200%",
+  "js_and_svg_attributes_modified": false
+}

@@ -1,3 +1,5 @@
+import { PracticeSection } from './practice/PracticeCloudProvider';
+import { practiceChapter } from './practice/placement';
 import { useId, useMemo, useRef, useState } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
@@ -218,7 +220,7 @@ export function VAECourse() {
       <Exercise question="Хорошее восстановление на учебных примерах при β=0 доказывает хорошую генерацию из prior?" options={['Да, это одно и то же', 'Нет: коды могут уйти в области, редко посещаемые prior', 'Да, если использовать больше случайного шума']} correct={1} explanation="Энкодер выбирает коды по x, а генерация берёт z из prior. Без связи между этими распределениями decoder может плохо работать на кодах, приходящих при генерации." />
     </div>
 
-    <div className="vg-chapter-actions"><button disabled={chapter === 0} onClick={() => move(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === SECTIONS.length - 1} onClick={() => move(chapter + 1)}>Следующий раздел →</button></div>
+    <PracticeSection lessonId="vae" topicId={practiceChapter('vae', chapter)} /><div className="vg-chapter-actions"><button disabled={chapter === 0} onClick={() => move(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === SECTIONS.length - 1} onClick={() => move(chapter + 1)}>Следующий раздел →</button></div>
     <details className="vg-sources"><summary>Первичные источники и границы вычислений</summary><ul>
       <li><a href="https://arxiv.org/abs/1312.6114">Kingma & Welling — Auto-Encoding Variational Bayes</a>: ELBO, reparameterization, Gaussian KL и вероятностный encoder/decoder.</li>
       <li><a href="https://arxiv.org/abs/1906.02691">Kingma & Welling — An Introduction to Variational Autoencoders</a>: вывод и расширения VAE.</li>

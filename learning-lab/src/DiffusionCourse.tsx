@@ -1,3 +1,5 @@
+import { PracticeSection } from './practice/PracticeCloudProvider';
+import { practiceChapter } from './practice/placement';
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
@@ -272,7 +274,7 @@ export function DiffusionCourse() {
     <div hidden={chapter !== 2}><ReverseStepLesson schedule={schedule} training={training} /></div>
     <div hidden={chapter !== 3}><SamplingLesson schedule={schedule} training={training} active={active && chapter === 3} /></div>
     <div hidden={chapter !== 4}><GuidanceLesson schedule={schedule} active={active && chapter === 4} /></div>
-    <div className="dc-chapter-actions"><button disabled={chapter === 0} onClick={() => moveChapter(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === CHAPTERS.length - 1} onClick={() => moveChapter(chapter + 1)}>Следующий раздел →</button></div>
+    <PracticeSection lessonId="diffusion" topicId={practiceChapter('diffusion', chapter)} /><div className="dc-chapter-actions"><button disabled={chapter === 0} onClick={() => moveChapter(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === CHAPTERS.length - 1} onClick={() => moveChapter(chapter + 1)}>Следующий раздел →</button></div>
     <details className="dc-sources"><summary>Первоисточники и точные границы реализации</summary>
       <p>Реализованы прямой гауссов процесс, две шумовые сетки, MLP с MSE и Adam, DDPM с σ²=β̃ₜ, DDIM с η=0, численная генерация и аналитическая демонстрация CFG. Все значения — JavaScript number, подписи округлены. Одномерные примеры показывают механизм, а не качество генерации изображений.</p>
       <p>Косинусная сетка использует f(t)=cos²(((t/T+0,008)/1,008)π/2), βₜ=min(0,25;1−f(t)/f(t−1)). Ограничение 0,25 — наш учебный выбор для 64 шагов. В Improved DDPM описано ограничение 0,999. Линейная сетка тоже адаптирована к короткому численному примеру, а не копирует 1 000 шагов DDPM.</p>

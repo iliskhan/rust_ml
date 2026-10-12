@@ -5,6 +5,9 @@ import { CurriculumView } from './CurriculumView';
 import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './learning-context';
 import { KnowledgeExplorer } from './KnowledgeExplorer';
 import { ConceptSearch } from './ConceptSearch';
+import { PracticeCloudProvider } from './practice/PracticeCloudProvider';
+
+const PracticeWorkspace = lazy(() => import('./practice/PracticeWorkspace').then(module => ({ default: module.PracticeWorkspace })));
 
 const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
@@ -19,6 +22,7 @@ const RLCourse = lazy(() => import('./RLCourse').then(module => ({ default: modu
 const lessons = [
   { id: 'map', title: 'Карта обучения', group: 'Ориентиры', hint: 'Связать части в одну систему', component: Overview },
   { id: 'curriculum', title: 'Маршрут с нуля', group: 'Ориентиры', hint: 'Найти отправную точку и нужные основы', component: CurriculumView },
+  { id: 'practice', title: 'Практика и прогресс', group: 'Ориентиры', hint: 'Формулы, короткий код и история понимания', component: PracticeWorkspace },
   { id: 'neuron', title: 'Нейрон и слои', group: 'Основы на практике', hint: 'От входов к выходу', component: NeuronLesson },
   { id: 'loss', title: 'Функции потерь', group: 'Основы на практике', hint: 'Измерить ошибку предсказания', component: LossLesson },
   { id: 'backprop', title: 'Обратный проход', group: 'Основы на практике', hint: 'Найти влияние каждого веса', component: BackpropLesson },
@@ -41,7 +45,7 @@ function navigate(id: string) { window.location.hash = id; }
 function getLesson() { return lessons.find(l => l.id === window.location.hash.slice(1)) ?? lessons[0]; }
 
 export function App() {
-  return <LearningProvider><LearningShell /></LearningProvider>;
+  return <LearningProvider><PracticeCloudProvider><LearningShell /></PracticeCloudProvider></LearningProvider>;
 }
 
 function LearningShell() {
@@ -127,7 +131,7 @@ function Overview() {
 function Sources() {
   return <>
     <p className="lesson-intro">Здесь маленькие модели раскрывают механизм. TypeScript использует числа IEEE 754 двойной точности; расчёты не заменяют реализацию и проверку промышленного ML-фреймворка.</p>
-    <section className="panel"><h3>Как учиться и возвращаться к основам</h3><p><a href="#curriculum">Маршрут с нуля</a> связывает предпосылки и разделы учебника. Незнакомый термин открывается поверх текущего урока: например, <ConceptLink concept="gradient">градиент</ConceptLink> ведёт к <ConceptLink concept="derivative">производной</ConceptLink> и её основам. Внутри разбора можно идти глубже и возвращаться по пути.</p><p>Открытые уроки и понятия сохраняют свои настройки и прокрутку в этой вкладке до перезагрузки страницы. Лаборатория границ дополнительно сохраняет текущий опыт и сравнение A/B локально между перезагрузками; JSON-файл позволяет перенести их. Остальные уроки и разборы используют временное состояние вкладки. Аккаунта и сохранения на сервере нет. Автоматические эксперименты при уходе из урока ставятся на паузу.</p></section>
+    <section className="panel"><h3>Как учиться и возвращаться к основам</h3><p><a href="#curriculum">Маршрут с нуля</a> связывает предпосылки и разделы учебника. Незнакомый термин открывается поверх текущего урока: например, <ConceptLink concept="gradient">градиент</ConceptLink> ведёт к <ConceptLink concept="derivative">производной</ConceptLink> и её основам. Внутри разбора можно идти глубже и возвращаться по пути.</p><p>Открытые уроки и понятия сохраняют свои настройки и прокрутку в этой вкладке до перезагрузки страницы. Лаборатория границ дополнительно сохраняет текущий опыт и сравнение A/B локально между перезагрузками; JSON-файл позволяет перенести их. Остальные уроки и разборы используют временное состояние вкладки. Практика отдельно сохраняет черновики, помощь и историю самопроверок в этом браузере. При настроенном Supabase аккаунт позволяет вручную сохранять код в облако; серверная проверка кода пока недоступна. Автоматические эксперименты при уходе из урока ставятся на паузу.</p></section>
     <section className="panel"><h3>Первичные источники</h3><ul className="source-list">
       <li><a href="https://docs.pytorch.org/docs/stable/notes/autograd.html" target="_blank" rel="noreferrer">PyTorch: Autograd mechanics ↗</a><p>Граф операций, накопление градиентов и соглашения в недифференцируемых точках.</p></li>
       <li><a href="https://docs.pytorch.org/docs/stable/notes/gradcheck.html" target="_blank" rel="noreferrer">PyTorch: Gradcheck mechanics ↗</a><p>Сравнение аналитической производной с численной оценкой.</p></li>

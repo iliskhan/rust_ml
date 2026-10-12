@@ -9,6 +9,7 @@ import { ConceptLink, LearningActivity, useLearningActive } from './learning-con
 import { type Activation, type OptimizerKind } from './math';
 import { Scene3D, type SceneLine, type Vec3 } from './ThreeD';
 import { Chart, fmt, Range } from './ui';
+import { PracticeSection } from './practice/PracticeCloudProvider';
 import './boundary-playground.css';
 
 const kinds: Record<BoundaryKind, string> = { circles: 'Круги', moons: 'Полумесяцы', spiral: 'Спираль' };
@@ -275,18 +276,23 @@ export function BoundaryPlayground() {
       </div>
     </div>
 
+    <PracticeSection lessonId="network" topicId="unit.network.boundary" />
+
     <BoundaryDiagnostics params={optimizer.params} config={config} dataset={dataset} threshold={threshold} step={optimizer.step}
       batchSize={training.batchSize} batchSeed={training.batchSeed} lambda={training.lambda} source={`${kinds[settings.kind]} · seed ${settings.seed}`}
       onProbeChange={setProbe} onThresholdExperiment={value => { setExperiment(current => ({ ...current, auto: false, remaining: 0 })); setThreshold(value); }} />
+    <PracticeSection lessonId="network" topicId="unit.network.diagnostics" />
 
     <div id="network-representations" tabIndex={-1} role="region" aria-label="Скрытые представления сети">
       <HiddenRepresentations params={optimizer.params} config={config} dataset={dataset} probe={probe} onProbeChange={setProbe} step={optimizer.step} source={`${kinds[settings.kind]} · seed ${settings.seed}`} />
     </div>
+    <PracticeSection lessonId="network" topicId="unit.network.representations" />
 
     <div className="boundary-loss"><h4>Уменьшается ли ошибка на новых точках?</h4>
       <Chart series={[{ name: 'Обучение · train', points: history.map(point => ({ x: point.step, y: point.train })), color: '#27694e' }, { name: 'Проверка · validation', points: history.map(point => ({ x: point.step, y: point.validation })), color: '#b75d24', dashed: true }]} xLabel="Шаг обучения" yLabel="Средняя потеря BCE" xDomain={[0, Math.max(1, optimizer.step)]} yDomain={[0, Math.max(.1, ...history.flatMap(point => [point.train, point.validation])) * 1.1]} />
       <p className="note">Обе кривые вычислены по одним и тем же весам в отмеченные шаги. Обновления весов видят только train; 32 точки validation не входят в градиент. Это малая независимая проверочная выборка из того же генератора, а не окончательный test.</p>
     </div>
+    <PracticeSection lessonId="network" topicId="unit.network.split" />
 
     <details className="boundary-3d" onToggle={event => { const open = event.currentTarget.open; setSceneOpen(open); if (open) setSceneVisited(true); }}>
       <summary>3D: граница выбранной сети</summary>

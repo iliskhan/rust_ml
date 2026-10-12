@@ -1,5 +1,60 @@
 # Прогресс RustML
 
+### Внедрение практики — checkpoint 2026-10-12, 18:06 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-implementation`,
+база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Изменения пока не committed.
+Rust-ядро не менялось. Исходный checkout `worktrees/6209` не затронут.
+
+- Собран полный каталог: 83 исходные учебные темы, 51 математическое понятие и два
+  дополнительных подраздела ReLU/softmax; 136 панелей-тем, 412 упражнений,
+  1236 языковых вариантов, 758 открытых fixtures. Полнота semantic IDs проверена.
+- Реализован редактор с основным языком на выбор, отдельными черновиками Python/JS/Rust,
+  durable help receipts и локальной историей самопроверок. CAS и Web Locks защищают
+  локальные версии; неправильное/недоступное storage не перезаписывается молча.
+- Практика встроена в восемь переключаемых курсов по семантическим ID главы,
+  в архитектуры, после конкретных тем базовых уроков и внутри математических разборов;
+  есть общий маршрут `#practice`.
+- Supabase migrations и Auth/PKCE клиент готовы локально. Полный seed выполнен fresh:
+  PostgreSQL17.5 через disposable PGlite, **12403 assertions PASS** для всех 1236
+  variants и requirement mappings, RLS двух пользователей, CAS, help и immutable release.
+  Это не проверка hosted JWT/PostgREST, OAuth или реального конкурентного DB-сеанса.
+- Общий suite: **422/422 PASS, 0 skipped**, Node24.19 / Python3.12.14 / rustc1.87;
+  включён `PRACTICE_VERIFY_ALL_LANGUAGES=1`, оба runtime указаны полными путями.
+  Лог: `learning-lab/evidence/practice/tests-final.log`. Авторские JS/Python/Rust
+  реально исполнялись; есть независимые FD, вероятностные, геометрические и domain проверки.
+  После последней языковой редактуры и переносимых runtime defaults затронутые
+  advanced/concept-advanced проверки повторены: **22/22 PASS**.
+- Security review исправлен: guest/A/B имеют отдельные code/help/history/primary scopes;
+  CAS выполняется даже при совпадении с cached source; поздние Auth body/OAuth/refresh/logout
+  не заменяют новый аккаунт или свежие токены. Cloud11 + local11 = 22/22 PASS;
+  последний read-only review не нашёл новой воспроизводимой ошибки в этих исправлениях.
+- Реальный IAB браузер `127.0.0.1:5194`: desktop 1440×1000 и mobile 390×844,
+  черновик+помощь+история пережили reload; на mobile горизонтальный overflow не найден.
+  Дополнительно сохранены реальные desktop1280×720 и mobile390×844 screenshots:
+  три inline панели нейрона без duplicate IDs/overflow, точная смена Adam/SGD/Momentum,
+  пять тем Network; математическая практика внутри mobile modal. Итоговый production
+  browser regression выполнен на production с `/rust_ml/`: сохранение кода, hints и
+  history после reload; modal375/375, Escape возвращает фокус на источник. Text stress
+  200% CSS: 320×568, p28px, page305/305; это не native zoom. Typecheck и две сборки
+  root/Pages PASS; предупреждение main chunk>500kB сохранено. Переносимые доказательства:
+  `learning-lab/evidence/practice/README.md`, hashes, logs, screenshots.
+- Начальный full suite 345/345 PASS относится к раннему срезу, не к итоговому каталогу:
+  `learning-lab/evidence/practice-tests-initial.log`. Runtime Node24.19; ранний Python3.10.11
+  относится к author-agent PATH. Текущий bundled Python проверен командой `--version`:
+  3.12.14, 17:34 MSK; прямой rustc1.87 из stable toolchain
+  (rustup shim требует недоступное скачивание).
+- GitHub Pages workflow и base `/rust_ml/` подготовлены. Repo public, connector
+  подтвердил push/admin права; browser GitHub не авторизован, Pages не включены.
+  Supabase проект/URL ещё не выбран. Hosted frontend/backend не заявляются рабочими.
+- Grading disabled: ни браузер, ни SQL не выдают pass без изолированного runner.
+  Piston public API с 2026-02-15 требует авторизации по README; бесплатный произвольный
+  Python/Rust runner пока не подтверждён. Платных ресурсов не создавали.
+
+Следующий шаг: commit/push и сверка SHA, затем проверка фактического Actions run.
+Для реальной публикации
+нужны обычный GitHub login/Pages Actions и выбранный Supabase Free project.
+
 ### Передача: практика, Supabase и бесплатное развёртывание — 2026-10-12
 
 База `827b443c32fc09411d9d2c326c410f4f54051b93`, checkout

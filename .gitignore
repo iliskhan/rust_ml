@@ -20,3 +20,5 @@ Thumbs.db
 
 # Generated copies for the documented CSS text stress test
 /work/a11y-text-*/
+/work/backend-smoke/
+/work/practice-*/

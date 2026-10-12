@@ -1,0 +1,113 @@
+{
+  "neuron": [
+    "unit.neuron.affine",
+    "unit.neuron.activation",
+    "unit.neuron.dense"
+  ],
+  "loss": [
+    "unit.loss.mse",
+    "unit.loss.bce"
+  ],
+  "backprop": [
+    "unit.backprop.shared",
+    "unit.backprop.check"
+  ],
+  "optimizers": [
+    "unit.optimizer.sgd",
+    "unit.optimizer.momentum",
+    "unit.optimizer.adam"
+  ],
+  "network": [
+    "unit.network.split",
+    "unit.network.boundary",
+    "unit.network.representations",
+    "unit.network.xor",
+    "unit.network.diagnostics"
+  ],
+  "architectures": [
+    "unit.architecture.dense",
+    "unit.architecture.cnn",
+    "unit.architecture.cnn-training",
+    "unit.architecture.cnn-shift",
+    "unit.architecture.rnn",
+    "unit.architecture.bptt",
+    "unit.architecture.lstm",
+    "unit.architecture.gru",
+    "unit.architecture.transformer"
+  ],
+  "transformer": [
+    "unit.transformer.tokens",
+    "unit.transformer.attention",
+    "unit.transformer.heads",
+    "unit.transformer.positions",
+    "unit.transformer.block",
+    "unit.transformer.families",
+    "unit.transformer.cache",
+    "unit.transformer.generation"
+  ],
+  "advanced": [
+    "unit.advanced.full-transformer",
+    "unit.advanced.bpe",
+    "unit.advanced.swiglu",
+    "unit.advanced.lora",
+    "unit.advanced.vit",
+    "unit.advanced.moe",
+    "unit.advanced.mla",
+    "unit.advanced.online-attention",
+    "unit.advanced.ssm",
+    "unit.advanced.denoisers"
+  ],
+  "frontiers": [
+    "unit.frontier.clip",
+    "unit.frontier.flow",
+    "unit.frontier.interpretability",
+    "unit.frontier.egnn",
+    "unit.frontier.neural-fields",
+    "unit.frontier.dpo",
+    "unit.frontier.quantization",
+    "unit.frontier.speculative",
+    "unit.frontier.long-context",
+    "unit.frontier.jepa",
+    "unit.frontier.masked-text",
+    "unit.frontier.kan",
+    "unit.frontier.vit-training",
+    "unit.frontier.moe-training",
+    "unit.frontier.ssm-training",
+    "unit.frontier.denoiser-training"
+  ],
+  "vae": [
+    "unit.vae.idea",
+    "unit.vae.compute",
+    "unit.vae.train",
+    "unit.vae.generate",
+    "unit.vae.limits"
+  ],
+  "gan": [
+    "unit.gan.game",
+    "unit.gan.gradients",
+    "unit.gan.train",
+    "unit.gan.diversity",
+    "unit.gan.variants"
+  ],
+  "diffusion": [
+    "unit.diffusion.noise",
+    "unit.diffusion.training",
+    "unit.diffusion.step",
+    "unit.diffusion.generation",
+    "unit.diffusion.condition"
+  ],
+  "gnn": [
+    "unit.gnn.graph",
+    "unit.gnn.message",
+    "unit.gnn.train",
+    "unit.gnn.depth",
+    "unit.gnn.variants"
+  ],
+  "rl": [
+    "unit.rl.environment",
+    "unit.rl.bellman",
+    "unit.rl.q-learning",
+    "unit.rl.policy",
+    "unit.rl.families"
+  ]
+}

@@ -5,6 +5,7 @@ import { ConceptLink, LearningActivity, useLearningActive } from './learning-con
 import { Scene3D } from './ThreeD';
 import { functionSurface, quadraticHeight, networkHeight } from './lessonSceneMath';
 import { LessonOutline } from './LessonOutline';
+import { PracticeSection } from './practice/PracticeCloudProvider';
 
 const NetworkFlow3D = lazy(() => import('./NetworkFlow3D').then(module => ({ default: module.NetworkFlow3D })));
 const DecisionBoundaryLesson = lazy(() => import('./DecisionBoundaryLesson').then(module => ({ default: module.DecisionBoundaryLesson })));
@@ -84,6 +85,7 @@ export function OptimizerLesson() {
       {selected === 'adam' && <div className="formula">{n > 0 ? <>Шаг t = {n}: m̂ₓ = {fmt(t.state.m[0])} / {fmt(1 - beta1 ** n, 6)} = {fmt(t.state.m[0] / (1 - beta1 ** n))}<br />v̂ₓ = {fmt(t.state.v[0])} / {fmt(1 - beta2 ** n, 6)} = {fmt(t.state.v[0] / (1 - beta2 ** n))}</> : 'Сделайте шаг, чтобы увидеть поправку смещения оценок.'}<br />θₜ = θₜ₋₁ − η·m̂ₜ / (√v̂ₜ + 10⁻⁸)</div>}
       <details><summary>Зачем Adam исправляет смещение оценок?</summary><p>Adam хранит экспоненциальные средние градиента m и его квадрата v. Они начинают с нуля; ранние оценки занижены. Деление на 1−β₁ᵗ и 1−β₂ᵗ исправляет это начальное смещение. Это «bias correction» оценок, отдельное понятие от bias нейрона.</p><p>Инерция здесь использует v = μv + g, как SGD без dampening и Nesterov. Adam — без weight decay и AMSGrad. Быстрый прогресс на этом примере не гарантирует сходимость на любой задаче. Для этой поверхности SGD сходится при 0 &lt; η &lt; 0.25; это следует из множителя 1−8η по оси y.</p></details>
     </section>
+    <PracticeSection lessonId="optimizers" topicId={`unit.optimizer.${selected}`} />
     <Exercise question="У SGD градиент gₓ = −3, η = 0.1. Как изменится x?" options={['На −3', 'На +0.3', 'На −0.3']} correct={1} explanation="Обновление Δx = −ηgₓ = +0.3. Градиент указывает рост потери, шаг идёт в обратную сторону." />
   </>;
 }
@@ -164,6 +166,7 @@ export function NetworkLesson() {
       {sceneOpened && <Scene3D title="Поверхность ответа XOR" description="Два входа и настоящая вероятность класса 1 из текущих 17 параметров сети. Высота является выходом, а не третьим входом. Сеть обучается только на четырёх углах." axes={[{label:'Вход x₁',min:0,max:1},{label:'Вход x₂',min:0,max:1},{label:'Вероятность класса 1',min:0,max:1}]} surfaces={[{name:'Текущий ответ сети',rows:functionSurface([0,1],[0,1],(a,b)=>networkHeight(a,b,p))}]} points={XOR_DATA.map(d=>({name:`[${d.input.join('; ')}] · цель ${d.target}`,position:[d.input[0],d.input[1],networkHeight(...d.input,p)] as const}))} />}
       <p className="note">Нажмите «100 шагов» выше — поверхность изменится вместе с весами. Карта цветов и таблица дают те же значения без вращения.</p>
     </details>
+    <PracticeSection lessonId="network" topicId="unit.network.xor" />
     <Exercise question="После сброса с тем же seed и настройками что произойдёт?" options={['Другие начальные веса', 'Те же веса и траектория обучения', 'Потеря сразу станет нулевой']} correct={1} explanation="Seed воспроизводит начальные параметры. Данные, порядок и вычисления здесь тоже фиксированы, поэтому повторяется весь эксперимент." />
   </>;
 }

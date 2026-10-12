@@ -3,3 +3,6 @@ node_modules/
 dist/
 work/*.log
 work/server.json
+.env
+.env.*
+!.env.example

@@ -6,6 +6,7 @@ import { bernoulli, chainSquare, crossEntropyLogits, descent1D, dotProduct, fini
 import './concept-lessons.css';
 import { Scene3D } from './ThreeD';
 import { functionSurface, quadraticHeight, quadraticTangent } from './lessonSceneMath';
+import { PracticeSection } from './practice/PracticeCloudProvider';
 const AdvancedConceptExperiment = lazy(() => import('./AdvancedConceptLesson').then(module => ({ default: module.AdvancedConceptExperiment })));
 
 const samples = (min: number, max: number, fn: (x: number) => number) => Array.from({ length: 101 }, (_, i) => { const x = min + (max - min) * i / 100; return { x, y: fn(x) }; });
@@ -24,6 +25,7 @@ export function ConceptLesson({ id }: { id: string }) {
     <details className="concept-formal"><summary>Точная запись и обозначения</summary><p>{concept.formal}</p></details>
     <aside className="concept-boundary"><strong>Где заканчивается этот пример</strong><p>{concept.limits}</p></aside>
     <p className="concept-source"><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a></p>
+    <PracticeSection lessonId="math" topicId={`concept.${id}`} />
   </div>;
 }
 

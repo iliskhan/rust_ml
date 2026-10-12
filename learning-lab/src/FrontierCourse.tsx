@@ -1,3 +1,5 @@
+import { PracticeSection } from './practice/PracticeCloudProvider';
+import { practiceChapter } from './practice/placement';
 import { lazy, Suspense, useId, useRef, useState } from 'react';
 import { LearningActivity } from './learning-context';
 import './transformer-course.css';
@@ -51,6 +53,6 @@ export function FrontierCourse() {
     <label className="tc-mobile-navigation" htmlFor={selectId}>Новый механизм<select id={selectId} value={chapter} onChange={e => choose(Number(e.target.value))}>{chapters.map((item, i) => <option key={item.title} value={i}>{i + 1}. {item.title}</option>)}</select></label>
     <div className="tc-chapter-heading"><span>Лаборатория {chapter + 1} из {chapters.length}</span><h2 ref={heading} tabIndex={-1}>{chapters[chapter].subtitle}</h2></div>
     {visited.map(i => { const Component = chapters[i].component; return <div key={i} hidden={chapter !== i} data-frontier-lab={i}><LearningActivity active={chapter === i}><Suspense fallback={<p role="status">Загружается лаборатория…</p>}><Component /></Suspense></LearningActivity></div>; })}
-    <div className="tc-chapter-actions"><button disabled={chapter === 0} onClick={() => choose(chapter - 1, true)}>← Предыдущая лаборатория</button><button disabled={chapter === chapters.length - 1} onClick={() => choose(chapter + 1, true)}>Следующая лаборатория →</button></div>
+    <PracticeSection lessonId="frontiers" topicId={practiceChapter('frontiers', chapter)} /><div className="tc-chapter-actions"><button disabled={chapter === 0} onClick={() => choose(chapter - 1, true)}>← Предыдущая лаборатория</button><button disabled={chapter === chapters.length - 1} onClick={() => choose(chapter + 1, true)}>Следующая лаборатория →</button></div>
   </section>;
 }
