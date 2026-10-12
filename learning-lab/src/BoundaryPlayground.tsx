@@ -1,6 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
-import { boundaryMetrics, boundaryParameterCount, predictBoundary, type BoundaryConfig, type BoundaryKind } from './boundaryNetworkMath';
-import { advanceBoundaryExperiment as advance, boundaryFileLimit, boundaryStepLimit as stepLimit, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryStorage, restoreBoundaryRun, saveBoundaryRun, writeBoundaryStorage, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
+import { boundaryBatchIndices, boundaryBatchProgress, boundaryL2, boundaryMetrics, boundaryParameterCount, predictBoundary, type BoundaryConfig, type BoundaryKind } from './boundaryNetworkMath';
+import { advanceBoundaryExperiment as advance, boundaryFileLimit, boundaryStepLimit as stepLimit, boundaryStepsToEpoch, boundaryTrainingSettings, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryStorage, restoreBoundaryRun, saveBoundaryRun, writeBoundaryStorage, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
 import { BoundaryComparison } from './BoundaryComparison';
 import { probabilityGrid } from './decisionBoundaryMath';
 import { HiddenRepresentations } from './HiddenRepresentations';
@@ -39,10 +39,15 @@ export function BoundaryPlayground() {
   const [probabilityColors, setProbabilityColors] = useState(false);
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [projection, setProjection] = useState(true);
+  const [targetEpochs, setTargetEpochs] = useState(10);
   const map = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(400);
   const { settings, dataset, optimizer, history, error } = experiment;
   const { config } = settings;
+  const training = boundaryTrainingSettings(settings);
+  const budget = boundaryBatchProgress(optimizer.step, training.batchSize);
+  const stepsToTarget = boundaryStepsToEpoch(experiment, targetEpochs);
+  const nextBatch = boundaryBatchIndices(optimizer.step, training.batchSize, training.batchSeed);
   const busy = experiment.auto || experiment.remaining > 0;
   const atLimit = optimizer.step >= stepLimit;
 
@@ -176,19 +181,25 @@ export function BoundaryPlayground() {
 
     <details className="boundary-setup">
       <summary>Данные и сеть: {kinds[settings.kind]} · {architecture}<span>Изменение настроек начнёт новый опыт</span></summary>
-      <p className="note boundary-reset-note">Любая настройка ниже сбрасывает шаг, веса и историю. Тот же seed воспроизводит данные и стартовые веса выбранной архитектуры. Порог, проба и ракурс сохраняются.</p>
+      <p className="note boundary-reset-note">Любая настройка ниже сбрасывает шаг, веса и историю. Три независимых seed задают данные, начальные веса и порядок пакетов. Порог, проба и ракурс сохраняются.</p>
       <div className="boundary-settings">
         <label>Набор данных<select value={settings.kind} onChange={event => changeSettings({ kind: event.target.value as BoundaryKind })}>{Object.entries(kinds).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label>
-        <label>Seed · случайный старт<select value={settings.seed} onChange={event => changeSettings({ seed: Number(event.target.value) })}>{Array.from(new Set([42, 7, 1337, settings.seed])).map(seed => <option key={seed}>{seed}</option>)}</select></label>
         <label>Скрытых слоёв<select value={config.layers.length} onChange={event => changeSettings({ config: { layers: Array.from({ length: Number(event.target.value) }, (_, i) => config.layers[i] ?? { width: 8, activation: 'tanh' }) } })}>{[0, 1, 2, 3].map(count => <option key={count} value={count}>{count}{count === 0 ? ' · линейный логит' : ''}</option>)}</select></label>
         <label>Оптимизатор<select value={settings.method} onChange={event => changeSettings({ method: event.target.value as OptimizerKind })}><option value="sgd">SGD</option><option value="momentum">Momentum</option><option value="adam">Adam</option></select></label>
+      </div>
+      <div className="boundary-seeds">
+        <Range label="Seed данных" value={settings.seed} min={0} max={4294967295} step={1} onChange={seed => changeSettings({ seed })} />
+        <Range label="Seed начальных весов" value={training.initSeed} min={0} max={4294967295} step={1} onChange={initSeed => changeSettings({ initSeed })} />
+        <Range label="Seed порядка batch" value={training.batchSeed} min={0} max={4294967295} step={1} onChange={batchSeed => changeSettings({ batchSeed })} />
       </div>
       <div className="boundary-layers">{config.layers.map((layer, index) => <fieldset key={index}><legend>Скрытый слой {index + 1}</legend>
         <Range label={`Нейронов в слое ${index + 1}`} value={layer.width} min={1} max={16} step={1} onChange={width => changeLayer(index, { width })} />
         <label>Активация слоя {index + 1}<select value={layer.activation} onChange={event => changeLayer(index, { activation: event.target.value as Activation })}><option value="relu">ReLU</option><option value="tanh">tanh</option><option value="sigmoid">sigmoid</option></select></label>
       </fieldset>)}</div>
       <Range label="Скорость обучения η" value={settings.lr} min={.001} max={.2} step={.001} onChange={lr => changeSettings({ lr })} />
-      <p className="note">Большая скорость η может мешать сходимости и повышать ошибку. Каждый шаг использует все 96 обучающих точек. При открытии математического понятия или уходе из урока обучение ставится на паузу.</p>
+      <Range label="Размер batch · train-примеры" value={training.batchSize} min={1} max={96} step={1} onChange={batchSize => changeSettings({ batchSize })} />
+      <Range label="L2 λ · штраф весов" value={training.lambda} min={0} max={1} step={.001} onChange={lambda => changeSettings({ lambda })} />
+      <p className="note">Batch 96 — прежний полный шаг. Меньшие пакеты перемешиваются без повторений внутри эпохи; последний пакет может быть короче. Validation никогда не входит в обновление. Большая η может мешать сходимости. При уходе из урока обучение ставится на паузу.</p>
       <p className="note">Сравните одну прямую границу без скрытых слоёв с сетью из нескольких слоёв.</p>
     </details>
 
@@ -196,14 +207,20 @@ export function BoundaryPlayground() {
       <div>
         <div className="boundary-training">
           <p className="boundary-architecture"><strong>{architecture}</strong><span>{boundaryParameterCount(config)} параметров · выход sigmoid</span></p>
-          <p className="note boundary-current-settings">{settings.method === 'adam' ? 'Adam' : settings.method === 'sgd' ? 'SGD' : 'Momentum'} · η = {fmt(settings.lr, 3)} · seed {settings.seed}</p>
+          <p className="note boundary-current-settings">{settings.method === 'adam' ? 'Adam' : settings.method === 'sgd' ? 'SGD' : 'Momentum'} · η = {fmt(settings.lr, 3)} · batch {training.batchSize} · λ = {fmt(training.lambda, 3)} · seed данных {settings.seed}</p>
           <div className="button-row">
             <button disabled={busy || atLimit || !!error} onClick={() => train(1)}>1 шаг</button>
             <button className="primary" disabled={busy || atLimit || !!error} onClick={() => train(100)}>100 шагов</button>
             <button disabled={atLimit || !!error} onClick={() => setExperiment(current => ({ ...current, auto: !busy, remaining: 0 }))}>{busy ? 'Пауза' : 'Авто'}</button>
             <button aria-describedby={`${id}-reset-help`} onClick={() => setExperiment(current => createExperiment(current.settings))}>Сброс</button>
           </div>
-          <p className="note boundary-run-status" data-step={optimizer.step} data-running={busy}>Шаг: <strong>{optimizer.step}</strong> / {stepLimit}.{experiment.remaining > 0 && ` Осталось ${experiment.remaining} шагов выбранного запуска.`}</p>
+          <p className="note boundary-run-status" data-step={optimizer.step} data-running={busy}>Обновлений: <strong>{optimizer.step}</strong> / {stepLimit} · обработано train-примеров: <strong>{budget.examples}</strong> · эквивалентных эпох: <strong>{fmt(budget.epochs, 3)}</strong>.{experiment.remaining > 0 && ` Осталось ${experiment.remaining} обновлений выбранного запуска.`}</p>
+          <div className="boundary-budget">
+            <Range label="Целевой бюджет · полных эпох" value={targetEpochs} min={1} max={40} step={1} onChange={setTargetEpochs} />
+            <button disabled={busy || atLimit || !!error || stepsToTarget === 0} onClick={() => train(stepsToTarget)}>До {targetEpochs} эпох · {targetEpochs * 96} примеров</button>
+            <p className="note">Абсолютная цель от старта опыта: ещё {stepsToTarget} обновлений. Для A/B сбросьте оба опыта и обучите до одного числа эпох. Равное число шагов при разных batch не означает равный бюджет примеров.</p>
+          </div>
+          {!atLimit && <details><summary>Следующий пакет: {nextBatch.length} train-примеров</summary><p className="note">Эпоха {budget.epoch + 1}, позиция {budget.cursor + 1}–{budget.cursor + nextBatch.length}. ID: {nextBatch.map(i => `T${String(i + 1).padStart(3, '0')}`).join(', ')}.</p></details>}
           <p className="note boundary-training-status" role="status">{error ? `Обучение остановлено из-за ошибки на шаге ${optimizer.step}.` : atLimit ? `Достигнут предел: ${optimizer.step} шагов. Сброс начинает новый опыт.` : busy ? experiment.auto ? 'Автообучение идёт.' : 'Выполняется выбранный запуск.' : `Обучение на паузе. Итоговый шаг: ${optimizer.step}.`}</p>
           <p className="note boundary-reset-help" id={`${id}-reset-help`}>Сброс вернёт начальные веса и шаг 0, очистит историю. Слоты A/B, порог и проба сохранятся.</p>
           {error && <p className="boundary-error" role="alert">{error}</p>}
@@ -244,6 +261,7 @@ export function BoundaryPlayground() {
           <div><h4>Обучение · train</h4><p><strong>{scores.train.correct} / {scores.train.total}</strong> верно · {fmt(100 * scores.train.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.train.loss, 6)}</strong></p></div>
           <div><h4>Проверка · validation</h4><p><strong>{scores.validation.correct} / {scores.validation.total}</strong> верно · {fmt(100 * scores.validation.accuracy, 1)}%</p><p>BCE: <strong>{fmt(scores.validation.loss, 6)}</strong></p></div>
         </div>
+        <p className="note">L2 = {fmt(boundaryL2(optimizer.params, config, training.lambda).loss, 6)} · objective на всех train = {fmt(scores.train.loss + boundaryL2(optimizer.params, config, training.lambda).loss, 6)}. BCE выше и на графике — без штрафа.</p>
         <Range label="Порог решения τ" value={threshold} min={.05} max={.95} step={.01} onChange={setThreshold} />
         <p className="note">p ≥ τ → класс 1, иначе класс 0. Порог меняет решения и долю верных ответов; веса и потеря BCE остаются прежними.</p>
         <div className="boundary-probe-card"><h4>Проверьте свою точку</h4>
@@ -289,7 +307,10 @@ export function BoundaryPlayground() {
       <p>На карте входы x₁, x₂ лежат в [0, 1]. Перед первым слоем сеть центрирует их: a⁽⁰⁾ = 2x − 1. Затем каждый скрытый слой считает <ConceptLink concept="matrix">матричное произведение</ConceptLink> z = Wa + b и свою активацию. Выход всегда один: p = sigmoid(z).</p>
       <div className="formula">p = 1 / (1 + exp(−z))<br />Граница: p = τ ⇔ z = ln(τ / (1 − τ))<br />Сейчас: τ = {fmt(threshold, 2)}, z на границе = {fmt(Math.log(threshold / (1 - threshold)), 5)}</div>
       <p>Средняя <ConceptLink concept="cross-entropy">потеря BCE</ConceptLink> штрафует уверенные ошибочные ответы. Она считается устойчиво по логиту z. <ConceptLink concept="backpropagation">Обратный проход</ConceptLink> находит градиент по всем весам и смещениям; выбранный оптимизатор делает шаг с <ConceptLink concept="learning-rate">скоростью η</ConceptLink>.</p>
-      <p>В SGD вес меняется на −ηg. Momentum накапливает направление (коэффициент 0,9). Adam использует средние градиента и его квадрата (0,9 и 0,999, ε = 10⁻⁸). Здесь нет регуляризации или weight decay. Начальные веса используют масштаб He для ReLU, Glorot для остальных слоёв, начальные смещения равны нулю.</p>
+      <div className="formula">rawBCE = средняя BCE выбранного пакета<br />objective = rawBCE + λ/2 · ΣW²<br />gW = gBCE + λW · gb = gBCE</div>
+      <p>В SGD вес меняется на −ηg. Momentum накапливает направление (0,9). Adam использует средние градиента и его квадрата (0,9 и 0,999, ε = 10⁻⁸). L2 входит в градиент objective для всех трёх методов; это не AdamW. Bias не штрафуются. Начальные веса используют масштаб He для ReLU, Glorot для остальных слоёв; bias равны нулю.</p>
+      <p>Например, λ = 0,1 и W = [1; 2] добавляют 0,25 к потере и [0,1; 0,2] к градиенту весов. При λ = 0 штраф исчезает.</p>
+      <p className="note">Источники: <a href="https://www.deeplearningbook.org/contents/optimization.html" target="_blank" rel="noreferrer">Deep Learning, §8.1.3 · mini-batch</a>; <a href="https://en.d2l.ai/chapter_linear-regression/weight-decay.html" target="_blank" rel="noreferrer">Dive into Deep Learning, §3.7 · L2</a>.</p>
       <p>Порог τ применяется после расчёта вероятности и не входит в потерю. Измените его, чтобы увидеть разницу между уверенностью сети и правилом принятия решения.</p>
     </details>
     <p className="boundary-xor-note">Ниже — отдельный пошаговый разбор XOR с фиксированной сетью 2 → 4 → 1. У него свои веса и обучение: его можно изучать независимо от этой лаборатории.</p>

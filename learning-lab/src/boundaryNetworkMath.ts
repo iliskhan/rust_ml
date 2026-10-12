@@ -176,7 +176,7 @@ export function boundaryNeuronParameters(params: number[], config: BoundaryConfi
 }
 
 /** Mean BCE from logits, with gradients for every weight and bias in the same flat layout. */
-export function boundaryLossGradient(params: number[], config: BoundaryConfig, data: BoundarySample[]) {
+export function boundaryLossGradient(params: number[], config: BoundaryConfig, data: BoundarySample[], lambda = 0) {
   const layers = checkedModel(params, config);
   checkData(data);
   const grad = Array<number>(params.length).fill(0);
@@ -203,8 +203,51 @@ export function boundaryLossGradient(params: number[], config: BoundaryConfig, d
       if (l > 0) dz = previousGradient.map((g, i) => g * activationDerivative(preactivations[l - 1][i], layers[l - 1].activation));
     }
   }
+  const rawBCE = loss;
+  const penalty = boundaryL2(params, config, lambda);
+  loss += penalty.loss;
+  for (let i = 0; i < grad.length; i++) grad[i] += penalty.grad[i];
   finite([loss, ...grad]);
-  return { loss, grad, predictions };
+  return { loss, rawBCE, penalty: penalty.loss, grad, predictions };
+}
+
+/** λ/2 ΣW² and λW, excluding every bias; coupled objective L2 for all optimizers. */
+export function boundaryL2(params: number[], config: BoundaryConfig, lambda = 0) {
+  const layers = checkedModel(params, config);
+  if (!Number.isFinite(lambda) || lambda < 0) throw new RangeError('Boundary: λ должна быть конечной и неотрицательной');
+  const grad = Array<number>(params.length).fill(0);
+  let loss = 0;
+  if (lambda > 0) for (const layer of layers) for (let i = layer.offset; i < layer.bias; i++) {
+    loss += (lambda / 2) * params[i] * params[i];
+    grad[i] = lambda * params[i];
+  }
+  finite([loss, ...grad]);
+  return { loss, grad };
+}
+
+/** The step determines epoch/cursor; the last batch is short, never crosses an epoch. */
+export function boundaryBatchProgress(step: number, batchSize: number, size = 96) {
+  if (!Number.isSafeInteger(size) || size < 1 || !Number.isSafeInteger(batchSize) || batchSize < 1 || batchSize > size || !Number.isSafeInteger(step) || step < 0) {
+    throw new RangeError('Boundary: неверный шаг или размер batch');
+  }
+  const updatesPerEpoch = Math.ceil(size / batchSize);
+  const epoch = Math.floor(step / updatesPerEpoch), cursor = (step % updatesPerEpoch) * batchSize;
+  const examples = epoch * size + cursor;
+  if (!Number.isSafeInteger(examples)) throw new RangeError('Boundary: слишком большой бюджет');
+  return { epoch, cursor, examples, epochs: examples / size, updatesPerEpoch };
+}
+
+/** Fresh deterministic permutation per epoch; full-batch retains legacy summation order. */
+export function boundaryBatchIndices(step: number, batchSize: number, seed: number, size = 96) {
+  const { epoch, cursor } = boundaryBatchProgress(step, batchSize, size);
+  const random = randomSource((seed >>> 0) ^ Math.imul(epoch, 0x9e3779b9));
+  if (!Number.isInteger(seed) || seed < 0 || seed > 4294967295) throw new RangeError('Boundary: seed порядка должен быть uint32');
+  const order = Array.from({ length: size }, (_, i) => i);
+  if (batchSize < size) for (let i = size - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order.slice(cursor, Math.min(size, cursor + batchSize));
 }
 
 export function boundaryMetrics(params: number[], config: BoundaryConfig, data: BoundarySample[], threshold = 0.5) {

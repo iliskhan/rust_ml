@@ -1,17 +1,35 @@
-import { boundaryLossGradient, boundaryMetrics, boundaryParameterCount, createBoundaryParameters, makeBoundaryDataset, type BoundaryConfig, type BoundaryDataset, type BoundaryKind } from './boundaryNetworkMath.ts';
+import { boundaryBatchIndices, boundaryBatchProgress, boundaryLossGradient, boundaryMetrics, boundaryParameterCount, createBoundaryParameters, makeBoundaryDataset, type BoundaryConfig, type BoundaryDataset, type BoundaryKind } from './boundaryNetworkMath.ts';
 import { createOptimizerState, optimizerStep, type Activation, type OptimizerKind, type OptimizerState } from './math.ts';
 
-export type BoundarySettings = { kind: BoundaryKind; seed: number; config: BoundaryConfig; method: OptimizerKind; lr: number };
+export type BoundarySettings = { kind: BoundaryKind; seed: number; config: BoundaryConfig; method: OptimizerKind; lr: number; initSeed?: number; batchSeed?: number; batchSize?: number; lambda?: number };
 export type BoundaryHistoryPoint = { step: number; train: number; validation: number };
 export type BoundaryExperiment = { settings: BoundarySettings; dataset: BoundaryDataset; optimizer: OptimizerState; history: BoundaryHistoryPoint[]; auto: boolean; remaining: number; error: string | null };
 export type SavedBoundaryRun = { settings: BoundarySettings; optimizer: OptimizerState; history: BoundaryHistoryPoint[]; threshold: number; probe: [number, number] };
 export type BoundarySlots = { A: SavedBoundaryRun | null; B: SavedBoundaryRun | null };
-export type BoundaryWorkspace = { format: 'rustml-boundary'; version: 1; current: SavedBoundaryRun; slots: BoundarySlots };
+export type BoundaryWorkspace = { format: 'rustml-boundary'; version: 2; current: SavedBoundaryRun; slots: BoundarySlots };
+// Keep the key so old local v1 records are read and migrated only after successful validation.
 export const boundaryStorageKey = 'rustml-boundary-v1';
 export const boundaryStepLimit = 4000;
 export const boundaryFileLimit = 2 * 1024 * 1024;
 const numericLimit = 1e100;
 export const initialBoundarySettings: BoundarySettings = { kind: 'moons', seed: 42, config: { layers: [{ width: 8, activation: 'tanh' }, { width: 8, activation: 'tanh' }] }, method: 'adam', lr: .02 };
+
+export function boundaryTrainingSettings(settings: BoundarySettings) {
+  return { ...settings, initSeed: settings.initSeed ?? settings.seed, batchSeed: settings.batchSeed ?? settings.seed, batchSize: settings.batchSize ?? 96, lambda: settings.lambda ?? 0 };
+}
+
+function batchGradient(optimizer: OptimizerState, settings: BoundarySettings, dataset: BoundaryDataset) {
+  const { batchSize, batchSeed, lambda } = boundaryTrainingSettings(settings);
+  const batch = boundaryBatchIndices(optimizer.step, batchSize, batchSeed, dataset.train.length).map(i => dataset.train[i]);
+  return boundaryLossGradient(optimizer.params, settings.config, batch, lambda).grad;
+}
+
+/** Absolute epoch target makes A/B budgets equal even for a short last batch. */
+export function boundaryStepsToEpoch(experiment: BoundaryExperiment, epochs: number) {
+  if (!Number.isInteger(epochs) || epochs < 1 || epochs > 40) throw new RangeError('Boundary: цель 1–40 эпох');
+  const { updatesPerEpoch } = boundaryBatchProgress(experiment.optimizer.step, boundaryTrainingSettings(experiment.settings).batchSize, experiment.dataset.train.length);
+  return Math.max(0, epochs * updatesPerEpoch - experiment.optimizer.step);
+}
 
 function lossPoint(optimizer: OptimizerState, settings: BoundarySettings, dataset: BoundaryDataset): BoundaryHistoryPoint {
   const point = { step: optimizer.step, train: boundaryMetrics(optimizer.params, settings.config, dataset.train).loss,
@@ -25,8 +43,14 @@ function checkOptimizer(optimizer: OptimizerState) {
 }
 
 export function createBoundaryExperiment(settings: BoundarySettings): BoundaryExperiment {
+  settings = boundaryTrainingSettings(settings);
+  for (const seed of [settings.seed, settings.initSeed!, settings.batchSeed!]) integer(seed, 0, 4294967295, 'Seed');
+  integer(settings.batchSize, 1, 96, 'Batch size');
+  number(settings.lambda, 0, 1, 'L2 λ');
+  number(settings.lr, .001, .2, 'Скорость обучения');
+  choice(settings.method, ['sgd', 'momentum', 'adam'], 'Оптимизатор');
   const dataset = makeBoundaryDataset(settings.kind, settings.seed);
-  const optimizer = createOptimizerState(createBoundaryParameters(settings.config, settings.seed));
+  const optimizer = createOptimizerState(createBoundaryParameters(settings.config, settings.initSeed));
   return { settings: structuredClone(settings), dataset, optimizer, history: [lossPoint(optimizer, settings, dataset)], auto: false, remaining: 0, error: null };
 }
 
@@ -46,13 +70,14 @@ function checkDomain(params: number[], config: BoundaryConfig) {
 }
 
 export function advanceBoundaryExperiment(experiment: BoundaryExperiment, count: number): BoundaryExperiment {
+  if (!Number.isInteger(count) || count < 0) throw new RangeError('Boundary: число обновлений должно быть неотрицательным целым');
   const { settings, dataset } = experiment;
   const steps = Math.min(count, boundaryStepLimit - experiment.optimizer.step);
   if (steps <= 0) return { ...experiment, auto: false, remaining: 0 };
   try {
     let optimizer = experiment.optimizer;
     for (let i = 0; i < steps; i++) {
-      const { grad } = boundaryLossGradient(optimizer.params, settings.config, dataset.train);
+      const grad = batchGradient(optimizer, settings, dataset);
       optimizer = optimizerStep(optimizer, grad, settings.method, { lr: settings.lr });
       checkOptimizer(optimizer);
     }
@@ -71,11 +96,11 @@ export function saveBoundaryRun(experiment: BoundaryExperiment, threshold: numbe
 
 export function restoreBoundaryRun(saved: SavedBoundaryRun): BoundaryExperiment {
   const { settings, optimizer, history } = structuredClone(saved);
-  return { settings, optimizer, history, dataset: makeBoundaryDataset(settings.kind, settings.seed), auto: false, remaining: 0, error: null };
+  return { settings: boundaryTrainingSettings(settings), optimizer, history, dataset: makeBoundaryDataset(settings.kind, settings.seed), auto: false, remaining: 0, error: null };
 }
 
 export function encodeBoundaryWorkspace(current: SavedBoundaryRun, slots: BoundarySlots): string {
-  return JSON.stringify({ format: 'rustml-boundary', version: 1, current, slots } satisfies BoundaryWorkspace);
+  return JSON.stringify({ format: 'rustml-boundary', version: 2, current, slots } satisfies BoundaryWorkspace);
 }
 
 function object(value: unknown, label: string): Record<string, unknown> {
@@ -96,8 +121,11 @@ function choice<T extends string>(value: unknown, choices: readonly T[], label: 
   return value as T;
 }
 
-function readRun(value: unknown, label: string): SavedBoundaryRun {
+function readRun(value: unknown, label: string, version: 1 | 2): SavedBoundaryRun {
   const run = object(value, label), rawSettings = object(run.settings, `${label}: настройки`);
+  if (version === 1 && ['initSeed', 'batchSeed', 'batchSize', 'lambda'].some(key => key in rawSettings)) {
+    throw new Error(`${label}: настройки mini-batch/L2 требуют формат v2.`);
+  }
   const rawConfig = object(rawSettings.config, `${label}: архитектура`);
   if (!Array.isArray(rawConfig.layers) || rawConfig.layers.length > 3) throw new Error(`${label}: нужны 0–3 скрытых слоя.`);
   const config: BoundaryConfig = { layers: rawConfig.layers.map(value => {
@@ -107,6 +135,12 @@ function readRun(value: unknown, label: string): SavedBoundaryRun {
   const settings: BoundarySettings = { config, kind: choice<BoundaryKind>(rawSettings.kind, ['circles', 'moons', 'spiral'], `${label}: данные`),
     seed: integer(rawSettings.seed, 0, 4294967295, `${label}: seed`), method: choice<OptimizerKind>(rawSettings.method, ['sgd', 'momentum', 'adam'], `${label}: оптимизатор`),
     lr: number(rawSettings.lr, .001, .2, `${label}: скорость обучения`) };
+  Object.assign(settings, version === 1 ? { initSeed: settings.seed, batchSeed: settings.seed, batchSize: 96, lambda: 0 } : {
+    initSeed: integer(rawSettings.initSeed, 0, 4294967295, `${label}: seed начальных весов`),
+    batchSeed: integer(rawSettings.batchSeed, 0, 4294967295, `${label}: seed порядка batch`),
+    batchSize: integer(rawSettings.batchSize, 1, 96, `${label}: batch size`),
+    lambda: number(rawSettings.lambda, 0, 1, `${label}: L2 λ`),
+  });
   const rawOptimizer = object(run.optimizer, `${label}: состояние оптимизатора`), size = boundaryParameterCount(config);
   const vector = (value: unknown, name: string, min: number) => {
     if (!Array.isArray(value) || value.length !== size) throw new Error(`${label}: размер ${name} не соответствует архитектуре (${size}).`);
@@ -135,7 +169,7 @@ function readRun(value: unknown, label: string): SavedBoundaryRun {
       const field = key as 'train' | 'validation';
       return Math.abs(current[field] - last[field]) > 1e-12 * Math.max(1, current[field]);
     })) throw new Error('Последняя точка истории не соответствует весам.');
-    const next = optimizerStep(optimizer, boundaryLossGradient(optimizer.params, config, dataset.train).grad, settings.method, { lr: settings.lr });
+    const next = optimizerStep(optimizer, batchGradient(optimizer, settings, dataset), settings.method, { lr: settings.lr });
     checkOptimizer(next);
     checkDomain(next.params, config);
   } catch (error) {
@@ -149,10 +183,10 @@ export function decodeBoundaryWorkspace(text: string): BoundaryWorkspace {
   let value: unknown;
   try { value = JSON.parse(text); } catch { throw new Error('Не удалось прочитать JSON. Выберите файл экспорта лаборатории.'); }
   const file = object(value, 'Файл');
-  if (file.format !== 'rustml-boundary' || file.version !== 1) throw new Error('Неподдерживаемый формат или версия. Нужен экспорт RustML Boundary v1.');
+  if (file.format !== 'rustml-boundary' || (file.version !== 1 && file.version !== 2)) throw new Error('Неподдерживаемый формат или версия. Нужен экспорт RustML Boundary v1 или v2.');
   const slots = object(file.slots, 'Слоты A/B');
-  return { format: 'rustml-boundary', version: 1, current: readRun(file.current, 'Текущий опыт'),
-    slots: { A: slots.A === null ? null : readRun(slots.A, 'Опыт A'), B: slots.B === null ? null : readRun(slots.B, 'Опыт B') } };
+  return { format: 'rustml-boundary', version: 2, current: readRun(file.current, 'Текущий опыт', file.version),
+    slots: { A: slots.A === null ? null : readRun(slots.A, 'Опыт A', file.version), B: slots.B === null ? null : readRun(slots.B, 'Опыт B', file.version) } };
 }
 
 export function readBoundaryStorage(storage: Pick<Storage, 'getItem'>): BoundaryWorkspace | null {
@@ -162,11 +196,19 @@ export function readBoundaryStorage(storage: Pick<Storage, 'getItem'>): Boundary
 
 export function writeBoundaryStorage(storage: Pick<Storage, 'setItem'>, current: SavedBoundaryRun, slots: BoundarySlots): void {
   const text = encodeBoundaryWorkspace(current, slots);
-  if (new TextEncoder().encode(text).length > boundaryFileLimit) throw new Error('Сохранение превышает 2 МиБ. Экспортируйте опыт и сократите историю сбросом.');
+  // Validate all slots before writing; invalid input must not replace a previous local record.
+  decodeBoundaryWorkspace(text);
   storage.setItem(boundaryStorageKey, text);
 }
 
 export function boundaryComparisonDifferences(a: SavedBoundaryRun, b: SavedBoundaryRun): string[] {
-  return [a.settings.kind !== b.settings.kind && 'разные наборы данных', a.settings.seed !== b.settings.seed && 'разные seed (данные и начальные веса)',
-    a.optimizer.step !== b.optimizer.step && 'разное число шагов', a.threshold !== b.threshold && 'разные пороги решения'].filter((value): value is string => !!value);
+  const A = boundaryTrainingSettings(a.settings), B = boundaryTrainingSettings(b.settings);
+  const budgetA = boundaryBatchProgress(a.optimizer.step, A.batchSize).examples, budgetB = boundaryBatchProgress(b.optimizer.step, B.batchSize).examples;
+  return [A.kind !== B.kind && 'разные наборы данных', A.seed !== B.seed && 'разные seed данных',
+    A.initSeed !== B.initSeed && 'разные seed начальных весов', A.batchSeed !== B.batchSeed && 'разные seed порядка batch',
+    JSON.stringify(A.config) !== JSON.stringify(B.config) && 'разные архитектуры или активации',
+    A.method !== B.method && 'разные оптимизаторы', A.lr !== B.lr && 'разные скорости обучения',
+    A.batchSize !== B.batchSize && 'разные размеры batch', A.lambda !== B.lambda && 'разные L2 λ',
+    a.optimizer.step !== b.optimizer.step && 'разное число обновлений', budgetA !== budgetB && 'разный бюджет train-примеров',
+    a.threshold !== b.threshold && 'разные пороги решения'].filter((value): value is string => !!value);
 }

@@ -1,6 +1,6 @@
-import { useId, useMemo } from 'react';
-import { boundaryMetrics, makeBoundaryDataset, predictBoundary } from './boundaryNetworkMath';
-import { boundaryComparisonDifferences, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
+import { useId, useMemo, useState } from 'react';
+import { boundaryBatchProgress, boundaryL2, boundaryMetrics, makeBoundaryDataset, predictBoundary } from './boundaryNetworkMath';
+import { boundaryComparisonDifferences, boundaryTrainingSettings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
 import { probabilityGrid } from './decisionBoundaryMath';
 import { Chart, fmt } from './ui';
 
@@ -28,34 +28,42 @@ function ComparisonMap({ name, run }: { name: string; run: SavedBoundaryRun }) {
 }
 
 export function BoundaryComparison({ slots }: { slots: BoundarySlots }) {
+  const [axis, setAxis] = useState<'step' | 'examples'>('examples');
   const saved = useMemo(() => runNames.flatMap(name => {
     const run = slots[name];
     if (!run) return [];
     const data = makeBoundaryDataset(run.settings.kind, run.settings.seed);
-    return [{ name, run, train: boundaryMetrics(run.optimizer.params, run.settings.config, data.train, run.threshold),
+    const training = boundaryTrainingSettings(run.settings);
+    return [{ name, run, training, budget: boundaryBatchProgress(run.optimizer.step, training.batchSize), penalty: boundaryL2(run.optimizer.params, run.settings.config, training.lambda).loss, train: boundaryMetrics(run.optimizer.params, run.settings.config, data.train, run.threshold),
       validation: boundaryMetrics(run.optimizer.params, run.settings.config, data.validation, run.threshold) }];
   }), [slots]);
   if (!saved.length) return <p className="note">Сохраните текущий опыт в A, измените настройку и обучите второй опыт, затем сохраните его в B. Слоты останутся неизменными при дальнейшем обучении и сбросе.</p>;
   const differences = slots.A && slots.B ? boundaryComparisonDifferences(slots.A, slots.B) : [];
   const rows: Array<[string, (entry: typeof saved[number]) => string]> = [
     ['Данные · seed', ({ run }) => `${kindNames[run.settings.kind]} · ${run.settings.seed}`],
+    ['Seed начальных весов / порядка batch', ({ training }) => `${training.initSeed} / ${training.batchSeed}`],
     ['Сеть', ({ run }) => [2, ...run.settings.config.layers.map(layer => layer.width), 1].join(' → ')],
     ['Активации скрытых слоёв', ({ run }) => run.settings.config.layers.map(layer => layer.activation).join(' / ') || 'Нет скрытых слоёв'],
     ['Оптимизатор · η', ({ run }) => `${run.settings.method} · ${fmt(run.settings.lr, 3)}`],
-    ['Шаги обучения', ({ run }) => String(run.optimizer.step)], ['Порог τ', ({ run }) => fmt(run.threshold, 2)],
+    ['Batch size / L2 λ', ({ training }) => `${training.batchSize} / ${fmt(training.lambda, 3)}`],
+    ['Обновления весов', ({ run }) => String(run.optimizer.step)],
+    ['Обработано train-примеров', ({ budget }) => String(budget.examples)],
+    ['Эквивалентных эпох', ({ budget }) => fmt(budget.epochs, 3)], ['Порог τ', ({ run }) => fmt(run.threshold, 2)],
     ['BCE · train', ({ train }) => fmt(train.loss, 6)], ['BCE · validation', ({ validation }) => fmt(validation.loss, 6)],
+    ['L2 · только веса', ({ penalty }) => fmt(penalty, 6)], ['Objective · все train + L2', ({ train, penalty }) => fmt(train.loss + penalty, 6)],
     ['Верно · train', ({ train }) => `${train.correct} / ${train.total} · ${fmt(train.accuracy * 100, 1)}%`],
     ['Верно · validation', ({ validation }) => `${validation.correct} / ${validation.total} · ${fmt(validation.accuracy * 100, 1)}%`],
   ];
   return <div className="boundary-comparison">
-    {slots.A && slots.B && <p className="note boundary-comparison-warning">{differences.length ? `Условия различаются: ${differences.join('; ')}. Такое сравнение не выделяет влияние одной настройки.` : 'Набор, seed, число шагов и порог совпадают. Остальные настройки сверяйте в таблице.'}</p>}
-    <p className="note">Одинаковый seed воспроизводит старт выбранной архитектуры. Разные архитектуры не имеют одинаковых начальных весов. Бюджет здесь — число полных шагов по 96 точкам, а не одинаковое время вычислений.</p>
+    {slots.A && slots.B && <p className="note boundary-comparison-warning">{differences.length ? `Условия различаются: ${differences.join('; ')}. Для изучения одной настройки оставьте остальные условия одинаковыми; учитывайте бюджет примеров.` : 'Настройки, бюджет примеров, число обновлений и порог совпадают.'}</p>}
+    <p className="note">Seed данных, весов и порядка пакетов независимы. Одинаковый seed весов воспроизводит старт выбранной архитектуры; разные архитектуры не имеют одинаковых весов. Равные обновления при разных batch не равны бюджету примеров. Для равного бюджета сбросьте оба опыта и используйте одну цель «До N эпох»: эпоха = 96 train-примеров. Это не равное время вычислений.</p>
     <div className="boundary-comparison-table" tabIndex={0} role="region" aria-label="Сравнение A/B, прокручиваемая таблица"><table><caption>Сохранённые опыты · метрики пересчитаны по их весам</caption><thead><tr><th scope="col">Условие / результат</th>{saved.map(({ name }) => <th scope="col" key={name}>Опыт {name}</th>)}</tr></thead><tbody>{rows.map(([label, display]) => <tr key={label}><th scope="row">{label}</th>{saved.map(entry => <td key={entry.name}>{display(entry)}</td>)}</tr>)}</tbody></table></div>
     <div className="boundary-comparison-maps">{saved.map(({ name, run }) => <ComparisonMap key={name} name={name} run={run} />)}</div>
     <p className="note">Оси обеих карт одинаковы: [0, 1] × [0, 1]. Фон: синий — решение 0, зелёный — 1; коричневая линия — p = τ. Используется порог каждого опыта; карты приближённые.</p>
-    <Chart series={saved.flatMap(({ name, run }) => [{ name: `${name} · train`, points: run.history.map(point => ({ x: point.step, y: point.train })), color: colors[name] },
-      { name: `${name} · validation`, points: run.history.map(point => ({ x: point.step, y: point.validation })), color: colors[name], dashed: true }])}
-      xLabel="Шаг обучения" yLabel="Средняя потеря BCE" xDomain={[0, Math.max(1, ...saved.map(({ run }) => run.optimizer.step))]}
+    <label>Бюджет на оси графика<select value={axis} onChange={event => setAxis(event.target.value as typeof axis)}><option value="examples">Обработанные train-примеры</option><option value="step">Обновления весов</option></select></label>
+    <Chart series={saved.flatMap(({ name, run, training }) => [{ name: `${name} · train`, points: run.history.map(point => ({ x: axis === 'step' ? point.step : boundaryBatchProgress(point.step, training.batchSize).examples, y: point.train })), color: colors[name] },
+      { name: `${name} · validation`, points: run.history.map(point => ({ x: axis === 'step' ? point.step : boundaryBatchProgress(point.step, training.batchSize).examples, y: point.validation })), color: colors[name], dashed: true }])}
+      xLabel={axis === 'step' ? 'Обновления весов' : 'Обработанные train-примеры'} yLabel="Средняя потеря BCE" xDomain={[0, Math.max(1, ...saved.map(({ run, budget }) => axis === 'step' ? run.optimizer.step : budget.examples))]}
       yDomain={[0, Math.max(.1, ...saved.flatMap(({ run }) => run.history.flatMap(point => [point.train, point.validation]))) * 1.1]} />
     <p className="note">Кривые используют сохранённые точки истории. Validation не участвует в градиенте; выбор лучшей настройки по ней не заменяет независимую итоговую проверку.</p>
   </div>;

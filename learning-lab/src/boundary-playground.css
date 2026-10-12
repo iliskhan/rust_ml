@@ -30,6 +30,10 @@
 .boundary-playground .boundary-reset-note{padding:10px 12px;border-left:3px solid #b88f71;background:#f6f0e5;color:#624630}
 .boundary-setup>.range-control{max-width:420px;margin-top:20px}
 .boundary-settings{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:18px}
+.boundary-seeds{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin-top:20px}
+.boundary-budget{margin-top:16px;max-width:420px}
+.boundary-budget button{min-height:44px;max-width:100%;white-space:normal;margin-top:10px}
+.boundary-playground .boundary-run-status,.boundary-playground .boundary-training .note{overflow-wrap:anywhere}
 .boundary-playground label{min-width:0}
 .boundary-settings>label,.boundary-layers label{display:flex;flex-direction:column;gap:8px;font-size:13px;font-weight:500;color:var(--deep)}
 .boundary-playground select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:9px 28px 9px 10px;border:1px solid #d0d8cc;border-radius:5px;background:#fffefa;color:var(--deep);font:inherit}
