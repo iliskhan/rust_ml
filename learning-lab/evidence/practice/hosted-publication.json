@@ -74,15 +74,32 @@
     "url": "https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site",
     "status": "succeeded",
     "audience": "owner-only",
-    "browser_observation": "ChatGPT login gate; application after login unverified",
+    "browser_observation": "Automatic IAB tab reached ChatGPT login gate; that sign-in flow remains unverified",
+    "native_viewer_observation": {
+      "screenshot_written_at_utc": "2026-10-12T20:53:59Z",
+      "practice_visible": true,
+      "topic_count": 136,
+      "editor_visible": true,
+      "cloud_enabled": false,
+      "grading_enabled": false,
+      "console_errors": [],
+      "mobile_verified": false,
+      "persistence_verified": false,
+      "screenshot_scope": "task-owned ignored visualization directory: sites-native-practice.png"
+    },
     "archive_sha256": "2a0068aa98e96b66844d21b2a1fa3b84e92ddeafe04109f2a1d5ef4e4edc8199"
   },
   "supabase": {
-    "project_created": false,
+    "project_created": null,
+    "project_creation_reported_by_owner": true,
+    "reported_project_ref": "phnjcmahugetofwvnbto",
+    "last_accessible_form_observation": "Free project form prepared; project was not yet created at that observation",
+    "current_hosted_state_verified": false,
+    "verification_blocker": "Saved browser permission blocks supabase.com; no workaround attempted",
     "cloud_configured": false,
     "local_schema_verified": true,
     "hosted_auth_verified": false,
-    "required_next_action": "Owner creates prepared Free project and sets database password"
+    "required_next_action": "Owner removes saved browser access block; inspect the reported existing project before applying migrations"
   },
   "grading_enabled": false
 }

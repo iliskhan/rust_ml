@@ -1,9 +1,11 @@
 # Публикация практики RustML
 
-Состояние 2026-10-12: личный предпросмотр Sites опубликован с доступом только владельца.
+Состояние 2026-10-13: личный предпросмотр Sites опубликован с доступом только владельца.
 GitHub Pages [опубликован](https://iliskhan.github.io/rust_ml/#practice) из `master`:
 build/deploy/CI PASS, HTTP200 и desktop/mobile проверены.
-Supabase Free project ещё не создан; Auth/PKCE клиент и SQL migrations проверены локально.
+Владелец сообщил о создании Supabase project `phnjcmahugetofwvnbto`; проверить его
+пока мешает сохранённый browser запрет для supabase.com. Auth/PKCE клиент и SQL migrations
+проверены локально; облачное подключение ещё не выполнено.
 Серверный зачёт кода отключён. Платный upgrade не подключали.
 
 ## Frontend: GitHub Pages
@@ -29,10 +31,13 @@ Frontend доступен без Supabase: локальные черновики
 
 ## Backend: выбранный Supabase Free project
 
-Вход владельца подтверждён. В личной организации **Free** подготовлена форма проекта
+При последнем доступном осмотре вход владельца был подтверждён; в личной организации
+**Free** была подготовлена форма проекта
 `rustml-learning-lab`, регион Europe, без автоматической выдачи доступа новым таблицам.
-Владелец должен задать Database password и завершить создание проекта; пароль БД
-и service-role ключ в чат или Git не передаются. Проект ещё не создан.
+Затем владелец сообщил о создании проекта. Для продолжения нужно снять сохранённый
+browser запрет для supabase.com и проверить dashboard проекта `phnjcmahugetofwvnbto`.
+Программа не должна создавать новый дубликат проекта. Секреты не добавляются в Git
+или frontend. Новый пароль и отправку формы по правилу browser hand-off выполняет владелец.
 
 1. В SQL Editor применить по порядку три файла `supabase/migrations/*.sql`.
    Это новая схема практики; повторно опубликованный release не редактировать.
@@ -58,8 +63,11 @@ JWT, OAuth, hosted PostgREST, refresh и конкурентные транзак
 
 Личный [предпросмотр Sites](https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site)
 уже опубликован (owner-only). Для открытия нужен вход владельца через ChatGPT.
-Native deployment подтвердил `succeeded`; браузер IAB дошёл до страницы входа,
-поэтому hosted UI после авторизации не проверен. Supabase в этой сборке не подключён.
+Native deployment подтвердил `succeeded`. Обычная автоматизационная вкладка IAB дошла
+до страницы входа; этот вход не проверен. В отдельном native Codex viewer учебник
+и практика открылись: 136 тем, редактор, cloud/grading disabled, console без ошибок.
+Mobile и persistence именно Sites-предпросмотра не проверялись. Supabase в этой сборке
+не подключён.
 
 [Cloudflare Pages Free](https://developers.cloudflare.com/pages/platform/limits/)
 подходит для того же статического `dist`: 500 builds/месяц, одна сборка одновременно,

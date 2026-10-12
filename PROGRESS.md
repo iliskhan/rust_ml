@@ -1,18 +1,19 @@
 # Прогресс RustML
 
-### Внедрение практики — checkpoint 2026-10-12, 23:43 MSK
+### Внедрение практики — checkpoint 2026-10-13, 00:54 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, текущая ветка `master`,
 база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Реализация committed и pushed:
 `76693f6993dfbe04884e0d9d1bffe44a4c8aa6f4`; `git ls-remote` подтвердил совпадение SHA.
 Исправление CI committed/pushed: `3a0a72a42c89c285ff2ef07a6caff2d654df9cb4`,
-локальный/remote SHA совпали. На момент этого checkpoint рабочие изменения — только
-документы результатов; source, tests, migrations и Rust-ядро совпадают с проверенным SHA.
+локальный/remote SHA совпали. Source, tests, migrations и Rust-ядро совпадают с проверенным SHA.
 Пользователь отдельно разрешил fast-forward `master`: `0082796` → `fe5ccac`,
 22 коммита/415 файлов. Remote master перепроверена; локальный fast-forward выполнен,
 затем workflow `[master]` committed/pushed в `3e036d70157672bbda36df52eefb03a7bbd0be58`.
-Local/remote master SHA совпали; feature branch сохранена. На момент checkpoint
-локальные изменения — только документы и screenshots результатов публикации.
+Local/remote master SHA совпали; feature branch сохранена. Документы и screenshots
+публичной публикации сохранены в `6430151e00d784d1085f891c2d35185e1140938d`;
+его local/remote master SHA совпали, рабочая копия перед текущим уточнением была чистой.
+Текущее уточнение меняет только документы результатов; runtime и tests не меняются.
 Rust-ядро не менялось. Исходный checkout `worktrees/6209` не затронут.
 
 - Собран полный каталог: 83 исходные учебные темы, 51 математическое понятие и два
@@ -60,7 +61,7 @@ Rust-ядро не менялось. Исходный checkout `worktrees/6209` 
   `114875585648` получил HTTP404 с указанием проверить включение Pages. Само состояние
   настройки Pages без входа не прочитано. На `3a0a72a` повторный Pages run
   `38268999579`: build `114878283434` PASS; deploy `114878584001` FAIL.
-  Новый проект Supabase Free разрешён пользователем; ещё не создан.
+  Новый проект Supabase Free разрешён пользователем; на тот момент ещё не создан.
   В этих ранних запусках frontend/backend ещё не заявлялись рабочими;
   последующая успешная публикация Pages записана ниже.
 - CI run `38268066995`, learning-lab job `114875200270`: 415 PASS / 3 FAIL / 4 SKIP.
@@ -84,10 +85,16 @@ Source=GitHub Actions сохранён. Rerun `38298431308`, attempt2: build PAS
 Первый fast-forward отклонён auto-review из-за широкого изменения default ветки.
 После конкретного ответа пользователя разрешение получено и fast-forward выполнен.
 
-Supabase: личная организация `iliskhan's Org` Free, форма `rustml-learning-lab`,
-Europe, Automatically expose new tables=false. Проект НЕ создан. По обязательным
-правилам browser hand-off новый Database password задаёт и подтверждает пользователь;
-общее полное разрешение не отменяет это требование. Пароль не читался и не создавался.
+Последний доступный осмотр Supabase: личная организация `iliskhan's Org` Free,
+форма `rustml-learning-lab`, Europe, Automatically expose new tables=false;
+при этом осмотре проект ещё не был создан. Затем владелец сообщил о создании проекта
+`phnjcmahugetofwvnbto`. Повторная проверка созданного проекта отвергнута browser tool:
+сохранённая настройка разрешений запрещает доступ к supabase.com. Обход не выполнялся.
+Правило browser hand-off требует, чтобы новый пароль и отправку формы выполнил владелец;
+его сообщение о создании получено, hosted состояние ещё не проверено.
+По прямому запросу владельца пароль сохранён локально с Windows DPAPI CurrentUser для
+`lomaster`: `work/practice-secrets/supabase-database-password.dpapi`; decrypt round-trip PASS,
+`git check-ignore` подтвердил исключение файла. Plaintext в файлы проекта не записывался.
 Prepared hosted SELECT-only smoke: `work/practice-hosted-verification/`; локальная
 проверка fresh migrations PASS, 20/20 counts, 6/6 triggers, 0 ACL violations.
 Это не hosted Auth/JWT/OAuth или concurrency-тест.
@@ -100,7 +107,11 @@ URL `https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site`, owner-
 Отдельный Sites source SHA `76fd4e937968028f05a4dc5639c2ad79163743b0`, compiled из fe5ccac
 с base `/`; архив SHA256 `2a0068aa98e96b66844d21b2a1fa3b84e92ddeafe04109f2a1d5ef4e4edc8199`
 перенесён после save в ignored `work/practice-sites-artifacts/`. Никаких secrets в файлах.
-IAB reached ChatGPT login gate; UI после авторизации на этом domain не проверен.
+Обычная автоматизационная вкладка IAB дошла до ChatGPT login gate; этот вход не проверен.
+Отдельный native Codex viewer показал учебник: открыта «Практика и прогресс», видны 136 тем,
+редактор и banners отключённых cloud/grading, console=[]; desktop screenshot сохранён
+в task-owned ignored visualization directory как `sites-native-practice.png`.
+Mobile и persistence именно этого личного Sites-предпросмотра не проверялись.
 Ownership mismatch исправлен process-local safe.directory для отдельного Sites repo;
 упаковщик использовал установленный Git Bash вместо отсутствующего WSL-диска,
 process-local Node PATH/TMPDIR внутри workspace и TAR_OPTIONS=--force-local.
@@ -124,8 +135,12 @@ Rust Windows `114993540378`, stable `114993540416`, Rust Ubuntu `114993540507`.
 код ученика не исполнялся. Переносимые proofs/screenshots:
 `learning-lab/evidence/practice/hosted-publication.json`, hosted-pages-*.png.
 
-Следующий шаг для продолжения backend: владелец задаёт пароль в подготовленной
-Supabase Free form и завершает создание проекта. Потом применить три migrations
+На checkpoint `6430151` CI `38306271930` и Pages `38306271862` полностью SUCCESS;
+эти изменения затрагивали только документы и доказательства.
+
+Следующий шаг для продолжения backend: владелец снимает сохранённый browser запрет
+для supabase.com. Затем проверить созданный им project `phnjcmahugetofwvnbto`, его
+готовность и отсутствие конфликтующих `practice_*` объектов; применить три migrations
 и выполнить настоящие hosted Auth/RLS/CAS проверки. До этого cloud/backend/runner
 не заявляются рабочими. Предыдущее отклонённое чтение Git credentials не выполнялось;
 Pages настроен через обычный авторизованный браузер. Секреты в чат/Git не передаются.
