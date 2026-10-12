@@ -66,7 +66,10 @@ production build и artifact. Deploy job `114875585648` вернул HTTP404 и 
 проверить включение Pages; состояние настройки без входа не прочитано.
 CI run `38268066995`: learning-lab `114875200270` FAIL при auto-install Rust1.87,
 с конфликтами общих файлов. В CI добавлены предварительная установка и точные paths;
-новый запуск исправленного workflow ожидает push. Релевантные выдержки: `actions-first-run.json`.
+на момент первого snapshot новый запуск ожидал push. Релевантные выдержки:
+`actions-first-run.json`. Последующие итоги и текущий delivery SHA — в корневом
+[PROGRESS.md](../../../PROGRESS.md): исправленный CI `38268999625` на `3a0a72a` полностью PASS,
+включая Rust Ubuntu/Windows и учебник422/422; hosted deployment остаётся отдельным шагом.
 
 ## Непроверенные внешние условия
 

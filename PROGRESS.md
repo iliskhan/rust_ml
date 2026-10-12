@@ -1,11 +1,13 @@
 # Прогресс RustML
 
-### Внедрение практики — checkpoint 2026-10-12, 18:14 MSK
+### Внедрение практики — checkpoint 2026-10-12, 22:31 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-implementation`,
 база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Реализация committed и pushed:
 `76693f6993dfbe04884e0d9d1bffe44a4c8aa6f4`; `git ls-remote` подтвердил совпадение SHA.
-Сейчас есть локальная правка CI runtime setup и checkpoint; ожидает commit/push.
+Исправление CI committed/pushed: `3a0a72a42c89c285ff2ef07a6caff2d654df9cb4`,
+локальный/remote SHA совпали. На момент этого checkpoint рабочие изменения — только
+документы результатов; source, tests, migrations и Rust-ядро совпадают с проверенным SHA.
 Rust-ядро не менялось. Исходный checkout `worktrees/6209` не затронут.
 
 - Собран полный каталог: 83 исходные учебные темы, 51 математическое понятие и два
@@ -50,21 +52,31 @@ Rust-ядро не менялось. Исходный checkout `worktrees/6209` 
   подтвердил push/admin права; browser GitHub не авторизован. Actions run `38268067306`:
   build job `114875201446` полностью PASS (языки, tests, build, artifact); deploy
   `114875585648` получил HTTP404 с указанием проверить включение Pages. Само состояние
-  настройки Pages без входа не прочитано. Supabase проект/URL ещё не выбран.
+  настройки Pages без входа не прочитано. На `3a0a72a` повторный Pages run
+  `38268999579`: build `114878283434` PASS; deploy `114878584001` FAIL.
+  Новый проект Supabase Free разрешён пользователем; ещё не создан.
   Hosted frontend/backend не заявляются рабочими.
 - CI run `38268066995`, learning-lab job `114875200270`: 415 PASS / 3 FAIL / 4 SKIP.
   Три Rust checks вызвали auto-install отсутствующего 1.87.0 через rustup proxy;
   log содержит конфликты установки `bin/cargo`, rust-std и `bin/rust-gdb`.
   До тестов добавлена последовательная установка toolchain и абсолютные Python3/rustc
   paths, как в прошедшем Pages build; включены все языковые проверки.
-  Исправленный CI ещё не запущен. Rust-ядро не изменялось.
+  Исправленный CI `38268999625` на `3a0a72a` полностью PASS: учебник
+  `114878282759`, Rust Ubuntu `114878282957`, stable `114878283021`,
+  Rust Windows `114878283054`. Учебник в Linux: **422/422 PASS, 0 skipped**,
+  typecheck/build PASS. Rust fmt, Clippy, debug/release/doc и примеры PASS.
+  Rust-ядро не изменялось.
 - Grading disabled: ни браузер, ни SQL не выдают pass без изолированного runner.
   Piston public API с 2026-02-15 требует авторизации по README; бесплатный произвольный
   Python/Rust runner пока не подтверждён. Платных ресурсов не создавали.
 
-Следующий шаг: commit/push исправления CI и сверка SHA, затем новый Actions run.
-Для реальной публикации
-нужны обычный GitHub login/Pages Actions и выбранный Supabase Free project.
+Следующий шаг: пользователь входит в GitHub и Supabase в IAB. Открыты и сохранены
+страницы входа `https://github.com/login` и Supabase dashboard sign-in; GitHub показан.
+После входа проверить Settings/Pages и включить Actions, создать новый проект Free,
+применить три migrations и проверить hosted Auth/RLS/CAS до заявления готовности.
+Секреты в чат/Git не передаются. Автоматическая проверка ранее отклонила чтение
+Git credentials для Pages API как использование вне назначенного источника;
+действие не выполнялось. Продолжение использует обычный вход в браузере.
 
 ### Передача: практика, Supabase и бесплатное развёртывание — 2026-10-12
 
