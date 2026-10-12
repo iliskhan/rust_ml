@@ -1,7 +1,8 @@
 # Публикация практики RustML
 
 Состояние 2026-10-12: личный предпросмотр Sites опубликован с доступом только владельца.
-GitHub Pages Source=Actions включён; workflow готовится к публикации из `master`.
+GitHub Pages [опубликован](https://iliskhan.github.io/rust_ml/#practice) из `master`:
+build/deploy/CI PASS, HTTP200 и desktop/mobile проверены.
 Supabase Free project ещё не создан; Auth/PKCE клиент и SQL migrations проверены локально.
 Серверный зачёт кода отключён. Платный upgrade не подключали.
 
@@ -20,8 +21,8 @@ Workflow `.github/workflows/learning-lab-pages.yml` собирает `learning-l
    `master`; workflow публикует эту ветку. Защита среды сохранена.
 2. После push открыть [Actions](https://github.com/iliskhan/rust_ml/actions), дождаться
    зелёных build/deploy и открыть URL из deployment result.
-3. Предполагаемый адрес project site — `https://iliskhan.github.io/rust_ml/`.
-   Пока deployment и HTTP/browser проверка не пройдены, этот адрес не считается рабочим.
+3. Рабочий адрес project site — [RustML](https://iliskhan.github.io/rust_ml/).
+   В этой публикации работают локальные задания, помощь и черновики; backend ещё не подключён.
 
 Frontend доступен без Supabase: локальные черновики, помощь и self-check history.
 Аккаунт активируется только после настройки backend ниже и новой сборки.
@@ -53,7 +54,7 @@ RLS, ownership, CAS, receipts и immutable publication; он **не** прове
 JWT, OAuth, hosted PostgREST, refresh и конкурентные транзакции двух DB connections.
 Эти сценарии остаются обязательными после выбора проекта.
 
-## Другой бесплатный frontend
+## Дополнительное размещение
 
 Личный [предпросмотр Sites](https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site)
 уже опубликован (owner-only). Для открытия нужен вход владельца через ChatGPT.

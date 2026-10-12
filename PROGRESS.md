@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Внедрение практики — checkpoint 2026-10-12, 23:19 MSK
+### Внедрение практики — checkpoint 2026-10-12, 23:43 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, текущая ветка `master`,
 база `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`. Реализация committed и pushed:
@@ -10,7 +10,9 @@ Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, текущая ветка `mas
 документы результатов; source, tests, migrations и Rust-ядро совпадают с проверенным SHA.
 Пользователь отдельно разрешил fast-forward `master`: `0082796` → `fe5ccac`,
 22 коммита/415 файлов. Remote master перепроверена; локальный fast-forward выполнен,
-теперь готовится commit workflow `[master]` и обычный push. Feature branch сохранена.
+затем workflow `[master]` committed/pushed в `3e036d70157672bbda36df52eefb03a7bbd0be58`.
+Local/remote master SHA совпали; feature branch сохранена. На момент checkpoint
+локальные изменения — только документы и screenshots результатов публикации.
 Rust-ядро не менялось. Исходный checkout `worktrees/6209` не затронут.
 
 - Собран полный каталог: 83 исходные учебные темы, 51 математическое понятие и два
@@ -59,7 +61,8 @@ Rust-ядро не менялось. Исходный checkout `worktrees/6209` 
   настройки Pages без входа не прочитано. На `3a0a72a` повторный Pages run
   `38268999579`: build `114878283434` PASS; deploy `114878584001` FAIL.
   Новый проект Supabase Free разрешён пользователем; ещё не создан.
-  Hosted frontend/backend не заявляются рабочими.
+  В этих ранних запусках frontend/backend ещё не заявлялись рабочими;
+  последующая успешная публикация Pages записана ниже.
 - CI run `38268066995`, learning-lab job `114875200270`: 415 PASS / 3 FAIL / 4 SKIP.
   Три Rust checks вызвали auto-install отсутствующего 1.87.0 через rustup proxy;
   log содержит конфликты установки `bin/cargo`, rust-std и `bin/rust-gdb`.
@@ -109,9 +112,22 @@ Raw source hashes обновлены после checkout master→fe5ccac: 38 di
 Оставшееся содержательное изменение — только workflow branch `[master]`.
 Исторические local/SQL logs сохраняют hashes своего проверенного среза.
 
-Следующий шаг: push master и проверить Pages deployment/реальный публичный браузер.
-После создания Supabase владельцем применить три migrations и проверить hosted
-Auth/RLS/CAS. Предыдущее отклонённое чтение Git credentials не выполнялось;
+Публичный Pages опубликован: `https://iliskhan.github.io/rust_ml/`, HTTP200.
+Run `38304016680`: build `114993540239` и deploy `114993855883` PASS.
+CI `38304016667` на том же SHA полностью PASS: learning-lab `114993540057`,
+Rust Windows `114993540378`, stable `114993540416`, Rust Ubuntu `114993540507`.
+В Linux422/422 PASS,0skipped; typecheck/build PASS.
+Реальный IAB: desktop1280×720, document1265/1265; Python QA code, hint receipt и
+1 formative history сохранились после reload. Mobile390×844: math concept.evaluation
+встроен в dialog, client/scroll375/375; Tab фокусирует exercise selector, Escape
+закрывает open dialog и возвращает фокус на source button. Console error/warn=[];
+код ученика не исполнялся. Переносимые proofs/screenshots:
+`learning-lab/evidence/practice/hosted-publication.json`, hosted-pages-*.png.
+
+Следующий шаг для продолжения backend: владелец задаёт пароль в подготовленной
+Supabase Free form и завершает создание проекта. Потом применить три migrations
+и выполнить настоящие hosted Auth/RLS/CAS проверки. До этого cloud/backend/runner
+не заявляются рабочими. Предыдущее отклонённое чтение Git credentials не выполнялось;
 Pages настроен через обычный авторизованный браузер. Секреты в чат/Git не передаются.
 
 ### Передача: практика, Supabase и бесплатное развёртывание — 2026-10-12

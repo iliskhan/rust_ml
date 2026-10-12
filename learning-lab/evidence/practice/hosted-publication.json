@@ -1,0 +1,88 @@
+{
+  "checked_at_utc": "2026-10-12T20:34:18Z",
+  "checkout": "C:/Users/lomaster/Desktop/dev/rust_ml",
+  "branch": "master",
+  "validated_revision": "3e036d70157672bbda36df52eefb03a7bbd0be58",
+  "pages": {
+    "url": "https://iliskhan.github.io/rust_ml/",
+    "http_status": 200,
+    "run_id": 38304016680,
+    "build_job": 114993540239,
+    "deploy_job": 114993855883,
+    "conclusion": "success"
+  },
+  "ci": {
+    "run_id": 38304016667,
+    "conclusion": "success",
+    "jobs": {
+      "learning_lab": 114993540057,
+      "rust_windows": 114993540378,
+      "stable": 114993540416,
+      "rust_ubuntu": 114993540507
+    },
+    "tests": 422,
+    "pass": 422,
+    "fail": 0,
+    "skipped": 0,
+    "verified_log_lines": [
+      "2026-10-12T20:25:04.8315390Z ℹ tests 422",
+      "2026-10-12T20:25:04.8316099Z ℹ pass 422",
+      "2026-10-12T20:25:04.8316423Z ℹ fail 0",
+      "2026-10-12T20:25:04.8317131Z ℹ skipped 0",
+      "2026-10-12T20:25:17.7527467Z \u001b[32m✓ built in 2.54s\u001b[39m"
+    ]
+  },
+  "browser": {
+    "provider": "Codex IAB",
+    "url": "https://iliskhan.github.io/rust_ml/#practice",
+    "desktop": {
+      "viewport": [
+        1280,
+        720
+      ],
+      "document_client": 1265,
+      "document_scroll": 1265,
+      "screenshot": "hosted-pages-desktop.png"
+    },
+    "persistence": {
+      "python_qa_code_after_reload": true,
+      "hint_receipt_after_reload": true,
+      "formative_history_count_after_reload": 1,
+      "code_grading_tested": false
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "math_topic": "concept.evaluation",
+      "dialog_client": 375,
+      "dialog_scroll": 375,
+      "tab_focus": "SELECT exercise",
+      "escape_closed_open_dialogs": true,
+      "escape_returned_focus": "source button",
+      "screenshot": "hosted-pages-math-mobile.png"
+    },
+    "console_errors": [],
+    "console_warnings": []
+  },
+  "sites": {
+    "project_id": "appgprj_6acd3df3debc8191a838981ae6b52d20",
+    "deployment_id": "appgdep_6acd3fafc14481918581f5ccb0173a7b",
+    "version_id": "appgprj_6acd3df3debc8191a838981ae6b52d20~appgver_b56f5eafdee48191bc957eabf106ed3b",
+    "source_revision": "76fd4e937968028f05a4dc5639c2ad79163743b0",
+    "url": "https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site",
+    "status": "succeeded",
+    "audience": "owner-only",
+    "browser_observation": "ChatGPT login gate; application after login unverified",
+    "archive_sha256": "2a0068aa98e96b66844d21b2a1fa3b84e92ddeafe04109f2a1d5ef4e4edc8199"
+  },
+  "supabase": {
+    "project_created": false,
+    "cloud_configured": false,
+    "local_schema_verified": true,
+    "hosted_auth_verified": false,
+    "required_next_action": "Owner creates prepared Free project and sets database password"
+  },
+  "grading_enabled": false
+}

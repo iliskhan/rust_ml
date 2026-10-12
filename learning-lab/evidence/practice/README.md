@@ -77,7 +77,18 @@ CI run `38268066995`: learning-lab `114875200270` FAIL при auto-install Rust1
 ## Непроверенные внешние условия
 
 Hosted Supabase JWT/Auth/PostgREST, GitHub OAuth redirect, многопроцессные SQL races
-и Pages deployment ещё не проверены. SQL использует реальный PostgreSQL engine и
+ещё не проверены. Pages deployment проверен ниже. SQL использует реальный PostgreSQL engine и
 тестовый `auth.uid` stub. Клиентские Auth races проверены deterministic mocked responses.
 Код ученика не исполняется; открытые examples и quizzes не дают server mastery.
 Платные ресурсы не создавались. Точные действия публикации: `../../docs/practice-deployment.md`.
+
+## Подтверждённая публикация Pages
+
+Срез `3e036d70157672bbda36df52eefb03a7bbd0be58`, ветка master, 2026-10-12:
+CI `38304016667` полностью PASS, учебник422/422/0skipped;
+Pages `38304016680` build/deploy PASS, публичный [сайт](https://iliskhan.github.io/rust_ml/)
+вернул HTTP200. Code/help/history пережили reload. Desktop1280×720: document1265/1265;
+mobile390×844: mathematical dialog375/375, concept.evaluation, Tab и Escape проверены.
+Новых console errors/warnings нет. Screenshots: `hosted-pages-desktop.png`,
+`hosted-pages-math-mobile.png`; точные IDs и границы: `hosted-publication.json`.
+Последующие документальные checkpoints не меняют проверенный код.
