@@ -73,3 +73,15 @@ UI: labels, Range exact inputs, scrollable focusable tables, selected target,
 Документы PLAN/PROGRESS и этот handoff — отдельный следующий коммит.
 Обычный push и local/remoteSHA проверяются после doc commit; финальные SHA в чате.
 UIdesktop/mobile/200%/keyboard остаётся pending родителю.
+
+## Доставка подтверждена — 2026-10-12 06:27:10 Europe/Moscow
+
+Обычный push ветки codex/transformer-output-head-lab выполнен; local/remote tip
+`733e6398e840ef8530489871a2dcf45ec969b260` совпал, рабочая копия была чистой.
+Код для cherry-pick: `9e15a770aaa48680a19302b7d96db863653a6d04`.
+Основной handoff/docs: `733e6398e840ef8530489871a2dcf45ec969b260`.
+Все исходники вне4разрешённых новых файлов неизменны относительно базы.
+Этот delivery checkpoint — отдельный doc commit; его финальный SHA и совпадение
+remote ещё раз сообщаются в чате. Модуль готов к интеграции.
+Следующий шаг родителя: подключить компонент и выполнить UI desktop/mobile/200%/keyboard
+по сценарию выше. Локальных code/test/build действий больше не осталось.

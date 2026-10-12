@@ -217,3 +217,8 @@ text-only zoom200% и исследование с живыми новичкам�
 остаётся за родителем после интеграции; он не считается пройденным здесь.
 Работающая генерация, общие math/UI и Rust сохранены. Новых dependencies нет.
 Точный handoff: [work/transformer-head-progress.md](work/transformer-head-progress.md).
+
+Доставка этапа4 подтверждена 2026-10-12 06:27:10 Europe/Moscow: code/doc commits
+отправлены обычным push своей ветки; remote/local tip733e6398e840ef8530489871a2dcf45ec969b260 совпал.
+Модуль готов для cherry-pick кода родителем. Следующий требуемый шаг общего проекта —
+интеграция и настоящая браузерная приёмка, описанные в handoff; UI pending.
