@@ -1,0 +1,21 @@
+.cnn-training-lab { display: grid; gap: 1.25rem; margin-top: 2rem; min-width: 0; }
+.cnn-training-lab .lesson-intro { margin-bottom: 0; }
+.cnn-training-lab .lab-grid { margin-bottom: 0; }
+.cnn-training-lab .panel { min-width: 0; }
+.cnn-training-controls { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 1rem; }
+.cnn-training-controls legend { margin-bottom: .75rem; }
+.cnn-training-controls select { width: 100%; }
+.cnn-training-matrices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin-block: 1rem; min-width: 0; }
+.cnn-training-scroll { overflow-x: auto; max-width: 100%; min-width: 0; margin-block: .75rem; }
+.cnn-training-lab .data-table { width: 100%; table-layout: auto; }
+.cnn-training-lab .data-table caption { text-align: left; overflow-wrap: anywhere; padding-bottom: .5rem; }
+.cnn-training-lab .data-table th, .cnn-training-lab .data-table td { overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.cnn-training-matrix td, .cnn-training-matrix th { text-align: center; }
+.cnn-training-matrix button { padding: .5rem; min-width: 2.75rem; min-height: 2.75rem; max-width: 100%; overflow-wrap: anywhere; }
+.cnn-training-matrix .cnn-in-field { background: var(--soft); font-weight: 600; }
+.cnn-training-lab .button-row { flex-wrap: wrap; }
+.cnn-training-lab .button-row button { max-width: 100%; white-space: normal; }
+.cnn-training-lab .formula { overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .cnn-training-lab .data-table th, .cnn-training-lab .data-table td { padding: .5rem .25rem; }
+}
