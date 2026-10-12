@@ -94,5 +94,7 @@ Codex IAB, production preview `http://127.0.0.1:5183/#advanced`.
 
 ## Доставка
 
-Обязательные проверки пройдены. Commit и обычный push фиксируются в корневом
-PROGRESS.md после сверки local/remote SHA.
+Обязательные проверки пройдены. Code commit
+`1e51996f9bd7f7682cbf31e35a71117e2723c733` отправлен обычным push;
+`rev-parse HEAD` и `ls-remote origin refs/heads/codex/ui-ux-learning-lab`
+вернули одинаковый SHA. Этот итог доставки также записан в корневом PROGRESS.md.
