@@ -45,7 +45,7 @@ test('rendered experiment references and demo kinds resolve', () => {
 });
 
 test('curriculum destinations are real, all levels are honest and routes are nonempty', () => {
-  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'advanced', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
+  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'advanced', 'frontiers', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
   const groups = new Set(curriculumGroups.map(group => group.id));
   assert.equal(new Set(curriculum.map(topic => topic.id)).size, curriculum.length);
   for (const topic of curriculum) {

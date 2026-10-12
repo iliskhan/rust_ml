@@ -1,3 +1,5 @@
+import { frontierTopics } from './frontierTopics.ts';
+
 export type Coverage = 'interactive' | 'reading' | 'next';
 export type StudyRoute = 'all' | 'beginner' | 'training' | 'transformer' | 'beyond';
 export type CurriculumTopic = {
@@ -12,7 +14,7 @@ export const studyRoutes: { id: StudyRoute; label: string; description: string }
   { id: 'beginner', label: 'Начать с нуля', description: 'Входы и веса → потеря → производная → один шаг обучения → XOR.' },
   { id: 'training', label: 'Понять обучение', description: 'Градиенты, оптимизаторы, данные и проверка качества на новых примерах.' },
   { id: 'transformer', label: 'Дойти до Transformer', description: 'Векторы → матрицы → вероятности → attention → Transformer и варианты.' },
-  { id: 'beyond', label: 'После базового курса', description: 'Генерация, графы и действия: пять работающих глав и явно отмеченные дальнейшие направления.' },
+  { id: 'beyond', label: 'После базового курса', description: 'Генерация, представления, геометрия и действия: малые работающие модели и проверяемое обучение.' },
 ];
 export const curriculumGroups = [
   { id: 'math', title: 'Математические кирпичики', description: 'Открывайте только то, что сейчас непонятно; каждый разбор ведёт к своим основаниям.' },
@@ -24,6 +26,7 @@ export const curriculumGroups = [
 ];
 
 export const curriculum: CurriculumTopic[] = [
+  ...frontierTopics,
   { id: 'numbers-shapes', title: 'Векторы, матрицы и формы', group: 'math', coverage: 'interactive', routes: ['beginner', 'transformer'],
     summary: 'Скалярное произведение собирает один выход; матрица — несколько. Форма объясняет, как совместить данные со слоем.',
     example: 'Измените строку матрицы 2×2 и проследите, какая выходная координата изменилась.',
@@ -103,11 +106,11 @@ export const curriculum: CurriculumTopic[] = [
   { id: 'vit', title: 'Vision Transformer', group: 'families', coverage: 'interactive', routes: ['beyond', 'transformer'], lesson: 'advanced', lessonLabel: 'Превратить изображение в патчи',
     summary: 'Пиксели превращаются в патчи, общая проекция — в токены, позиции и attention смешивают их признаки.',
     example: 'Выберите патч и измените исходный пиксель: проследите его путь через проекцию и attention.',
-    limit: 'Малая сетка и ручные веса forward; модель не обучена распознаванию. Карта attention не доказывает причинное влияние.', concepts: ['matrix', 'softmax'], source: { title: 'Dosovitskiy и др. · ViT', url: 'https://arxiv.org/abs/2010.11929' } },
+    limit: 'Здесь малая сетка и ручные веса forward; модель не обучена распознаванию. Отдельное обучение малого ViT — в #frontiers. Карта attention не доказывает причинное влияние.', concepts: ['matrix', 'softmax'], source: { title: 'Dosovitskiy и др. · ViT', url: 'https://arxiv.org/abs/2010.11929' } },
   { id: 'moe', title: 'Mixture of Experts', group: 'families', coverage: 'interactive', routes: ['beyond', 'transformer'], lesson: 'advanced', lessonLabel: 'Направить токены к экспертам',
     summary: 'Router выбирает top-1 или top-2 FFN, ограничение capacity меняет принятую нагрузку и смесь выходов.',
     example: 'Уменьшите capacity и сравните выбранные и принятые маршруты, веса смеси и выход токена.',
-    limit: 'Фиксированные router и эксперты; overflow без перенаправления. Нет обучения router или измерения распределённой производительности.', concepts: ['softmax', 'matrix'], source: { title: 'Shazeer и др. · Sparsely-Gated MoE', url: 'https://arxiv.org/abs/1701.06538' } },
+    limit: 'Здесь фиксированные router и эксперты; overflow без перенаправления. Малый MoE с обучением через soft-routing — в #frontiers; распределённая производительность не измеряется.', concepts: ['softmax', 'matrix'], source: { title: 'Shazeer и др. · Sparsely-Gated MoE', url: 'https://arxiv.org/abs/1701.06538' } },
   { id: 'mla', title: 'MLA: латентный KV-cache', group: 'families', coverage: 'interactive', routes: ['transformer', 'beyond'], lesson: 'advanced', lessonLabel: 'Исследовать латентный кэш',
     summary: 'Общий латентный код хранит контент K/V двух голов, а decoupled RoPE остаётся отдельным компонентом.',
     example: 'Сравните восстановление всех V со смешиванием латентных кодов и одной выходной проекцией.',
@@ -119,11 +122,11 @@ export const curriculum: CurriculumTopic[] = [
   { id: 'state-space', title: 'SSM, Mamba-2 и gated delta', group: 'families', coverage: 'interactive', routes: ['beyond', 'transformer'], lesson: 'advanced', lessonLabel: 'Сравнить механизмы памяти',
     summary: 'SSM дискретизирует непрерывное состояние; SSD затухает целиком, gated delta адресно исправляет запись по ключу.',
     example: 'Подайте импульс или перезапись ключа; сравните три координаты состояния, SSD, delta, attention и простую смесь.',
-    limit: 'Малые вычисляемые ядра, без полных обучаемых блоков Mamba-2 и DeltaNet. Гибрид — учебная смесь, не реплика Qwen.', concepts: ['matrix', 'function'], source: { title: 'Yang и др. · Gated Delta Networks', url: 'https://arxiv.org/abs/2412.06464' } },
+    limit: 'Здесь малые ядра с ручными параметрами. Отдельная обучаемая SSM — в #frontiers; полного Mamba-2 и DeltaNet нет. Гибрид — учебная смесь, не реплика Qwen.', concepts: ['matrix', 'function'], source: { title: 'Yang и др. · Gated Delta Networks', url: 'https://arxiv.org/abs/2412.06464' } },
   { id: 'image-denoisers', title: 'U-Net и DiT', group: 'beyond', coverage: 'interactive', routes: ['beyond', 'transformer'], lesson: 'advanced', lessonLabel: 'Сравнить предикторы шума',
     summary: 'U-Net соединяет масштабы через skip-concat, DiT обрабатывает патчи attention с conditioning по времени.',
     example: 'Меняйте уровень шума и пиксели; сравните промежуточные карты, предсказанный ε и ошибку двух моделей.',
-    limit: 'Небольшая сетка и ручные веса forward: это вычисление предикторов ε, а не обученная генерация изображений.', concepts: ['noise-schedule', 'matrix', 'softmax'], source: { title: 'Peebles & Xie · DiT', url: 'https://arxiv.org/abs/2212.09748' } },
+    limit: 'Здесь небольшая сетка и ручные веса forward. В #frontiers обучаются малые предикторы U-Net/DiT и запускается учебный sampling; фотореалистичной генерации нет.', concepts: ['noise-schedule', 'matrix', 'softmax'], source: { title: 'Peebles & Xie · DiT', url: 'https://arxiv.org/abs/2212.09748' } },
   { id: 'text-representations', title: 'Токенизация и embeddings', group: 'beyond', coverage: 'interactive', routes: ['beyond', 'transformer'], lesson: 'advanced', lessonLabel: 'Обучить символьный BPE',
     summary: 'Токенизатор разбивает текст на элементы словаря и выдаёт их id. Embedding извлекает по id строку обучаемой матрицы; позиционная информация решает отдельную задачу порядка.',
     example: 'У словаря размера V и ширины d таблица embeddings имеет форму [V,d]. Идентификатор 7 выбирает строку 7, а не число «7» как величину признака.',

@@ -1,0 +1,33 @@
+.flow-geometry-lab{display:grid;gap:22px;min-width:0}
+.flow-geometry-lab .lesson-intro{margin:0}
+.flow-geometry-lab .panel{min-width:0}
+.flow-geometry-lab h4{font-size:17px;line-height:1.45;margin:0 0 15px}
+.flow-geometry-lab p{line-height:1.75;margin:12px 0;overflow-wrap:anywhere}
+.flow-geometry-lab .formula{white-space:normal;overflow-wrap:anywhere}
+.flow-geometry-lab .button-row{flex-wrap:wrap;margin-block:14px}
+.flow-geometry-lab .button-row button{white-space:normal;text-align:left}
+.flow-geometry-lab details{margin-block:14px}
+.flow-geometry-lab summary{cursor:pointer;line-height:1.65;min-height:44px;padding-block:8px}
+.fg-table-scroll{max-width:100%;overflow:auto;overscroll-behavior-inline:contain;margin-block:17px;border:1px solid var(--line);border-radius:8px}
+.fg-table-scroll:focus-visible{outline:3px solid #27694e;outline-offset:3px}
+.fg-table-scroll table{width:100%;margin:0;white-space:nowrap}
+.fg-table-scroll caption{white-space:normal;text-align:left;line-height:1.6;padding:12px;font-size:13px;color:var(--deep)}
+.fg-table-scroll th:first-child{white-space:normal;min-width:100px}
+.fg-plane,.fg-volume-image{margin:0;min-width:0}
+.fg-plane figcaption,.fg-volume-image figcaption{font-weight:650;line-height:1.65;margin-bottom:12px;font-size:14px}
+.fg-plane-view{min-width:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#f9fbf5}
+.fg-plane svg{display:block;width:100%;height:auto}
+.fg-plane svg text{font:12px system-ui,sans-serif;fill:var(--deep)}
+.fg-plane svg .grid-line{stroke:var(--line);stroke-width:1}
+.fg-plane>p{font-size:13px}
+.fg-legend{display:flex;flex-wrap:wrap;gap:7px 13px;font-size:12px;line-height:1.5;margin-top:12px}
+.fg-legend span{display:flex;gap:6px;align-items:center}
+.fg-legend i{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.flow-geometry-lab .fg-check{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.6;font-size:14px;margin-block:17px;min-height:44px}
+.fg-check input{width:20px;height:20px;flex-shrink:0;margin:2px 0 0;accent-color:#27694e}
+.fg-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-block:18px}
+.fg-metrics p{margin:0;padding:14px;border:1px solid var(--line);border-radius:8px;font-size:13px}
+.fg-metrics strong{display:block;font-size:20px;margin-top:5px;overflow-wrap:anywhere}
+.fg-controls-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+.fg-volume-image svg{display:block;width:min(100%,340px);height:auto;margin-inline:auto;border:1px solid var(--line);border-radius:4px;image-rendering:pixelated;background:white}
+@media(max-width:560px){.flow-geometry-lab{gap:16px}.flow-geometry-lab h4{font-size:16px}.fg-metrics,.fg-controls-grid{grid-template-columns:1fr}.fg-metrics{gap:7px}.fg-metrics p{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:10px}.fg-metrics strong{font-size:17px;margin:0}.fg-table-scroll th:first-child{min-width:90px}}

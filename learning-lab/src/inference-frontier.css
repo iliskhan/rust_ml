@@ -1,0 +1,28 @@
+.inference-frontier { min-width: 0; }
+.inference-frontier .lab-grid { align-items: start; }
+.inference-frontier .panel { min-width: 0; }
+.inference-frontier .formula { overflow-wrap: anywhere; }
+.inference-frontier label { display: block; margin-block: .8rem; }
+.inference-frontier select { display: block; max-width: 100%; width: 100%; margin-block: .35rem; }
+.inference-frontier .if-scroll { overflow-x: auto; margin-block: 1rem; max-width: 100%; }
+.inference-frontier .if-scroll table { width: 100%; font-variant-numeric: tabular-nums; }
+.inference-frontier .if-scroll caption { text-align: left; font-weight: 600; margin-bottom: .5rem; }
+.inference-frontier .if-scroll th, .inference-frontier .if-scroll td { min-width: 4.5rem; padding: .5rem; }
+.inference-frontier .if-probabilities { display: grid; gap: 1.2rem; margin-block: 1rem; }
+.inference-frontier .if-probability { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr) 4.5rem; align-items: center; gap: .5rem; margin-block: .5rem; }
+.inference-frontier .if-probability output { text-align: right; font-variant-numeric: tabular-nums; }
+.inference-frontier .if-bar { display: block; height: .8rem; background: var(--paper); }
+.inference-frontier .if-bar > span { display: block; height: 100%; background: var(--tc-accent); }
+.inference-frontier .if-token-flow { display: flex; flex-wrap: wrap; gap: .6rem; padding: 0; list-style-position: inside; }
+.inference-frontier .if-token-flow li { flex: 1 1 8rem; padding: .65rem; background: var(--tc-soft); }
+.inference-frontier .if-token-flow strong, .inference-frontier .if-token-flow span, .inference-frontier .if-token-flow small { display: block; margin-top: .2rem; }
+.inference-frontier .if-token-flow li[data-state="rejected"] { border-bottom: 3px solid var(--accent); }
+.inference-frontier .if-token-flow li[data-state="discarded"] { background: var(--paper); }
+.inference-frontier .if-context-strip { display: flex; flex-wrap: wrap; gap: .4rem; margin-block: 1rem; }
+.inference-frontier .if-context-strip > span { min-width: 3.7rem; padding: .4rem; text-align: center; background: var(--tc-soft); }
+.inference-frontier .if-context-strip small { display: block; }
+.inference-frontier .if-context-strip [data-visible="false"] { background: var(--paper); text-decoration: line-through; }
+.inference-frontier .if-context-strip [data-target="true"] { outline: 2px solid var(--tc-accent); outline-offset: -2px; }
+.inference-frontier .if-token-inputs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; }
+.inference-frontier .if-source { margin-top: 1.5rem; }
+@media (max-width: 600px) { .inference-frontier .if-token-inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

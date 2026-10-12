@@ -1,0 +1,25 @@
+.architecture-training { min-width: 0; }
+.architecture-training h4 { margin: 1.6rem 0 .7rem; }
+.architecture-training > label, .atr-backward > label { display: grid; gap: .4rem; margin-block: .8rem; }
+.architecture-training select { width: 100%; max-width: 32rem; min-width: 0; }
+.atr-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: .7rem 1.4rem; }
+.atr-table { max-width: 100%; overflow-x: auto; margin-block: 1rem; border: 1px solid var(--line, #ddd8cc); border-radius: 8px; }
+.atr-table:focus-visible { outline: 3px solid var(--accent, #27694e); outline-offset: 3px; }
+.atr-table table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.atr-table caption { text-align: left; padding: .7rem; font-weight: 650; }
+.atr-table th, .atr-table td { padding: .55rem .7rem; white-space: nowrap; text-align: left; }
+.atr-table tbody tr:nth-child(odd) { background: #77777708; }
+.atr-backward { margin-block: 1rem; padding: .8rem; border: 1px solid var(--line, #ddd8cc); border-radius: 8px; }
+.atr-backward summary { cursor: pointer; font-weight: 650; }
+.atr-image-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: start; margin-block: 1rem; }
+.atr-image-row > div { flex: 1 1 200px; }
+.atr-image { margin: 0; width: 136px; max-width: 100%; }
+.atr-image figcaption { font-size: .85rem; min-height: 2.6em; margin-bottom: .4rem; }
+.atr-pixels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; border: 1px solid var(--line, #bbb); padding: 2px; aspect-ratio: 1; }
+.atr-pixels span { display: block; aspect-ratio: 1; }
+@media (max-width: 420px) {
+  .atr-image { width: 108px; }
+  .atr-image-row { gap: .6rem; }
+  .atr-backward { padding: .55rem; }
+  .architecture-training .button-row button { flex: 1 1 120px; }
+}
