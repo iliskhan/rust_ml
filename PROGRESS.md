@@ -6,23 +6,35 @@
 чаты для регистрации/входа Supabase и отслеживания прогресса. Передача сохраняет
 существующие PLAN.md/PROGRESS.md как авторитетные документы; секретные значения
 в новые prompts не передаются. Созданный владельцем project ref: `phnjcmahugetofwvnbto`.
-Попытка create_thread для Auth отвергнута до создания: «MCP tool call requires approval,
-but approval policy is never». Ни одного нового чата/ID не создано, обход не выполнялся.
+Предыдущая попытка create_thread для Auth была отвергнута до создания: «MCP tool call
+requires approval, but approval policy is never». Тогда новых чатов/ID не было.
+Теперь пользователь переключил профиль на danger-full-access: filesystem/network
+unrestricted, approval policy never; sandbox_permissions запрещён, обычный exec
+работает как lomaster. Повторное создание succeeded, без обхода:
+
+- основной `01a13261-d4bd-7170-9a0b-eb1e8db01e0c`;
+- Auth `01a13260-77c8-79d1-af8e-b94b8f436859`;
+- Progress `01a13261-4efe-7693-a7ba-78aecdbe254c`.
+
+Секреты не передавались. Initial prompts содержат актуальное уточнение профиля,
+историю проверок, boundaries файлов, критерии приёмки и known traps. Основной чат
+дождётся ready-20261013.json перед записью общих файлов; Auth/Progress имеют disjoint scopes.
 Полные briefs сохранены и проверены как локальные ignored task artifacts:
 `work/practice-chat-handoff/main.txt`, `auth.txt`, `progress.txt`. Их нужно передать
-соответствующим новым локальным чатам проекта после разрешённого создания.
+соответствующим новым локальным чатам проекта; initial prompts уже отправлены при создании.
 Checkpoint до этого уточнения: `5fecf49abf68fdf9c7ccd193b450e76a70404aec`,
 обычный push и local/remote master SHA match подтверждены. Новых source изменений нет.
 Backend ещё не подключён и не проверен: browser tool дважды отклонил чтение dashboard
 из-за saved permission block для supabase.com. Ошибка самого Supabase не наблюдалась.
 
-Причина запросов прав Git проверена непосредственно: обычный sandbox `git add`
+Причина запросов прав Git в прежнем профиле проверена непосредственно: обычный sandbox `git add`
 получил Permission denied на `.git/index.lock`; вне sandbox команда прошла.
-Sandbox process работает как `CodexSandboxOffline`, обычный Windows user — `lomaster`.
+Прежний sandbox process работал как `CodexSandboxOffline`, обычный Windows user — `lomaster`.
 Профиль разрешений команд и browser permissions независимы. Новый чат не доказывает
 устранение этих ограничений. Постоянное разрешение на commit/push основного branch
 явно сохранено в AGENTS.md, commit `a3a1946`; дополнительные вопросы о намерении
-commit/push main/master не нужны, обязательную sandbox escalation нельзя обходить.
+commit/push main/master не нужны. Теперь sandbox отключён: команды выполняются
+обычно, без sandbox_permissions. Отдельные browser permissions не изменяются этим доказательством.
 
 Перед передачей проверены документы/JSON, commit `7f5cfd09def8b5bdc308514fbb6f770ae7b7ef40`
 обычно pushed, local/remote master SHA совпали. Runtime срез публичной публикации
