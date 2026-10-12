@@ -9,6 +9,8 @@ const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ def
 type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft };
 const AccountContext = createContext<AccountState | null>(null);
 
+export function usePracticeAccount() { return useContext(AccountContext); }
+
 export function PracticeCloudProvider({ children }: { children: ReactNode }) {
   const [cloud] = useState(() => {
     const url = import.meta.env.VITE_SUPABASE_URL;
