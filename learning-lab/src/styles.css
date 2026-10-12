@@ -147,4 +147,5 @@ kbd{font:11px Consolas,monospace;padding:2px 5px;border:1px solid #c4cdbb;border
 .explorer-footer{max-height:20%;overflow:auto;flex-wrap:wrap}
 .pipeline{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
 .pipeline button code{white-space:normal}
+.nav-number{flex:0 0 auto;white-space:nowrap}
 @media(max-height:560px){.knowledge-explorer{height:100dvh;max-height:100dvh}.explorer-header{padding-top:10px}.explorer-origin,.explorer-footer{display:none}.explorer-breadcrumbs{margin-top:5px}.explorer-toolbar{padding:5px 0 9px}.explorer-frame{padding-top:18px}.explorer-message:not(:empty){max-height:76px;overflow:auto}}

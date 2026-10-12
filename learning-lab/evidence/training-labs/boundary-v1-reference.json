@@ -1,0 +1,12 @@
+{
+  "baseline": "490162fb8fb4c6ec8ff29cb6d7b640caf790431d",
+  "node": "v24.19.0",
+  "fixtureSha256": "da59f86791a2317f90e016462ad3b750feb5887e1fe9008ffcdec6372dc229ff",
+  "step": 450,
+  "currentOptimizerSha256": "356baa337e0acc85e8a71e360dee4f89a7c95a907fc699bf09479be4e64c1d3e",
+  "nextStep": 451,
+  "nextOptimizerSha256": "ff56bb2253909c20adbbbf298a10ee14a35f50beca8d2395aa78eaae2e2e0f5a",
+  "nextProbeProbability": 0.426568915308349,
+  "nextTrainBCE": 0.3568192440334547,
+  "nextValidationBCE": 0.18739693030290336
+}

@@ -149,8 +149,8 @@ export function transformerForward(options: { tokens: number[]; source: number[]
 
 export const architectureFamilies = [
   { id: 'dense', name: 'Dense / MLP', supported: '1–3 слоя, 1–5 нейронов; linear, ReLU, tanh, sigmoid', schema: 'Residual MLP и dropout: только пояснения' },
-  { id: 'cnn', name: 'CNN', supported: 'Conv2D; stride, padding, dilation; 1–2 входных канала; max/average pooling', schema: 'Conv1D / Conv3D: сравнение форм, без численного расчёта' },
-  { id: 'rnn', name: 'RNN', supported: 'Обычная, двухслойная и двунаправленная скалярная RNN', schema: 'Векторное состояние: формула расширения' },
+  { id: 'cnn', name: 'CNN', supported: 'Conv2D и pooling; отдельное обучение общего фильтра 3×3 с разбором градиентов', schema: 'Обучение одного фильтра на маленькой матрице; Conv1D / Conv3D — сравнение форм' },
+  { id: 'rnn', name: 'RNN', supported: 'Прямые проходы скалярной RNN; BPTT и SGD однослойной сети на 4–16 шагах', schema: 'Обучение одного скалярного состояния; векторная RNN — формула расширения' },
   { id: 'lstm', name: 'LSTM', supported: 'Скалярные c и h, четыре преобразования, регулируемые bias ворот', schema: 'Stacked / bidirectional / peephole: пояснения' },
   { id: 'gru', name: 'GRU', supported: 'Скалярный reset-before GRU, reset и update', schema: 'Reset-after, stacked и bidirectional: пояснения' },
   { id: 'transformer', name: 'Transformer', supported: 'Encoder, decoder, encoder–decoder; 1/2 головы; self/cross; позиции; FFN', schema: 'Один блок, d_model=4; без обучения, словаря и генерации' },

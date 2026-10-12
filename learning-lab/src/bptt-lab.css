@@ -1,0 +1,15 @@
+.bptt-lab { margin-top: 28px; min-width: 0; overflow-wrap: anywhere; }
+.bptt-lab > h3 { margin-bottom: 12px; }
+.bptt-lab .panel { min-width: 0; }
+.bptt-lab > .panel { margin-top: 20px; }
+.bptt-lab .controls details .controls { margin-top: 16px; }
+.bptt-lab .button-row button { white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+.bptt-table-scroll { max-width: 100%; overflow-x: auto; margin-top: 16px; }
+.bptt-table-scroll .data-table { min-width: 580px; }
+.bptt-table-scroll .data-table caption { position: sticky; left: 0; width: min(100%, 30rem); white-space: normal; }
+.bptt-table-scroll td { min-width: 72px; white-space: nowrap; }
+.bptt-table-scroll th { overflow-wrap: normal; }
+.bptt-selected { background: #edf2e8; }
+@media (max-width: 560px) {
+  .bptt-lab .lab-grid { grid-template-columns: minmax(0, 1fr); }
+}

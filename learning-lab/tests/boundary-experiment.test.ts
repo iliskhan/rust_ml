@@ -7,7 +7,7 @@ import { optimizerStep, type OptimizerKind } from '../src/math.ts';
 function fixture(): BoundaryWorkspace {
   const experiment = advanceBoundaryExperiment(createBoundaryExperiment(initialBoundarySettings), 17);
   const current = saveBoundaryRun(experiment, .63, [.24, .81]);
-  return { format: 'rustml-boundary', version: 1, current, slots: { A: structuredClone(current), B: null } };
+  return { format: 'rustml-boundary', version: 2, current, slots: { A: structuredClone(current), B: null } };
 }
 
 test('saved Boundary: exact JSON roundtrip, dataset order and next optimizer step for every optimizer', () => {
@@ -63,7 +63,7 @@ test('saved Boundary: snapshots stay independent through training, reset, restor
 test('saved Boundary: malformed, version, shape, range and history imports reject atomically', () => {
   const file = fixture(), original = structuredClone(file);
   const invalidChanges: Array<(value: any) => void> = [
-    value => { value.version = 2; }, value => { value.format = 'another-lab'; }, value => { value.current = null; },
+    value => { value.version = 3; }, value => { value.format = 'another-lab'; }, value => { value.current = null; },
     value => { value.current.settings.kind = 'xor'; }, value => { value.current.settings.seed = -1; },
     value => { value.current.settings.seed = 4.2; }, value => { value.current.settings.seed = 4294967296; },
     value => { value.current.settings.method = 'unknown'; }, value => { value.current.settings.lr = 2; },
@@ -116,7 +116,7 @@ test('saved Boundary: comparison labels changed conditions without treating equa
   const A = fixture().current, B = structuredClone(A);
   assert.deepEqual(boundaryComparisonDifferences(A, B), []);
   B.settings.kind = 'spiral'; B.settings.seed = 7; B.optimizer.step++; B.threshold = .5;
-  assert.deepEqual(boundaryComparisonDifferences(A, B), ['разные наборы данных', 'разные seed (данные и начальные веса)', 'разное число шагов', 'разные пороги решения']);
+  assert.deepEqual(boundaryComparisonDifferences(A, B), ['разные наборы данных', 'разные seed данных', 'разное число обновлений', 'разный бюджет train-примеров', 'разные пороги решения']);
 });
 
 test('saved Boundary: reaching the limit does not append duplicate history or restart a run', () => {
