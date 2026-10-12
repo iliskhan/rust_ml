@@ -21,7 +21,12 @@ warning A/B прошёл. Исходники соответствуют code com
 Логи: `work/minibatch-tests.log`, `work/minibatch-build.log`. Git diff --check PASS.
 UI desktop/mobile 320px, keyboard, CSS 200% — pending координатору; здесь browser/server
 не запускались по заданию. Rust/dependencies/прочая математика не менялись.
-Код и документы разделены; обычный push и точные local/remote SHA подтверждаются в финале чата.
+Код и документы разделены: code `6d13646327f5524e3a3909f1d79dc31236a8de4e`,
+docs `bdfd672951e8d3bcbbdd71fa0ad70aa7e3bf27c4`. Обычный push прошёл,
+local/remote `bdfd672951e8d3bcbbdd71fa0ad70aa7e3bf27c4` совпали, checkout чистый
+при сверке. Первый push вернул `remote rejected (failed)` без причины;
+после проверки отсутствующего ref повторный обычный push прошёл.
+Причина первого отказа не установлена. Финальный SHA записи доставки — в чате.
 Подробности, источники и следующий шаг: [handoff](work/minibatch-progress.md).
 
 ### Доступность — исправления проверены; озвучивание пропущено, 2026-10-12

@@ -55,7 +55,8 @@ Worktree `minibatch-l2/rust_ml`, ветка `codex/minibatch-l2`, база `4901
 отдельные rawBCE/objective и бюджеты обновлений/примеров/эквивалентных эпох. JSONv2,
 миграция старых записей с full-batchλ0 и точное продолжение по deterministicstep/epoch.
 204 теста, typecheck/build и независимое core/UI logic review прошли.
-Код зафиксирован отдельно: `6d13646327f5524e3a3909f1d79dc31236a8de4e`; подготовлены документы и обычный push.
+Код зафиксирован отдельно: `6d13646327f5524e3a3909f1d79dc31236a8de4e`; docs `bdfd672951e8d3bcbbdd71fa0ad70aa7e3bf27c4`.
+Обычный push прошёл, local/remote SHA совпали. Следующий шаг — интеграция координатором.
 Реальная desktop/mobile UI-приёмка после объединения — ответственность координатора и пока pending.
 Настройки/история/optimizer/A/B, старые уроки и Rust сохранены. [Checkpoint](work/minibatch-progress.md).
 
