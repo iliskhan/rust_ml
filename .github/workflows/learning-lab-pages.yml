@@ -2,7 +2,7 @@ name: Publish learning lab
 
 on:
   push:
-    branches: [codex/practice-implementation]
+    branches: [master]
     paths: [learning-lab/**, .github/workflows/learning-lab-pages.yml]
   workflow_dispatch:
 

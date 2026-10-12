@@ -1,8 +1,9 @@
 # Публикация практики RustML
 
-Состояние 2026-10-12: исходники, локальная практика, Auth/PKCE клиент, SQL migrations
-и Pages workflow подготовлены. Hosted frontend/backend ещё не подтверждены.
-Серверный зачёт кода отключён, платных ресурсов не создавали.
+Состояние 2026-10-12: личный предпросмотр Sites опубликован с доступом только владельца.
+GitHub Pages Source=Actions включён; workflow готовится к публикации из `master`.
+Supabase Free project ещё не создан; Auth/PKCE клиент и SQL migrations проверены локально.
+Серверный зачёт кода отключён. Платный upgrade не подключали.
 
 ## Frontend: GitHub Pages
 
@@ -14,9 +15,9 @@ Workflow `.github/workflows/learning-lab-pages.yml` собирает `learning-l
 
 В обычном авторизованном GitHub:
 
-1. Открыть [Settings → Pages](https://github.com/iliskhan/rust_ml/settings/pages)
-   и выбрать Source **GitHub Actions**. Для ветки `codex/practice-implementation`
-   при необходимости разрешить deployment в environment `github-pages`.
+1. В [Settings → Pages](https://github.com/iliskhan/rust_ml/settings/pages)
+   уже выбран Source **GitHub Actions**. Environment `github-pages` разрешает только
+   `master`; workflow публикует эту ветку. Защита среды сохранена.
 2. После push открыть [Actions](https://github.com/iliskhan/rust_ml/actions), дождаться
    зелёных build/deploy и открыть URL из deployment result.
 3. Предполагаемый адрес project site — `https://iliskhan.github.io/rust_ml/`.
@@ -27,8 +28,10 @@ Frontend доступен без Supabase: локальные черновики
 
 ## Backend: выбранный Supabase Free project
 
-Нужны обычный вход владельца и выбранный **Free** project; пароль БД и service-role
-ключ в чат или Git не передаются. Проект пока не выбран/не создан этим чатом.
+Вход владельца подтверждён. В личной организации **Free** подготовлена форма проекта
+`rustml-learning-lab`, регион Europe, без автоматической выдачи доступа новым таблицам.
+Владелец должен задать Database password и завершить создание проекта; пароль БД
+и service-role ключ в чат или Git не передаются. Проект ещё не создан.
 
 1. В SQL Editor применить по порядку три файла `supabase/migrations/*.sql`.
    Это новая схема практики; повторно опубликованный release не редактировать.
@@ -51,6 +54,11 @@ JWT, OAuth, hosted PostgREST, refresh и конкурентные транзак
 Эти сценарии остаются обязательными после выбора проекта.
 
 ## Другой бесплатный frontend
+
+Личный [предпросмотр Sites](https://rustml-iliskhan-learning-lab.comet-bison-6441.chatgpt.site)
+уже опубликован (owner-only). Для открытия нужен вход владельца через ChatGPT.
+Native deployment подтвердил `succeeded`; браузер IAB дошёл до страницы входа,
+поэтому hosted UI после авторизации не проверен. Supabase в этой сборке не подключён.
 
 [Cloudflare Pages Free](https://developers.cloudflare.com/pages/platform/limits/)
 подходит для того же статического `dist`: 500 builds/месяц, одна сборка одновременно,

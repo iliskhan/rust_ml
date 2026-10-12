@@ -3,6 +3,9 @@
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-implementation`,
 исходный revision `212a6ef4d3baebb83b41bd20a53a069f4358a2e4` + рабочее дерево этой задачи.
 Снимки исходников для воспроизводимости: `source-hashes.json`. Rust-ядро не менялось.
+Raw hashes пересозданы после checkout для публикации из master. Смена CRLF/LF
+изменила часть disk digests; source/test/SQL Git content совпадает с проверенным
+fe5ccac. Исторические logs сохраняют hashes и окружение своих запусков.
 
 ## Итоговые локальные проверки
 

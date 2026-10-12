@@ -67,9 +67,11 @@ Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `codex/practice-imp
 Реализация отправлена в commit `76693f6`; локальный и remote SHA совпали.
 CI runtime setup исправлен в `3a0a72a`; Actions `38268999625` полностью PASS,
 включая Rust Ubuntu/Windows, stable и учебник с тремя языками.
-Pages build прошёл, deploy вернул HTTP 404 с указанием проверить включение Pages.
-Пользователь выбрал создание нового Supabase Free project. Текущий шаг — обычный
-вход пользователя в GitHub и Supabase, затем настройка Pages и нового проекта.
+После входа Source=GitHub Actions включён. Environment разрешает только `master`;
+переход в неё fast-forward от `0082796` до `fe5ccac` отдельно подтверждён пользователем
+и выполнен локально. Текущий шаг — push workflow для master и проверка публичного Pages.
+Личный Sites-предпросмотр опубликован owner-only. Supabase Free form подготовлена;
+проект ещё не создан, пароль и его подтверждение требуют действий владельца.
 Самопроверка в браузере
 не является серверным освоением. Исполнение learner-кода остаётся закрытым,
 пока не проверены изоляция и бесплатный доступный runner. Бесплатный frontend
