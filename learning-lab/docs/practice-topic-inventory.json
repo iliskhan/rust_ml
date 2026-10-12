@@ -1,0 +1,6321 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-12",
+  "checkout": "C:/Users/lomaster/.codex/worktrees/6209/rust_ml",
+  "source_revision": "827b443c32fc09411d9d2c326c410f4f54051b93",
+  "scope": "design_only",
+  "id_policy": "Stable semantic IDs proposed here. Current tab indices are locators, never database identity.",
+  "language_policy": "User chooses one primary language. Other language completions award separate achievements; never required for primary course completion.",
+  "counts": {
+    "app_routes": 17,
+    "learning_routes": 14,
+    "navigation_reference_routes": 3,
+    "tab_chapters": 59,
+    "practice_units": 83,
+    "reference_concepts": 51,
+    "catalog_cards": 45,
+    "unit_task_outlines": 332,
+    "concept_task_outlines": 204
+  },
+  "units": [
+    {
+      "id": "unit.neuron.affine",
+      "route": "#neuron",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "NeuronLesson"
+      ],
+      "current_selector": "neuron-result",
+      "title": "Взвешенная сумма и bias",
+      "prerequisite_concept_ids": [
+        "dot-product"
+      ],
+      "skill_objectives": [
+        "Рассчитать выход и вклад веса"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "neuron.affine.formula",
+          "kind": "formula",
+          "goal": "z=wx+b вручную"
+        },
+        {
+          "id": "neuron.affine.implementation",
+          "kind": "implementation",
+          "goal": "affine(x,w,b)"
+        },
+        {
+          "id": "neuron.affine.edge",
+          "kind": "edge_case",
+          "goal": "Нулевой x и несовпадение форм"
+        },
+        {
+          "id": "neuron.affine.transfer",
+          "kind": "transfer",
+          "goal": "Найти bias для заданного выхода"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.neuron.activation",
+      "route": "#neuron",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "NeuronLesson"
+      ],
+      "current_selector": "neuron-activation",
+      "title": "Активации и производные",
+      "prerequisite_concept_ids": [
+        "derivative"
+      ],
+      "skill_objectives": [
+        "Связать нелинейность с наклоном"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "neuron.activation.formula",
+          "kind": "formula",
+          "goal": "Знаки ReLU sigmoid tanh"
+        },
+        {
+          "id": "neuron.activation.implementation",
+          "kind": "implementation",
+          "goal": "activation_and_grad(z,kind)"
+        },
+        {
+          "id": "neuron.activation.edge",
+          "kind": "edge_case",
+          "goal": "ReLU в нуле с явной конвенцией"
+        },
+        {
+          "id": "neuron.activation.transfer",
+          "kind": "transfer",
+          "goal": "Сравнить насыщение больших аргументов"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.neuron.dense",
+      "route": "#neuron",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "NeuronLesson"
+      ],
+      "current_selector": "neuron-batch",
+      "title": "Linear для пакета",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "tensor"
+      ],
+      "skill_objectives": [
+        "Сохранить оси batch и features"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "neuron.dense.formula",
+          "kind": "formula",
+          "goal": "Форма B×I на O×I"
+        },
+        {
+          "id": "neuron.dense.implementation",
+          "kind": "implementation",
+          "goal": "dense_batch(x,w,b)"
+        },
+        {
+          "id": "neuron.dense.edge",
+          "kind": "edge_case",
+          "goal": "Один пример и bias broadcast"
+        },
+        {
+          "id": "neuron.dense.transfer",
+          "kind": "transfer",
+          "goal": "Проверить независимость строк пакета"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.loss.mse",
+      "route": "#loss",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "LossLesson"
+      ],
+      "current_selector": "MSE section",
+      "title": "MSE и reduction",
+      "prerequisite_concept_ids": [
+        "loss"
+      ],
+      "skill_objectives": [
+        "Различить сумму и среднюю потерю"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "loss.mse.formula",
+          "kind": "formula",
+          "goal": "MSE и 2(pred-target)/n"
+        },
+        {
+          "id": "loss.mse.implementation",
+          "kind": "implementation",
+          "goal": "mse_and_grad(pred,target)"
+        },
+        {
+          "id": "loss.mse.edge",
+          "kind": "edge_case",
+          "goal": "Один пример; пустой пакет ошибка"
+        },
+        {
+          "id": "loss.mse.transfer",
+          "kind": "transfer",
+          "goal": "Дублирование пакета не меняет mean"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.loss.bce",
+      "route": "#loss",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "LossLesson"
+      ],
+      "current_selector": "BCE section",
+      "title": "Бинарная cross-entropy",
+      "prerequisite_concept_ids": [
+        "logarithm",
+        "probability"
+      ],
+      "skill_objectives": [
+        "Вычислять BCE из logits устойчиво"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "loss.bce.formula",
+          "kind": "formula",
+          "goal": "max(z,0)-yz+log1p(exp(-abs(z)))"
+        },
+        {
+          "id": "loss.bce.implementation",
+          "kind": "implementation",
+          "goal": "bce_logits_and_grad(z,y)"
+        },
+        {
+          "id": "loss.bce.edge",
+          "kind": "edge_case",
+          "goal": "Logits ±1000 и y вне 0…1"
+        },
+        {
+          "id": "loss.bce.transfer",
+          "kind": "transfer",
+          "goal": "Разделить loss и accuracy уверенных ошибок"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.backprop.shared",
+      "route": "#backprop",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "BackpropLesson"
+      ],
+      "current_selector": "shared graph",
+      "title": "Цепочка и общий узел",
+      "prerequisite_concept_ids": [
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Сложить вклад всех путей"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "backprop.shared.formula",
+          "kind": "formula",
+          "goal": "q=wx+b L=q²+q"
+        },
+        {
+          "id": "backprop.shared.implementation",
+          "kind": "implementation",
+          "goal": "shared_graph_backward(x,w,b)"
+        },
+        {
+          "id": "backprop.shared.edge",
+          "kind": "edge_case",
+          "goal": "q=-0.5 и нулевой x"
+        },
+        {
+          "id": "backprop.shared.transfer",
+          "kind": "transfer",
+          "goal": "Добавить третий путь в сумму"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.backprop.check",
+      "route": "#backprop",
+      "source": "src/Foundations.tsx",
+      "components": [
+        "BackpropLesson"
+      ],
+      "current_selector": "finite difference",
+      "title": "Проверка градиента",
+      "prerequisite_concept_ids": [
+        "derivative"
+      ],
+      "skill_objectives": [
+        "Оценивать численную погрешность"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "backprop.check.formula",
+          "kind": "formula",
+          "goal": "Центральная разность двух forward"
+        },
+        {
+          "id": "backprop.check.implementation",
+          "kind": "implementation",
+          "goal": "finite_difference(f,theta,h)"
+        },
+        {
+          "id": "backprop.check.edge",
+          "kind": "edge_case",
+          "goal": "h=0 ошибка; не проверять излом"
+        },
+        {
+          "id": "backprop.check.transfer",
+          "kind": "transfer",
+          "goal": "Сравнить несколько h и найти потерянный путь"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.optimizer.sgd",
+      "route": "#optimizers",
+      "source": "src/Experiments.tsx",
+      "components": [
+        "OptimizerLesson"
+      ],
+      "current_selector": "SGD method",
+      "title": "SGD и learning rate",
+      "prerequisite_concept_ids": [
+        "gradient",
+        "learning-rate"
+      ],
+      "skill_objectives": [
+        "Различать градиент и изменение веса"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "optimizer.sgd.formula",
+          "kind": "formula",
+          "goal": "theta_new=theta-eta*g"
+        },
+        {
+          "id": "optimizer.sgd.implementation",
+          "kind": "implementation",
+          "goal": "sgd_step(theta,g,eta)"
+        },
+        {
+          "id": "optimizer.sgd.edge",
+          "kind": "edge_case",
+          "goal": "eta=0 и нулевой grad"
+        },
+        {
+          "id": "optimizer.sgd.transfer",
+          "kind": "transfer",
+          "goal": "Показать рост loss при большом eta"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.optimizer.momentum",
+      "route": "#optimizers",
+      "source": "src/Experiments.tsx",
+      "components": [
+        "OptimizerLesson"
+      ],
+      "current_selector": "momentum method",
+      "title": "Momentum и история",
+      "prerequisite_concept_ids": [
+        "gradient"
+      ],
+      "skill_objectives": [
+        "Переносить историю между шагами"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "optimizer.momentum.formula",
+          "kind": "formula",
+          "goal": "v_new=mu*v+g"
+        },
+        {
+          "id": "optimizer.momentum.implementation",
+          "kind": "implementation",
+          "goal": "momentum_step(theta,g,v,eta,mu)"
+        },
+        {
+          "id": "optimizer.momentum.edge",
+          "kind": "edge_case",
+          "goal": "mu=0 совпадает с SGD"
+        },
+        {
+          "id": "optimizer.momentum.transfer",
+          "kind": "transfer",
+          "goal": "Два шага с противоположными gradients"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.optimizer.adam",
+      "route": "#optimizers",
+      "source": "src/Experiments.tsx",
+      "components": [
+        "OptimizerLesson"
+      ],
+      "current_selector": "Adam method",
+      "title": "Adam и коррекция смещения",
+      "prerequisite_concept_ids": [
+        "gradient"
+      ],
+      "skill_objectives": [
+        "Обновлять две EMA и timestep"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "optimizer.adam.formula",
+          "kind": "formula",
+          "goal": "m_hat=m/(1-beta1^t)"
+        },
+        {
+          "id": "optimizer.adam.implementation",
+          "kind": "implementation",
+          "goal": "adam_step(theta,g,state,eta)"
+        },
+        {
+          "id": "optimizer.adam.edge",
+          "kind": "edge_case",
+          "goal": "Первый шаг и прежняя ненулевая история"
+        },
+        {
+          "id": "optimizer.adam.transfer",
+          "kind": "transfer",
+          "goal": "Сравнить масштабирование gradients при epsilon>0"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.network.split",
+      "route": "#network",
+      "source": "src/BoundaryPlayground.tsx",
+      "components": [
+        "BoundaryPlayground"
+      ],
+      "current_selector": "train validation panels",
+      "title": "Разделение данных и validation",
+      "prerequisite_concept_ids": [
+        "train-validation-test"
+      ],
+      "skill_objectives": [
+        "Исключить утечку статистики"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "network.split.formula",
+          "kind": "formula",
+          "goal": "Среднее масштаба только train"
+        },
+        {
+          "id": "network.split.implementation",
+          "kind": "implementation",
+          "goal": "fit_standardizer; transform"
+        },
+        {
+          "id": "network.split.edge",
+          "kind": "edge_case",
+          "goal": "Повторы одной группы в одном split"
+        },
+        {
+          "id": "network.split.transfer",
+          "kind": "transfer",
+          "goal": "Выброс validation не меняет fitted state"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.network.boundary",
+      "route": "#network",
+      "source": "src/BoundaryPlayground.tsx",
+      "components": [
+        "BoundaryPlayground"
+      ],
+      "current_selector": "boundary-experiment",
+      "title": "Mini-batch и граница решений",
+      "prerequisite_concept_ids": [
+        "batches-epochs",
+        "initialization"
+      ],
+      "skill_objectives": [
+        "Выполнить полный update по заданной цели"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "network.boundary.formula",
+          "kind": "formula",
+          "goal": "Средняя BCE плюс L2"
+        },
+        {
+          "id": "network.boundary.implementation",
+          "kind": "implementation",
+          "goal": "train_batch(params,batch,eta,l2)"
+        },
+        {
+          "id": "network.boundary.edge",
+          "kind": "edge_case",
+          "goal": "eta=0 и batch=1"
+        },
+        {
+          "id": "network.boundary.transfer",
+          "kind": "transfer",
+          "goal": "Перестановка примеров полного batch"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.network.representations",
+      "route": "#network",
+      "source": "src/HiddenRepresentations.tsx",
+      "components": [
+        "HiddenRepresentations"
+      ],
+      "current_selector": "network-representations",
+      "title": "Скрытые представления",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "function"
+      ],
+      "skill_objectives": [
+        "Различить input hidden и output coordinates"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "network.representations.formula",
+          "kind": "formula",
+          "goal": "h=tanh(Wx+b)"
+        },
+        {
+          "id": "network.representations.implementation",
+          "kind": "implementation",
+          "goal": "hidden_features(params,points)"
+        },
+        {
+          "id": "network.representations.edge",
+          "kind": "edge_case",
+          "goal": "Один hidden feature не физический xyz"
+        },
+        {
+          "id": "network.representations.transfer",
+          "kind": "transfer",
+          "goal": "Разные h с одинаковым предсказанием"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.network.xor",
+      "route": "#network",
+      "source": "src/Experiments.tsx",
+      "components": [
+        "NetworkLesson"
+      ],
+      "current_selector": "network-xor",
+      "title": "XOR forward backward update",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Собрать сеть 2→4→1 из проверенных функций"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "network.xor.formula",
+          "kind": "formula",
+          "goal": "17 параметров и mean BCE"
+        },
+        {
+          "id": "network.xor.implementation",
+          "kind": "implementation",
+          "goal": "xor_forward; xor_backward; xor_step"
+        },
+        {
+          "id": "network.xor.edge",
+          "kind": "edge_case",
+          "goal": "Нулевая инициализация и симметрия"
+        },
+        {
+          "id": "network.xor.transfer",
+          "kind": "transfer",
+          "goal": "Finite difference всех параметров до обучения"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.network.diagnostics",
+      "route": "#network",
+      "source": "src/BoundaryDiagnostics.tsx",
+      "components": [
+        "BoundaryDiagnostics"
+      ],
+      "current_selector": "diagnostics panel",
+      "title": "Качество и порог",
+      "prerequisite_concept_ids": [
+        "train-validation-test",
+        "loss"
+      ],
+      "skill_objectives": [
+        "Отделить ошибку от порога классификации"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "network.diagnostics.formula",
+          "kind": "formula",
+          "goal": "TP FP FN TN"
+        },
+        {
+          "id": "network.diagnostics.implementation",
+          "kind": "implementation",
+          "goal": "confusion_matrix(p,y,threshold)"
+        },
+        {
+          "id": "network.diagnostics.edge",
+          "kind": "edge_case",
+          "goal": "p равно threshold и пустой класс"
+        },
+        {
+          "id": "network.diagnostics.transfer",
+          "kind": "transfer",
+          "goal": "Изменение порога меняет accuracy но не BCE"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.dense",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "DenseLab"
+      ],
+      "current_selector": "family dense",
+      "title": "Dense и глубина MLP",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Показать роль нелинейности между слоями"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.dense.formula",
+          "kind": "formula",
+          "goal": "Композиция двух affine"
+        },
+        {
+          "id": "architecture.dense.implementation",
+          "kind": "implementation",
+          "goal": "compose_affine(W1,b1,W2,b2)"
+        },
+        {
+          "id": "architecture.dense.edge",
+          "kind": "edge_case",
+          "goal": "Несовместимые формы"
+        },
+        {
+          "id": "architecture.dense.transfer",
+          "kind": "transfer",
+          "goal": "Сравнить linear композицию и tanh"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.cnn",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "CnnLab"
+      ],
+      "current_selector": "family cnn forward",
+      "title": "Conv2D pooling stride padding dilation",
+      "prerequisite_concept_ids": [
+        "tensor"
+      ],
+      "skill_objectives": [
+        "Индексировать receptive field"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.cnn.formula",
+          "kind": "formula",
+          "goal": "Размер floor((n+2p-d(k-1)-1)/s)+1"
+        },
+        {
+          "id": "architecture.cnn.implementation",
+          "kind": "implementation",
+          "goal": "conv2d; pool2d"
+        },
+        {
+          "id": "architecture.cnn.edge",
+          "kind": "edge_case",
+          "goal": "Непомещающийся фильтр; отрицательный max"
+        },
+        {
+          "id": "architecture.cnn.transfer",
+          "kind": "transfer",
+          "goal": "Dilation увеличивает охват без новых весов"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.cnn-training",
+      "route": "#architectures",
+      "source": "src/CnnTrainingLab.tsx",
+      "components": [
+        "CnnTrainingLab"
+      ],
+      "current_selector": "family cnn training",
+      "title": "Градиенты общего фильтра",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Сложить вклад веса во всех окнах"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.cnn-training.formula",
+          "kind": "formula",
+          "goal": "dW сумма по позициям"
+        },
+        {
+          "id": "architecture.cnn-training.implementation",
+          "kind": "implementation",
+          "goal": "conv_filter_grad(x,k,target)"
+        },
+        {
+          "id": "architecture.cnn-training.edge",
+          "kind": "edge_case",
+          "goal": "Один вес в нескольких окнах"
+        },
+        {
+          "id": "architecture.cnn-training.transfer",
+          "kind": "transfer",
+          "goal": "Finite difference и один SGD шаг"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.cnn-shift",
+      "route": "#architectures",
+      "source": "src/CnnShiftLab.tsx",
+      "components": [
+        "CnnShiftLab"
+      ],
+      "current_selector": "family cnn shift dialog",
+      "title": "Сдвиги CNN и границы",
+      "prerequisite_concept_ids": [
+        "tensor"
+      ],
+      "skill_objectives": [
+        "Различить equivariance и invariance"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.cnn-shift.formula",
+          "kind": "formula",
+          "goal": "conv(shift(x)) vs shift(conv(x))"
+        },
+        {
+          "id": "architecture.cnn-shift.implementation",
+          "kind": "implementation",
+          "goal": "shift_grid; interior_shift_error"
+        },
+        {
+          "id": "architecture.cnn-shift.edge",
+          "kind": "edge_case",
+          "goal": "Stride=2 и boundary effects"
+        },
+        {
+          "id": "architecture.cnn-shift.transfer",
+          "kind": "transfer",
+          "goal": "Контрпример полной invariance"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.rnn",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "RecurrentLab"
+      ],
+      "current_selector": "family rnn forward",
+      "title": "RNN stacked bidirectional",
+      "prerequisite_concept_ids": [
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Применять общие веса во времени"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.rnn.formula",
+          "kind": "formula",
+          "goal": "h_t=tanh(wx*x_t+wh*h_prev+b)"
+        },
+        {
+          "id": "architecture.rnn.implementation",
+          "kind": "implementation",
+          "goal": "rnn_forward; bidirectional_states"
+        },
+        {
+          "id": "architecture.rnn.edge",
+          "kind": "edge_case",
+          "goal": "Пустая последовательность и h0"
+        },
+        {
+          "id": "architecture.rnn.transfer",
+          "kind": "transfer",
+          "goal": "Будущее bidirectional несовместимо с causal"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.bptt",
+      "route": "#architectures",
+      "source": "src/BpttLab.tsx",
+      "components": [
+        "BpttLab"
+      ],
+      "current_selector": "family rnn training",
+      "title": "BPTT через время",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Не потерять путь последующих состояний"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.bptt.formula",
+          "kind": "formula",
+          "goal": "d_h_t=local+wh*d_z_next"
+        },
+        {
+          "id": "architecture.bptt.implementation",
+          "kind": "implementation",
+          "goal": "rnn_backward(trace,target)"
+        },
+        {
+          "id": "architecture.bptt.edge",
+          "kind": "edge_case",
+          "goal": "wh=0 и loss только last"
+        },
+        {
+          "id": "architecture.bptt.transfer",
+          "kind": "transfer",
+          "goal": "Сумма общих весов и gradient check"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.lstm",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "RecurrentLab"
+      ],
+      "current_selector": "family lstm",
+      "title": "LSTM память c и ворота",
+      "prerequisite_concept_ids": [
+        "probability"
+      ],
+      "skill_objectives": [
+        "Различить память c и выход h"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.lstm.formula",
+          "kind": "formula",
+          "goal": "c=f*c_prev+i*g h=o*tanh(c)"
+        },
+        {
+          "id": "architecture.lstm.implementation",
+          "kind": "implementation",
+          "goal": "lstm_cell(x,h,c,weights)"
+        },
+        {
+          "id": "architecture.lstm.edge",
+          "kind": "edge_case",
+          "goal": "f=1 i=0 и o=0"
+        },
+        {
+          "id": "architecture.lstm.transfer",
+          "kind": "transfer",
+          "goal": "Память сохранена при нулевом выходе"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.gru",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "RecurrentLab"
+      ],
+      "current_selector": "family gru",
+      "title": "GRU reset-before",
+      "prerequisite_concept_ids": [
+        "probability"
+      ],
+      "skill_objectives": [
+        "Зафиксировать конвенцию update gate"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.gru.formula",
+          "kind": "formula",
+          "goal": "h=z*h_prev+(1-z)*n"
+        },
+        {
+          "id": "architecture.gru.implementation",
+          "kind": "implementation",
+          "goal": "gru_reset_before_cell"
+        },
+        {
+          "id": "architecture.gru.edge",
+          "kind": "edge_case",
+          "goal": "z=1 и z=0"
+        },
+        {
+          "id": "architecture.gru.transfer",
+          "kind": "transfer",
+          "goal": "Векторный reset-before vs reset-after"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.architecture.transformer",
+      "route": "#architectures",
+      "source": "src/ArchitectureLesson.tsx",
+      "components": [
+        "TransformerLab"
+      ],
+      "current_selector": "family transformer",
+      "title": "Encoder decoder cross блок",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Проследить происхождение Q K V"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "architecture.transformer.formula",
+          "kind": "formula",
+          "goal": "Q decoder K/V encoder"
+        },
+        {
+          "id": "architecture.transformer.implementation",
+          "kind": "implementation",
+          "goal": "attention_block(x,memory,mode)"
+        },
+        {
+          "id": "architecture.transformer.edge",
+          "kind": "edge_case",
+          "goal": "Source и target разных длин"
+        },
+        {
+          "id": "architecture.transformer.transfer",
+          "kind": "transfer",
+          "goal": "Memory влияет через cross путь"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.tokens",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "EmbeddingLesson"
+      ],
+      "current_selector": "chapter 0",
+      "title": "Токены и embedding lookup",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Различить ID и позицию"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.tokens.formula",
+          "kind": "formula",
+          "goal": "X=E[ids]+P[pos]"
+        },
+        {
+          "id": "transformer.tokens.implementation",
+          "kind": "implementation",
+          "goal": "embedding_lookup(ids,E)"
+        },
+        {
+          "id": "transformer.tokens.edge",
+          "kind": "edge_case",
+          "goal": "Неизвестный ID и повтор ID"
+        },
+        {
+          "id": "transformer.tokens.transfer",
+          "kind": "transfer",
+          "goal": "Один токен в разных позициях"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.attention",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "AttentionLesson"
+      ],
+      "current_selector": "chapter 1",
+      "title": "Scaled attention и mask",
+      "prerequisite_concept_ids": [
+        "dot-product",
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Собрать QK scores softmax V"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.attention.formula",
+          "kind": "formula",
+          "goal": "scores=QK^T/sqrt(d)"
+        },
+        {
+          "id": "transformer.attention.implementation",
+          "kind": "implementation",
+          "goal": "scaled_attention(Q,K,V,mask)"
+        },
+        {
+          "id": "transformer.attention.edge",
+          "kind": "edge_case",
+          "goal": "Все ключи запрещены: ошибка"
+        },
+        {
+          "id": "transformer.attention.transfer",
+          "kind": "transfer",
+          "goal": "Заменить V без изменения весов"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.heads",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "HeadsLesson"
+      ],
+      "current_selector": "chapter 2",
+      "title": "MHA GQA MQA",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "tensor"
+      ],
+      "skill_objectives": [
+        "Сопоставить Q и KV головы"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.heads.formula",
+          "kind": "formula",
+          "goal": "kv_index=floor(q_head/group_size)"
+        },
+        {
+          "id": "transformer.heads.implementation",
+          "kind": "implementation",
+          "goal": "grouped_attention; kv_bytes"
+        },
+        {
+          "id": "transformer.heads.edge",
+          "kind": "edge_case",
+          "goal": "Q_heads не делятся на KV_heads"
+        },
+        {
+          "id": "transformer.heads.transfer",
+          "kind": "transfer",
+          "goal": "GQA с Q_heads=KV_heads совпадает с MHA"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.positions",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "RopeLesson"
+      ],
+      "current_selector": "chapter 3",
+      "title": "Позиции и RoPE",
+      "prerequisite_concept_ids": [
+        "dot-product"
+      ],
+      "skill_objectives": [
+        "Вращать пары по абсолютному index"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.positions.formula",
+          "kind": "formula",
+          "goal": "R(pos*omega) на каждой паре"
+        },
+        {
+          "id": "transformer.positions.implementation",
+          "kind": "implementation",
+          "goal": "rope_pair; sinusoidal_position"
+        },
+        {
+          "id": "transformer.positions.edge",
+          "kind": "edge_case",
+          "goal": "pos=0; нечётная ширина ошибка"
+        },
+        {
+          "id": "transformer.positions.transfer",
+          "kind": "transfer",
+          "goal": "Dot поворотов зависит от относительной позиции"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.block",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "BlockLesson"
+      ],
+      "current_selector": "chapter 4",
+      "title": "FFN residual LN RMSNorm",
+      "prerequisite_concept_ids": [
+        "normalization",
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Нормировать features позиции"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.block.formula",
+          "kind": "formula",
+          "goal": "LN по last axis; x+F(x)"
+        },
+        {
+          "id": "transformer.block.implementation",
+          "kind": "implementation",
+          "goal": "layer_norm; rms_norm; residual_backward"
+        },
+        {
+          "id": "transformer.block.edge",
+          "kind": "edge_case",
+          "goal": "Константный вектор epsilon>0"
+        },
+        {
+          "id": "transformer.block.transfer",
+          "kind": "transfer",
+          "goal": "Сдвиг input сохраняет LN но не RMSNorm"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.families",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "FamiliesLesson"
+      ],
+      "current_selector": "chapter 5",
+      "title": "Self causal cross доступ",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Не маскировать cross как causal self"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.families.formula",
+          "kind": "formula",
+          "goal": "j<=i только causal self"
+        },
+        {
+          "id": "transformer.families.implementation",
+          "kind": "implementation",
+          "goal": "attention_mask(nq,nk,kind)"
+        },
+        {
+          "id": "transformer.families.edge",
+          "kind": "edge_case",
+          "goal": "Q=2 K=3"
+        },
+        {
+          "id": "transformer.families.transfer",
+          "kind": "transfer",
+          "goal": "Будущий input не меняет прошлый causal output"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.cache",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "CacheLesson"
+      ],
+      "current_selector": "chapter 6",
+      "title": "KV-cache append-only",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Сохранить K/V и offset позиции"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.cache.formula",
+          "kind": "formula",
+          "goal": "Новый Q читает прошлые K/V"
+        },
+        {
+          "id": "transformer.cache.implementation",
+          "kind": "implementation",
+          "goal": "cached_attention_step(x,cache,pos)"
+        },
+        {
+          "id": "transformer.cache.edge",
+          "kind": "edge_case",
+          "goal": "Первый токен; invalidation изменённого префикса"
+        },
+        {
+          "id": "transformer.cache.transfer",
+          "kind": "transfer",
+          "goal": "Cached/full совпадают при fixed weights"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.transformer.generation",
+      "route": "#transformer",
+      "source": "src/TransformerCourse.tsx",
+      "components": [
+        "GenerationLesson",
+        "TransformerHeadLab"
+      ],
+      "current_selector": "chapter 7",
+      "title": "Sampling teacher forcing и голова",
+      "prerequisite_concept_ids": [
+        "cross-entropy"
+      ],
+      "skill_objectives": [
+        "Разделить выбор и gradient output матрицы"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "transformer.generation.formula",
+          "kind": "formula",
+          "goal": "Temperature top-k renorm top-p renorm"
+        },
+        {
+          "id": "transformer.generation.implementation",
+          "kind": "implementation",
+          "goal": "sampling_distribution; shifted_targets; head_grad"
+        },
+        {
+          "id": "transformer.generation.edge",
+          "kind": "edge_case",
+          "goal": "Tie EOS u=0"
+        },
+        {
+          "id": "transformer.generation.transfer",
+          "kind": "transfer",
+          "goal": "Top-p включает threshold token; frozen features прежние"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.full-transformer",
+      "route": "#advanced",
+      "source": "src/TinyTransformerLab.tsx",
+      "components": [
+        "TinyTransformerLab"
+      ],
+      "current_selector": "chapter 0",
+      "title": "Полный tiny Transformer backward",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Связать все группы параметров"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.full-transformer.formula",
+          "kind": "formula",
+          "goal": "Reverse всех подслоёв"
+        },
+        {
+          "id": "advanced.full-transformer.implementation",
+          "kind": "implementation",
+          "goal": "tiny_block_forward; parameter_grad"
+        },
+        {
+          "id": "advanced.full-transformer.edge",
+          "kind": "edge_case",
+          "goal": "Gradient masked future=0"
+        },
+        {
+          "id": "advanced.full-transformer.transfer",
+          "kind": "transfer",
+          "goal": "Gradient check всех параметров до training"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.bpe",
+      "route": "#advanced",
+      "source": "src/TokenAdaptationLabs.tsx",
+      "components": [
+        "BpeLab"
+      ],
+      "current_selector": "chapter 1",
+      "title": "BPE правила merge",
+      "prerequisite_concept_ids": [
+        "function"
+      ],
+      "skill_objectives": [
+        "Сохранить learned rank merge"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.bpe.formula",
+          "kind": "formula",
+          "goal": "Самая частая пара с tie-break"
+        },
+        {
+          "id": "advanced.bpe.implementation",
+          "kind": "implementation",
+          "goal": "count_pairs; merge_pair; encode_bpe"
+        },
+        {
+          "id": "advanced.bpe.edge",
+          "kind": "edge_case",
+          "goal": "Перекрытие пар и unseen symbol"
+        },
+        {
+          "id": "advanced.bpe.transfer",
+          "kind": "transfer",
+          "goal": "Новый текст без обучения ranks"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.swiglu",
+      "route": "#advanced",
+      "source": "src/TokenAdaptationLabs.tsx",
+      "components": [
+        "GatedFfnLab"
+      ],
+      "current_selector": "chapter 2",
+      "title": "ReLU GELU SwiGLU",
+      "prerequisite_concept_ids": [
+        "derivative"
+      ],
+      "skill_objectives": [
+        "Разделить gate и value ветви"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.swiglu.formula",
+          "kind": "formula",
+          "goal": "SiLU(a)*b"
+        },
+        {
+          "id": "advanced.swiglu.implementation",
+          "kind": "implementation",
+          "goal": "swiglu_forward; swiglu_backward"
+        },
+        {
+          "id": "advanced.swiglu.edge",
+          "kind": "edge_case",
+          "goal": "Gate около нуля и большие минус a"
+        },
+        {
+          "id": "advanced.swiglu.transfer",
+          "kind": "transfer",
+          "goal": "Сравнить gate с фиксированной ReLU"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.lora",
+      "route": "#advanced",
+      "source": "src/TokenAdaptationLabs.tsx",
+      "components": [
+        "LoraLab"
+      ],
+      "current_selector": "chapter 3",
+      "title": "LoRA низкий ранг",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Обучать A/B при frozen W"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.lora.formula",
+          "kind": "formula",
+          "goal": "W_eff=W+(alpha/r)*BA"
+        },
+        {
+          "id": "advanced.lora.implementation",
+          "kind": "implementation",
+          "goal": "lora_forward; lora_grad"
+        },
+        {
+          "id": "advanced.lora.edge",
+          "kind": "edge_case",
+          "goal": "A=0 B=0; r=0 ошибка"
+        },
+        {
+          "id": "advanced.lora.transfer",
+          "kind": "transfer",
+          "goal": "Merged forward совпадает при прежней W"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.vit",
+      "route": "#advanced",
+      "source": "src/VisionRoutingLabs.tsx",
+      "components": [
+        "VisionTransformerLab"
+      ],
+      "current_selector": "chapter 4",
+      "title": "ViT patchification",
+      "prerequisite_concept_ids": [
+        "tensor",
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Сохранить порядок пикселей патча"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.vit.formula",
+          "kind": "formula",
+          "goal": "Grid→P×features→embedding"
+        },
+        {
+          "id": "advanced.vit.implementation",
+          "kind": "implementation",
+          "goal": "patchify; patch_projection"
+        },
+        {
+          "id": "advanced.vit.edge",
+          "kind": "edge_case",
+          "goal": "Размер grid не кратен patch"
+        },
+        {
+          "id": "advanced.vit.transfer",
+          "kind": "transfer",
+          "goal": "Один пиксель сначала меняет один token"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.moe",
+      "route": "#advanced",
+      "source": "src/VisionRoutingLabs.tsx",
+      "components": [
+        "MixtureExpertsLab"
+      ],
+      "current_selector": "chapter 5",
+      "title": "MoE top-k capacity routing",
+      "prerequisite_concept_ids": [
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Учесть renorm и dropped assignments"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.moe.formula",
+          "kind": "formula",
+          "goal": "Weighted expert sum"
+        },
+        {
+          "id": "advanced.moe.implementation",
+          "kind": "implementation",
+          "goal": "route_topk; mix_experts"
+        },
+        {
+          "id": "advanced.moe.edge",
+          "kind": "edge_case",
+          "goal": "Capacity=0 и ties"
+        },
+        {
+          "id": "advanced.moe.transfer",
+          "kind": "transfer",
+          "goal": "Разделить нагрузку и качество экспертов"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.mla",
+      "route": "#advanced",
+      "source": "src/EfficientSequenceLabs.tsx",
+      "components": [
+        "LatentAttentionLab"
+      ],
+      "current_selector": "chapter 6",
+      "title": "MLA latent KV-cache",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Отличить latent cache от full K/V"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.mla.formula",
+          "kind": "formula",
+          "goal": "latent=x*W_down затем up"
+        },
+        {
+          "id": "advanced.mla.implementation",
+          "kind": "implementation",
+          "goal": "latent_cache_step; cache_elements"
+        },
+        {
+          "id": "advanced.mla.edge",
+          "kind": "edge_case",
+          "goal": "Нулевой latent rank ошибка"
+        },
+        {
+          "id": "advanced.mla.transfer",
+          "kind": "transfer",
+          "goal": "Ошибка реконструкции и память отдельно"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.online-attention",
+      "route": "#advanced",
+      "source": "src/EfficientSequenceLabs.tsx",
+      "components": [
+        "OnlineAttentionLab"
+      ],
+      "current_selector": "chapter 7",
+      "title": "Online exact softmax",
+      "prerequisite_concept_ids": [
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Переносить m l weighted_sum между блоками"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.online-attention.formula",
+          "kind": "formula",
+          "goal": "Rescale exp(m_old-m_new)"
+        },
+        {
+          "id": "advanced.online-attention.implementation",
+          "kind": "implementation",
+          "goal": "online_attention_update"
+        },
+        {
+          "id": "advanced.online-attention.edge",
+          "kind": "edge_case",
+          "goal": "Пустой блок; logits ±1000"
+        },
+        {
+          "id": "advanced.online-attention.transfer",
+          "kind": "transfer",
+          "goal": "Любое разбиение совпадает с full"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.ssm",
+      "route": "#advanced",
+      "source": "src/EfficientSequenceLabs.tsx",
+      "components": [
+        "StateSpaceLab"
+      ],
+      "current_selector": "chapter 8",
+      "title": "SSM DeltaNet адресная запись",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Различить decay и addressed update"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.ssm.formula",
+          "kind": "formula",
+          "goal": "h=A*h+B*x; delta по key error"
+        },
+        {
+          "id": "advanced.ssm.implementation",
+          "kind": "implementation",
+          "goal": "ssm_step; delta_memory_update"
+        },
+        {
+          "id": "advanced.ssm.edge",
+          "kind": "edge_case",
+          "goal": "A=0 и repeated key"
+        },
+        {
+          "id": "advanced.ssm.transfer",
+          "kind": "transfer",
+          "goal": "Сохранение иных keys при новой записи"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.advanced.denoisers",
+      "route": "#advanced",
+      "source": "src/VisionRoutingLabs.tsx",
+      "components": [
+        "ImageDenoiserLab"
+      ],
+      "current_selector": "chapter 9",
+      "title": "U-Net skip и DiT condition",
+      "prerequisite_concept_ids": [
+        "tensor"
+      ],
+      "skill_objectives": [
+        "Skip переносит features той же сетки"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "advanced.denoisers.formula",
+          "kind": "formula",
+          "goal": "Concat skip vs attention tokens"
+        },
+        {
+          "id": "advanced.denoisers.implementation",
+          "kind": "implementation",
+          "goal": "unet_skip_merge; timestep_condition"
+        },
+        {
+          "id": "advanced.denoisers.edge",
+          "kind": "edge_case",
+          "goal": "Skip off; несовместимые resolution"
+        },
+        {
+          "id": "advanced.denoisers.transfer",
+          "kind": "transfer",
+          "goal": "Время условие функции без физической оси"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.clip",
+      "route": "#frontiers",
+      "source": "src/RepresentationFrontierLabs.tsx",
+      "components": [
+        "ClipLab"
+      ],
+      "current_selector": "chapter 0",
+      "title": "CLIP contrastive objective",
+      "prerequisite_concept_ids": [
+        "cross-entropy",
+        "dot-product"
+      ],
+      "skill_objectives": [
+        "Использовать pairs в двух направлениях"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.clip.formula",
+          "kind": "formula",
+          "goal": "CE rows плюс CE columns"
+        },
+        {
+          "id": "frontier.clip.implementation",
+          "kind": "implementation",
+          "goal": "normalize_embeddings; symmetric_clip_loss"
+        },
+        {
+          "id": "frontier.clip.edge",
+          "kind": "edge_case",
+          "goal": "Переставленные pairs; zero norm ошибка"
+        },
+        {
+          "id": "frontier.clip.transfer",
+          "kind": "transfer",
+          "goal": "Одинаковая перестановка image/text сохраняет loss"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.flow",
+      "route": "#frontiers",
+      "source": "src/FlowGeometryLabs.tsx",
+      "components": [
+        "FlowMatchingLab"
+      ],
+      "current_selector": "chapter 1",
+      "title": "Flow matching ODE",
+      "prerequisite_concept_ids": [
+        "gradient",
+        "function"
+      ],
+      "skill_objectives": [
+        "Различить conditional path и marginal field"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.flow.formula",
+          "kind": "formula",
+          "goal": "x_t=(1-t)x0+t*x1 target=x1-x0"
+        },
+        {
+          "id": "frontier.flow.implementation",
+          "kind": "implementation",
+          "goal": "flow_training_pair; euler_step"
+        },
+        {
+          "id": "frontier.flow.edge",
+          "kind": "edge_case",
+          "goal": "t=0 t=1 zero velocity"
+        },
+        {
+          "id": "frontier.flow.transfer",
+          "kind": "transfer",
+          "goal": "Снижение шага ODE и численная ошибка"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.interpretability",
+      "route": "#frontiers",
+      "source": "src/RepresentationFrontierLabs.tsx",
+      "components": [
+        "InterpretabilityLab"
+      ],
+      "current_selector": "chapter 2",
+      "title": "Признаки и вмешательства",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "loss"
+      ],
+      "skill_objectives": [
+        "Измерять конкретную замену активации"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.interpretability.formula",
+          "kind": "formula",
+          "goal": "delta=f(h_patched)-f(h)"
+        },
+        {
+          "id": "frontier.interpretability.implementation",
+          "kind": "implementation",
+          "goal": "patch_activation; intervention_effect"
+        },
+        {
+          "id": "frontier.interpretability.edge",
+          "kind": "edge_case",
+          "goal": "Сам baseline даёт нулевой effect"
+        },
+        {
+          "id": "frontier.interpretability.transfer",
+          "kind": "transfer",
+          "goal": "Корреляция и эффект вмешательства отдельно"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.egnn",
+      "route": "#frontiers",
+      "source": "src/FlowGeometryLabs.tsx",
+      "components": [
+        "EquivariantLab"
+      ],
+      "current_selector": "chapter 3",
+      "title": "EGNN симметрии xyz",
+      "prerequisite_concept_ids": [
+        "graph",
+        "vector"
+      ],
+      "skill_objectives": [
+        "Scalar invariance vector equivariance"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.egnn.formula",
+          "kind": "formula",
+          "goal": "Distance² messages и relative xyz"
+        },
+        {
+          "id": "frontier.egnn.implementation",
+          "kind": "implementation",
+          "goal": "egnn_coordinate_step"
+        },
+        {
+          "id": "frontier.egnn.edge",
+          "kind": "edge_case",
+          "goal": "Совпадающие точки и отражение"
+        },
+        {
+          "id": "frontier.egnn.transfer",
+          "kind": "transfer",
+          "goal": "Перенос+поворот согласует outputs"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.neural-fields",
+      "route": "#frontiers",
+      "source": "src/FlowGeometryLabs.tsx",
+      "components": [
+        "NeuralFieldLab"
+      ],
+      "current_selector": "chapter 4",
+      "title": "Neural fields volume rendering",
+      "prerequisite_concept_ids": [
+        "exponential",
+        "vector"
+      ],
+      "skill_objectives": [
+        "Считать T до текущей sample"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.neural-fields.formula",
+          "kind": "formula",
+          "goal": "alpha=1-exp(-sigma*delta) weight=T*alpha"
+        },
+        {
+          "id": "frontier.neural-fields.implementation",
+          "kind": "implementation",
+          "goal": "volume_composite(samples)"
+        },
+        {
+          "id": "frontier.neural-fields.edge",
+          "kind": "edge_case",
+          "goal": "sigma=0 плотная первая sample"
+        },
+        {
+          "id": "frontier.neural-fields.transfer",
+          "kind": "transfer",
+          "goal": "Разбиение однородного segment сохраняет итог"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.dpo",
+      "route": "#frontiers",
+      "source": "src/InferenceFrontierLabs.tsx",
+      "components": [
+        "PreferenceLab"
+      ],
+      "current_selector": "chapter 5",
+      "title": "DPO reference policy",
+      "prerequisite_concept_ids": [
+        "kl-divergence",
+        "gradient"
+      ],
+      "skill_objectives": [
+        "Не обновлять frozen reference"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.dpo.formula",
+          "kind": "formula",
+          "goal": "z=beta*(logratio_w-logratio_l)"
+        },
+        {
+          "id": "frontier.dpo.implementation",
+          "kind": "implementation",
+          "goal": "dpo_pair_loss; dpo_logit_grad"
+        },
+        {
+          "id": "frontier.dpo.edge",
+          "kind": "edge_case",
+          "goal": "Winner/loser swap beta=0"
+        },
+        {
+          "id": "frontier.dpo.transfer",
+          "kind": "transfer",
+          "goal": "Loss пары и KL всей политики"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.quantization",
+      "route": "#frontiers",
+      "source": "src/InferenceFrontierLabs.tsx",
+      "components": [
+        "QuantizationLab"
+      ],
+      "current_selector": "chapter 6",
+      "title": "Quantization и адаптер",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Учесть scale zero-point clipping metadata"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.quantization.formula",
+          "kind": "formula",
+          "goal": "q=clamp(round(w/scale)+zero)"
+        },
+        {
+          "id": "frontier.quantization.implementation",
+          "kind": "implementation",
+          "goal": "quantize; dequantize; storage_bytes"
+        },
+        {
+          "id": "frontier.quantization.edge",
+          "kind": "edge_case",
+          "goal": "Константный канал и выброс"
+        },
+        {
+          "id": "frontier.quantization.transfer",
+          "kind": "transfer",
+          "goal": "Per-channel error и payload+metadata"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.speculative",
+      "route": "#frontiers",
+      "source": "src/InferenceFrontierLabs.tsx",
+      "components": [
+        "SpeculativeLab"
+      ],
+      "current_selector": "chapter 7",
+      "title": "Speculative correction",
+      "prerequisite_concept_ids": [
+        "probability"
+      ],
+      "skill_objectives": [
+        "Сохранить target law аналитически"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.speculative.formula",
+          "kind": "formula",
+          "goal": "accept=min(1,p/q) residual=max(p-q,0)/Z"
+        },
+        {
+          "id": "frontier.speculative.implementation",
+          "kind": "implementation",
+          "goal": "acceptance_probability; residual_distribution"
+        },
+        {
+          "id": "frontier.speculative.edge",
+          "kind": "edge_case",
+          "goal": "p=q; q=0 не предлагает token"
+        },
+        {
+          "id": "frontier.speculative.transfer",
+          "kind": "transfer",
+          "goal": "Accepted mass+rejected*residual=p"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.long-context",
+      "route": "#frontiers",
+      "source": "src/InferenceFrontierLabs.tsx",
+      "components": [
+        "LongContextLab"
+      ],
+      "current_selector": "chapter 8",
+      "title": "Контекст и extrapolation",
+      "prerequisite_concept_ids": [
+        "train-validation-test",
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Разделить reachable key и score"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.long-context.formula",
+          "kind": "formula",
+          "goal": "Window mask отдельно от positional bias"
+        },
+        {
+          "id": "frontier.long-context.implementation",
+          "kind": "implementation",
+          "goal": "retrieval_attention; alibi_bias"
+        },
+        {
+          "id": "frontier.long-context.edge",
+          "kind": "edge_case",
+          "goal": "Ключ вне window вес 0"
+        },
+        {
+          "id": "frontier.long-context.transfer",
+          "kind": "transfer",
+          "goal": "Короткое обучение длинная held-out проверка"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.jepa",
+      "route": "#frontiers",
+      "source": "src/RepresentationFrontierLabs.tsx",
+      "components": [
+        "JepaLab"
+      ],
+      "current_selector": "chapter 9",
+      "title": "JEPA EMA stop-gradient",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "gradient"
+      ],
+      "skill_objectives": [
+        "Не градуировать target encoder"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.jepa.formula",
+          "kind": "formula",
+          "goal": "target=tau*target+(1-tau)*online"
+        },
+        {
+          "id": "frontier.jepa.implementation",
+          "kind": "implementation",
+          "goal": "jepa_loss; ema_update"
+        },
+        {
+          "id": "frontier.jepa.edge",
+          "kind": "edge_case",
+          "goal": "tau=1 collapse constant features"
+        },
+        {
+          "id": "frontier.jepa.transfer",
+          "kind": "transfer",
+          "goal": "Zero loss не доказывает representation quality"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.masked-text",
+      "route": "#frontiers",
+      "source": "src/InferenceFrontierLabs.tsx",
+      "components": [
+        "MaskedTextLab"
+      ],
+      "current_selector": "chapter 10",
+      "title": "Masked text denoising",
+      "prerequisite_concept_ids": [
+        "cross-entropy"
+      ],
+      "skill_objectives": [
+        "Loss только по masked positions"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.masked-text.formula",
+          "kind": "formula",
+          "goal": "Masked CE и visible context"
+        },
+        {
+          "id": "frontier.masked-text.implementation",
+          "kind": "implementation",
+          "goal": "masked_ce; reveal_tokens"
+        },
+        {
+          "id": "frontier.masked-text.edge",
+          "kind": "edge_case",
+          "goal": "No masks и full mask"
+        },
+        {
+          "id": "frontier.masked-text.transfer",
+          "kind": "transfer",
+          "goal": "Synchronous vs iterative reveal с right hint"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.kan",
+      "route": "#frontiers",
+      "source": "src/RepresentationFrontierLabs.tsx",
+      "components": [
+        "KanLab"
+      ],
+      "current_selector": "chapter 11",
+      "title": "KAN и сплайны",
+      "prerequisite_concept_ids": [
+        "function",
+        "derivative"
+      ],
+      "skill_objectives": [
+        "Интерполировать и обучать knots"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.kan.formula",
+          "kind": "formula",
+          "goal": "Две ненулевые basis weights"
+        },
+        {
+          "id": "frontier.kan.implementation",
+          "kind": "implementation",
+          "goal": "linear_spline; spline_coefficient_grad"
+        },
+        {
+          "id": "frontier.kan.edge",
+          "kind": "edge_case",
+          "goal": "Exact knot; вне domain политика"
+        },
+        {
+          "id": "frontier.kan.transfer",
+          "kind": "transfer",
+          "goal": "Аддитивная KAN не выражает x*y"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.vit-training",
+      "route": "#frontiers",
+      "source": "src/ArchitectureTrainingLabs.tsx",
+      "components": [
+        "VitTrainingLab"
+      ],
+      "current_selector": "chapter 12",
+      "title": "Обучение ViT",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Проверить gradient patch QKV head"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.vit-training.formula",
+          "kind": "formula",
+          "goal": "Reverse patch→QKV→head"
+        },
+        {
+          "id": "frontier.vit-training.implementation",
+          "kind": "implementation",
+          "goal": "vit_loss_grad; grouped_delta_norm"
+        },
+        {
+          "id": "frontier.vit-training.edge",
+          "kind": "edge_case",
+          "goal": "Frozen group zero delta"
+        },
+        {
+          "id": "frontier.vit-training.transfer",
+          "kind": "transfer",
+          "goal": "Validation новых узоров после gradient checks"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.moe-training",
+      "route": "#frontiers",
+      "source": "src/ArchitectureTrainingLabs.tsx",
+      "components": [
+        "MoeTrainingLab"
+      ],
+      "current_selector": "chapter 13",
+      "title": "Soft MoE обучение",
+      "prerequisite_concept_ids": [
+        "softmax",
+        "loss"
+      ],
+      "skill_objectives": [
+        "Отличить soft route от top-k"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.moe-training.formula",
+          "kind": "formula",
+          "goal": "MSE плюс заданный balance loss"
+        },
+        {
+          "id": "frontier.moe-training.implementation",
+          "kind": "implementation",
+          "goal": "soft_moe_loss_grad"
+        },
+        {
+          "id": "frontier.moe-training.edge",
+          "kind": "edge_case",
+          "goal": "Same experts uniform router"
+        },
+        {
+          "id": "frontier.moe-training.transfer",
+          "kind": "transfer",
+          "goal": "Баланс без уменьшения MSE не успех"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.ssm-training",
+      "route": "#frontiers",
+      "source": "src/ArchitectureTrainingLabs.tsx",
+      "components": [
+        "SsmTrainingLab"
+      ],
+      "current_selector": "chapter 14",
+      "title": "Обучение SSM памяти",
+      "prerequisite_concept_ids": [
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Суммировать shared recurrence influence"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.ssm-training.formula",
+          "kind": "formula",
+          "goal": "A=tanh(a) contribution=B*x0*A^t"
+        },
+        {
+          "id": "frontier.ssm-training.implementation",
+          "kind": "implementation",
+          "goal": "ssm_sequence_grad"
+        },
+        {
+          "id": "frontier.ssm-training.edge",
+          "kind": "edge_case",
+          "goal": "A=0 zero initial state"
+        },
+        {
+          "id": "frontier.ssm-training.transfer",
+          "kind": "transfer",
+          "goal": "Derivative 5*A^4*(1-A²) по a"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.frontier.denoiser-training",
+      "route": "#frontiers",
+      "source": "src/ArchitectureTrainingLabs.tsx",
+      "components": [
+        "DenoiserTrainingLab"
+      ],
+      "current_selector": "chapter 15",
+      "title": "Обучение U-Net DiT noise",
+      "prerequisite_concept_ids": [
+        "backpropagation",
+        "noise-schedule"
+      ],
+      "skill_objectives": [
+        "Loss по числам epsilon"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "frontier.denoiser-training.formula",
+          "kind": "formula",
+          "goal": "MSE epsilon_pred vs epsilon"
+        },
+        {
+          "id": "frontier.denoiser-training.implementation",
+          "kind": "implementation",
+          "goal": "denoiser_loss_grad; sample_reverse"
+        },
+        {
+          "id": "frontier.denoiser-training.edge",
+          "kind": "edge_case",
+          "goal": "Display clipping не меняет loss"
+        },
+        {
+          "id": "frontier.denoiser-training.transfer",
+          "kind": "transfer",
+          "goal": "Train validation и reverse sample отдельно"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.vae.idea",
+      "route": "#vae",
+      "source": "src/VAECourse.tsx",
+      "components": [
+        "VAECourse"
+      ],
+      "current_selector": "chapter 0",
+      "title": "Encoder распределение и prior",
+      "prerequisite_concept_ids": [
+        "gaussian",
+        "latent-variable"
+      ],
+      "skill_objectives": [
+        "Различить posterior и prior sample"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "vae.idea.formula",
+          "kind": "formula",
+          "goal": "q=N(mu,sigma²)"
+        },
+        {
+          "id": "vae.idea.implementation",
+          "kind": "implementation",
+          "goal": "encode_gaussian; sample_prior"
+        },
+        {
+          "id": "vae.idea.edge",
+          "kind": "edge_case",
+          "goal": "sigma>0; разные sigma при одной mu"
+        },
+        {
+          "id": "vae.idea.transfer",
+          "kind": "transfer",
+          "goal": "Без x генерация использует prior"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.vae.compute",
+      "route": "#vae",
+      "source": "src/VAECourse.tsx",
+      "components": [
+        "VAECourse"
+      ],
+      "current_selector": "chapter 1",
+      "title": "Reparameterization KL ELBO",
+      "prerequisite_concept_ids": [
+        "reparameterization",
+        "elbo"
+      ],
+      "skill_objectives": [
+        "Gradient при fixed epsilon"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "vae.compute.formula",
+          "kind": "formula",
+          "goal": "z=mu+sigma*eps; KL к N(0,1)"
+        },
+        {
+          "id": "vae.compute.implementation",
+          "kind": "implementation",
+          "goal": "reparameterize; gaussian_kl; elbo_loss"
+        },
+        {
+          "id": "vae.compute.edge",
+          "kind": "edge_case",
+          "goal": "mu=0 sigma=1 KL=0"
+        },
+        {
+          "id": "vae.compute.transfer",
+          "kind": "transfer",
+          "goal": "Finite difference с тем же epsilon"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.vae.train",
+      "route": "#vae",
+      "source": "src/VAECourse.tsx",
+      "components": [
+        "VAECourse"
+      ],
+      "current_selector": "chapter 2",
+      "title": "Обучение Gaussian VAE",
+      "prerequisite_concept_ids": [
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Собрать NLL+beta*KL backward"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "vae.train.formula",
+          "kind": "formula",
+          "goal": "Gradients шести параметров"
+        },
+        {
+          "id": "vae.train.implementation",
+          "kind": "implementation",
+          "goal": "vae_sample_grad; vae_batch_step"
+        },
+        {
+          "id": "vae.train.edge",
+          "kind": "edge_case",
+          "goal": "eta=0 beta=0"
+        },
+        {
+          "id": "vae.train.transfer",
+          "kind": "transfer",
+          "goal": "Смена beta меняет цель без update"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.vae.generate",
+      "route": "#vae",
+      "source": "src/VAECourse.tsx",
+      "components": [
+        "VAECourse"
+      ],
+      "current_selector": "chapter 3",
+      "title": "Decoder mean и выборка",
+      "prerequisite_concept_ids": [
+        "gaussian"
+      ],
+      "skill_objectives": [
+        "Разделить среднее и variance decoder"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "vae.generate.formula",
+          "kind": "formula",
+          "goal": "x=w*z+b+sigma_x*eps_x"
+        },
+        {
+          "id": "vae.generate.implementation",
+          "kind": "implementation",
+          "goal": "decode_mean; decoder_sample"
+        },
+        {
+          "id": "vae.generate.edge",
+          "kind": "edge_case",
+          "goal": "eps_x=0 разное sigma_x"
+        },
+        {
+          "id": "vae.generate.transfer",
+          "kind": "transfer",
+          "goal": "Latent interpolation не гарантия prior density"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.vae.limits",
+      "route": "#vae",
+      "source": "src/VAECourse.tsx",
+      "components": [
+        "VAECourse"
+      ],
+      "current_selector": "chapter 4",
+      "title": "Beta-VAE prior posterior разрыв",
+      "prerequisite_concept_ids": [
+        "kl-divergence"
+      ],
+      "skill_objectives": [
+        "Не смешивать reconstruction и prior quality"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "vae.limits.formula",
+          "kind": "formula",
+          "goal": "Reconstruction и codes statistics"
+        },
+        {
+          "id": "vae.limits.implementation",
+          "kind": "implementation",
+          "goal": "reconstruction_metric; latent_summary"
+        },
+        {
+          "id": "vae.limits.edge",
+          "kind": "edge_case",
+          "goal": "beta=0 и плохой prior coverage"
+        },
+        {
+          "id": "vae.limits.transfer",
+          "kind": "transfer",
+          "goal": "Две beta на одинаковом независимом наборе"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gan.game",
+      "route": "#gan",
+      "source": "src/GANCourse.tsx",
+      "components": [
+        "GANCourse"
+      ],
+      "current_selector": "chapter 0",
+      "title": "Generator discriminator игра",
+      "prerequisite_concept_ids": [
+        "adversarial-game"
+      ],
+      "skill_objectives": [
+        "Разделить параметры двух моделей"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gan.game.formula",
+          "kind": "formula",
+          "goal": "D(real) D(G(z))"
+        },
+        {
+          "id": "gan.game.implementation",
+          "kind": "implementation",
+          "goal": "generator_forward; discriminator_forward"
+        },
+        {
+          "id": "gan.game.edge",
+          "kind": "edge_case",
+          "goal": "Same output разных latent"
+        },
+        {
+          "id": "gan.game.transfer",
+          "kind": "transfer",
+          "goal": "Предсказать направление двух целей"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gan.gradients",
+      "route": "#gan",
+      "source": "src/GANCourse.tsx",
+      "components": [
+        "GANCourse"
+      ],
+      "current_selector": "chapter 1",
+      "title": "Два GAN backward",
+      "prerequisite_concept_ids": [
+        "chain-rule"
+      ],
+      "skill_objectives": [
+        "Gradient через frozen D в G"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gan.gradients.formula",
+          "kind": "formula",
+          "goal": "Non-saturating G и D BCE"
+        },
+        {
+          "id": "gan.gradients.implementation",
+          "kind": "implementation",
+          "goal": "gan_discriminator_grad; gan_generator_grad"
+        },
+        {
+          "id": "gan.gradients.edge",
+          "kind": "edge_case",
+          "goal": "Уверенный D stable logits"
+        },
+        {
+          "id": "gan.gradients.transfer",
+          "kind": "transfer",
+          "goal": "Finite difference каждой группы"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gan.train",
+      "route": "#gan",
+      "source": "src/GANCourse.tsx",
+      "components": [
+        "GANCourse"
+      ],
+      "current_selector": "chapter 2",
+      "title": "Чередование D и G",
+      "prerequisite_concept_ids": [
+        "gradient"
+      ],
+      "skill_objectives": [
+        "Обновлять только выбранную группу"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gan.train.formula",
+          "kind": "formula",
+          "goal": "D step затем G step с новым D"
+        },
+        {
+          "id": "gan.train.implementation",
+          "kind": "implementation",
+          "goal": "gan_alternating_step"
+        },
+        {
+          "id": "gan.train.edge",
+          "kind": "edge_case",
+          "goal": "eta_G=0 eta_D=0"
+        },
+        {
+          "id": "gan.train.transfer",
+          "kind": "transfer",
+          "goal": "Frozen параметры прежние на каждом подшаге"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gan.diversity",
+      "route": "#gan",
+      "source": "src/GANCourse.tsx",
+      "components": [
+        "GANCourse"
+      ],
+      "current_selector": "chapter 3",
+      "title": "Mode coverage разнообразие",
+      "prerequisite_concept_ids": [
+        "variance"
+      ],
+      "skill_objectives": [
+        "Один sample не покрытие modes"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gan.diversity.formula",
+          "kind": "formula",
+          "goal": "Samples per target region"
+        },
+        {
+          "id": "gan.diversity.implementation",
+          "kind": "implementation",
+          "goal": "mode_coverage; sample_variance"
+        },
+        {
+          "id": "gan.diversity.edge",
+          "kind": "edge_case",
+          "goal": "Все samples одинаковые"
+        },
+        {
+          "id": "gan.diversity.transfer",
+          "kind": "transfer",
+          "goal": "При близком mean найти пропущенную mode"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gan.variants",
+      "route": "#gan",
+      "source": "src/GANCourse.tsx",
+      "components": [
+        "GANCourse"
+      ],
+      "current_selector": "chapter 4",
+      "title": "Conditional GAN WGAN",
+      "prerequisite_concept_ids": [
+        "expectation"
+      ],
+      "skill_objectives": [
+        "Различить discriminator и critic"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gan.variants.formula",
+          "kind": "formula",
+          "goal": "Wasserstein critic objective"
+        },
+        {
+          "id": "gan.variants.implementation",
+          "kind": "implementation",
+          "goal": "critic_objective; conditional_input"
+        },
+        {
+          "id": "gan.variants.edge",
+          "kind": "edge_case",
+          "goal": "Critic не ограничен 0…1"
+        },
+        {
+          "id": "gan.variants.transfer",
+          "kind": "transfer",
+          "goal": "Найти нарушение Lipschitz; полный WGAN не заявлен"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.diffusion.noise",
+      "route": "#diffusion",
+      "source": "src/DiffusionCourse.tsx",
+      "components": [
+        "ForwardLesson"
+      ],
+      "current_selector": "chapter 0",
+      "title": "Schedule forward noise",
+      "prerequisite_concept_ids": [
+        "noise-schedule",
+        "gaussian"
+      ],
+      "skill_objectives": [
+        "Правильно считать alpha cumprod"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "diffusion.noise.formula",
+          "kind": "formula",
+          "goal": "sqrt(alpha_bar)*x0+sqrt(1-alpha_bar)*eps"
+        },
+        {
+          "id": "diffusion.noise.implementation",
+          "kind": "implementation",
+          "goal": "alpha_cumprod; forward_noise"
+        },
+        {
+          "id": "diffusion.noise.edge",
+          "kind": "edge_case",
+          "goal": "t=0 конвенция; beta вне (0,1)"
+        },
+        {
+          "id": "diffusion.noise.transfer",
+          "kind": "transfer",
+          "goal": "Квадраты signal noise коэффициентов суммируются в 1"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.diffusion.training",
+      "route": "#diffusion",
+      "source": "src/DiffusionCourse.tsx",
+      "components": [
+        "TrainingLesson"
+      ],
+      "current_selector": "chapter 1",
+      "title": "Epsilon prediction training",
+      "prerequisite_concept_ids": [
+        "loss",
+        "backpropagation"
+      ],
+      "skill_objectives": [
+        "Не путать epsilon и x0 targets"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "diffusion.training.formula",
+          "kind": "formula",
+          "goal": "MSE(eps_pred,eps)"
+        },
+        {
+          "id": "diffusion.training.implementation",
+          "kind": "implementation",
+          "goal": "noise_batch_loss_grad"
+        },
+        {
+          "id": "diffusion.training.edge",
+          "kind": "edge_case",
+          "goal": "Fixed t и eps для grad check"
+        },
+        {
+          "id": "diffusion.training.transfer",
+          "kind": "transfer",
+          "goal": "Независимый noise batch validation"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.diffusion.step",
+      "route": "#diffusion",
+      "source": "src/DiffusionCourse.tsx",
+      "components": [
+        "ReverseStepLesson"
+      ],
+      "current_selector": "chapter 2",
+      "title": "Один DDPM reverse step",
+      "prerequisite_concept_ids": [
+        "noise-schedule"
+      ],
+      "skill_objectives": [
+        "Считать posterior variance mean"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "diffusion.step.formula",
+          "kind": "formula",
+          "goal": "mu=(xt-beta/sqrt(1-alpha_bar)*eps_pred)/sqrt(alpha)"
+        },
+        {
+          "id": "diffusion.step.implementation",
+          "kind": "implementation",
+          "goal": "ddpm_mean; posterior_variance"
+        },
+        {
+          "id": "diffusion.step.edge",
+          "kind": "edge_case",
+          "goal": "Последний шаг без добавочного шума"
+        },
+        {
+          "id": "diffusion.step.transfer",
+          "kind": "transfer",
+          "goal": "Perfect epsilon восстанавливает заданный x0"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.diffusion.generation",
+      "route": "#diffusion",
+      "source": "src/DiffusionCourse.tsx",
+      "components": [
+        "SamplingLesson"
+      ],
+      "current_selector": "chapter 3",
+      "title": "DDPM DDIM последовательность",
+      "prerequisite_concept_ids": [
+        "gaussian"
+      ],
+      "skill_objectives": [
+        "Разделить stochastic deterministic paths"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "diffusion.generation.formula",
+          "kind": "formula",
+          "goal": "DDIM eta=0"
+        },
+        {
+          "id": "diffusion.generation.implementation",
+          "kind": "implementation",
+          "goal": "ddim_step; reverse_schedule"
+        },
+        {
+          "id": "diffusion.generation.edge",
+          "kind": "edge_case",
+          "goal": "Один шаг и skipped schedule"
+        },
+        {
+          "id": "diffusion.generation.transfer",
+          "kind": "transfer",
+          "goal": "Fixed initial noise воспроизводит DDIM eta=0"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.diffusion.condition",
+      "route": "#diffusion",
+      "source": "src/DiffusionCourse.tsx",
+      "components": [
+        "GuidanceLesson"
+      ],
+      "current_selector": "chapter 4",
+      "title": "Guidance score conditioning",
+      "prerequisite_concept_ids": [
+        "score-function"
+      ],
+      "skill_objectives": [
+        "Смешать conditional unconditional eps"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "diffusion.condition.formula",
+          "kind": "formula",
+          "goal": "eps_u+s*(eps_c-eps_u)"
+        },
+        {
+          "id": "diffusion.condition.implementation",
+          "kind": "implementation",
+          "goal": "classifier_free_guidance; gaussian_score"
+        },
+        {
+          "id": "diffusion.condition.edge",
+          "kind": "edge_case",
+          "goal": "s=0 s=1; score не density"
+        },
+        {
+          "id": "diffusion.condition.transfer",
+          "kind": "transfer",
+          "goal": "Большой guidance не гарантирует качество"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gnn.graph",
+      "route": "#gnn",
+      "source": "src/GNNCourse.tsx",
+      "components": [
+        "GraphIdea"
+      ],
+      "current_selector": "section 0",
+      "title": "Граф adjacency features",
+      "prerequisite_concept_ids": [
+        "graph",
+        "adjacency-matrix"
+      ],
+      "skill_objectives": [
+        "Разделить topology и features"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gnn.graph.formula",
+          "kind": "formula",
+          "goal": "A N×N X N×F"
+        },
+        {
+          "id": "gnn.graph.implementation",
+          "kind": "implementation",
+          "goal": "add_self_loops; graph_degrees"
+        },
+        {
+          "id": "gnn.graph.edge",
+          "kind": "edge_case",
+          "goal": "Isolated node self-loop без двойного счёта"
+        },
+        {
+          "id": "gnn.graph.transfer",
+          "kind": "transfer",
+          "goal": "Переименовать nodes одной permutation"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gnn.message",
+      "route": "#gnn",
+      "source": "src/GNNCourse.tsx",
+      "components": [
+        "MessageLesson"
+      ],
+      "current_selector": "section 1",
+      "title": "Нормированная GCN aggregation",
+      "prerequisite_concept_ids": [
+        "message-passing",
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Нормировать с двух сторон"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gnn.message.formula",
+          "kind": "formula",
+          "goal": "D^-1/2*(A+I)*D^-1/2*XW"
+        },
+        {
+          "id": "gnn.message.implementation",
+          "kind": "implementation",
+          "goal": "normalize_adjacency; gcn_layer"
+        },
+        {
+          "id": "gnn.message.edge",
+          "kind": "edge_case",
+          "goal": "Isolated node после self-loop"
+        },
+        {
+          "id": "gnn.message.transfer",
+          "kind": "transfer",
+          "goal": "Mean neighbors vs symmetric normalization"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gnn.train",
+      "route": "#gnn",
+      "source": "src/GNNCourse.tsx",
+      "components": [
+        "TrainingLesson"
+      ],
+      "current_selector": "section 2",
+      "title": "Обучение GCN двух слоёв",
+      "prerequisite_concept_ids": [
+        "backpropagation",
+        "cross-entropy"
+      ],
+      "skill_objectives": [
+        "Использовать train labels mask"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gnn.train.formula",
+          "kind": "formula",
+          "goal": "CE train через shared W"
+        },
+        {
+          "id": "gnn.train.implementation",
+          "kind": "implementation",
+          "goal": "masked_ce; gcn_loss_grad"
+        },
+        {
+          "id": "gnn.train.edge",
+          "kind": "edge_case",
+          "goal": "Пустой mask ошибка"
+        },
+        {
+          "id": "gnn.train.transfer",
+          "kind": "transfer",
+          "goal": "Held-out labels не меняют train gradient"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gnn.depth",
+      "route": "#gnn",
+      "source": "src/GNNCourse.tsx",
+      "components": [
+        "DepthLesson"
+      ],
+      "current_selector": "section 3",
+      "title": "Глубина smoothing и порядок",
+      "prerequisite_concept_ids": [
+        "matrix"
+      ],
+      "skill_objectives": [
+        "Различить smoothing и trained layer"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gnn.depth.formula",
+          "kind": "formula",
+          "goal": "Повтор normalized adjacency"
+        },
+        {
+          "id": "gnn.depth.implementation",
+          "kind": "implementation",
+          "goal": "smooth_features; permutation_error"
+        },
+        {
+          "id": "gnn.depth.edge",
+          "kind": "edge_case",
+          "goal": "Disconnected components"
+        },
+        {
+          "id": "gnn.depth.transfer",
+          "kind": "transfer",
+          "goal": "P*f(A,X)=f(PAP^T,PX)"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.gnn.variants",
+      "route": "#gnn",
+      "source": "src/GNNCourse.tsx",
+      "components": [
+        "VariantLesson"
+      ],
+      "current_selector": "section 4",
+      "title": "GAT mean GraphSAGE",
+      "prerequisite_concept_ids": [
+        "message-passing",
+        "softmax"
+      ],
+      "skill_objectives": [
+        "Attention только по neighbors"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "gnn.variants.formula",
+          "kind": "formula",
+          "goal": "LeakyReLU softmax; mean concat"
+        },
+        {
+          "id": "gnn.variants.implementation",
+          "kind": "implementation",
+          "goal": "gat_aggregate; graphsage_mean"
+        },
+        {
+          "id": "gnn.variants.edge",
+          "kind": "edge_case",
+          "goal": "Нет neighbors явная self convention"
+        },
+        {
+          "id": "gnn.variants.transfer",
+          "kind": "transfer",
+          "goal": "Neighbor permutation сохраняет output"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.rl.environment",
+      "route": "#rl",
+      "source": "src/RLCourse.tsx",
+      "components": [
+        "EnvironmentLesson"
+      ],
+      "current_selector": "section 0",
+      "title": "MDP rewards return",
+      "prerequisite_concept_ids": [
+        "markov-chain",
+        "discounted-return"
+      ],
+      "skill_objectives": [
+        "Разделить reward и return"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "rl.environment.formula",
+          "kind": "formula",
+          "goal": "G=sum gamma^t*r_t"
+        },
+        {
+          "id": "rl.environment.implementation",
+          "kind": "implementation",
+          "goal": "transition_distribution; discounted_return"
+        },
+        {
+          "id": "rl.environment.edge",
+          "kind": "edge_case",
+          "goal": "Terminal gamma=0"
+        },
+        {
+          "id": "rl.environment.transfer",
+          "kind": "transfer",
+          "goal": "Малая negative reward может вести к лучшему return"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.rl.bellman",
+      "route": "#rl",
+      "source": "src/RLCourse.tsx",
+      "components": [
+        "BellmanLesson"
+      ],
+      "current_selector": "section 1",
+      "title": "Синхронная value iteration",
+      "prerequisite_concept_ids": [
+        "bellman-equation"
+      ],
+      "skill_objectives": [
+        "Все states читают previous V"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "rl.bellman.formula",
+          "kind": "formula",
+          "goal": "V_new=max_a sum P*(r+gamma*V)"
+        },
+        {
+          "id": "rl.bellman.implementation",
+          "kind": "implementation",
+          "goal": "bellman_sweep"
+        },
+        {
+          "id": "rl.bellman.edge",
+          "kind": "edge_case",
+          "goal": "gamma=0 terminal bootstrap=0"
+        },
+        {
+          "id": "rl.bellman.transfer",
+          "kind": "transfer",
+          "goal": "Sweep order не влияет на synchronous result"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.rl.q-learning",
+      "route": "#rl",
+      "source": "src/RLCourse.tsx",
+      "components": [
+        "QLearningLesson"
+      ],
+      "current_selector": "section 2",
+      "title": "Q-learning termination truncation",
+      "prerequisite_concept_ids": [
+        "q-value"
+      ],
+      "skill_objectives": [
+        "Отделить terminal от external time limit"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "rl.q-learning.formula",
+          "kind": "formula",
+          "goal": "Q+=eta*(r+gamma*maxQ_next-Q)"
+        },
+        {
+          "id": "rl.q-learning.implementation",
+          "kind": "implementation",
+          "goal": "q_update; epsilon_greedy"
+        },
+        {
+          "id": "rl.q-learning.edge",
+          "kind": "edge_case",
+          "goal": "Terminal zero bootstrap truncation сохраняет"
+        },
+        {
+          "id": "rl.q-learning.transfer",
+          "kind": "transfer",
+          "goal": "Одна transition разные flags разные targets"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.rl.policy",
+      "route": "#rl",
+      "source": "src/RLCourse.tsx",
+      "components": [
+        "PolicyLesson",
+        "PolicyVarianceLab"
+      ],
+      "current_selector": "section 3",
+      "title": "Policy gradient REINFORCE variance",
+      "prerequisite_concept_ids": [
+        "policy-gradient"
+      ],
+      "skill_objectives": [
+        "Сравнить exact mean и estimate variance"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "rl.policy.formula",
+          "kind": "formula",
+          "goal": "dJ=p*(1-p)*(r_right-r_left)"
+        },
+        {
+          "id": "rl.policy.implementation",
+          "kind": "implementation",
+          "goal": "two_action_policy_grad; reinforce_estimate"
+        },
+        {
+          "id": "rl.policy.edge",
+          "kind": "edge_case",
+          "goal": "Equal rewards exact gradient=0"
+        },
+        {
+          "id": "rl.policy.transfer",
+          "kind": "transfer",
+          "goal": "Action-independent baseline сохраняет expected gradient"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    },
+    {
+      "id": "unit.rl.families",
+      "route": "#rl",
+      "source": "src/RLCourse.tsx",
+      "components": [
+        "FamiliesLesson"
+      ],
+      "current_selector": "section 4",
+      "title": "DQN actor-critic PPO",
+      "prerequisite_concept_ids": [
+        "q-value",
+        "policy-gradient"
+      ],
+      "skill_objectives": [
+        "Связать tabular target и approximator"
+      ],
+      "ordered_tasks": [
+        {
+          "id": "rl.families.formula",
+          "kind": "formula",
+          "goal": "PPO min(r*A,clip(r)*A)"
+        },
+        {
+          "id": "rl.families.implementation",
+          "kind": "implementation",
+          "goal": "td_target; ppo_clipped_objective"
+        },
+        {
+          "id": "rl.families.edge",
+          "kind": "edge_case",
+          "goal": "Advantage положительный и отрицательный"
+        },
+        {
+          "id": "rl.families.transfer",
+          "kind": "transfer",
+          "goal": "Роли baseline frozen old policy без полного PPO trainer"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ],
+      "practice_status": "designed_not_implemented"
+    }
+  ],
+  "reference_concepts": [
+    {
+      "id": "concept.function",
+      "current_id": "function",
+      "title": "Функция: правило «вход → выход»",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('function') overlay, not hash route",
+      "prerequisite_concept_ids": [],
+      "used_by_unit_ids": [
+        "unit.network.representations",
+        "unit.advanced.bpe",
+        "unit.frontier.flow",
+        "unit.frontier.kan"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.function.formula",
+          "kind": "formula",
+          "goal": "Подставить x в x²"
+        },
+        {
+          "id": "concept.function.implementation",
+          "kind": "implementation",
+          "goal": "quadratic(x)"
+        },
+        {
+          "id": "concept.function.edge",
+          "kind": "edge_case",
+          "goal": "Разные x с одним y допустимы"
+        },
+        {
+          "id": "concept.function.transfer",
+          "kind": "transfer",
+          "goal": "То же правило к списку входов"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.slope",
+      "current_id": "slope",
+      "title": "Наклон: изменение выхода на единицу входа",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('slope') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.slope.formula",
+          "kind": "formula",
+          "goal": "Секущая delta_y/delta_x"
+        },
+        {
+          "id": "concept.slope.implementation",
+          "kind": "implementation",
+          "goal": "secant(f,x,h)"
+        },
+        {
+          "id": "concept.slope.edge",
+          "kind": "edge_case",
+          "goal": "h=0 ошибка"
+        },
+        {
+          "id": "concept.slope.transfer",
+          "kind": "transfer",
+          "goal": "Наклон x² справа и слева"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.limit",
+      "current_id": "limit",
+      "title": "Предел: к чему приближаются значения",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('limit') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function",
+        "slope"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.limit.formula",
+          "kind": "formula",
+          "goal": "Для x² секущая 2x+h"
+        },
+        {
+          "id": "concept.limit.implementation",
+          "kind": "implementation",
+          "goal": "secant_errors(x,hs)"
+        },
+        {
+          "id": "concept.limit.edge",
+          "kind": "edge_case",
+          "goal": "Очень малый h даёт rounding"
+        },
+        {
+          "id": "concept.limit.transfer",
+          "kind": "transfer",
+          "goal": "Delta=epsilon на этом примере не общее доказательство"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.derivative",
+      "current_id": "derivative",
+      "title": "Производная: наклон прямо в этой точке",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('derivative') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function",
+        "slope",
+        "limit"
+      ],
+      "used_by_unit_ids": [
+        "unit.neuron.activation",
+        "unit.backprop.check",
+        "unit.advanced.swiglu",
+        "unit.frontier.kan"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.derivative.formula",
+          "kind": "formula",
+          "goal": "Производная x² равна 2x"
+        },
+        {
+          "id": "concept.derivative.implementation",
+          "kind": "implementation",
+          "goal": "quadratic_derivative(x)"
+        },
+        {
+          "id": "concept.derivative.edge",
+          "kind": "edge_case",
+          "goal": "Отрицательный x и x=0"
+        },
+        {
+          "id": "concept.derivative.transfer",
+          "kind": "transfer",
+          "goal": "Linear prediction против exact delta"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.partial-derivative",
+      "current_id": "partial-derivative",
+      "title": "Частная производная: менять одну координату",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('partial-derivative') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "derivative",
+        "vector"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.partial-derivative.formula",
+          "kind": "formula",
+          "goal": "L=(x²+8y²)/2"
+        },
+        {
+          "id": "concept.partial-derivative.implementation",
+          "kind": "implementation",
+          "goal": "coordinate_difference(f,point,axis,h)"
+        },
+        {
+          "id": "concept.partial-derivative.edge",
+          "kind": "edge_case",
+          "goal": "Другие coordinates неизменны"
+        },
+        {
+          "id": "concept.partial-derivative.transfer",
+          "kind": "transfer",
+          "goal": "Проверить две оси независимо"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.gradient",
+      "current_id": "gradient",
+      "title": "Градиент: все чувствительности в одном векторе",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('gradient') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "derivative",
+        "partial-derivative",
+        "vector",
+        "dot-product"
+      ],
+      "used_by_unit_ids": [
+        "unit.optimizer.sgd",
+        "unit.optimizer.momentum",
+        "unit.optimizer.adam",
+        "unit.frontier.flow",
+        "unit.frontier.dpo",
+        "unit.frontier.jepa",
+        "unit.gan.train"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.gradient.formula",
+          "kind": "formula",
+          "goal": "grad L=(x,8y)"
+        },
+        {
+          "id": "concept.gradient.implementation",
+          "kind": "implementation",
+          "goal": "quadratic_gradient(point)"
+        },
+        {
+          "id": "concept.gradient.edge",
+          "kind": "edge_case",
+          "goal": "Zero grad не всегда minimum"
+        },
+        {
+          "id": "concept.gradient.transfer",
+          "kind": "transfer",
+          "goal": "Directional slope grad dot unit_vector"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.chain-rule",
+      "current_id": "chain-rule",
+      "title": "Правило цепочки: перемножить локальные влияния",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('chain-rule') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "derivative",
+        "function"
+      ],
+      "used_by_unit_ids": [
+        "unit.backprop.shared",
+        "unit.architecture.rnn",
+        "unit.transformer.block",
+        "unit.advanced.ssm",
+        "unit.frontier.ssm-training",
+        "unit.gan.gradients"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.chain-rule.formula",
+          "kind": "formula",
+          "goal": "u=3x+1 y=u²"
+        },
+        {
+          "id": "concept.chain-rule.implementation",
+          "kind": "implementation",
+          "goal": "composite_derivative(x,a,b)"
+        },
+        {
+          "id": "concept.chain-rule.edge",
+          "kind": "edge_case",
+          "goal": "a=0 обнуляет путь"
+        },
+        {
+          "id": "concept.chain-rule.transfer",
+          "kind": "transfer",
+          "goal": "Добавить независимый путь в сумму"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.vector",
+      "current_id": "vector",
+      "title": "Вектор: упорядоченный набор чисел",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('vector') overlay, not hash route",
+      "prerequisite_concept_ids": [],
+      "used_by_unit_ids": [
+        "unit.frontier.egnn",
+        "unit.frontier.neural-fields"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.vector.formula",
+          "kind": "formula",
+          "goal": "Покомпонентное сложение"
+        },
+        {
+          "id": "concept.vector.implementation",
+          "kind": "implementation",
+          "goal": "vector_add(a,b)"
+        },
+        {
+          "id": "concept.vector.edge",
+          "kind": "edge_case",
+          "goal": "Разные длины ошибка"
+        },
+        {
+          "id": "concept.vector.transfer",
+          "kind": "transfer",
+          "goal": "Переставить coordinates обоих operands"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.dot-product",
+      "current_id": "dot-product",
+      "title": "Скалярное произведение: попарно умножить и сложить",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('dot-product') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "vector"
+      ],
+      "used_by_unit_ids": [
+        "unit.neuron.affine",
+        "unit.transformer.attention",
+        "unit.transformer.positions",
+        "unit.frontier.clip"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.dot-product.formula",
+          "kind": "formula",
+          "goal": "Сумма a_i*b_i"
+        },
+        {
+          "id": "concept.dot-product.implementation",
+          "kind": "implementation",
+          "goal": "dot(a,b)"
+        },
+        {
+          "id": "concept.dot-product.edge",
+          "kind": "edge_case",
+          "goal": "Нулевой и ортогональные vectors"
+        },
+        {
+          "id": "concept.dot-product.transfer",
+          "kind": "transfer",
+          "goal": "Bilinearity symmetry"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.matrix",
+      "current_id": "matrix",
+      "title": "Матрица: несколько взвешенных сумм сразу",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('matrix') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "vector",
+        "dot-product"
+      ],
+      "used_by_unit_ids": [
+        "unit.neuron.dense",
+        "unit.network.representations",
+        "unit.architecture.dense",
+        "unit.architecture.transformer",
+        "unit.transformer.tokens",
+        "unit.transformer.heads",
+        "unit.transformer.families",
+        "unit.transformer.cache",
+        "unit.advanced.lora",
+        "unit.advanced.vit",
+        "unit.advanced.mla",
+        "unit.advanced.ssm",
+        "unit.frontier.interpretability",
+        "unit.frontier.quantization",
+        "unit.frontier.jepa",
+        "unit.gnn.message",
+        "unit.gnn.depth"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.matrix.formula",
+          "kind": "formula",
+          "goal": "Y=X*W с названными осями"
+        },
+        {
+          "id": "concept.matrix.implementation",
+          "kind": "implementation",
+          "goal": "matmul(a,b)"
+        },
+        {
+          "id": "concept.matrix.edge",
+          "kind": "edge_case",
+          "goal": "Несовместимые формы ошибка"
+        },
+        {
+          "id": "concept.matrix.transfer",
+          "kind": "transfer",
+          "goal": "Associativity ограниченных float fixtures"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.tensor",
+      "current_id": "tensor",
+      "title": "Тензор и форма: какие оси у данных",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('tensor') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "vector",
+        "matrix"
+      ],
+      "used_by_unit_ids": [
+        "unit.neuron.dense",
+        "unit.architecture.cnn",
+        "unit.architecture.cnn-shift",
+        "unit.transformer.heads",
+        "unit.advanced.vit",
+        "unit.advanced.denoisers"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.tensor.formula",
+          "kind": "formula",
+          "goal": "Число элементов product(shape)"
+        },
+        {
+          "id": "concept.tensor.implementation",
+          "kind": "implementation",
+          "goal": "flat_index(shape,indices)"
+        },
+        {
+          "id": "concept.tensor.edge",
+          "kind": "edge_case",
+          "goal": "Индекс вне shape ошибка"
+        },
+        {
+          "id": "concept.tensor.transfer",
+          "kind": "transfer",
+          "goal": "Unravel/ravel roundtrip без физической оси batch"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.probability",
+      "current_id": "probability",
+      "title": "Вероятность: распределить единицу между исходами",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('probability') overlay, not hash route",
+      "prerequisite_concept_ids": [],
+      "used_by_unit_ids": [
+        "unit.loss.bce",
+        "unit.architecture.lstm",
+        "unit.architecture.gru",
+        "unit.frontier.speculative"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.probability.formula",
+          "kind": "formula",
+          "goal": "Неотрицательная масса sum=1"
+        },
+        {
+          "id": "concept.probability.implementation",
+          "kind": "implementation",
+          "goal": "normalize_mass(weights)"
+        },
+        {
+          "id": "concept.probability.edge",
+          "kind": "edge_case",
+          "goal": "Все веса zero ошибка"
+        },
+        {
+          "id": "concept.probability.transfer",
+          "kind": "transfer",
+          "goal": "Общий positive scale не меняет p"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.expectation",
+      "current_id": "expectation",
+      "title": "Математическое ожидание: среднее с весами вероятностей",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('expectation') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability"
+      ],
+      "used_by_unit_ids": [
+        "unit.gan.variants"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.expectation.formula",
+          "kind": "formula",
+          "goal": "E=sum p_i*x_i"
+        },
+        {
+          "id": "concept.expectation.implementation",
+          "kind": "implementation",
+          "goal": "expectation(p,values)"
+        },
+        {
+          "id": "concept.expectation.edge",
+          "kind": "edge_case",
+          "goal": "Malformed probabilities ошибка"
+        },
+        {
+          "id": "concept.expectation.transfer",
+          "kind": "transfer",
+          "goal": "Добавка c к values добавляет c к E"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.variance",
+      "current_id": "variance",
+      "title": "Дисперсия: средний квадрат расстояния до среднего",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('variance') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation"
+      ],
+      "used_by_unit_ids": [
+        "unit.gan.diversity"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.variance.formula",
+          "kind": "formula",
+          "goal": "E[(X-E[X])²]"
+        },
+        {
+          "id": "concept.variance.implementation",
+          "kind": "implementation",
+          "goal": "weighted_variance(p,values)"
+        },
+        {
+          "id": "concept.variance.edge",
+          "kind": "edge_case",
+          "goal": "Константа даёт zero variance"
+        },
+        {
+          "id": "concept.variance.transfer",
+          "kind": "transfer",
+          "goal": "Shift неизменен scale a умножает на a²"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.exponential",
+      "current_id": "exponential",
+      "title": "Экспонента: превратить прибавку в умножение",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('exponential') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function"
+      ],
+      "used_by_unit_ids": [
+        "unit.frontier.neural-fields"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.exponential.formula",
+          "kind": "formula",
+          "goal": "exp(a+b)=exp(a)*exp(b)"
+        },
+        {
+          "id": "concept.exponential.implementation",
+          "kind": "implementation",
+          "goal": "shifted_exp(values)"
+        },
+        {
+          "id": "concept.exponential.edge",
+          "kind": "edge_case",
+          "goal": "Large logit overflow"
+        },
+        {
+          "id": "concept.exponential.transfer",
+          "kind": "transfer",
+          "goal": "Отношения через common shift"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.logarithm",
+      "current_id": "logarithm",
+      "title": "Логарифм: какой показатель степени дал это число",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('logarithm') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "exponential"
+      ],
+      "used_by_unit_ids": [
+        "unit.loss.bce"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.logarithm.formula",
+          "kind": "formula",
+          "goal": "log(ab)=log a+log b"
+        },
+        {
+          "id": "concept.logarithm.implementation",
+          "kind": "implementation",
+          "goal": "negative_log_probability(p)"
+        },
+        {
+          "id": "concept.logarithm.edge",
+          "kind": "edge_case",
+          "goal": "p=0 mathematically +infinity"
+        },
+        {
+          "id": "concept.logarithm.transfer",
+          "kind": "transfer",
+          "goal": "Групповая log likelihood сумма log"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.entropy",
+      "current_id": "entropy",
+      "title": "Энтропия: средняя неожиданность исхода",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('entropy') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "expectation",
+        "logarithm"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.entropy.formula",
+          "kind": "formula",
+          "goal": "H=-sum p log p"
+        },
+        {
+          "id": "concept.entropy.implementation",
+          "kind": "implementation",
+          "goal": "entropy(p)"
+        },
+        {
+          "id": "concept.entropy.edge",
+          "kind": "edge_case",
+          "goal": "0*log0 считать 0"
+        },
+        {
+          "id": "concept.entropy.transfer",
+          "kind": "transfer",
+          "goal": "Перестановка classes сохраняет H"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.softmax",
+      "current_id": "softmax",
+      "title": "Softmax: из логитов в вероятности классов",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('softmax') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "exponential",
+        "probability",
+        "vector"
+      ],
+      "used_by_unit_ids": [
+        "unit.architecture.transformer",
+        "unit.transformer.attention",
+        "unit.advanced.moe",
+        "unit.advanced.online-attention",
+        "unit.frontier.long-context",
+        "unit.frontier.moe-training",
+        "unit.gnn.variants"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.softmax.formula",
+          "kind": "formula",
+          "goal": "exp(z-max)/sum"
+        },
+        {
+          "id": "concept.softmax.implementation",
+          "kind": "implementation",
+          "goal": "stable_softmax(z)"
+        },
+        {
+          "id": "concept.softmax.edge",
+          "kind": "edge_case",
+          "goal": "±1000 singleton malformed"
+        },
+        {
+          "id": "concept.softmax.transfer",
+          "kind": "transfer",
+          "goal": "Shift invariance permutation equivariance"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.normalization",
+      "current_id": "normalization",
+      "title": "Нормализация: убрать общий сдвиг и масштаб",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('normalization') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "vector",
+        "expectation",
+        "variance"
+      ],
+      "used_by_unit_ids": [
+        "unit.transformer.block"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.normalization.formula",
+          "kind": "formula",
+          "goal": "Mean variance по features"
+        },
+        {
+          "id": "concept.normalization.implementation",
+          "kind": "implementation",
+          "goal": "layer_norm(x,gamma,beta,eps)"
+        },
+        {
+          "id": "concept.normalization.edge",
+          "kind": "edge_case",
+          "goal": "Константный vector epsilon>0"
+        },
+        {
+          "id": "concept.normalization.transfer",
+          "kind": "transfer",
+          "goal": "Shift сохраняет normalized vector"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.loss",
+      "current_id": "loss",
+      "title": "Потеря: число, которое обучение пытается уменьшить",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('loss') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function",
+        "expectation"
+      ],
+      "used_by_unit_ids": [
+        "unit.loss.mse",
+        "unit.network.diagnostics",
+        "unit.frontier.interpretability",
+        "unit.frontier.moe-training",
+        "unit.diffusion.training"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.loss.formula",
+          "kind": "formula",
+          "goal": "Mean squared residual"
+        },
+        {
+          "id": "concept.loss.implementation",
+          "kind": "implementation",
+          "goal": "mean_squared_error(pred,target)"
+        },
+        {
+          "id": "concept.loss.edge",
+          "kind": "edge_case",
+          "goal": "Empty batch ошибка"
+        },
+        {
+          "id": "concept.loss.transfer",
+          "kind": "transfer",
+          "goal": "Same accuracy разные numerical losses"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.cross-entropy",
+      "current_id": "cross-entropy",
+      "title": "Cross-entropy: штраф за малую вероятность верного класса",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('cross-entropy') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "loss",
+        "softmax",
+        "logarithm",
+        "entropy"
+      ],
+      "used_by_unit_ids": [
+        "unit.transformer.generation",
+        "unit.frontier.clip",
+        "unit.frontier.masked-text",
+        "unit.gnn.train"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.cross-entropy.formula",
+          "kind": "formula",
+          "goal": "-log p_correct из logits"
+        },
+        {
+          "id": "concept.cross-entropy.implementation",
+          "kind": "implementation",
+          "goal": "logit_cross_entropy(z,target)"
+        },
+        {
+          "id": "concept.cross-entropy.edge",
+          "kind": "edge_case",
+          "goal": "Target вне vocabulary ошибка"
+        },
+        {
+          "id": "concept.cross-entropy.transfer",
+          "kind": "transfer",
+          "goal": "Stable logsumexp при common shift"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.learning-rate",
+      "current_id": "learning-rate",
+      "title": "Скорость обучения: как далеко идти по градиенту",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('learning-rate') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "gradient",
+        "loss"
+      ],
+      "used_by_unit_ids": [
+        "unit.optimizer.sgd"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.learning-rate.formula",
+          "kind": "formula",
+          "goal": "delta=-eta*g"
+        },
+        {
+          "id": "concept.learning-rate.implementation",
+          "kind": "implementation",
+          "goal": "sgd_step(theta,g,eta)"
+        },
+        {
+          "id": "concept.learning-rate.edge",
+          "kind": "edge_case",
+          "goal": "eta=0"
+        },
+        {
+          "id": "concept.learning-rate.transfer",
+          "kind": "transfer",
+          "goal": "eta меньше 2/lambda для quadratic descent"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.backpropagation",
+      "current_id": "backpropagation",
+      "title": "Обратный проход: правило цепочки по всему графу",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('backpropagation') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "chain-rule",
+        "gradient",
+        "loss"
+      ],
+      "used_by_unit_ids": [
+        "unit.network.xor",
+        "unit.architecture.cnn-training",
+        "unit.architecture.bptt",
+        "unit.advanced.full-transformer",
+        "unit.frontier.vit-training",
+        "unit.frontier.denoiser-training",
+        "unit.vae.train",
+        "unit.diffusion.training",
+        "unit.gnn.train"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.backpropagation.formula",
+          "kind": "formula",
+          "goal": "Reverse contributions add"
+        },
+        {
+          "id": "concept.backpropagation.implementation",
+          "kind": "implementation",
+          "goal": "shared_graph_backward(x,w,b)"
+        },
+        {
+          "id": "concept.backpropagation.edge",
+          "kind": "edge_case",
+          "goal": "Общий q участвует дважды"
+        },
+        {
+          "id": "concept.backpropagation.transfer",
+          "kind": "transfer",
+          "goal": "Независимая finite difference"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.train-validation-test",
+      "current_id": "train-validation-test",
+      "title": "Train, validation, test: три разных роли данных",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('train-validation-test') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "loss",
+        "probability"
+      ],
+      "used_by_unit_ids": [
+        "unit.network.split",
+        "unit.network.diagnostics",
+        "unit.frontier.long-context"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.train-validation-test.formula",
+          "kind": "formula",
+          "goal": "Статистика только train"
+        },
+        {
+          "id": "concept.train-validation-test.implementation",
+          "kind": "implementation",
+          "goal": "fit_standardizer(train)"
+        },
+        {
+          "id": "concept.train-validation-test.edge",
+          "kind": "edge_case",
+          "goal": "Group observations нельзя разнести"
+        },
+        {
+          "id": "concept.train-validation-test.transfer",
+          "kind": "transfer",
+          "goal": "Validation outlier не меняет fitted parameters"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.overfitting",
+      "current_id": "overfitting",
+      "title": "Переобучение: лучше запомнить, хуже предсказать новое",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('overfitting') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "train-validation-test",
+        "loss"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.overfitting.formula",
+          "kind": "formula",
+          "goal": "Train held-out loss отдельно"
+        },
+        {
+          "id": "concept.overfitting.implementation",
+          "kind": "implementation",
+          "goal": "generalization_gap(train,heldout)"
+        },
+        {
+          "id": "concept.overfitting.edge",
+          "kind": "edge_case",
+          "goal": "Negative gap допустим"
+        },
+        {
+          "id": "concept.overfitting.transfer",
+          "kind": "transfer",
+          "goal": "Hyperparameter choice на validation не test"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.regularization",
+      "current_id": "regularization",
+      "title": "Регуляризация: ограничить подгонку под train",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('regularization') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "overfitting",
+        "gradient"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.regularization.formula",
+          "kind": "formula",
+          "goal": "L_data+lambda*sum w²"
+        },
+        {
+          "id": "concept.regularization.implementation",
+          "kind": "implementation",
+          "goal": "l2_penalty_and_grad(w,lambda)"
+        },
+        {
+          "id": "concept.regularization.edge",
+          "kind": "edge_case",
+          "goal": "lambda=0 bias convention"
+        },
+        {
+          "id": "concept.regularization.transfer",
+          "kind": "transfer",
+          "goal": "Replicated mean batch сохраняет L2 strength"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.initialization",
+      "current_id": "initialization",
+      "title": "Инициализация: откуда начинается обучение",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('initialization') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "matrix",
+        "variance",
+        "backpropagation"
+      ],
+      "used_by_unit_ids": [
+        "unit.network.boundary"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.initialization.formula",
+          "kind": "formula",
+          "goal": "Variance fan-in scale"
+        },
+        {
+          "id": "concept.initialization.implementation",
+          "kind": "implementation",
+          "goal": "fan_in_scale(fan_in)"
+        },
+        {
+          "id": "concept.initialization.edge",
+          "kind": "edge_case",
+          "goal": "fan_in=0 ошибка"
+        },
+        {
+          "id": "concept.initialization.transfer",
+          "kind": "transfer",
+          "goal": "Zero hidden symmetry против perturbation"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.batches-epochs",
+      "current_id": "batches-epochs",
+      "title": "Пакет, шаг и эпоха: что именно посчитали",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('batches-epochs') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation",
+        "gradient",
+        "train-validation-test"
+      ],
+      "used_by_unit_ids": [
+        "unit.network.boundary"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.batches-epochs.formula",
+          "kind": "formula",
+          "goal": "Обход индексов без пропуска"
+        },
+        {
+          "id": "concept.batches-epochs.implementation",
+          "kind": "implementation",
+          "goal": "batch_indices(n,batch_size)"
+        },
+        {
+          "id": "concept.batches-epochs.edge",
+          "kind": "edge_case",
+          "goal": "Неполный last batch n=0"
+        },
+        {
+          "id": "concept.batches-epochs.transfer",
+          "kind": "transfer",
+          "goal": "Каждый sample один раз за epoch"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.adamw",
+      "current_id": "adamw",
+      "title": "AdamW: адаптивный шаг и отдельное уменьшение весов",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('adamw') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "gradient",
+        "learning-rate",
+        "regularization"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.adamw.formula",
+          "kind": "formula",
+          "goal": "Adaptive update decoupled decay"
+        },
+        {
+          "id": "concept.adamw.implementation",
+          "kind": "implementation",
+          "goal": "adamw_decay_step(theta,adaptive,eta,lambda)"
+        },
+        {
+          "id": "concept.adamw.edge",
+          "kind": "edge_case",
+          "goal": "Zero grad с историей и decay"
+        },
+        {
+          "id": "concept.adamw.transfer",
+          "kind": "transfer",
+          "goal": "Decoupled decay vs L2 в gradient Adam"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.evaluation",
+      "current_id": "evaluation",
+      "title": "Оценка модели: какую ошибку важно заметить",
+      "source": "src/concepts.ts",
+      "current_route": "ConceptLink('evaluation') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "train-validation-test",
+        "cross-entropy"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.evaluation.formula",
+          "kind": "formula",
+          "goal": "TP FP FN TN precision"
+        },
+        {
+          "id": "concept.evaluation.implementation",
+          "kind": "implementation",
+          "goal": "classification_metrics(p,y,threshold)"
+        },
+        {
+          "id": "concept.evaluation.edge",
+          "kind": "edge_case",
+          "goal": "Zero denominator undefined пометка"
+        },
+        {
+          "id": "concept.evaluation.transfer",
+          "kind": "transfer",
+          "goal": "Threshold не меняет probability loss"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.gaussian",
+      "current_id": "gaussian",
+      "title": "Гауссово распределение: колокол возможных чисел",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('gaussian') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "variance",
+        "exponential"
+      ],
+      "used_by_unit_ids": [
+        "unit.vae.idea",
+        "unit.vae.generate",
+        "unit.diffusion.noise",
+        "unit.diffusion.generation"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.gaussian.formula",
+          "kind": "formula",
+          "goal": "Gaussian logpdf формула"
+        },
+        {
+          "id": "concept.gaussian.implementation",
+          "kind": "implementation",
+          "goal": "gaussian_logpdf(x,mu,sigma)"
+        },
+        {
+          "id": "concept.gaussian.edge",
+          "kind": "edge_case",
+          "goal": "sigma<=0 ошибка"
+        },
+        {
+          "id": "concept.gaussian.transfer",
+          "kind": "transfer",
+          "goal": "Standardization density Jacobian"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.kl-divergence",
+      "current_id": "kl-divergence",
+      "title": "KL-дивергенция: насколько расходятся распределения",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('kl-divergence') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation",
+        "logarithm",
+        "gaussian"
+      ],
+      "used_by_unit_ids": [
+        "unit.frontier.dpo",
+        "unit.vae.limits"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.kl-divergence.formula",
+          "kind": "formula",
+          "goal": "Gaussian KL к standard normal"
+        },
+        {
+          "id": "concept.kl-divergence.implementation",
+          "kind": "implementation",
+          "goal": "gaussian_kl(mu,log_variance)"
+        },
+        {
+          "id": "concept.kl-divergence.edge",
+          "kind": "edge_case",
+          "goal": "mu=0 logvar=0 zero"
+        },
+        {
+          "id": "concept.kl-divergence.transfer",
+          "kind": "transfer",
+          "goal": "Asymmetry KL двух distributions"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.latent-variable",
+      "current_id": "latent-variable",
+      "title": "Скрытая переменная: промежуточная причина наблюдения",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('latent-variable') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "function",
+        "probability",
+        "gaussian"
+      ],
+      "used_by_unit_ids": [
+        "unit.vae.idea"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.latent-variable.formula",
+          "kind": "formula",
+          "goal": "Маргинал sum_z joint(x,z)"
+        },
+        {
+          "id": "concept.latent-variable.implementation",
+          "kind": "implementation",
+          "goal": "marginalize_joint(joint)"
+        },
+        {
+          "id": "concept.latent-variable.edge",
+          "kind": "edge_case",
+          "goal": "Одна latent category"
+        },
+        {
+          "id": "concept.latent-variable.transfer",
+          "kind": "transfer",
+          "goal": "Разные latent joint одна marginal"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.likelihood",
+      "current_id": "likelihood",
+      "title": "Правдоподобие: как модель объясняет наблюдённые данные",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('likelihood') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "logarithm",
+        "gaussian"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.likelihood.formula",
+          "kind": "formula",
+          "goal": "Log likelihood observations"
+        },
+        {
+          "id": "concept.likelihood.implementation",
+          "kind": "implementation",
+          "goal": "gaussian_log_likelihood(xs,mu,sigma)"
+        },
+        {
+          "id": "concept.likelihood.edge",
+          "kind": "edge_case",
+          "goal": "Empty xs sum=0"
+        },
+        {
+          "id": "concept.likelihood.transfer",
+          "kind": "transfer",
+          "goal": "Likelihood не distribution по параметру"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.bayes-rule",
+      "current_id": "bayes-rule",
+      "title": "Правило Байеса: пересмотреть предположение после наблюдения",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('bayes-rule') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "likelihood"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.bayes-rule.formula",
+          "kind": "formula",
+          "goal": "Posterior proportional prior*likelihood"
+        },
+        {
+          "id": "concept.bayes-rule.implementation",
+          "kind": "implementation",
+          "goal": "bayes_update(prior,likelihood)"
+        },
+        {
+          "id": "concept.bayes-rule.edge",
+          "kind": "edge_case",
+          "goal": "Evidence zero ошибка"
+        },
+        {
+          "id": "concept.bayes-rule.transfer",
+          "kind": "transfer",
+          "goal": "Uniform likelihood сохраняет prior"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.elbo",
+      "current_id": "elbo",
+      "title": "ELBO: доступная нижняя граница log likelihood",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('elbo') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "kl-divergence",
+        "likelihood",
+        "latent-variable"
+      ],
+      "used_by_unit_ids": [
+        "unit.vae.compute"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.elbo.formula",
+          "kind": "formula",
+          "goal": "Expected log conditional minus KL"
+        },
+        {
+          "id": "concept.elbo.implementation",
+          "kind": "implementation",
+          "goal": "elbo(reconstruction_expectation,kl)"
+        },
+        {
+          "id": "concept.elbo.edge",
+          "kind": "edge_case",
+          "goal": "KL=0 ELBO не обязательно likelihood"
+        },
+        {
+          "id": "concept.elbo.transfer",
+          "kind": "transfer",
+          "goal": "Exact log evidence минус ELBO равно posterior KL"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.reparameterization",
+      "current_id": "reparameterization",
+      "title": "Перепараметризация: вынести случайность за параметры",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('reparameterization') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "gaussian",
+        "chain-rule"
+      ],
+      "used_by_unit_ids": [
+        "unit.vae.compute"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.reparameterization.formula",
+          "kind": "formula",
+          "goal": "z=mu+exp(logvar/2)*eps"
+        },
+        {
+          "id": "concept.reparameterization.implementation",
+          "kind": "implementation",
+          "goal": "reparameterize(mu,logvar,eps)"
+        },
+        {
+          "id": "concept.reparameterization.edge",
+          "kind": "edge_case",
+          "goal": "eps=0 fixed randomness"
+        },
+        {
+          "id": "concept.reparameterization.transfer",
+          "kind": "transfer",
+          "goal": "Logvar gradient check с тем же epsilon"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.monte-carlo",
+      "current_id": "monte-carlo",
+      "title": "Монте-Карло: оценить среднее по случайным примерам",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('monte-carlo') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation",
+        "variance"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.monte-carlo.formula",
+          "kind": "formula",
+          "goal": "Среднее sampled function values"
+        },
+        {
+          "id": "concept.monte-carlo.implementation",
+          "kind": "implementation",
+          "goal": "sample_mean_and_variance(values)"
+        },
+        {
+          "id": "concept.monte-carlo.edge",
+          "kind": "edge_case",
+          "goal": "Один sample uncertainty unavailable"
+        },
+        {
+          "id": "concept.monte-carlo.transfer",
+          "kind": "transfer",
+          "goal": "Exact enumeration vs fixed-seed estimate без stochastic pass"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.adversarial-game",
+      "current_id": "adversarial-game",
+      "title": "Состязательная игра: две модели меняют условия друг друга",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('adversarial-game') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "cross-entropy",
+        "gradient"
+      ],
+      "used_by_unit_ids": [
+        "unit.gan.game"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.adversarial-game.formula",
+          "kind": "formula",
+          "goal": "D и G разные losses"
+        },
+        {
+          "id": "concept.adversarial-game.implementation",
+          "kind": "implementation",
+          "goal": "gan_pair_objectives(real_logit,fake_logit)"
+        },
+        {
+          "id": "concept.adversarial-game.edge",
+          "kind": "edge_case",
+          "goal": "Extreme logits stable"
+        },
+        {
+          "id": "concept.adversarial-game.transfer",
+          "kind": "transfer",
+          "goal": "Frozen D сохраняет weights но не блокирует input gradient"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.conditional-expectation",
+      "current_id": "conditional-expectation",
+      "title": "Условное ожидание: лучший средний ответ с имеющейся информацией",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('conditional-expectation') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation",
+        "bayes-rule"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.conditional-expectation.formula",
+          "kind": "formula",
+          "goal": "E Y given X из joint"
+        },
+        {
+          "id": "concept.conditional-expectation.implementation",
+          "kind": "implementation",
+          "goal": "conditional_mean(joint,x,ys)"
+        },
+        {
+          "id": "concept.conditional-expectation.edge",
+          "kind": "edge_case",
+          "goal": "P(X=x)=0 undefined"
+        },
+        {
+          "id": "concept.conditional-expectation.transfer",
+          "kind": "transfer",
+          "goal": "Law total expectation"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.noise-schedule",
+      "current_id": "noise-schedule",
+      "title": "Шумовое расписание: сколько сигнала остаётся на каждом шаге",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('noise-schedule') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "gaussian",
+        "variance"
+      ],
+      "used_by_unit_ids": [
+        "unit.frontier.denoiser-training",
+        "unit.diffusion.noise",
+        "unit.diffusion.step"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.noise-schedule.formula",
+          "kind": "formula",
+          "goal": "alpha_bar=product(1-beta)"
+        },
+        {
+          "id": "concept.noise-schedule.implementation",
+          "kind": "implementation",
+          "goal": "alpha_cumprod(betas)"
+        },
+        {
+          "id": "concept.noise-schedule.edge",
+          "kind": "edge_case",
+          "goal": "Beta вне (0,1) ошибка"
+        },
+        {
+          "id": "concept.noise-schedule.transfer",
+          "kind": "transfer",
+          "goal": "Signal noise squared coefficients sum=1"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.score-function",
+      "current_id": "score-function",
+      "title": "Score распределения: производная его log плотности",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('score-function') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "derivative",
+        "logarithm",
+        "gaussian"
+      ],
+      "used_by_unit_ids": [
+        "unit.diffusion.condition"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.score-function.formula",
+          "kind": "formula",
+          "goal": "Gaussian score=-(x-mu)/sigma²"
+        },
+        {
+          "id": "concept.score-function.implementation",
+          "kind": "implementation",
+          "goal": "gaussian_score(x,mu,sigma)"
+        },
+        {
+          "id": "concept.score-function.edge",
+          "kind": "edge_case",
+          "goal": "sigma<=0 ошибка"
+        },
+        {
+          "id": "concept.score-function.transfer",
+          "kind": "transfer",
+          "goal": "Finite difference derivative logpdf"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.graph",
+      "current_id": "graph",
+      "title": "Граф: объекты и связи между ними",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('graph') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "vector"
+      ],
+      "used_by_unit_ids": [
+        "unit.frontier.egnn",
+        "unit.gnn.graph"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.graph.formula",
+          "kind": "formula",
+          "goal": "Neighbours по edges"
+        },
+        {
+          "id": "concept.graph.implementation",
+          "kind": "implementation",
+          "goal": "neighbor_lists(n,edges)"
+        },
+        {
+          "id": "concept.graph.edge",
+          "kind": "edge_case",
+          "goal": "Isolated node duplicates policy"
+        },
+        {
+          "id": "concept.graph.transfer",
+          "kind": "transfer",
+          "goal": "Node permutation сохраняет topology"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.adjacency-matrix",
+      "current_id": "adjacency-matrix",
+      "title": "Матрица смежности: записать рёбра числами",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('adjacency-matrix') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "graph",
+        "matrix"
+      ],
+      "used_by_unit_ids": [
+        "unit.gnn.graph"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.adjacency-matrix.formula",
+          "kind": "formula",
+          "goal": "A_ij кодирует edge i→j"
+        },
+        {
+          "id": "concept.adjacency-matrix.implementation",
+          "kind": "implementation",
+          "goal": "adjacency_from_edges(n,edges)"
+        },
+        {
+          "id": "concept.adjacency-matrix.edge",
+          "kind": "edge_case",
+          "goal": "Undirected symmetry convention"
+        },
+        {
+          "id": "concept.adjacency-matrix.transfer",
+          "kind": "transfer",
+          "goal": "Edges adjacency roundtrip"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.message-passing",
+      "current_id": "message-passing",
+      "title": "Передача сообщений: собрать информацию соседей",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('message-passing') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "adjacency-matrix",
+        "function"
+      ],
+      "used_by_unit_ids": [
+        "unit.gnn.message",
+        "unit.gnn.variants"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.message-passing.formula",
+          "kind": "formula",
+          "goal": "Aggregate neighbors features"
+        },
+        {
+          "id": "concept.message-passing.implementation",
+          "kind": "implementation",
+          "goal": "sum_neighbor_messages(A,X)"
+        },
+        {
+          "id": "concept.message-passing.edge",
+          "kind": "edge_case",
+          "goal": "Нет neighbors zero sum"
+        },
+        {
+          "id": "concept.message-passing.transfer",
+          "kind": "transfer",
+          "goal": "Neighbors order сохраняет sum"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.markov-chain",
+      "current_id": "markov-chain",
+      "title": "Марковское состояние: достаточно настоящего для следующего шага",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('markov-chain') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "conditional-expectation"
+      ],
+      "used_by_unit_ids": [
+        "unit.rl.environment"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.markov-chain.formula",
+          "kind": "formula",
+          "goal": "p_next=p*P"
+        },
+        {
+          "id": "concept.markov-chain.implementation",
+          "kind": "implementation",
+          "goal": "markov_step(p,transition)"
+        },
+        {
+          "id": "concept.markov-chain.edge",
+          "kind": "edge_case",
+          "goal": "Each row sum=1"
+        },
+        {
+          "id": "concept.markov-chain.transfer",
+          "kind": "transfer",
+          "goal": "Два шага p*P²"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.discounted-return",
+      "current_id": "discounted-return",
+      "title": "Дисконтированная отдача: сложить награды с учётом времени",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('discounted-return') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "expectation",
+        "function"
+      ],
+      "used_by_unit_ids": [
+        "unit.rl.environment"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.discounted-return.formula",
+          "kind": "formula",
+          "goal": "Backward G=r+gamma*G_next"
+        },
+        {
+          "id": "concept.discounted-return.implementation",
+          "kind": "implementation",
+          "goal": "discounted_return(rewards,gamma)"
+        },
+        {
+          "id": "concept.discounted-return.edge",
+          "kind": "edge_case",
+          "goal": "gamma=0 empty return=0"
+        },
+        {
+          "id": "concept.discounted-return.transfer",
+          "kind": "transfer",
+          "goal": "Reward shift c finite geometric sum"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.policy",
+      "current_id": "policy",
+      "title": "Политика: правило выбора действия",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('policy') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "probability",
+        "function"
+      ],
+      "used_by_unit_ids": [],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.policy.formula",
+          "kind": "formula",
+          "goal": "Action probabilities given state"
+        },
+        {
+          "id": "concept.policy.implementation",
+          "kind": "implementation",
+          "goal": "epsilon_greedy_distribution(q,epsilon)"
+        },
+        {
+          "id": "concept.policy.edge",
+          "kind": "edge_case",
+          "goal": "Tie best actions явная policy"
+        },
+        {
+          "id": "concept.policy.transfer",
+          "kind": "transfer",
+          "goal": "epsilon=1 uniform epsilon=0 greedy"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.q-value",
+      "current_id": "q-value",
+      "title": "Q-значение: будущая отдача после конкретного действия",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('q-value') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "discounted-return",
+        "policy"
+      ],
+      "used_by_unit_ids": [
+        "unit.rl.q-learning",
+        "unit.rl.families"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.q-value.formula",
+          "kind": "formula",
+          "goal": "Expected r+gamma*V_next"
+        },
+        {
+          "id": "concept.q-value.implementation",
+          "kind": "implementation",
+          "goal": "q_from_model(P,R,V,gamma)"
+        },
+        {
+          "id": "concept.q-value.edge",
+          "kind": "edge_case",
+          "goal": "Terminal no bootstrap"
+        },
+        {
+          "id": "concept.q-value.transfer",
+          "kind": "transfer",
+          "goal": "Q для action vs max_a Q"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.bellman-equation",
+      "current_id": "bellman-equation",
+      "title": "Уравнение Беллмана: сейчас плюс ценность следующего состояния",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('bellman-equation') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "discounted-return",
+        "conditional-expectation"
+      ],
+      "used_by_unit_ids": [
+        "unit.rl.bellman"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.bellman-equation.formula",
+          "kind": "formula",
+          "goal": "V_new=max_a Q_model"
+        },
+        {
+          "id": "concept.bellman-equation.implementation",
+          "kind": "implementation",
+          "goal": "bellman_sweep(V,P,R,gamma)"
+        },
+        {
+          "id": "concept.bellman-equation.edge",
+          "kind": "edge_case",
+          "goal": "Все states читают old V"
+        },
+        {
+          "id": "concept.bellman-equation.transfer",
+          "kind": "transfer",
+          "goal": "Sweep-order independence"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    },
+    {
+      "id": "concept.policy-gradient",
+      "current_id": "policy-gradient",
+      "title": "Градиент политики: менять вероятности полезных действий",
+      "source": "src/advancedConcepts.ts",
+      "current_route": "ConceptLink('policy-gradient') overlay, not hash route",
+      "prerequisite_concept_ids": [
+        "policy",
+        "gradient",
+        "discounted-return"
+      ],
+      "used_by_unit_ids": [
+        "unit.rl.policy",
+        "unit.rl.families"
+      ],
+      "practice_policy": "Dedicated foundation recipe after this concept. Reuse its tested core function inside contextual unit tasks. Concept progress and unit progress are separate.",
+      "recipe_status": "designed_not_implemented",
+      "ordered_tasks": [
+        {
+          "id": "concept.policy-gradient.formula",
+          "kind": "formula",
+          "goal": "Two-action exact gradient"
+        },
+        {
+          "id": "concept.policy-gradient.implementation",
+          "kind": "implementation",
+          "goal": "two_action_policy_grad(theta,r0,r1)"
+        },
+        {
+          "id": "concept.policy-gradient.edge",
+          "kind": "edge_case",
+          "goal": "Equal rewards zero gradient"
+        },
+        {
+          "id": "concept.policy-gradient.transfer",
+          "kind": "transfer",
+          "goal": "Action-independent baseline expected gradient прежний"
+        }
+      ],
+      "languages": [
+        "python",
+        "javascript",
+        "rust"
+      ]
+    }
+  ],
+  "catalog_cards": [
+    {
+      "id": "numbers-shapes",
+      "title": "Векторы, матрицы и формы",
+      "group": "math",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "calculus",
+      "title": "От функции к градиенту",
+      "group": "math",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "probability-language",
+      "title": "Вероятности и язык потерь",
+      "group": "math",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "data-split",
+      "title": "Train, validation и test",
+      "group": "data",
+      "current_coverage": "reading",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "normalization-data",
+      "title": "Масштаб и нормализация",
+      "group": "data",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "neuron-layer",
+      "title": "Нейрон, активация и Dense",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "objectives",
+      "title": "Регрессия, классификация и loss",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "automatic-differentiation",
+      "title": "Цепочка, ветвление и backprop",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "optimizer-path",
+      "title": "SGD, momentum, Adam и learning rate",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "full-network",
+      "title": "Полное обучение маленькой сети",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "dense-cnn",
+      "title": "MLP и CNN: полные связи или локальные фильтры",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "recurrent",
+      "title": "RNN, LSTM, GRU: состояние через время",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "attention-transformer",
+      "title": "Внимание и Transformer",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "generalization",
+      "title": "Переобучение видно на новых данных",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "training-practice",
+      "title": "Mini-batch, L2 и воспроизводимость",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "measure-quality",
+      "title": "Метрики, утечки и сдвиг данных",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "residual",
+      "title": "Residual-сети и ResNet",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "full-transformer",
+      "title": "Полное обучение маленького Transformer",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "gated-ffn",
+      "title": "GELU и SwiGLU",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "vit",
+      "title": "Vision Transformer",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "moe",
+      "title": "Mixture of Experts",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "mla",
+      "title": "MLA: латентный KV-cache",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "online-attention",
+      "title": "Блочное внимание и online softmax",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "state-space",
+      "title": "SSM, Mamba-2 и gated delta",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "image-denoisers",
+      "title": "U-Net и DiT",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "text-representations",
+      "title": "Токенизация и embeddings",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "transfer",
+      "title": "Transfer learning и LoRA",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "autoencoder-vae",
+      "title": "Автоэнкодеры и VAE",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "gan",
+      "title": "GAN: генератор и различитель",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "diffusion",
+      "title": "Диффузионные модели",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "gnn",
+      "title": "Графовые нейросети",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "rl",
+      "title": "Обучение с подкреплением",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/curriculum.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "contrastive-clip",
+      "title": "CLIP: изображение и текст",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "flow-matching",
+      "title": "Flow matching",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "causal-interpretability",
+      "title": "Признаки и причинные вмешательства",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "equivariant-egnn",
+      "title": "EGNN: геометрические симметрии",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "neural-fields",
+      "title": "Neural fields и объёмный рендеринг",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "preference-dpo",
+      "title": "DPO: обучение по предпочтениям",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "quantization",
+      "title": "Квантизация и адаптация",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "speculative-decoding",
+      "title": "Speculative decoding",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "long-context",
+      "title": "Длинный контекст и экстраполяция",
+      "group": "quality",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "jepa",
+      "title": "I-JEPA: скрытые представления",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "masked-text",
+      "title": "Диффузионное восстановление текста",
+      "group": "beyond",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "kan",
+      "title": "KAN: обучаемые функции связей",
+      "group": "families",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    },
+    {
+      "id": "architecture-training",
+      "title": "Обучение ViT, MoE, SSM и denoisers",
+      "group": "learning",
+      "current_coverage": "interactive",
+      "source": "src/frontierTopics.ts",
+      "kind": "catalog_card_not_additional_chapter"
+    }
+  ]
+}

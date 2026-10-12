@@ -1,5 +1,94 @@
 # Прогресс RustML
 
+### Передача: практика, Supabase и бесплатное развёртывание — 2026-10-12
+
+База `827b443c32fc09411d9d2c326c410f4f54051b93`, checkout
+`C:/Users/lomaster/.codex/worktrees/6209/rust_ml`, ветка `codex/ui-ux-learning-lab`,
+remote `https://github.com/iliskhan/rust_ml.git`. Исходное дерево было чистым.
+Проектные документы добавлены тремя агентами в непересекающихся файлах;
+все агенты прекратили изменения перед передачей. Основной чат сохраняет их commit/push.
+
+**Последние поручения пользователя (они расширяют прежний design-only scope):**
+1. Основной язык на выбор, остальные — отдельные достижения.
+2. Реализовать практику после каждой темы, распределив части между агентами/чатами.
+3. Сразу развернуть проект; backend — Supabase, frontend на бесплатном хостинге;
+   объяснить, что требуется от пользователя. Пользователь назвал GitHub Pages
+   и попросил альтернативы. Платные ресурсы не заказывались и не разрешены.
+4. Создать новый чат со всем нужным контекстом; вся основная разработка продолжается там.
+
+**Что подготовлено:**
+- [Общая спецификация](learning-lab/docs/practice-system.md): UX, аккаунт, offline,
+  помощь, доступность, интеграция и пять этапов внедрения.
+- `practice-curriculum.md` + `practice-topic-inventory.json`: 83 учебных раздела,
+  51 математическая микротема, 45 навигационных карточек, 536 контуров заданий.
+  Это не 536 готовых bundles. Softmax, shared-node backward, SGD расписаны подробно
+  с Python/JavaScript/Rust сигнатурами, числами и ловимыми ошибками.
+- `practice-data-model.md` + `practice-schema.sql`: 13 таблиц, 11 функций, 1 view;
+  immutable releases, RLS/grants, draft CAS, help receipts, attempts, SQL jobs,
+  lease/fencing/idempotency. Требования объединяют равноценные упражнения через OR:
+  guided `pass`, transfer `independent`; минимум A/B для independent. Банк конечный.
+- `practice-execution.md`: API и отдельный изолированный runner; code-only grade.
+  Conceptual quiz пока formative/local. Submit берёт уже сохранённый draft revision.
+  `/runs`, retirement релиза, rich result JSON и полноценный compute ledger пока
+  не поддержаны proposed DDL; явные границы описаны. Внешние ключи/права нужно проверить.
+
+**Проверки этого пакета:** Python 3, Windows, этот checkout/база; разобран JSON,
+проверены уникальные unit/concept/task IDs, 51 current concept ID по исходникам,
+prerequisite refs, существование source paths, Markdown-ссылки/ограждения;
+независимо пересчитаны 7 fixtures softmax/backprop/SGD — PASS.
+Текст SQL прочитан и договоры API приведены в соответствие. Это не execution SQL.
+`git diff --cached --check` выполняется перед commit, delivery SHA передаётся в новый чат.
+Новых runtime/bundles/UI/auth/RLS проверок не было. Прежние 331/331, tsc/build,
+desktop/mobile относятся к последней функциональной реализации ниже.
+Локальные PostgreSQL/Supabase CLI не найдены; Docker daemon недоступен
+(`docker_engine` pipe отсутствует). Новых аккаунтов, Supabase-проекта, секретов,
+облачных ресурсов и работающего backend не создано. Приложение/Rust не менялись.
+
+**Бесплатное размещение, проверено по официальным страницам 2026-10-12:**
+- [Cloudflare Pages](https://www.cloudflare.com/products/pages/) — рекомендация
+  для статического React/Vite. [Free limits](https://developers.cloudflare.com/pages/platform/limits/):
+  500 builds/месяц, 1 одновременная сборка, asset ≤25 MiB. Проверить тяжёлые WASM,
+  если появятся. Поддомен pages.dev позволяет обойтись без покупки домена.
+- [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)
+  бесплатен для public repo на GitHub Free; для project site требуется Vite base
+  `/rust_ml/`. Наличие public доступа репозитория отдельно не проверено.
+- [Supabase Free](https://supabase.com/pricing): подойдёт для первого аккаунта/прогресса
+  в пределах лимитов. [Малоактивные проекты могут приостанавливаться](https://supabase.com/docs/guides/platform/free-project-pausing).
+  Не утверждать, что свободный слот free project у аккаунта пользователя уже есть.
+- Пользовательский Python/JS/Rust не запускать в Supabase Edge. Нужен отдельный
+  доказанно изолированный runner; его бесплатный непрерывный хостинг пока не найден.
+  Не заменять его eval в приложении или поддельным «серверным успехом».
+
+**Что может потребоваться от пользователя:** вход/подключение Cloudflare (если
+выбран Pages) и Supabase, выбор существующего или создание бесплатного проекта,
+регион и разрешение GitHub-интеграции на rust_ml. URL и publishable key допустимы
+в frontend; DB password/service_role/secret/PAT вводить через защищённый login/secret
+механизм, не в чат и не в Git. Для email OTP потребуется SMTP; для бесплатного старта
+рассмотреть GitHub OAuth, согласовав изменение предложенного UX. Никаких текущих
+доступов к Supabase/Cloudflare не подтверждено; подключённого Supabase tool нет.
+
+**Следующее действие нового чата:** прочитать этот checkpoint и шесть документов,
+проверить текущий checkout/ветку/dirty state. Брать актуальную отправленную ветку
+`origin/codex/ui-ux-learning-lab`, а не устаревшую default branch. Сохранённый проект
+Codex указывает на `C:/Users/lomaster/Desktop/dev/rust_ml`; там сначала проверить
+пользовательские изменения. Ветка текущего чата занята worktree6209 — нельзя force
+переключать/сбрасывать её. При необходимости создать свою codex-ветку/изолированный
+worktree от подтверждённого commit, сохранив чужую работу. Затем параллельно:
+контент первых трёх anchors, UI/локальный прогресс, Supabase/RLS/инфраструктура.
+Подготовить и проверить frontend deploy, запросить только реальные недостающие
+доступы, продолжая независимые части. Не выдавать план за работающий сайт.
+
+Рабочие команды: из learning-lab запускать Node напрямую
+`C:/Users/lomaster/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe`
+с `--test tests/*.test.ts`, `node_modules/typescript/bin/tsc --noEmit`,
+`node_modules/vite/bin/vite.js build`. Python находится рядом в
+`dependencies/python/python.exe`; на Windows для Unicode нужен `-X utf8`.
+В learning-lab пока нет vite.config.ts; GitHub Pages base/config ещё не настраивались.
+Секреты никогда не переносить в VITE_* кроме public URL/publishable key.
+Для UI обязательны настоящий desktop/mobile, клавиатура и 200% text/reflow;
+Narrator пропущен пользователем, не возобновлять без нового запроса.
+После изменений: meaningful tests, commit, обычный push и local/remote SHA.
+
 ### После шестнадцати лабораторий — исследование завершено, 2026-10-12
 
 Текущий запрос — найти оставшиеся темы и визуальные опыты. Проверена чистая
