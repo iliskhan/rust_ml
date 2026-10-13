@@ -1,5 +1,42 @@
 # Прогресс RustML
 
+### Интеграция опубликована; hosted Supabase остаётся заблокирован — 2026-10-13
+
+Общая интеграция committed/pushed в `46235ac4feaa9f6262186088e9add60064cc8e28`;
+под FileShare.None Git-lock подтверждён local=remote master. Source hash snapshot
+после commit совпал для всех38 файлов. CI38381096306 SUCCESS, Pages38381096383
+build/deploy SUCCESS (наблюдены jobs115241417819/115241758357). На публичном
+`https://iliskhan.github.io/rust_ml/#practice` работает «Мой прогресс»;
+desktop1280x720 и mobile390x844 без overflow/duplicateIDs, console error/warn=[].
+Локальная production/reload/keyboard приёмка и full suite464/464 остаются применимы:
+runtime source после неё не менялся. Подключения cloud config в Pages ещё нет.
+
+Исходный чат исправил воспроизведённый SQL smoke отказ: CRLF в literal seed-коде
+не совпадал с LF импортированного TS каталога. `.gitattributes` закрепил
+`learning-lab/supabase/migrations/*.sql text eol=lf`, commit
+`3df41d3505f619865323800b7dc68825c1ed77f3` обычно pushed; local/remote match проверен
+тем чатом под общим lock. SQL Git content не изменён.
+Свежий PGlite17.5/Node24.19, checkout общий, base e451276+dirty worktree,
+2026-10-13T10:05:54.759Z: **12403 PASS**, включая полный каталог136/276/412/1236.
+Точная исходная команда:
+`node learning-lab/supabase/tests/rls-smoke.mjs work/backend-smoke/node_modules/@electric-sql/pglite/dist/index.js work/root-supabase-connect/rls-smoke-result.json`.
+Исходный чат затем перенёс evidence в ignored `work/practice-supabase-connect/`;
+portable копия report сохранена в `learning-lab/evidence/auth-progress/sql-recheck.json`.
+Это auth.uid stub, не hosted JWT/PostgREST/OAuth или реальные concurrent connections.
+
+Хотя владелец прямо разрешил подключение и сообщил о добавлении site allow rule,
+browser исходного чата повторно отверг https://supabase.com:
+`A saved user permission setting blocks this action`. Этот чат не использует своё
+ранее работавшее подключение для обхода того отказа. Удалённая БД/Auth settings
+не изменены; hosted Auth/RLS/CAS двух реальных аккаунтов и доставка писем ещё не
+проверены. Следующий hosted шаг — устранить конкретный saved site-rule blocker,
+после чего исходный чат применяет целые migrations и выполняет hosted приёмку.
+
+Рабочая копия содержит посторонние .codex-remote-attachments и два author preview
+файла; они не включены в commit. После LF-нормализации `git status` также показывал
+M у трёх migration файлов при пустом content diff; эти файлы принадлежат исходному
+чату и не staging этого чата. Runner/grading остаётся disabled.
+
 ### Auth/Progress: общая локальная интеграция проверена — 2026-10-13, 13:01 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база

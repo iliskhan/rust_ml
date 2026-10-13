@@ -1,0 +1,37 @@
+{
+  "checked_at_utc": "2026-10-13T10:14:58Z",
+  "code_revision": "46235ac4feaa9f6262186088e9add60064cc8e28",
+  "url": "https://iliskhan.github.io/rust_ml/#practice",
+  "ci": {
+    "run_id": 38381096306,
+    "status": "success"
+  },
+  "pages": {
+    "run_id": 38381096383,
+    "status": "success",
+    "build_job": 115241417819,
+    "deploy_job": 115241758357
+  },
+  "browser": {
+    "desktop": {
+      "viewport": [
+        1280,
+        720
+      ],
+      "document_width": 1265
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "document_width": 375
+    },
+    "duplicate_ids": 0,
+    "console_errors": 0,
+    "console_warnings": 0
+  },
+  "cloud_configured": false,
+  "server_grading": "disabled",
+  "boundary": "Published frontend verified. Hosted Supabase Auth/JWT/PostgREST/RLS/CAS and mail delivery pending; source thread browser saved-site block remains."
+}

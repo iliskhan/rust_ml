@@ -1,5 +1,13 @@
 # Проверка интеграции Auth и прогресса — 13 октября 2026
 
+Публикация интеграции `46235ac` подтверждена: CI38381096306 и Pages38381096383
+SUCCESS; публичный desktop/mobile без overflow/duplicateIDs и ошибок консоли.
+Сводка — [hosted-publication.json](hosted-publication.json).
+Свежий local PGlite13.10 после правила eol=lf — [12403 PASS](sql-recheck.json).
+Его исходная команда указана в текущем PROGRESS.md; embedded command report
+содержит default output path, а фактический task output затем был перенесён.
+Hosted Supabase по-прежнему не подключён: браузер исходного чата сохраняет site block.
+
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база
 `e45127662c7a5e0c61d30d40d5a3ea4d439876ab` плюс изменения этой задачи.
 Проверенные исходники/тесты записаны в `source-hashes.json`. Rust-ядро и SQL migrations
