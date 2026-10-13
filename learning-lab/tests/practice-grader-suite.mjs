@@ -12,6 +12,23 @@ import { prepareManifests } from '../grader/publication.mjs'
 const message = (testCase, value) => JSON.stringify({ protocol: 1, case_id: testCase.id, value })
 const exercise = exercises.find(item => item.id === 'unit.neuron.dot.guided') ?? exercises[0]
 
+test('deployed API imports without the TypeScript catalog and fails closed without DB config', () => {
+  const result = spawnSync(process.execPath, ['--no-experimental-strip-types', '--input-type=module', '-e', `
+    import assert from 'node:assert/strict';
+    delete process.env.PRACTICE_API_DATABASE_URL;
+    delete process.env.PRACTICE_WORKER_DATABASE_URL;
+    const { default: api } = await import(${JSON.stringify(new URL('../api/practice-grade.js', import.meta.url).href)});
+    await import(${JSON.stringify(new URL('../api/practice-reap.js', import.meta.url).href)});
+    const response = await api.fetch(new Request('https://rustml-grader.vercel.app/api/practice-grade', {
+      headers: { Origin: 'https://iliskhan.github.io' }
+    }));
+    assert.equal(response.status, 503);
+    assert.equal(response.headers.get('access-control-allow-origin'), 'https://iliskhan.github.io');
+    assert.deepEqual(await response.json(), { code: 'grading_unavailable' });
+  `], { encoding: 'utf8', timeout: 15000 })
+  assert.equal(result.status, 0, result.stderr)
+})
+
 test('runtime identity is pinned in the grading manifest digest', () => {
   const a = buildBundle(exercise, 'python', { runtimeDigest: 'sha256:' + 'a'.repeat(64) })
   const b = buildBundle(exercise, 'python', { runtimeDigest: 'sha256:' + 'b'.repeat(64) })

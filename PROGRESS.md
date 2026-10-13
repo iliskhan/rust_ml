@@ -1,14 +1,72 @@
 # Прогресс RustML
 
-Проверка checkpoint: `8671b44c191ae39c8f7bfcb87bc41951910270d8` отправлен обычным
-push в master, local/remote совпали. CI `38426710204` и Pages `38426710243`
-SUCCESS. После reload публичного RustML аккаунт восстановился и появился статус
-«Прогресс синхронизирован между устройствами», console warnings/errors отсутствуют.
-Скриншот `work/practice-grader/hosted-after-sql006.png`. Grader остаётся выключенным.
-Начат новый штатный CLI device login после завершения первого, но и новая форма
-показывает disabled Allow Access. Текущий короткоживущий запрос сохранён во вкладке;
-его код не является постоянным способом входа. Нужен ответ пользователя о входе
-в обычном браузере; общая задача всё ещё не завершена.
+### Реальный runtime проверен; остаётся окружение Vercel — 2026-10-13, 19:40 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база `b2c6a95`.
+Локальные проверки этого набора выполнены до commit; итог обычного push и
+сверка local/remote SHA записываются в `work/practice-grader/git-delivery.json`.
+CLI Vercel63.1.2 успешно авторизован: открыли `/oauth/device` без query-параметра,
+ввели новый код вручную и подтвердили Allow Access. Причина неактивной кнопки
+на прежней форме не установлена. Просьба завершить вход пользователю устарела.
+Проект `rustml-grader` / `iliskhans-projects` связан; API подтвердил Hobby.
+Карта, платный тариф и дополнительные платные ресурсы не подключались.
+
+Реальный SDK3.7.0 runtime: Node24.21.0, Python3.14.4, Rust1.90.0. Все три
+reference-примера PASS; гостевой UID1001, ограниченное окружение, deny-all,
+CPU/process/file/output limits, compile_error/output_limit проверены.
+Trusted snapshot `snap_It6mVj2cPSWSKzj0OCukNncSEHDK` сохранён (1 463 374 209 B);
+шесть case VM и одна prep VM удалены, GET resume:false подтвердил 404.
+Подробности и границы: `learning-lab/evidence/grading/runtime-2026-10-13.json`.
+Allowlist SHA256 `f6e5d7f8d499fa5b9407cf1a1118e2b5a35ed87e2e15091633dff39548bc40a1`;
+LF закреплён в .gitattributes, поскольку evidence проверяет точные байты.
+
+Supabase SQL001–006 уже применены; повторно не выполнять. Созданы отдельные
+LOGIN rustml_api/rustml_worker с ограниченными правами и connection limit3;
+owner/service_role для Vercel не используются. 28 private-table, 84 public-write,
+119 function assertions PASS; настоящие TLS-подключения и 22 проверки запретов
+PASS. Пробные транзакции откачены. Доказательства: `database-logins-2026-10-13.json`.
+Опубликованы 1236 immutable manifests edition1 после сверки условий и starter;
+`manifests-2026-10-13.json` подтверждает admission OFF, окно NULL, reservations0,
+pending jobs0/attempts0. История и опубликованные variant IDs не менялись.
+
+Vercel API развёрнут: https://rustml-grader.vercel.app. Первая сборка отклонила
+includeFiles-array, заменили на строковый glob. Первый запуск дал
+ERR_MODULE_NOT_FOUND all-catalog.ts через bundles.mjs; canonical/sha256 вынесены
+в digest.mjs, runtime imports больше не тянут author catalog. Регрессия запускает
+API с отключённым TypeScript stripping и проверяет fail-closed 503. Deploy
+`dpl_3SpjhVBtapcFJEBXzKrNc6xu5NU2` READY; public GET grade503 JSON с точным CORS,
+reap503 JSON. Это проверка запуска без конфигурации, не рабочая проверка решений.
+
+Node24.19 / bundled Python / direct stable rustc1.87: весь набор
+`PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test tests/*.test.ts` — 533/533 PASS,
+0 skipped (`work/practice-grader/final-tests-owner-fixed.log`). TypeScript и
+Vite production build PASS. Первые запуски ограниченной песочницы получили
+Access is denied для rustup/esbuild, повтор выполнен под владельцем с direct
+rustc. Пойман отдельный flaky тест двух вкладок: deadline15ms истекал до
+crypto digest; тест теперь ждёт polling обеих вкладок и отменяет явно.
+Смежные проверки настоящего deadline сохранены. Независимый review grader
+не нашёл ошибок; это не заменяет незавершённую hosted HTTP-приёмку.
+
+Блокер: автоматическая проверка отклонила передачу двух новых dedicated DB URL
+и CRON_SECRET в production-env Vercel, потребовав отдельного согласия на эти
+секреты и конкретное назначение. Вопрос отправлен, ответа ещё нет. Отклонённая
+команда не исполнилась; env и CRON_SECRET не созданы. Prepared helper:
+`work/practice-grader/provision-env.ps1`; запускать только после этого ответа.
+Повторные commit/push, вход CLI и обычное создание Sandbox уже разрешены.
+
+Следующий шаг: после согласия записать ограниченные env → redeploy → проверить
+актуальную бесплатную квоту/окно и временно включить admission → hosted приёмка.
+`work/practice-grader/hosted-acceptance/run-root.ps1 -ExecuteRoot` и CHECKPOINT
+подготовлены, local mock selfcheck PASS; удалённо не запускались. Admin key для
+двух тестовых Auth-аккаунтов передаётся прежним разрешённым RSA transport только
+в память локального процесса; runner выключает admission и проверяет удаление
+своих пользователей/записей/VM. Затем hosted fencing/reaper, включение production
+и Actions `VITE_PRACTICE_GRADER_URL`, commit/push, CI/Pages и desktop/mobile.
+Сейчас серверная кнопка выключена; общий запрос пользователя ещё не завершён.
+
+Последняя ранее проверенная публикация frontend: `8671b44`, CI38426710204 и
+Pages38426710243 SUCCESS, public reload/sync-ready и console0. Старые записи
+ниже — история этапов, актуальный статус находится в этом checkpoint.
 
 ### SQL006 применена; проект Vercel создан — 2026-10-13, 18:58 MSK
 

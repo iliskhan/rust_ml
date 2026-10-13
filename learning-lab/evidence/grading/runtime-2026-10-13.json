@@ -1,0 +1,143 @@
+{
+  "result": "PASS",
+  "checkedAt": "2026-10-13T16:25:44.604Z",
+  "verifiedCommit": "b2c6a9593aa2ba088738e6330413ae0f1b079eed",
+  "sdkVersion": "3.7.0",
+  "scope": "Hosted runtime/provider smoke and narrow isolation probes; HTTP API, database publication, leases/fencing and UI acceptance are separate.",
+  "runtimeAllowlistSha256": "f6e5d7f8d499fa5b9407cf1a1118e2b5a35ed87e2e15091633dff39548bc40a1",
+  "runtimeAllowlistHashFormat": "Lowercase hexadecimal SHA-256 of exact runtimes.json file bytes, without sha256: prefix.",
+  "image": "vercel/sandbox/universal@sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0",
+  "runtimeDigest": "sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0",
+  "snapshot": {
+    "id": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+    "status": "created",
+    "sizeBytes": 1463374209,
+    "regions": [
+      "iad1"
+    ],
+    "expiresAt": null,
+    "trustedPreparationWithoutLearnerCode": true,
+    "preservedAfterCases": 6
+  },
+  "toolchain": {
+    "rustVersion": "1.90.0",
+    "target": "x86_64-unknown-linux-gnu",
+    "artifact": "https://static.rust-lang.org/dist/rust-1.90.0-x86_64-unknown-linux-gnu.tar.xz",
+    "sha256": "bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67",
+    "checksumSource": "https://static.rust-lang.org/dist/rust-1.90.0-x86_64-unknown-linux-gnu.tar.xz.sha256",
+    "artifactSha256VerifiedBeforeInstall": true
+  },
+  "versions": {
+    "node": "v24.21.0",
+    "python": "Python 3.14.4",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cc": "cc (Ubuntu 15.2.0-16ubuntu1) 15.2.0"
+  },
+  "caseTimeoutMs": 30000,
+  "resourceBounds": {
+    "vcpus": 1,
+    "memoryMB": 2048,
+    "persistent": false,
+    "ports": [],
+    "networkPolicy": "deny-all"
+  },
+  "javascriptProcessLimits": {
+    "cpuSeconds": {
+      "soft": 5,
+      "hard": 5
+    },
+    "addressSpaceBytes": {
+      "soft": 8589934592,
+      "hard": 8589934592
+    },
+    "processes": {
+      "soft": 32,
+      "hard": 32
+    },
+    "openFiles": {
+      "soft": 64,
+      "hard": 64
+    },
+    "fileSizeBytes": {
+      "soft": 16777216,
+      "hard": 16777216
+    },
+    "coreSizeBytes": {
+      "soft": 0,
+      "hard": 0
+    }
+  },
+  "isolation": {
+    "guestUID": 1001,
+    "guestEnvironmentKeys": [
+      "HOME",
+      "LANG",
+      "PATH",
+      "TMPDIR"
+    ],
+    "createEnvironmentKeys": [],
+    "networkRequestSucceeded": false,
+    "networkFailureName": "TypeError",
+    "rootFileError": "EACCES",
+    "sudoExit": 1,
+    "limitsSource": "/proc/self/limits",
+    "networkProbeLimitation": "One failed HTTPS request plus confirmed deny-all metadata; not exhaustive network-path testing."
+  },
+  "cleanup": {
+    "prepVMsDeletedAndGet404": 1,
+    "caseVMsDeletedAndGet404": 6,
+    "remainingAcceptedSnapshots": 1,
+    "deleteOrphanSnapshots": false
+  },
+  "freePlan": {
+    "planVerifiedByRoot": "hobby",
+    "storageBeforePreparation": {
+      "dashboardUsedBytes": 0,
+      "dashboardLimitBytes": 15000000000,
+      "cumulativeLifetimeUsageNotEstablished": true
+    },
+    "cumulativeLifetimeUsageEstablished": false
+  },
+  "checks": [
+    {
+      "check": "Official Rust artifact SHA-256 verified before trusted snapshot preparation",
+      "result": "PASS"
+    },
+    {
+      "check": "Hosted javascript reference add(2)=3 through production provider",
+      "result": "PASS"
+    },
+    {
+      "check": "Hosted python reference add(2)=3 through production provider",
+      "result": "PASS"
+    },
+    {
+      "check": "Hosted rust reference add(2)=3 through production provider",
+      "result": "PASS"
+    },
+    {
+      "check": "SDK metadata confirms deny-all, one vCPU, 2048MB, nonpersistent VM, empty create environment and ports",
+      "result": "PASS"
+    },
+    {
+      "check": "Guest UID/environment, denied root-file read and unsuccessful sudo privilege elevation",
+      "result": "PASS"
+    },
+    {
+      "check": "Guest process limits read from /proc/self/limits match configured JavaScript bounds",
+      "result": "PASS"
+    },
+    {
+      "check": "Negative HTTPS network probe under confirmed deny-all policy",
+      "result": "PASS"
+    },
+    {
+      "check": "Controlled JavaScript excessive output and syntax error classified output_limit and compile_error",
+      "result": "PASS"
+    },
+    {
+      "check": "All seven task VMs deleted with GET resume:false HTTP404; trusted snapshot preserved after six cases",
+      "result": "PASS"
+    }
+  ]
+}

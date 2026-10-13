@@ -1,1 +1,23 @@
-{}
+{
+  "[\"javascript\",\"sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0\",\"snap_It6mVj2cPSWSKzj0OCukNncSEHDK\",\"bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67\"]": {
+    "language": "javascript",
+    "image": "vercel/sandbox/universal@sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0",
+    "snapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+    "toolchainSha256": "bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67",
+    "caseTimeoutMs": 30000
+  },
+  "[\"python\",\"sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0\",\"snap_It6mVj2cPSWSKzj0OCukNncSEHDK\",\"bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67\"]": {
+    "language": "python",
+    "image": "vercel/sandbox/universal@sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0",
+    "snapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+    "toolchainSha256": "bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67",
+    "caseTimeoutMs": 30000
+  },
+  "[\"rust\",\"sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0\",\"snap_It6mVj2cPSWSKzj0OCukNncSEHDK\",\"bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67\"]": {
+    "language": "rust",
+    "image": "vercel/sandbox/universal@sha256:c77f7436b9bc0a8b01ef7b09dbcea2de6a18a9fe2aafa89996d2da193da72cf0",
+    "snapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+    "toolchainSha256": "bff8974f2d3ee6c0e6ac926b533f65bbdd3697d2c2b925bdae5f45b9eed10a67",
+    "caseTimeoutMs": 30000
+  }
+}

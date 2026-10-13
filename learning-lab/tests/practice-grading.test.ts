@@ -72,10 +72,17 @@ test('CAS conflict prevents submit; expired JWT refreshes inside cloud client; w
   const foreign = await setup({ foreign: true })
   await assert.rejects(createGrading({ cloud: foreign.cloud, storage: foreign.storage, locks }).run(scope, 'code', snapshot, new AbortController().signal, () => {}), /не соответствует/)
 })
-test('pending attempt polling/resume is bounded and abort preserves recovery', async () => {
+test('pending attempt polling/resume is bounded and abort preserves recovery', async context => {
   const state = await setup({ pending: true })
-  const grading = createGrading({ cloud: state.cloud, storage: state.storage, locks, pollMs: 1, deadlineMs: 15 })
-  await assert.rejects(grading.run(scope, 'code', snapshot, new AbortController().signal, () => {}), /Проверка продолжается/)
+  const startedAt = Date.now()
+  let elapsed = 0
+  context.mock.method(Date, 'now', () => startedAt + elapsed)
+  const grading = createGrading({ cloud: state.cloud, storage: state.storage, locks, pollMs: 1, deadlineMs: 5000 })
+  let updates = 0
+  await assert.rejects(grading.run(scope, 'code', snapshot, new AbortController().signal, () => {
+    updates++; elapsed = 5001
+  }), /Проверка продолжается/)
+  assert.equal(updates, 1)
   assert.equal(state.posts.filter(body => body.action === 'submit').length, 1)
   assert.equal(state.posts.filter(body => body.action === 'resume').length, 1)
   assert.equal(grading.hasPending(scope), true)
@@ -121,13 +128,34 @@ test('two tabs serialize read/prepare/write and share one pending key while poll
     const body = typeof options === 'function' ? options : callback!
     const current = tail.then(body); tail = current.catch(() => {}); return current
   } } as Pick<LockManager, 'request'>
-  const first = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, pollMs: 1, deadlineMs: 15 })
-  const second = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, pollMs: 1, deadlineMs: 15 })
-  const prepare = async () => { prepared++; await new Promise(resolve => setTimeout(resolve, 1)); return snapshot() }
-  await Promise.allSettled([first.run(scope, 'code', prepare, new AbortController().signal, () => {}), second.run(scope, 'code', prepare, new AbortController().signal, () => {})])
+  const first = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, pollMs: 1, deadlineMs: 5000 })
+  const second = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, pollMs: 1, deadlineMs: 5000 })
+  const prepare = async () => { prepared++; return snapshot() }
+  const controls = [new AbortController(), new AbortController()]
+  const observed = new Set<number>()
+  let ready!: () => void
+  const bothPolling = new Promise<void>(resolve => { ready = resolve })
+  const update = (tab: number) => (message: string) => {
+    assert.match(message, /Ожидаем серверную проверку/)
+    observed.add(tab)
+    if (observed.size === 2) ready()
+  }
+  const finished = Promise.allSettled([
+    first.run(scope, 'code', prepare, controls[0].signal, update(0)),
+    second.run(scope, 'code', prepare, controls[1].signal, update(1)),
+  ])
+  await Promise.race([bothPolling, finished.then(() => { throw Error('both tabs must reach polling before cancellation') })])
+  controls.forEach(control => control.abort())
+  const outcomes = await finished
+  assert.deepEqual([...observed].sort(), [0, 1])
+  for (const outcome of outcomes) {
+    assert.equal(outcome.status, 'rejected')
+    if (outcome.status === 'rejected') assert.match(outcome.reason.message, /Проверка продолжается/)
+  }
   assert.equal(prepared, 1)
   assert.equal(new Set(state.posts.filter(body => body.action === 'submit').map(body => body.key)).size, 1)
   assert.equal(first.hasPending(scope), true)
+  assert.equal(second.hasPending(scope), true)
 })
 
 test('unresolved prepare releases Web Lock on abort/deadline and late completion cannot write pending', async () => {
@@ -139,7 +167,7 @@ test('unresolved prepare releases Web Lock on abort/deadline and late completion
       const current = tail.then(async () => { held++; try { return await body() } finally { held-- } })
       tail = current.catch(() => {}); return current
     } } as Pick<LockManager, 'request'>
-    const grading = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, deadlineMs: 20 })
+    const grading = createGrading({ cloud: state.cloud, storage: state.storage, locks: serial, deadlineMs: abort ? 5000 : 1000 })
     const control = new AbortController()
     let finishPrepare!: (value: Awaited<ReturnType<typeof snapshot>>) => void
     let entered!: () => void
@@ -149,9 +177,12 @@ test('unresolved prepare releases Web Lock on abort/deadline and late completion
       assert.equal(prepareSignal.aborted, false); entered(); return neverReady
     }, control.signal, () => {})
     const rejected = assert.rejects(pending, /Проверка продолжается/)
-    await entry
-    if (abort) setTimeout(() => control.abort(), 10)
-    await Promise.race([rejected, new Promise((_, reject) => setTimeout(() => reject(Error('prepare lock hung')), 100))])
+    await Promise.race([entry, rejected.then(() => { throw Error('prepare must start before cancellation') })])
+    if (abort) control.abort()
+    let watchdog!: ReturnType<typeof setTimeout>
+    try {
+      await Promise.race([rejected, new Promise((_, reject) => { watchdog = setTimeout(() => reject(Error('prepare lock hung')), 5000) })])
+    } finally { clearTimeout(watchdog) }
     await tail
     assert.equal(held, 0)
     assert.equal(grading.hasPending(scope), false)

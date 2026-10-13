@@ -56,36 +56,44 @@ Supabase, подключить изолированную проверку Pytho
 
 1. Проверить модель прогресса и доступный серверный исполнитель — готово.
    Исполнителя нет; Supabase Compute показывает отсутствие доступа к private
-   alpha. Опубликованный release содержит пустые grading bundles.
+   alpha. Старые help bundles сохранены; серверные manifests опубликованы отдельно.
 2. Синхронизировать учебный прогресс между устройствами — готово.
    Добавлены отдельные idempotent события самопроверок, помощи, активности и
    языка, coordinator и UI статуса. 484 теста, typecheck/build, 49 SQL-проверок
    и 8 hosted-групп PASS; миграции 004–005 применены. Локальные desktop/mobile
    проверены. Runtime `6b97845` опубликован, CI/Pages SUCCESS; signed-in,
    automatic/manual sync, reload и progress panel проверены на публичном сайте.
-3. Подключить изолированную серверную проверку кода — блокер входа Vercel CLI.
+3. Подключить изолированную серверную проверку кода — окружение Vercel ожидает разрешения.
    Пользователь уточнил: только бесплатно, без карты и своего сервера.
    Vercel Sandbox Hobby даёт ежемесячную квоту с блокировкой вместо доплат;
    вход через GitHub выполнен, существующий Hobby подтверждён. Пользователь
    разрешил условия и отключение передачи данных для обучения; опция отключена.
    Предложение отдельной 2FA пропущено после прямого разрешения пользователя.
-   Создан проект rustml-grader на Hobby. Реальный запуск Sandbox без карты ещё
-   не проверен: форма входа CLI показывает неактивную Allow Access, причина
-   не установлена. Пользователю предложено завершить этот вход обычным браузером.
+   Создан проект rustml-grader на Hobby. CLI успешно авторизован после ручного
+   ввода нового кода на /oauth/device без query-параметра; причина прежней
+   неактивной кнопки не установлена. Реальные Sandbox трёх языков, изоляция,
+   лимиты и удаление семи временных VM проверены. Trusted snapshot сохранён.
    SQL006, supervisor, HTTP handler, provider и клиент реализованы с выключенным
    admission. Локально 530 тестов PASS; две найденные review причины исправлены.
    Ежедневная резервная очистка принадлежащих grader сред реализована и проверена
-   локально; реальные Sandbox ещё ожидают подключения. SQL006 применена ровно
-   один раз 2026-10-13, admission OFF; 20 private-table, 60 public-write и
-   85 function assertions прошли для групповых ролей. Dedicated logins пока нет.
+   локально; ежедневный cron ещё требует hosted-приёмки. SQL006 применена ровно
+   один раз 2026-10-13, admission OFF. Dedicated logins rustml_api/rustml_worker
+   созданы: 28 private-table, 84 public-write, 119 function assertions и 22
+   проверки настоящих TLS-подключений/запретов PASS. 1236 immutable manifests
+   опубликованы; source runtime pins и доказательства сохранены в evidence/grading.
+   API развёрнут на https://rustml-grader.vercel.app; ошибка импорта каталога
+   устранена, без конфигурации возвращает безопасный 503. Автоматическая проверка
+   отклонила передачу двух ограниченных DB URL и CRON_SECRET в production-env
+   Vercel: отдельный запрос пользователю уже отправлен, ответа пока нет.
    Подготовка сохранена в `4cb5a08`, local/remote match, CI/Pages SUCCESS.
    Проверки открытых примеров публикуются отдельными immutable manifests для
    прежних variant IDs: история, черновики и помощь не переносятся в новый release.
    GitHub Actions не использовать как production serverless исполнитель.
 4. Проверить аккаунты, исполнение и миграции на Supabase — на проверке.
    Реальные JWT, независимые хранилища устройств, concurrent/offline replay,
-   foreign-owner denial; grading — resource limits, no network/secrets, trusted
-   comparison и отказ на устаревший lease.
+   foreign-owner denial. Hosted runtime/roles проверены; полный HTTP→worker→DB
+   сценарий двух аккаунтов и hosted fencing ещё предстоят. Локальный runner
+   подготовлен в work/practice-grader/hosted-acceptance/, remote не запускался.
 5. Опубликовать и проверить рабочий сайт — частично готово.
    Синхронизация опубликована независимо от ожидающего executor (`6b97845`).
    CI38402567929 и Pages38402567784 SUCCESS, hosted desktop/mobile PASS.

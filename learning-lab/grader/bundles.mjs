@@ -1,18 +1,11 @@
-import { createHash } from 'node:crypto'
+import { canonical, sha256 } from './digest.mjs'
 import { practiceTopics } from '../src/practice/all-catalog.ts'
+export { canonical, sha256 } from './digest.mjs'
 
 export const languages = ['python', 'javascript', 'rust']
 export const exercises = practiceTopics.flatMap(topic => topic.exercises)
 const identifier = /^[A-Za-z_][A-Za-z0-9_]*$/
 const rustTypes = new Set(['f64', 'usize', 'u32', 'i32', 'bool', '&str', '&[f64]', '&[usize]', '&[bool]', '&[Vec<f64>]'])
-
-// This digest covers the executable grading manifest, never the help-only v1 bundle.
-export function canonical(value) {
-  if (value === null || typeof value !== 'object') return JSON.stringify(value)
-  if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']'
-  return '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + canonical(value[key])).join(',') + '}'
-}
-export const sha256 = value => createHash('sha256').update(value).digest('hex')
 
 export function runnerSpec(exercise, language) {
   if (!languages.includes(language)) throw Error('unsupported_language')

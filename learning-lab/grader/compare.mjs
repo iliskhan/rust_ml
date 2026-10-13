@@ -1,4 +1,4 @@
-import { canonical, sha256 } from './bundles.mjs'
+import { canonical, sha256 } from './digest.mjs'
 
 function bounded(value, depth = 0, budget = { remaining: 16384 }) {
   if (--budget.remaining < 0 || depth > 16) throw Error('invalid_result')

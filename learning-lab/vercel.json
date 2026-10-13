@@ -9,7 +9,7 @@
   "functions": {
     "api/practice-grade.js": {
       "maxDuration": 300,
-      "includeFiles": ["grader/runtimes.json", "grader/supabase-ca.crt"]
+      "includeFiles": "grader/{runtimes.json,supabase-ca.crt}"
     },
     "api/practice-reap.js": { "maxDuration": 60 }
   }

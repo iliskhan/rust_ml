@@ -1,2 +1,4 @@
 # Preserve literal source code and bundle hashes in SQL on Windows and CI.
 learning-lab/supabase/migrations/*.sql text eol=lf
+# Runtime verification records the SHA-256 of these exact bytes.
+learning-lab/grader/runtimes.json text eol=lf

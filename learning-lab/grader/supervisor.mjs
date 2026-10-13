@@ -1,4 +1,4 @@
-import { canonical, sha256 } from './bundles.mjs'
+import { canonical, sha256 } from './digest.mjs'
 import { buildExecution } from './execution.mjs'
 import { finishResult } from './compare.mjs'
 
