@@ -1,4 +1,11 @@
 .practice-panel{margin-top:28px;scroll-margin-top:20px}
+.practice-navigation .practice-search{margin:20px 0;padding:18px 0;border-block:1px solid var(--line)}
+.practice-navigation label{display:block;font-size:14px;font-weight:600;margin:8px 0}
+.practice-navigation input,.practice-navigation select{box-sizing:border-box;max-width:100%;width:100%;min-width:0}
+.practice-navigation input{padding:12px;border:1px solid var(--line);border-radius:7px;background:var(--paper);color:var(--deep);font:inherit}
+.practice-navigation input:focus-visible{outline:3px solid #9f4a19;outline-offset:3px}
+.practice-navigation .practice-resume{margin:16px 0}
+.practice-navigation p{overflow-wrap:anywhere}
 .practice-panel h2{font-size:23px;margin:8px 0 14px}
 .practice-panel h3{font-size:20px;margin:24px 0 8px}
 .practice-panel h4{font-size:17px;margin-bottom:10px}
@@ -27,3 +34,4 @@
 .practice-history ol{padding-left:22px}
 @media(max-width:900px){.practice-workspace{grid-template-columns:minmax(0,1fr)}.practice-selectors{grid-template-columns:minmax(0,1fr)}.practice-panel textarea{font-size:16px}.practice-panel h2{font-size:21px}}
 @media(max-width:560px){.practice-workspace{gap:12px}.practice-panel .button-row button{width:100%;text-align:left}.practice-panel textarea{height:280px}.practice-quiz{padding:12px}.practice-panel .data-table{font-size:12px}}
+@media(max-width:560px){.practice-navigation input,.practice-navigation select{font-size:16px;min-height:44px}.practice-navigation button{min-height:44px}}

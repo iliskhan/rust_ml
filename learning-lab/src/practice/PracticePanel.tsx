@@ -87,7 +87,7 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
   })
   const [record, setRecord] = useState(initial.record)
   const [code, setCode] = useState(() => pendingEdits.get(scopeKey(scope)) ?? initial.record.draft?.code ?? exercise.starter[scope.language])
-  const [status, setStatus] = useState(initial.error || (pendingEdits.has(scopeKey(scope)) ? 'Есть несохранённый код из этой сессии. Сохраните или скачайте файл.' : initial.record.draft ? `Черновик сохранён · версия ${initial.record.draft.revision}` : 'Стартовый фрагмент. Дополните свою функцию.'))
+  const [status, setStatus] = useState(initial.error || (pendingEdits.has(scopeKey(scope)) ? 'Есть несохранённый код из этой сессии. Сохраните или скачайте файл.' : initial.record.draft ? `Черновик сохранён на этом устройстве · версия ${initial.record.draft.revision}` : 'Стартовый фрагмент. Дополните свою функцию.'))
   const [busy, setBusy] = useState(false)
   const revision = useRef(initial.record.draft?.revision ?? 0)
   const queue = useRef(Promise.resolve())
@@ -144,7 +144,7 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
         revision.current = draft.revision
         setRecord(store.read(scope))
         if (pendingEdits.get(scopeKey(scope)) === nextCode) {
-          pendingEdits.delete(scopeKey(scope)); setStatus(`Черновик сохранён · версия ${draft.revision}`)
+          pendingEdits.delete(scopeKey(scope)); setStatus(`Черновик сохранён на этом устройстве · версия ${draft.revision}`)
         }
       } catch (error) {
         blocked.current = true; setStatus(errorMessage(error))
@@ -182,9 +182,10 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
         <label htmlFor={`${id}-code`}>Ваш код · {languageLabels[scope.language]}</label>
         <textarea id={`${id}-code`} autoFocus={autoFocus} value={code} spellCheck={false} autoCapitalize="off" autoCorrect="off" wrap="off" rows={16} aria-describedby={`${id}-save ${id}-execution`} onChange={event => { setCode(event.target.value); persist(event.target.value) }} />
         <p id={`${id}-save`} role="status" aria-live="polite" aria-atomic="true" className="practice-save">{status}</p>
+        <p className="note">Автосохранение — в этом браузере; результат показан выше. {onSaveCloudDraft ? 'Чтобы перенести текущий код на другое устройство, нажмите «Сохранить в аккаунте».' : 'Чтобы перенести код на другое устройство, скачайте файл.'} Сохранение не проверяет код и не подтверждает освоение.</p>
         <div className="button-row">
           <button type="button" onClick={() => download()}>Скачать .{extensions[scope.language]}</button>
-          <button type="button" disabled={busy || Boolean(conflict)} onClick={() => { blocked.current = false; persist(code) }}>Сохранить черновик</button>
+          <button type="button" disabled={busy || Boolean(conflict)} onClick={() => { blocked.current = false; persist(code) }}>Сохранить на устройстве</button>
           <button type="button" disabled={!onSaveCloudDraft || busy || Boolean(conflict)} onClick={async () => {
             if (!onSaveCloudDraft) return
             setBusy(true); onSaving(true)
