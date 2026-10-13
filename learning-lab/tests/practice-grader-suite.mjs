@@ -7,9 +7,38 @@ import { spawnSync } from 'node:child_process'
 import { buildBundle, buildBundles, exercises, runnerSpec } from '../grader/bundles.mjs'
 import { buildExecution, rustCaseProgram } from '../grader/execution.mjs'
 import { compareCase, finishResult } from '../grader/compare.mjs'
+import { prepareManifests } from '../grader/publication.mjs'
 
 const message = (testCase, value) => JSON.stringify({ protocol: 1, case_id: testCase.id, value })
 const exercise = exercises.find(item => item.id === 'unit.neuron.dot.guided') ?? exercises[0]
+
+test('runtime identity is pinned in the grading manifest digest', () => {
+  const a = buildBundle(exercise, 'python', { runtimeDigest: 'sha256:' + 'a'.repeat(64) })
+  const b = buildBundle(exercise, 'python', { runtimeDigest: 'sha256:' + 'b'.repeat(64) })
+  assert.notEqual(a.bundle_sha256, b.bundle_sha256)
+  assert.equal(a.runner_spec.runtime_digest, 'sha256:' + 'a'.repeat(64))
+  assert.throws(() => buildBundle(exercise, 'python', { runtimeDigest: 'latest' }), /invalid_runtime_digest/)
+  const snapshot = id => buildBundle(exercise, 'rust', { runtimeDigest: 'sha256:' + 'a'.repeat(64), snapshotId: id, toolchainSha256: 'c'.repeat(64) })
+  assert.notEqual(snapshot('snp_first').bundle_sha256, snapshot('snp_second').bundle_sha256)
+  assert.throws(() => buildBundle(exercise, 'rust', { snapshotId: 'snp_first' }), /invalid_snapshot_identity/)
+})
+
+test('publication refuses missing or changed published contracts', () => {
+  const runtimes = Object.fromEntries(['python', 'javascript', 'rust'].map(language => [language, { digest: 'sha256:' + 'a'.repeat(64) }]))
+  const rows = exercises.flatMap((item, index) => ['python', 'javascript', 'rust'].map((language, languageIndex) => ({
+    id: `00000000-0000-4000-8000-${String(index * 3 + languageIndex).padStart(12, '0')}`, exercise_key: item.id, language,
+    starter_code: item.starter[language], entrypoint: runnerSpec(item, language).entrypoint,
+    public_tests: item.fixtures.map(f => ({ input: JSON.parse(f.input), output: JSON.parse(f.output) })),
+    objective: item.title, prompt_markdown: `${item.prompt}\n\n${item.formula}`,
+  })))
+  assert.equal(prepareManifests(rows, runtimes).length, 1236)
+  assert.throws(() => prepareManifests(rows.slice(1), runtimes), /incomplete_catalog/)
+  assert.throws(() => prepareManifests([...rows, rows[0]], runtimes), /catalog_identity_mismatch/)
+  for (const change of [{ starter_code: 'changed' }, { entrypoint: 'other' }, { public_tests: [] }, { objective: 'changed' }, { prompt_markdown: 'changed' }]) {
+    assert.throws(() => prepareManifests([{ ...rows[0], ...change }, ...rows.slice(1)], runtimes), /published_contract_mismatch/)
+  }
+  assert.throws(() => prepareManifests(rows, {}), /missing_runtime/)
+})
 
 test('every authored exercise/language has a supported execution contract and public bundle', () => {
   const bundles = buildBundles()

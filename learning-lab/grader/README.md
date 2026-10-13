@@ -1,8 +1,8 @@
 # Проверка открытых примеров в изолированном исполнителе
 
-Эти модули не запускают код ученика на хосте и не создают sandbox.
-`execution.mjs` создаёт файлы/argv; выбранный backend обязан создать отдельный
-изолированный runtime, выполнить их и убрать все ресурсы. Авторские тесты
+`execution.mjs` создаёт файлы/argv, `vercel-provider.mjs` запускает их в отдельной
+Vercel Sandbox и завершает созданную среду. Код ученика на хосте не исполняется.
+Авторские тесты
 локально исполняют только фиксированные импортированные reference solutions
 и контролируемые маленькие ошибки из этого test file.
 
@@ -24,10 +24,12 @@
    отсутствуют. JS/Python вызывают функцию с positional input values; Rust
    использует сигнатуру/поля structs из starter. Неизвестный contract отклоняется.
 5. Provider пишет только фиксированные filenames в новый workspace, выполняет
-   fixed argv без shell, ограничивает resources/время/вывод и читает только
-   фиксированный result.json (проверяя symlink/type/size вне guest).
+   fixed argv (SDK использует фиксированную sudo/bash-обёртку), ограничивает
+   resources/время/вывод и читает только фиксированный result.json. После
+   остановки процессов learner-пользователя проверяются symlink/type/size.
    Nonzero compile -> `compile_error`, nonzero run -> `runtime_error`;
-   provider timeout/OOM/output -> соответствующая категория. Ошибка provision,
+   Доказанное превышение вывода -> `output_limit`; неоднозначные timeout/OOM
+   остаются инфраструктурной ошибкой. Ошибка provision,
    provider/DB/lease -> `infrastructure`. Guest не выбирает transport category.
 6. `finishResult(bundle, caseResults)` вне learner sandbox проверяет digest,
    количество cases и bounded values/protocol/ID/shape/numeric tolerance.
@@ -45,13 +47,53 @@ Guest `result.json` считается недоверенным. Его marker �
 
 Production runtime должен содержать Node, CPython или rustc для соответствующего
 языка. Rust использует только std и generated shim, без Cargo/dependency registry.
-Память, CPU/process/output limits, no-network/no-secrets и watchdog являются
-обязанностью выбранного provider; эти файлы не являются границей безопасности.
+Граница изоляции — Vercel Sandbox. Provider создаёт непостоянную среду с
+`deny-all`, 1 vCPU/2 GiB, отдельным пользователем, CPU/process/output limits,
+ограниченным временем жизни и stop/delete. SDK 3.7.0 закреплён в lockfile:
+автовосстановление сессии и повтор мутаций запрещены, чтобы не запускать
+дополнительные незарезервированные среды.
+
+## Подключение
+
+`api/practice-grade.js` проверяет JWT через Supabase Auth, принимает только
+session/key/revision или собственный attempt ID и запускает supervisor через
+Vercel `waitUntil`. Результат читается клиентом через own-read RLS; потерянный
+ответ повторяется с прежним ключом. Исходный код берётся из сохранённой версии
+в БД. Сравнение с ожидаемым ответом происходит в доверенном supervisor.
+
+Миграция `202610130006_grading_manifests.sql` добавляет immutable editions для
+существующих variant IDs, lease fencing и резервирование ограниченной квоты.
+Миграции 001–005 уже применены; повторно запускать их нельзя. Новая миграция
+сама не включает приём отправок. `prepareManifests` сверяет все опубликованные
+условия, starter code и открытые примеры перед публикацией 1236 manifests.
+
+`runtimes.json` содержит allowlist по JSON-ключу
+`[language, runtime_digest, snapshot_id ?? null, toolchain_sha256 ?? null]`.
+Старые pinned editions сохраняют свой runtime при добавлении новых snapshots.
+Для подготовленного snapshot manifest дополнительно фиксирует `snapshot_id`
+и SHA256 артефакта toolchain. OCI digest идентифицирует базовый образ, а ID
+snapshot — сохранённую среду Vercel: он не является криптографическим хешем её
+содержимого. Snapshot создаётся только из доверенной подготовки без кода ученика.
+
+Сейчас allowlist пуст, API возвращает 503, admission выключен. Hosted Sandbox,
+его изоляция, удаление и работа без карты ещё не проверены; SQL006 не применена.
+До включения нужны проверенные runtimes, отдельные минимальные DB logins
+`rustml_api`/`rustml_worker`, окружение Vercel и hosted-приёмка. Пароли этих
+logins передаются только серверному окружению; owner/service-role ключи там
+не используются. Frontend активируется через `VITE_PRACTICE_GRADER_URL`.
+Неизвестный исход создания или гибель serverless функции ограничены TTL среды.
+`api/practice-reap.js` — ежедневная резервная очистка: только project-scoped
+непостоянные `rustml-case-UUID` с полными ownership tags и возрастом более
+10 минут. Она повторно проверяет метаданные, не возобновляет среды и сохраняет
+snapshots. Защищена отдельным `CRON_SECRET` (не менее 32 символов); без него
+возвращает 503. Hobby cron работает раз в день, поэтому немедленную остановку
+обеспечивают TTL и обычный finally cleanup. Реальная очистка ещё не проверена.
 
 ## Проверка
 
 ```text
 node --test learning-lab/tests/practice-grader.test.ts
+node --test learning-lab/tests/practice-grader-provider.test.ts learning-lab/tests/practice-grader-supervisor.test.ts learning-lab/tests/practice-grading.test.ts
 PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test learning-lab/tests/practice-grader.test.ts
 ```
 

@@ -45,6 +45,11 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
     }
   }, [])
   useEffect(() => {
+    const graded = (event: Event) => { if ((event as CustomEvent<{ ownerId?: string }>).detail?.ownerId === ownerId) refreshAccount(n => n + 1) }
+    window.addEventListener('rustml-practice-grade', graded)
+    return () => window.removeEventListener('rustml-practice-grade', graded)
+  }, [ownerId])
+  useEffect(() => {
     if (!cloud || !ownerId || !accountCatalog || accountCatalog.releaseKey !== releaseId || cloudOwnerId(cloud) !== ownerId) { setAccount(null); return }
     let active = true
     const catalog = accountCatalog
@@ -74,7 +79,7 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
       </select></label>
       <button type="button" onClick={() => { refreshLocal(n => n + 1); refreshAccount(n => n + 1) }}>Обновить прогресс</button>
     </div>
-    <p className="note">Самопроверка — вопрос на понимание. Черновик и верный ответ не подтверждают проверку кода или самостоятельное освоение темы. Серверная оценка кода пока отключена.</p>
+    <p className="note">Самопроверка — вопрос на понимание. Черновик и верный ответ не подтверждают проверку кода или самостоятельное освоение темы. {cloud?.gradingAvailable ? 'Серверный зачёт учитывает проверенные открытые примеры и историю помощи.' : 'Серверная оценка кода пока отключена.'}</p>
     <div className="practice-progress-languages" aria-label="Записи по языкам">
       {local.languages.map(row => <p key={row.language}><strong>{progressLanguageLabels[row.language]}{row.language === local.primaryLanguage ? ' · основной' : ''}</strong><br />
         Начата работа: {row.topicsStarted} / {row.topics.length} тем. Черновики: {row.counts.drafts} / {row.counts.exercisesTotal} упражнений. Самопроверки: {row.counts.quizExercises} / {row.counts.exercisesTotal}.{row.counts.unreadable > 0 && ` Непрочитано записей: ${row.counts.unreadable}. Числа неполные.`}</p>)}

@@ -1,11 +1,12 @@
 import type { LearningEvent } from './progress-sync.ts'
 export type CloudLanguage = 'python' | 'javascript' | 'rust'
-export type CloudConfig = { url: string; publishableKey: string }
+export type CloudConfig = { url: string; publishableKey: string; graderUrl?: string }
 export type CloudAuthSession = { access_token: string; refresh_token: string; expires_at: number; user: { id: string; email?: string } }
 export type CloudDraft = { session_id: string; source: string; revision: number; origin: string; updated_at: string }
 export type CloudSession = { id: string; variant_id: string; release_id: string; draft: CloudDraft }
 export type CloudVariant = { id: string; exercise_id: string; release_id: string; language: CloudLanguage; starter_code: string; practice_exercises: { exercise_key: string }; practice_releases: { release_key: string } }
 export type CloudProgress = { user_id: string; release_id: string; topic_id: string; language: CloudLanguage; is_primary_language: boolean; required_total: number; required_completed: number; required_passed: number }
+export type CloudAttempt = { id: string; user_id: string; session_id: string; variant_id: string; release_id: string; draft_revision: number; source_sha256: string; status: 'queued' | 'running' | 'graded' | 'error'; verdict: 'pass' | 'fail' | null; assistance: 'none' | 'hint' | 'solution'; expected_tests: number; passed_tests: number | null; error_kind: string | null }
 export class PracticeCloudError extends Error {
   readonly code: string
   readonly status: number
@@ -25,11 +26,18 @@ export function validateCloudConfig(config: CloudConfig): CloudConfig {
     try { publicKey = JSON.parse(atob(key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).role === 'anon' } catch { publicKey = false }
   }
   if (!publicKey) throw new PracticeCloudError('Используйте только publishable или anon key. Серверные ключи запрещены.', 'invalid_key')
-  return { url: url.origin, publishableKey: key }
+  let graderUrl: string | undefined
+  if (config.graderUrl) {
+    const grader = new URL(config.graderUrl)
+    if (grader.username || grader.password || grader.search || grader.hash ||
+      (grader.protocol !== 'https:' && !(grader.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(grader.hostname)))) throw new PracticeCloudError('Нужен безопасный адрес серверной проверки.', 'invalid_config')
+    graderUrl = grader.href
+  }
+  return { url: url.origin, publishableKey: key, ...(graderUrl ? { graderUrl } : {}) }
 }
 
 export function createPracticeCloud(config: CloudConfig, options: { fetch?: typeof fetch; storage?: Storage } = {}) {
-  const { url, publishableKey } = validateCloudConfig(config)
+  const { url, publishableKey, graderUrl } = validateCloudConfig(config)
   const requestFetch = options.fetch ?? globalThis.fetch.bind(globalThis)
   const storage = options.storage ?? globalThis.localStorage
   const storageKey = `rustml-auth:${url}`
@@ -65,7 +73,8 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     return persist({ access_token: value.access_token, refresh_token: value.refresh_token,
       expires_at: expiresAt, user: { id: value.user.id, ...(typeof value.user.email === 'string' ? { email: value.user.email } : {}) } })!
   }
-  async function request<T>(path: string, init: RequestInit = {}, authenticated = false): Promise<T> {
+  async function request<T>(path: string, init: RequestInit = {}, authenticated = false, grader = false): Promise<T> {
+    if (grader && !graderUrl) throw new PracticeCloudError('Серверная проверка пока недоступна.', 'grading_unavailable')
     let owner: string | undefined
     const generation = authGeneration
     if (authenticated) {
@@ -88,16 +97,28 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
         if (generation !== authGeneration || readSession()?.user.id !== owner) throw changedAccount()
       }
     }
-    const headers: Record<string, string> = { apikey: publishableKey, 'Content-Type': 'application/json' }
+    const headers: Record<string, string> = { ...(grader ? {} : { apikey: publishableKey }), 'Content-Type': 'application/json' }
     if (authenticated && session) headers.Authorization = `Bearer ${session.access_token}`
     const requestToken = session?.access_token
     let response: Response
-    try { response = await requestFetch(`${url}${path}`, { ...init, headers: { ...headers, ...init.headers } }) }
+    try { response = await requestFetch(grader ? graderUrl! : `${url}${path}`, { ...init, ...(grader ? { redirect: 'error' as const } : {}), headers: { ...headers, ...init.headers } }) }
     catch { throw new PracticeCloudError(path.startsWith('/auth/') ? 'Сеть недоступна. Повторите подключение позже.' : 'Сеть недоступна. Код остаётся в редакторе; скачайте файл.', 'network_error') }
     if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
     const body = await response.json().catch(() => null)
     if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
     if (!response.ok) {
+      if (grader) {
+        const messages: Record<string, string> = {
+          unauthenticated: 'Сессия истекла. Войдите снова.', auth_unavailable: 'Сервис входа временно недоступен.',
+          grading_unavailable: 'Серверная проверка пока недоступна.', grading_budget_exhausted: 'Лимит проверок сервиса исчерпан. Повторите позже.',
+          submission_limit: 'Лимит отправок достигнут. Дождитесь текущей проверки.', grading_capacity: 'Все исполнители заняты. Повторите позже.',
+          draft_conflict: 'Облачный черновик изменился. Откройте его перед отправкой.',
+          invalid_submission: 'Отправка не принята. Сохраните черновик и повторите.',
+          idempotency_key_reused_with_different_request: 'Параметры отправки изменились. Откройте задание заново.',
+        }
+        const code = typeof body?.code === 'string' && messages[body.code] ? body.code : response.status === 401 ? 'unauthenticated' : 'grading_error'
+        throw new PracticeCloudError(messages[code] ?? 'Сервер не подтвердил проверку. Сохранённая отправка доступна для повтора.', code, response.status)
+      }
       // Only map known server codes. Raw SQL/Auth bodies can contain sensitive context.
       const hint = typeof body?.message === 'string' ? body.message : ''
       const authCode = path.startsWith('/auth/') ? body?.code ?? body?.error_code : undefined
@@ -170,16 +191,31 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       throw error
     }
   }
-  const rpc = <T>(name: string, body: object) => request<T>(`/rest/v1/rpc/${name}`, { method: 'POST', body: JSON.stringify(body) }, true)
-  async function getSession(id: string): Promise<CloudSession> {
+  const rpc = <T>(name: string, body: object, signal?: AbortSignal) => request<T>(`/rest/v1/rpc/${name}`, { method: 'POST', body: JSON.stringify(body), ...(signal ? { signal } : {}) }, true)
+  async function getSession(id: string, signal?: AbortSignal): Promise<CloudSession> {
     const [rows, drafts] = await Promise.all([
-      request<Omit<CloudSession, 'draft'>[]>(`/rest/v1/practice_sessions?id=eq.${encodeURIComponent(id)}&select=id,variant_id,release_id`, {}, true),
-      request<CloudDraft[]>(`/rest/v1/practice_drafts?session_id=eq.${encodeURIComponent(id)}&select=session_id,source,revision,origin,updated_at`, {}, true)
+      request<Omit<CloudSession, 'draft'>[]>(`/rest/v1/practice_sessions?id=eq.${encodeURIComponent(id)}&select=id,variant_id,release_id`, { signal }, true),
+      request<CloudDraft[]>(`/rest/v1/practice_drafts?session_id=eq.${encodeURIComponent(id)}&select=session_id,source,revision,origin,updated_at`, { signal }, true)
     ])
     if (!rows[0] || !drafts[0]) throw new PracticeCloudError('Черновик не найден в вашем аккаунте.', 'not_found', 404)
     return { ...rows[0], draft: drafts[0] }
   }
   return {
+    gradingAvailable: Boolean(graderUrl),
+    gradeSubmit(session: string, key: string, revision: number, signal?: AbortSignal) {
+      return request<{ attempt_id: string; status: string }>('', { method: 'POST', body: JSON.stringify({ action: 'submit', session, key, revision }), signal }, true, true)
+    },
+    gradeResume(attemptId: string, signal?: AbortSignal) {
+      return request<{ attempt_id: string; status: string }>('', { method: 'POST', body: JSON.stringify({ action: 'resume', attempt_id: attemptId }), signal }, true, true)
+    },
+    async gradeAttempt(filter: { id?: string; key?: string }, signal?: AbortSignal) {
+      const query = new URLSearchParams({ select: 'id,user_id,session_id,variant_id,release_id,draft_revision,source_sha256,status,verdict,assistance,expected_tests,passed_tests,error_kind', limit: '1' })
+      if (filter.id) query.set('id', `eq.${filter.id}`)
+      else if (filter.key) query.set('idempotency_key', `eq.${filter.key}`)
+      else throw new PracticeCloudError('Не найдена сохранённая отправка.', 'invalid_attempt')
+      const rows = await request<CloudAttempt[]>(`/rest/v1/practice_attempts?${query}`, { signal }, true)
+      return rows[0] ?? null
+    },
     // UI snapshots stay readable; restoreSession and authenticated requests report storage errors.
     get session() { try { session = readSession() } catch { session = null } return session },
     storageKey,
@@ -234,7 +270,7 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       persist(null)
       if (current) await request('/auth/v1/logout?scope=local', { method: 'POST', headers: { Authorization: `Bearer ${current.access_token}` } })
     },
-    async catalog(filter?: { releaseKey: string; exerciseKey: string; language: CloudLanguage }) {
+    async catalog(filter?: { releaseKey: string; exerciseKey: string; language: CloudLanguage }, signal?: AbortSignal) {
       const query = new URLSearchParams({
         select: `id,exercise_id,release_id,language,starter_code,practice_exercises${filter ? '!inner' : ''}(exercise_key),practice_releases${filter ? '!inner' : ''}(release_key)`,
         order: 'id.asc', limit: '500',
@@ -247,7 +283,7 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       const rows: CloudVariant[] = []
       for (let offset = 0; ; offset += 500) {
         query.set('offset', String(offset))
-        const page = await request<CloudVariant[]>(`/rest/v1/practice_variants?${query}`)
+        const page = await request<CloudVariant[]>(`/rest/v1/practice_variants?${query}`, { signal })
         rows.push(...page)
         if (page.length < 500) return rows
       }
@@ -274,12 +310,12 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       if (!releaseId) throw new PracticeCloudError('Выпуск практики ещё не опубликован в облачном каталоге.', 'catalog_unavailable')
       return { releaseKey, releaseId, topicIds }
     },
-    async startSession(variantId: string) { return getSession(await rpc<string>('practice_start', { p_variant: variantId })) },
+    async startSession(variantId: string, signal?: AbortSignal) { return getSession(await rpc<string>('practice_start', { p_variant: variantId }, signal), signal) },
     getSession,
-    saveDraft(id: string, revision: number, source: string, origin: 'editor' | 'guest_import' = 'editor') {
-      return rpc<number>('practice_save_draft', { p_session: id, p_revision: revision, p_source: source, p_origin: origin })
+    saveDraft(id: string, revision: number, source: string, origin: 'editor' | 'guest_import' = 'editor', signal?: AbortSignal) {
+      return rpc<number>('practice_save_draft', { p_session: id, p_revision: revision, p_source: source, p_origin: origin }, signal)
     },
-    openHelp(id: string, key: string) { return rpc<string>('practice_open_help', { p_session: id, p_key: key }) },
+    openHelp(id: string, key: string, signal?: AbortSignal) { return rpc<string>('practice_open_help', { p_session: id, p_key: key }, signal) },
     syncLearning(releaseId: string, events: readonly LearningEvent[], after = 0) {
       return rpc<unknown>('practice_sync_learning', { p_release: releaseId, p_events: events, p_after: after })
     },

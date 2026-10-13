@@ -1,5 +1,60 @@
 # Прогресс RustML
 
+### Серверная проверка реализована локально; Vercel ожидает решения по 2FA — 2026-10-13, 18:00 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, HEAD `47de654`.
+Изменения grader подготовлены к checkpoint. Реализованы SQL006 с immutable grading
+editions для прежних variant IDs, owner-only API, fenced supervisor, Vercel
+provider и клиент с CAS/idempotency/recovery. Проверяются открытые примеры;
+hidden coverage не заявляется. Runtime allowlist пуст, admission выключен;
+SQL006 в Supabase НЕ применена, backend НЕ развёрнут.
+
+Пользователь разрешил Vercel Hobby без карты и платежей, вход через GitHub
+выполнен. Передача кода/чатов для обучения отключена после отдельного согласия.
+Vercel предложил добавить собственную 2FA; автоматическая проверка отклонила
+кнопку `Skip securing my account` как неподтверждённое ослабление защиты.
+Отдельный вопрос отправлен, ответ ещё не получен. Браузер находится на странице
+Sandbox с этим предложением. Реальная доступность создания Sandbox без карты
+ещё не доказана; другие сервисы и платные ресурсы не подключались.
+
+Локальная проверка Node24.19 с bundled Python/direct stable rustc:
+`PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test tests/*.test.ts` — 530/530 PASS,
+0 skipped; TypeScript и Vite production build PASS. Запуск внутри песочницы
+дал 515/516 из-за esbuild Access is denied при чтении зависимостей; повтор
+с доступом завершился успешно. Preview точной Pages-конфигурации
+`VITE_BASE_PATH=/rust_ml/`, `VITE_PRACTICE_AUTH_PROVIDER=github` осмотрен при
+1280×720 и 390×844: вход только GitHub, grader отключён, overflow/alerts/console
+warnings/errors отсутствуют. Это проверка неактивного интерфейса, а не hosted
+исполнения. Скриншоты: `work/practice-grader/local-desktop*.png`,
+`work/practice-grader/local-mobile-editor.png`.
+
+SQL006 локально в PGlite: 89 новых проверок PASS; существующие RLS12403 и sync49
+PASS. Provider SDK transport/mocks не заменяют реальную проверку изоляции.
+Review обнаружил коллизию snapshot editions при одном base OCI digest и
+неограниченное ожидание prepare внутри Web Lock; обе причины исправлены,
+регрессии включены в 530 тестов. Дополнительная регрессия reaper на сохранение
+referenced snapshot проверена после общего suite: 12/12 targeted PASS.
+SQL006 SHA256: `daac23c832ecca6192906b2c03b9cbd99b87a49ef3e28a6ef44c0afeb2a6e5c5`.
+Ежедневный reaper подключён к `vercel.json`, GET защищён `CRON_SECRET`; без
+конфигурации оба API вернули ожидаемые 503. Это локальная проверка маршрутов.
+Final production build: `index-BP78-NMR.js`; стандартное предупреждение о
+размере основного chunk остаётся. Реальная UI-приёмка активных состояний
+выполнена на локальном стенде с подставленными ответами: running/pass/error,
+редактор доступен во время проверки, помощь заблокирована до результата,
+повторная проверка после ошибки доступна, desktop1280/mobile390 без overflow
+и ошибок консоли. Скриншоты `work/practice-grader/ui-*.png`. Настоящие hosted
+запуски не выполнялись и этой UI-приёмкой не заменяются.
+
+Следующий внешний шаг: после ответа на вопрос 2FA продолжить Vercel и проверить
+Sandbox на Hobby без карты. Затем получить доверенные runtime/snapshot pins,
+подготовить отдельные least-privilege DB logins, применить только SQL006,
+проверить реальные Python/JavaScript/Rust, limits/egress/cleanup и два аккаунта,
+включить admission и public `VITE_PRACTICE_GRADER_URL`, проверить Pages.
+DPAPI пароль БД остаётся в прежнем ignored secret location; owner/service-role
+ключ не должен передаваться Vercel. SDK provider pinSession предотвращает
+автоматический resume, transport не повторяет неизвестный create POST.
+Подробные implementation/review notes: `work/practice-grader/`.
+
 ### Синхронизация опубликована; бесплатный executor ожидает подключения — 2026-10-13, 16:12 MSK
 
 Runtime `6b97845abca3e36d006ff4794783bbb5ec23d7d8` отправлен обычным push

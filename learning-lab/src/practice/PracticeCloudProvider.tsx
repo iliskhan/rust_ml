@@ -5,9 +5,10 @@ import type { SaveCloudDraft, LoadCloudDraft, PracticeSelection, ChooseCloudLang
 import type { PracticeScope } from './local-progress';
 import { browserPracticeStore } from './local-progress';
 import { useLearningSync } from './useLearningSync';
+import { createGrading, type GradeCode, type GradingSnapshot } from './grading';
 const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ default: module.PracticePanel })));
 
-type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; choosePrimaryLanguage?: ChooseCloudLanguage };
+type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; choosePrimaryLanguage?: ChooseCloudLanguage; gradeCode?: GradeCode; hasPendingGrade?: (scope: PracticeScope) => boolean };
 const AccountContext = createContext<AccountState | null>(null);
 
 export function usePracticeAccount() { return useContext(AccountContext); }
@@ -18,8 +19,9 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     const url = import.meta.env.VITE_SUPABASE_URL;
     const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
     if (!url || !publishableKey) return null;
-    try { return createPracticeCloud({ url, publishableKey }); } catch { return null; }
+    try { return createPracticeCloud({ url, publishableKey, graderUrl: import.meta.env.VITE_PRACTICE_GRADER_URL }); } catch { return null; }
   });
+  const [grading] = useState(() => cloud?.gradingAvailable ? createGrading({ cloud, storage: window.localStorage }) : null);
   const [user, setUser] = useState<CloudAuthSession['user'] | null>(null);
   const { learningSync, syncLearningNow } = useLearningSync(cloud, user?.id);
   const [status, setStatus] = useState('');
@@ -169,19 +171,19 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     catch (value) { if (epoch === authEpoch.current) { setStatus(value instanceof PracticeCloudError && value.code === 'account_changed' ? 'Аккаунт изменился. Обновите страницу, чтобы открыть его черновики.' : 'Локальный выход выполнен; сервер не подтвердил завершение сессии.'); setError(value instanceof Error ? value.message : 'Сервер не подтвердил выход.'); } }
     finally { if (epoch === authEpoch.current) { busyRef.current = false; setBusy(false); } }
   }
-  async function saveDraft(scope: PracticeScope, source: string): Promise<string> {
+  async function saveSnapshot(scope: PracticeScope, source: string, signal?: AbortSignal): Promise<GradingSnapshot> {
     const epoch = authEpoch.current;
-    const assertOwner = () => { if (epoch !== authEpoch.current || !cloud || !user || scope.ownerId !== user.id || cloud.session?.user.id !== user.id) throw new Error('Аккаунт изменился. Откройте его черновик заново; код остаётся в редакторе.'); };
+    const assertOwner = () => { if (signal?.aborted) throw new Error('Сохранение остановлено. Код остаётся в редакторе; облачная версия могла измениться.'); if (epoch !== authEpoch.current || !cloud || !user || scope.ownerId !== user.id || cloud.session?.user.id !== user.id) throw new Error('Аккаунт изменился. Откройте его черновик заново; код остаётся в редакторе.'); };
     assertOwner();
     if (!cloud || !user) throw new Error('Сначала войдите в аккаунт.');
-    const variants = await cloud.catalog({ releaseKey: scope.releaseId, exerciseKey: scope.exerciseId, language: scope.language });
+    const variants = await cloud.catalog({ releaseKey: scope.releaseId, exerciseKey: scope.exerciseId, language: scope.language }, signal);
     assertOwner();
     const variant = variants.find(v => v.language === scope.language && v.practice_exercises.exercise_key === scope.exerciseId && v.practice_releases.release_key === scope.releaseId);
     if (!variant) throw new Error('Это задание ещё не опубликовано в облачном каталоге. Код остаётся в редакторе; скачайте файл.');
     const key = `${user.id}/${variant.id}`;
     let known = cloudDrafts.current.get(key);
     if (!known) {
-      const remote = await cloud.startSession(variant.id);
+      const remote = await cloud.startSession(variant.id, signal);
       assertOwner();
       if (remote.draft.source !== variant.starter_code && remote.draft.source !== source) {
         throw new Error('В аккаунте уже есть другой черновик. Ваш код остаётся в редакторе; облачная версия не изменена.');
@@ -192,14 +194,22 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     const store = browserPracticeStore();
     for (const receipt of store.read(scope).help) {
       const hint = /^hint-(\d+)$/.exec(receipt.kind);
-      await cloud.openHelp(known.sessionId, hint ? `hint:${Number(hint[1]) + 1}` : receipt.kind);
+      await cloud.openHelp(known.sessionId, hint ? `hint:${Number(hint[1]) + 1}` : receipt.kind, signal);
       assertOwner();
     }
-    const revision = await cloud.saveDraft(known.sessionId, known.revision, source);
+    const revision = await cloud.saveDraft(known.sessionId, known.revision, source, 'editor', signal);
     assertOwner();
     cloudDrafts.current.set(key, { ...known, revision, source });
-    return `Черновик сохранён в аккаунте, версия ${revision}. Код не проверен.`;
+    return { sessionId: known.sessionId, variantId: variant.id, releaseId: variant.release_id, revision };
   }
+  async function saveDraft(scope: PracticeScope, source: string): Promise<string> {
+    const saved = await saveSnapshot(scope, source);
+    return `Черновик сохранён в аккаунте, версия ${saved.revision}. Код не проверен.`;
+  }
+  const gradeCode: GradeCode = async (scope, source, signal, update) => {
+    if (!grading) throw new Error('Серверная проверка пока недоступна.');
+    return grading.run(scope, source, prepareSignal => saveSnapshot(scope, source, prepareSignal), signal, update);
+  };
   async function loadDraft(scope: PracticeScope): Promise<string> {
     const epoch = authEpoch.current;
     if (!cloud || !user || scope.ownerId !== user.id || cloud.session?.user.id !== user.id) throw new Error('Сначала войдите в аккаунт и откройте его черновик.');
@@ -226,12 +236,12 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     await cloud.chooseLanguage(variant.release_id, scope.language);
     assertOwner();
   }
-  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, learningSync, syncLearningNow, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
+  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, learningSync, syncLearningNow, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined, gradeCode: grading && user ? gradeCode : undefined, hasPendingGrade: grading ? scope => grading.hasPending(scope) : undefined }}>{children}</AccountContext.Provider>;
 }
 
 export function PracticeSection({ lessonId, topicId, initialSelection }: { lessonId: string; topicId?: string; initialSelection?: PracticeSelection }) {
   const account = useContext(AccountContext);
-  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} initialSelection={initialSelection} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} onChooseCloudLanguage={account?.choosePrimaryLanguage} /></Suspense>;
+  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} initialSelection={initialSelection} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} onChooseCloudLanguage={account?.choosePrimaryLanguage} onGradeCode={account?.gradeCode} hasPendingGrade={account?.hasPendingGrade} /></Suspense>;
 }
 
 export function PracticeAccount() {

@@ -1,0 +1,9 @@
+node_modules
+dist
+work
+evidence
+docs
+tests
+supabase
+.env*
+.vercel

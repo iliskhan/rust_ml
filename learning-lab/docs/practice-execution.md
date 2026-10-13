@@ -62,7 +62,16 @@ Worker помогает не блокировать UI, но может имет
 
 ## Контракт упражнения и языка
 
-Проектная SQL-схема версионирует контент через immutable `release_id`. Внутри release есть semantic `exercise_key`, `exercise_id` и отдельный `variant_id` каждого языка. У variant фиксированы `entrypoint`, starter, public tests и `runtime_digest`; у private bundle — `bundle_sha256`, grading tests и `runner_spec`. `runner_spec` должен содержать версию solve-протокола, language, точные compiler flags, допуски, группы критериев и `limit_profile`. Значение `draft_revision` — CAS-версия исходника, а не версия учебного контента. Новая проверка/исправление опубликованного задания — новый release; job всегда использует закреплённые digest. Отзыв ошибочного release — отдельное production-требование, ещё отсутствующее в данном DDL.
+Проектная SQL-схема версионирует учебный контент через immutable `release_id`.
+Внутри release есть semantic `exercise_key`, `exercise_id` и `variant_id` каждого
+языка. У variant фиксированы `entrypoint`, starter и public tests. SQL006 добавляет
+отдельные immutable `private.practice_grading_manifests`: edition, runtime digest,
+grading tests, runner spec и canonical hash. Изменение условия требует нового
+release; новая версия исполнения прежнего условия получает новую grading edition.
+Publication сверяет исходный учебный контракт, а attempt и claim закрепляют hash
+конкретной edition. Старые черновики, помощь и passes сохраняются. `draft_revision`
+остаётся CAS-версией исходника. Отзыв ошибочного release и повторная сертификация
+старых passes — отдельные задачи, не реализованные данным DDL.
 
 Общий формат — заданная функция `solve(input)` с JSON-совместимым входом и выходом. Конкретное имя функции, типы и scaffold определяет contract шага. Например, у вычисления MSE вход содержит `predictions` и `targets`, выход — `loss` и при необходимости `gradient`; ввод/вывод и проверяемый математический смысл одинаковы во всех языках. Для Rust публикуются точные типы и готовый JSON shim, чтобы сериализация не подменяла учебную задачу.
 

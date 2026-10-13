@@ -1,5 +1,11 @@
 # Practice backend — проверенный полный релиз
 
+> Обновление архитектуры, 2026-10-13: ниже сохранён исторический отчёт 12 октября.
+> Auth и синхронизация уже опубликованы; актуальная hosted-приёмка — в PROGRESS.md.
+> SQL006 добавляет grading editions для прежних variant IDs, с выключенным по
+> умолчанию admission. Новый учебный release для первого зачёта тех же открытых
+> примеров не требуется. Реальный sandbox и production grading ещё не проверены.
+
 2026-10-12 17:56 Europe/Moscow. Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`,
 branch `codex/practice-implementation`, base `212a6ef4d3baebb83b41bd20a53a069f4358a2e4`.
 Проверено рабочее дерево реализации до общего commit. Внешние проекты не менялись.
@@ -34,8 +40,9 @@ expected_tests=0, grading_tests=[], runner_spec.enabled=false. Bundle SHA256
 соответствует реальному JSON авторской помощи, не runner image. Публичные примеры
 и открытые авторские решения не выдаются за hidden grading evidence. Код ученика
 не исполняется в browser cloud client, SQL или Edge. Для включения проверки нужны
-проверенный sandbox/runtime/harness, закрытые fixtures, новая миграция и новый
-immutable release.
+проверенный sandbox/runtime/harness и новая миграция. Текущий этап проверяет только
+открытые примеры; закрытое покрытие не заявляется. SQL006 сохраняет release и
+создаёт отдельную immutable grading edition, не меняя опубликованное условие.
 
 ## Реальная проверка SQL
 

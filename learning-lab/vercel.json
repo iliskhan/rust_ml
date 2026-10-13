@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": "grader-public",
+  "fluid": true,
+  "regions": ["fra1"],
+  "crons": [{ "path": "/api/practice-reap", "schedule": "15 3 * * *" }],
+  "functions": {
+    "api/practice-grade.js": {
+      "maxDuration": 300,
+      "includeFiles": ["grader/runtimes.json", "grader/supabase-ca.crt"]
+    },
+    "api/practice-reap.js": { "maxDuration": 60 }
+  }
+}

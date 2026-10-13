@@ -41,8 +41,18 @@ export function runnerSpec(exercise, language) {
   return spec
 }
 
-export function buildBundle(exercise, language) {
+export function buildBundle(exercise, language, { runtimeDigest, snapshotId, toolchainSha256 } = {}) {
   const runner_spec = runnerSpec(exercise, language)
+  if (runtimeDigest !== undefined) {
+    if (!/^sha256:[0-9a-f]{64}$/.test(runtimeDigest)) throw Error('invalid_runtime_digest')
+    runner_spec.runtime_digest = runtimeDigest
+  }
+  if (snapshotId !== undefined || toolchainSha256 !== undefined) {
+    if (!runtimeDigest || typeof snapshotId !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(snapshotId) ||
+      typeof toolchainSha256 !== 'string' || !/^[0-9a-f]{64}$/.test(toolchainSha256)) throw Error('invalid_snapshot_identity')
+    runner_spec.snapshot_id = snapshotId
+    runner_spec.toolchain_sha256 = toolchainSha256
+  }
   const grading_tests = exercise.fixtures.map((fixture, index) => ({
     id: 'public-' + index, visibility: 'public', input: JSON.parse(fixture.input), expected: JSON.parse(fixture.output),
   }))
