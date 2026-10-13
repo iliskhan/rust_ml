@@ -4,6 +4,7 @@ import { PracticeAccountPanel, type PracticeAccountPanelProps } from './account/
 import type { SaveCloudDraft, LoadCloudDraft, PracticeSelection, ChooseCloudLanguage } from './PracticePanel';
 import type { PracticeScope } from './local-progress';
 import { browserPracticeStore } from './local-progress';
+import { useLearningSync } from './useLearningSync';
 const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ default: module.PracticePanel })));
 
 type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; choosePrimaryLanguage?: ChooseCloudLanguage };
@@ -20,6 +21,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     try { return createPracticeCloud({ url, publishableKey }); } catch { return null; }
   });
   const [user, setUser] = useState<CloudAuthSession['user'] | null>(null);
+  const { learningSync, syncLearningNow } = useLearningSync(cloud, user?.id);
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
   const [confirmationEmail, setConfirmationEmail] = useState<string | null>(null);
@@ -224,7 +226,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     await cloud.chooseLanguage(variant.release_id, scope.language);
     assertOwner();
   }
-  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
+  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, learningSync, syncLearningNow, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
 }
 
 export function PracticeSection({ lessonId, topicId, initialSelection }: { lessonId: string; topicId?: string; initialSelection?: PracticeSelection }) {

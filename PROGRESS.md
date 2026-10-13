@@ -1,5 +1,64 @@
 # Прогресс RustML
 
+### Синхронизация прошла hosted-приёмку — 2026-10-13, 16:06 MSK
+
+На базовом `f3f9efe`, `master`, текущие изменения прошли полный suite Node24.19:
+484/484 PASS, 0 skipped, с bundled Python и прямым stable rustc;
+`tsc --noEmit` и production build PASS. Проверки SQL004/005: 49/49 PASS.
+Миграция 005 применена в 12:58:48 UTC, SHA256
+`32b46bcfd356758f894821cac04fb278a78576aac3ec9f65b80b2d10caf90b7f`.
+Она согласует основной язык profile/enrollment с LWW событием, включая offline
+и старый RPC. Исправлены metadata в повторной отправке языка и обновление
+открытой панели после cloud merge; регрессия проходит.
+
+Реальные Auth JWT двух одноразовых пользователей прошли 8 hosted-групп:
+две независимые memory storage одного аккаунта обменялись самопроверками,
+помощью, языком и последней активностью; код не заменялся. Потерянный после
+реального commit ответ повторён без дубля. Foreign read пуст, direct write
+403, anon RPC401. Получены все 509 событий через границу страницы 500, local
+history ограничена 100; graded evidence не создано. Profile/enrollment язык
+проверен при смене на Rust и JavaScript. Оба тестовых Auth user удалены;
+одноразовые public key/ciphertext файлы отсутствуют после finally.
+Это проверка независимых хранилищ, а не двух физических устройств.
+
+Локальный production UI осмотрен при 1280×720 и 390×844 без overflow.
+Переносимый отчёт: [hosted-20261013.json](learning-lab/evidence/progress-sync/hosted-20261013.json).
+Pages runtime пока старый; следующий шаг — commit/push, CI/Pages и hosted UI.
+
+Пользователь уточнил ограничение executor: только бесплатно, без карты и своего
+сервера. Vercel Sandbox Hobby по [официальным условиям](https://vercel.com/docs/sandbox/pricing)
+имеет ежемесячную квоту и остановку вместо доплат; no-card activation ещё не
+проверена в аккаунте. Открыта регистрация, ожидается обязательное подтверждение
+условий нового сервиса. Grader в production остаётся выключенным.
+
+### Синхронизация прогресса и серверная проверка — в работе, 2026-10-13, 15:51 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, базовый HEAD
+`f3f9efe5ec16a502faa8c74e501b86a202e1c315`. Новые изменения ещё не закоммичены.
+Реализованы отдельные события истории самопроверок, помощи, активности и языка,
+RPC с own-read RLS, immutable retries, курсор страниц и слияние на устройстве.
+Черновики кода используют прежнее явное сохранение/CAS; formative события не
+дают серверный зачёт. Локально 33 адресных теста, typecheck и 25 SQL-проверок
+PASS. Review обнаружил повторную отправку cloud metadata в настройке языка
+после reload; исправление и регрессия выполняются перед полной проверкой.
+
+13.10 в 12:49:53 UTC применена только миграция `202610130004_progress_sync.sql`,
+SHA256 `76597cdc37bb753007b8a6ba15133667612021902c644d96d24ef114ae19e6e8`.
+Preflight подтвердил отсутствие её таблицы/RPC; после применения RLS включён,
+authenticated имеет только SELECT. Evidence:
+`work/practice-progress-cloud/hosted-learning-migration.json`.
+001–003 повторно не применялись; HTTP приёмка настоящими JWT ещё ожидает.
+
+Подготовлены provider-independent bundles/adapters/comparator для 412 упражнений
+на 3 языках; 6 grader-тестов PASS со всеми toolchains. Это открытые примеры,
+не hidden coverage. Runtime isolation и production worker ещё не развёрнуты.
+Supabase Compute в dashboard явно недоступен (private alpha). Выбор отдельного
+сервера/Modal ожидает ответа пользователя; подключение карты не выполнялось.
+Следующий шаг: hosted двухаккаунтная проверка двух независимых хранилищ,
+полный suite и desktop/mobile, затем commit/push и Pages для готовой части.
+
+### Предыдущая завершённая приёмка Auth и облачных черновиков
+
 Финальный review не нашёл материальных проблем Auth/RLS/CAS. В сопровождающем
 checkpoint исправлен только текст `missing_verifier`: он предлагает повторить
 вход без предположения об email/password. После этой правки 43 адресных теста

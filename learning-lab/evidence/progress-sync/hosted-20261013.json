@@ -1,0 +1,126 @@
+{
+  "checkedAt": "2026-10-13T13:07:16.3854555+00:00",
+  "baseRevision": "f3f9efe5ec16a502faa8c74e501b86a202e1c315",
+  "branch": "master",
+  "project": "phnjcmahugetofwvnbto",
+  "localTests": {
+    "failed": 0,
+    "command": "PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test tests/*.test.ts",
+    "skipped": 0,
+    "passed": 484,
+    "node": "24.19.0"
+  },
+  "typecheck": "PASS",
+  "build": "PASS",
+  "bundle": "index-Be80u9cX.js",
+  "sql": {
+    "status": "PASS",
+    "checks": 49,
+    "scope": "PGlite SQL004/005 owner/RLS/replay/schema/500-page/quota/language-LWW/backfill/no-grading; not hosted Supabase or concurrent connections",
+    "timestamp": "2026-10-13T13:05:39.37Z"
+  },
+  "migrations": [
+    {
+      "checkedAt": "2026-10-13T12:49:53.288Z",
+      "project": "phnjcmahugetofwvnbto",
+      "migration": "202610130004_progress_sync.sql",
+      "sha256": "76597cdc37bb753007b8a6ba15133667612021902c644d96d24ef114ae19e6e8",
+      "result": "APPLIED",
+      "before": {
+        "existing": null,
+        "rpc": null
+      },
+      "rls": [
+        {
+          "relrowsecurity": true
+        }
+      ],
+      "grants": [
+        {
+          "grantee": "authenticated",
+          "privilege_type": "SELECT"
+        }
+      ]
+    },
+    {
+      "checkedAt": "2026-10-13T12:58:48.923Z",
+      "project": "phnjcmahugetofwvnbto",
+      "migration": "202610130005_learning_language.sql",
+      "sha256": "32b46bcfd356758f894821cac04fb278a78576aac3ec9f65b80b2d10caf90b7f",
+      "result": "APPLIED",
+      "before": {
+        "prerequisite": "practice_learning_events",
+        "existing": null
+      },
+      "triggers": [
+        {
+          "tgname": "practice_learning_language_reconcile",
+          "tgenabled": "O"
+        }
+      ]
+    }
+  ],
+  "hosted": {
+    "project": "https://phnjcmahugetofwvnbto.supabase.co",
+    "checkedAt": "2026-10-13T12:59:07.884Z",
+    "provisioning": "Two unique disposable task-owned Auth users; no emails sent",
+    "checks": [
+      {
+        "check": "Two unique disposable Auth users verified with real JWTs",
+        "result": "PASS"
+      },
+      {
+        "check": "Actual createPracticeCloud + coordinator transfer selfcheck/help/preferred language/resume between independent device stores",
+        "result": "PASS"
+      },
+      {
+        "check": "Bidirectional device merge and replay preserve receipts without duplicate rows or replacing editor drafts",
+        "result": "PASS",
+        "events": 7
+      },
+      {
+        "check": "Lost response after real commit safely retries the same receipt UUIDs",
+        "result": "PASS"
+      },
+      {
+        "check": "Other account reads no foreign activity; authenticated direct writes and anonymous RPC denied",
+        "result": "PASS",
+        "directWriteStatus": 403,
+        "anonymousStatus": 401
+      },
+      {
+        "check": "Real PostgreSQL pagination pulls more than 500 events; server retains all receipts while local history stays last 100",
+        "result": "PASS",
+        "received": 509,
+        "localHistory": 100
+      },
+      {
+        "check": "Client-authored correct answers/help never create graded attempts, sessions or mastery",
+        "result": "PASS",
+        "gradedAttempts": 0,
+        "practiceSessions": 0
+      },
+      {
+        "check": "Fresh-device preference metadata is projected correctly when immutable events are uploaded again",
+        "result": "PASS"
+      }
+    ],
+    "cleanup": [
+      {
+        "testUser": "888339d1-caab-442e-a719-5e1c83c0864f",
+        "result": "removed"
+      },
+      {
+        "testUser": "85ef7101-54ef-4d0e-a81d-6a6f4f7bc6f6",
+        "result": "removed"
+      }
+    ],
+    "result": "PASS"
+  },
+  "browser": {
+    "localMobile": "390x844 no overflow; visually inspected",
+    "hosted": "PENDING",
+    "localDesktop": "1280x720 no overflow; visually inspected"
+  },
+  "serverGrading": "Not deployed; provider-independent adapters tested. Free/no-card hosted executor onboarding pending; no paid resources allowed."
+}

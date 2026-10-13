@@ -1,16 +1,17 @@
 import type { PracticeLanguage } from './catalog'
+import { mergeLearningEvents, newestLanguagePreference, readLanguagePreference, recordLanguagePreference, rememberLanguagePreference, type LearningEvent } from './progress-sync.ts'
 
 export type PracticeScope = { releaseId: string; exerciseId: string; language: PracticeLanguage; ownerId?: string }
 export type PracticeDraft = { code: string; revision: number; updatedAt: string }
 export type HelpReceipt = { kind: string; openedAt: string }
-export type QuizReceipt = { answer: number; correct: boolean; at: string; draftRevision: number }
-export type LocalPracticeRecord = { version: 1; draft: PracticeDraft | null; help: HelpReceipt[]; history: QuizReceipt[] }
+export type QuizReceipt = { answer: number; correct: boolean; at: string; draftRevision: number; syncId?: string }
+export type LocalPracticeRecord = { version: 1; draft: PracticeDraft | null; help: HelpReceipt[]; history: QuizReceipt[]; activityAt?: string }
 export type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
-export type PracticeLock = <T>(name: string, action: () => T) => Promise<T>
+export type PracticeLock = <T>(name: string, action: () => T | Promise<T>) => Promise<T>
 const languages: PracticeLanguage[] = ['python', 'javascript', 'rust']
 const emptyRecord = (): LocalPracticeRecord => ({ version: 1, draft: null, help: [], history: [] })
 // Storage events reach other tabs; this event refreshes summaries in the writing tab.
-function notifyPracticeChange() { if (typeof window !== 'undefined') window.dispatchEvent(new Event('rustml-practice-change')) }
+function notifyPracticeChange(origin?: 'cloud') { if (typeof window !== 'undefined') window.dispatchEvent(origin ? new CustomEvent('rustml-practice-change', { detail: { origin } }) : new Event('rustml-practice-change')) }
 // Existing three-part records remain guest data; an account never reads or sends them implicitly.
 export const practiceStorageKey = (scope: PracticeScope) => `rustml-practice:v1:${JSON.stringify(scope.ownerId ? [scope.releaseId, scope.exerciseId, scope.language, scope.ownerId] : [scope.releaseId, scope.exerciseId, scope.language])}`
 export const primaryLanguageKey = (releaseId: string, ownerId?: string) => `rustml-practice:language:${ownerId ? JSON.stringify([releaseId, ownerId]) : releaseId}`
@@ -33,14 +34,15 @@ function parseRecord(raw: string): LocalPracticeRecord {
     const draft = value.draft
     if (draft !== null && (!isObject(draft) || !validCode(draft.code) || !isRevision(draft.revision) || !validDate(draft.updatedAt))) throw new Error()
     if (!value.help.every(h => isObject(h) && typeof h.kind === 'string' && h.kind.length <= 100 && validDate(h.openedAt))) throw new Error()
-    if (!value.history.every(h => isObject(h) && typeof h.answer === 'number' && Number.isSafeInteger(h.answer) && h.answer >= 0 && typeof h.correct === 'boolean' && validDate(h.at) && isRevision(h.draftRevision))) throw new Error()
+    if (!value.history.every(h => isObject(h) && typeof h.answer === 'number' && Number.isSafeInteger(h.answer) && h.answer >= 0 && typeof h.correct === 'boolean' && validDate(h.at) && isRevision(h.draftRevision) && (h.syncId === undefined || typeof h.syncId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(h.syncId)))) throw new Error()
+    if (value.activityAt !== undefined && !validDate(value.activityAt)) throw new Error()
     return value as unknown as LocalPracticeRecord
   } catch { throw new PracticeStorageError('corrupt', 'Локальная запись повреждена. Она сохранена без изменений; скачайте свой код и проверьте хранилище браузера.') }
 }
 
-function browserLock<T>(name: string, action: () => T): Promise<T> {
+async function browserLock<T>(name: string, action: () => T | Promise<T>): Promise<T> {
   if (typeof navigator === 'undefined' || !navigator.locks) return Promise.reject(new PracticeStorageError('unavailable', 'Браузер не поддерживает безопасное сохранение между вкладками. Скачайте код в файл.'))
-  return navigator.locks.request(name, action)
+  return await navigator.locks.request(name, action)
 }
 
 /** Local records are formative only. Web Locks serialize CAS across tabs of this origin. */
@@ -60,12 +62,13 @@ export class LocalPracticeStore {
     }
   }
 
-  private write(scope: PracticeScope, update: (record: LocalPracticeRecord) => LocalPracticeRecord): Promise<LocalPracticeRecord> {
-    return this.lock(practiceStorageKey(scope), () => {
-      const next = update(this.read(scope))
+  private write(scope: PracticeScope, update: (record: LocalPracticeRecord) => LocalPracticeRecord | Promise<LocalPracticeRecord>, origin?: 'cloud'): Promise<LocalPracticeRecord> {
+    return this.lock(practiceStorageKey(scope), async () => {
+      const candidate = update(this.read(scope))
+      const next = candidate instanceof Promise ? await candidate : candidate
       try { this.storage.setItem(practiceStorageKey(scope), JSON.stringify(next)) }
       catch { throw new PracticeStorageError('unavailable', 'Черновик не сохранён: хранилище недоступно или заполнено. Скачайте файл перед уходом.') }
-      notifyPracticeChange()
+      notifyPracticeChange(origin)
       return next
     })
   }
@@ -88,7 +91,28 @@ export class LocalPracticeStore {
 
   recordQuiz(scope: PracticeScope, answer: number, correct: boolean): Promise<LocalPracticeRecord> {
     if (!Number.isSafeInteger(answer) || answer < 0 || typeof correct !== 'boolean') return Promise.reject(new Error('Некорректный ответ'))
-    return this.write(scope, record => ({ ...record, history: [...record.history, { answer, correct, at: this.now(), draftRevision: record.draft?.revision ?? 0 }].slice(-100) }))
+    return this.write(scope, record => ({ ...record, history: [...record.history, { answer, correct, at: this.now(), draftRevision: record.draft?.revision ?? 0, syncId: crypto.randomUUID() }].slice(-100) }))
+  }
+
+  mergeLearning(scope: PracticeScope, events: readonly LearningEvent[]): Promise<LocalPracticeRecord> {
+    return this.write(scope, record => mergeLearningEvents(record, scope, events), 'cloud')
+  }
+
+  touchActivity(scope: PracticeScope): Promise<LocalPracticeRecord> {
+    return this.write(scope, record => ({ ...record, activityAt: this.now() }))
+  }
+
+  async mergePrimaryLanguage(releaseId: string, ownerId: string, events: readonly LearningEvent[]): Promise<PracticeLanguage | null> {
+    if (!ownerId) throw new Error('Для синхронизации нужен аккаунт.')
+    return this.lock(primaryLanguageKey(releaseId, ownerId), () => {
+      const local = readLanguagePreference(this.storage, releaseId, ownerId)
+      const newest = newestLanguagePreference([...events, ...(local ? [local] : [])])
+      if (!newest) return null
+      this.storage.setItem(primaryLanguageKey(releaseId, ownerId), newest.language)
+      rememberLanguagePreference(this.storage, releaseId, ownerId, newest)
+      notifyPracticeChange('cloud')
+      return newest.language
+    })
   }
 
   getPrimaryLanguage(releaseId: string, ownerId?: string): PracticeLanguage {
@@ -108,6 +132,7 @@ export class LocalPracticeStore {
     await this.lock(primaryLanguageKey(releaseId, ownerId), () => {
       try { this.storage.setItem(primaryLanguageKey(releaseId, ownerId), language) }
       catch { throw new PracticeStorageError('unavailable', 'Основной язык не сохранён: хранилище недоступно или заполнено.') }
+      if (ownerId) recordLanguagePreference(this.storage, releaseId, ownerId, language, this.now())
       notifyPracticeChange()
     })
   }

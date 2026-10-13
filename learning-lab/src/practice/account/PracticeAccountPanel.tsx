@@ -4,6 +4,8 @@ import './PracticeAccountPanel.css';
 export type PracticeAccountPanelProps = {
   cloudAvailable: boolean;
   emailAuthAvailable?: boolean;
+  learningSync?: { busy: boolean; message: string; error: boolean };
+  syncLearningNow?: () => void;
   user: { id: string; email?: string } | null;
   busy: boolean;
   status: string;
@@ -16,7 +18,7 @@ export type PracticeAccountPanelProps = {
   signOut: () => Promise<void>;
 };
 
-export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true, user, busy, status, error, confirmationEmail, signInWithPassword, signUpWithPassword, resendConfirmation, signIn, signOut }: PracticeAccountPanelProps) {
+export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true, learningSync, syncLearningNow, user, busy, status, error, confirmationEmail, signInWithPassword, signUpWithPassword, resendConfirmation, signIn, signOut }: PracticeAccountPanelProps) {
   const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in');
   const [showConfirmation, setShowConfirmation] = useState(true);
   const emailInput = useRef<HTMLInputElement>(null);
@@ -39,7 +41,7 @@ export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true
 
   return <section className="panel practice-account" aria-labelledby="practice-account-title">
     <h2 id="practice-account-title">Ваши черновики и аккаунт</h2>
-    <p>Без входа задания, черновики, открытая помощь и история вопросов сохраняются в этом браузере. Аккаунт позволяет вручную сохранить код в облаке.</p>
+    <p>Без входа задания, черновики, открытая помощь и история вопросов сохраняются в этом браузере. После входа история, помощь и основной язык синхронизируются между устройствами. Код сохраняется в облаке кнопкой «Сохранить в аккаунте».</p>
     <p>Гостевые и личные черновики хранятся отдельно. Чтобы перенести гостевой код, скачайте его перед входом и вставьте в выбранный личный черновик.</p>
     {!cloudAvailable ? <p className="note">Облачное сохранение на этом сайте ещё не настроено. Локальная практика доступна; скачайте код, чтобы перенести его на другое устройство.</p> : <>
       <div className="practice-account-auth" aria-busy={busy}>
@@ -80,6 +82,10 @@ export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true
       </div>
       {error && <p className="practice-account-error" role="alert">{error}</p>}
       <p className="practice-account-status" role="status" aria-atomic="true">{status}</p>
+      {user && learningSync && <div aria-busy={learningSync.busy}>
+        <p role={learningSync.error ? 'alert' : 'status'}>{learningSync.message}</p>
+        <button type="button" disabled={learningSync.busy || busy} onClick={syncLearningNow}>Синхронизировать прогресс</button>
+      </div>}
     </>}
     <p className="note">Серверная оценка кода пока недоступна. Локальная самопроверка не подтверждает освоение темы на сервере.</p>
   </section>;

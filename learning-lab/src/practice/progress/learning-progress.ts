@@ -42,7 +42,7 @@ export function readLearningProgress(store: LocalPracticeStore, topics: readonly
           const record = store.read(scope)
           return { ...base, hasDraft: record.draft !== null, helpKinds: record.help.map(h => h.kind), quizAttempts: record.history.length,
             latestQuizCorrect: record.history.at(-1)?.correct ?? null,
-            lastActivityAt: latest([...(record.draft ? [record.draft.updatedAt] : []), ...record.help.map(h => h.openedAt), ...record.history.map(h => h.at)]) }
+            lastActivityAt: latest([...(record.activityAt ? [record.activityAt] : []), ...(record.draft ? [record.draft.updatedAt] : []), ...record.help.map(h => h.openedAt), ...record.history.map(h => h.at)]) }
         } catch (error) { return { ...base, error: message(error) } }
       })
       return { id: topic.id, lessonId: topic.lessonId, title: topic.title, exercises, counts: countLearningExercises(exercises) }

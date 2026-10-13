@@ -40,8 +40,9 @@ export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initia
     }
     const syncStorage = (event: StorageEvent) => { if (event.key === null || event.key === primaryLanguageKey(practiceRelease, ownerId)) syncPrimary() }
     window.addEventListener('rustml-practice-language', syncPrimary)
+    window.addEventListener('rustml-practice-change', syncPrimary)
     window.addEventListener('storage', syncStorage)
-    return () => { window.removeEventListener('rustml-practice-language', syncPrimary); window.removeEventListener('storage', syncStorage) }
+    return () => { window.removeEventListener('rustml-practice-language', syncPrimary); window.removeEventListener('rustml-practice-change', syncPrimary); window.removeEventListener('storage', syncStorage) }
   }, [store, ownerId])
   const topic = topics.find(t => t.id === topicId) ?? topics[0]
   const exercise = topic?.exercises.find(e => e.id === exerciseId) ?? topic?.exercises[0]
@@ -49,7 +50,7 @@ export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initia
   return <section className="practice-panel panel" id={`${id}-practice`} aria-labelledby={`${id}-title`}>
     <span className="eyebrow">Практика · {practiceRelease}</span>
     <h2 id={`${id}-title`}>Напишите свой фрагмент</h2>
-    <p>Черновики, подсказки и самопроверки сохраняются на этом устройстве. Подтверждённое освоение требует отдельной серверной проверки кода.</p>
+    <p>{ownerId ? 'История самопроверок и открытая помощь синхронизируются с аккаунтом. Код сохраняйте в облако отдельно.' : 'Черновики, подсказки и самопроверки сохраняются на этом устройстве.'} Подтверждённое освоение требует отдельной серверной проверки кода.</p>
     {!topic || !exercise ? <p className="note">Для этого урока в текущем выпуске ещё нет практики. Чтение урока доступно без ограничений.</p> : <>
       <div className="practice-selectors">
         <label htmlFor={`${id}-topic`}>Тема<select id={`${id}-topic`} value={topic.id} disabled={saving} onChange={event => { setTopicId(event.target.value); setExerciseId('') }}>{topics.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
@@ -96,6 +97,19 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
   const [visibleHelp, setVisibleHelp] = useState<string[]>(initial.record.help.map(h => h.kind))
   const [historyOpen, setHistoryOpen] = useState(false)
   const [cloudCode, setCloudCode] = useState<string | null>(null)
+
+  useEffect(() => {
+    const update = () => {
+      try {
+        const next = store.read(scope)
+        setRecord(next)
+        setVisibleHelp(current => [...new Set([...current, ...next.help.map(receipt => receipt.kind)])])
+      } catch (error) { setStatus(errorMessage(error)) }
+    }
+    window.addEventListener('rustml-practice-change', update)
+    window.addEventListener('storage', update)
+    return () => { window.removeEventListener('rustml-practice-change', update); window.removeEventListener('storage', update) }
+  }, [store, scope.releaseId, scope.exerciseId, scope.language, scope.ownerId])
 
   function persist(nextCode: string) {
     pendingEdits.set(scopeKey(scope), nextCode)
@@ -200,7 +214,7 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
         catch (error) { setStatus(errorMessage(error)) }
       }}>Проверить понимание</button><p role="status" aria-live="polite">{feedback}</p>
     </fieldset>
-    <button type="button" aria-expanded={historyOpen} aria-controls={`${id}-history`} onClick={() => setHistoryOpen(!historyOpen)}>История на этом устройстве · {record.history.length} самопроверок</button>
+    <button type="button" aria-expanded={historyOpen} aria-controls={`${id}-history`} onClick={() => setHistoryOpen(!historyOpen)}>{scope.ownerId ? 'История аккаунта' : 'История на этом устройстве'} · {record.history.length} самопроверок</button>
     <div id={`${id}-history`} hidden={!historyOpen} className="practice-history"><p>Это ответы на вопрос, а не проверки кода и не подтверждённые достижения. Последние 100 записей хранятся отдельно для каждого языка и версии практики.</p>{record.history.length ? <ol>{[...record.history].reverse().map((entry, i) => <li key={i}>{new Date(entry.at).toLocaleString('ru-RU')} · {languageLabels[scope.language]} · {entry.correct ? 'ответ совпал' : 'нужно повторить'} · версия черновика {entry.draftRevision}</li>)}</ol> : <p>Самопроверок пока нет.</p>}</div>
     <table className="data-table"><caption>Локальная работа по языкам · только это задание, без зачёта освоения</caption><thead><tr><th scope="col">Язык</th><th scope="col">Черновик</th><th scope="col">Самопроверки понимания</th></tr></thead><tbody>{(Object.keys(languageLabels) as PracticeLanguage[]).map(language => {
       try {

@@ -63,7 +63,7 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
   return <section className="panel practice-progress" aria-labelledby={`${id}-title`}>
     <span className="eyebrow">Учебный прогресс · {releaseId}</span>
     <h2 id={`${id}-title`}>Мой прогресс</h2>
-    <p>{ownerId ? 'Локальные записи текущего аккаунта' : 'Гостевые записи'} на этом устройстве. Основной маршрут: {progressLanguageLabels[local.primaryLanguage]}. Другие языки сохраняются отдельно.</p>
+    <p>{ownerId && cloud ? 'История текущего аккаунта синхронизируется между устройствами. Состояние синхронизации показано рядом с аккаунтом.' : ownerId ? 'Локальные записи текущего аккаунта на этом устройстве.' : 'Гостевые записи на этом устройстве.'} Основной маршрут: {progressLanguageLabels[local.primaryLanguage]}. Другие языки сохраняются отдельно.</p>
     {local.primaryError && <p role="alert">{local.primaryError}</p>}
     <div className="practice-progress-controls">
       <label htmlFor={`${id}-language`}>Язык прогресса<select id={`${id}-language`} value={language} onChange={event => select({ ownerId, releaseId, language: event.target.value as PracticeLanguage })}>
@@ -80,7 +80,7 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
         Начата работа: {row.topicsStarted} / {row.topics.length} тем. Черновики: {row.counts.drafts} / {row.counts.exercisesTotal} упражнений. Самопроверки: {row.counts.quizExercises} / {row.counts.exercisesTotal}.{row.counts.unreadable > 0 && ` Непрочитано записей: ${row.counts.unreadable}. Числа неполные.`}</p>)}
     </div>
     {continueWith && <p>Последняя работа на {progressLanguageLabels[language]}: {continueWith.title}. {onOpenExercise && <button type="button" onClick={() => onOpenExercise(continueWith)}>Продолжить работу</button>}</p>}
-    <h3>На этом устройстве · {progressLanguageLabels[language]}</h3>
+    <h3>{ownerId && cloud ? 'История аккаунта' : 'На этом устройстве'} · {progressLanguageLabels[language]}</h3>
     {topics.length === 0 ? <p role="status">В этом выпуске нет упражнений.</p> : <>
       <p role="status">Темы: {shownTopics.length}. Упражнения: {counts.exercisesTotal}. Черновики: {counts.drafts}. Помощь открыта: {counts.helped}. Самопроверки: {counts.quizExercises}; последний ответ верен: {counts.latestCorrect}. Сохранено ответов: {counts.quizAttempts}.</p>
       {counts.unreadable > 0 && <p role="alert">Не удалось прочитать {counts.unreadable} записей. Их данные не изменены; числа могут быть неполными. Повторите чтение кнопкой «Обновить прогресс».</p>}

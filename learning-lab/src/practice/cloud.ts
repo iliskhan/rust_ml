@@ -1,3 +1,4 @@
+import type { LearningEvent } from './progress-sync.ts'
 export type CloudLanguage = 'python' | 'javascript' | 'rust'
 export type CloudConfig = { url: string; publishableKey: string }
 export type CloudAuthSession = { access_token: string; refresh_token: string; expires_at: number; user: { id: string; email?: string } }
@@ -116,6 +117,8 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       const expired = response.status < 500 && response.status !== 429 && (response.status === 401 || ['refresh_token_not_found', 'refresh_token_already_used', 'session_not_found', 'session_expired', 'bad_jwt'].includes(authCode))
       if (expired && path === '/auth/v1/user' && generation === authGeneration && readSession()?.access_token === requestToken) persist(null)
       if (expired && path.startsWith('/auth/')) throw new PracticeCloudError('Сессия истекла. Войдите снова.', 'unauthenticated', response.status)
+      if (hint.includes('learning_rate_limit')) throw new PracticeCloudError('Слишком много новых записей. Синхронизация повторится через минуту.', 'learning_rate_limit', 429)
+      if (hint.includes('learning_storage_limit')) throw new PracticeCloudError('Достигнут лимит истории аккаунта. Новые записи остаются на устройстве; обратитесь к владельцу учебника.', 'learning_storage_limit', 409)
       const code = hint.includes('draft_conflict') ? 'draft_conflict' : hint.includes('grading_unavailable') ? 'grading_unavailable' : response.status === 401 ? 'unauthenticated' : 'cloud_error'
       const message = code === 'draft_conflict' ? 'Облачный черновик уже изменился. Загрузите его перед сохранением.' :
         code === 'grading_unavailable' ? 'Серверная проверка пока недоступна.' : code === 'unauthenticated' ? 'Сессия истекла. Войдите снова.' :
@@ -277,6 +280,9 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
       return rpc<number>('practice_save_draft', { p_session: id, p_revision: revision, p_source: source, p_origin: origin })
     },
     openHelp(id: string, key: string) { return rpc<string>('practice_open_help', { p_session: id, p_key: key }) },
+    syncLearning(releaseId: string, events: readonly LearningEvent[], after = 0) {
+      return rpc<unknown>('practice_sync_learning', { p_release: releaseId, p_events: events, p_after: after })
+    },
     progress() { return request<CloudProgress[]>('/rest/v1/practice_topic_progress?select=*', {}, true) },
     chooseLanguage(releaseId: string, language: CloudLanguage) { return rpc<null>('practice_choose_language', { p_release: releaseId, p_language: language }) },
   }
