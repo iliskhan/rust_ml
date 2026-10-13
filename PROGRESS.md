@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Нелинейный MLP проверен локально — 2026-10-14
+### Нелинейный MLP опубликован и проверен — 2026-10-14
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master, база `430cdc5`.
 Следующий этап PLAN.md: `Variable::relu`, `Linear::with_seed` и пример XOR 2→8→1.
@@ -20,8 +20,12 @@ strict rustdoc и запуск всех6examples PASS: **77 тестов +8 doct
 focused Clippy и workspacefmt. Подробные команды: `docs/improvements/mlp-implementation.md`;
 логи родителя: `work/comprehensive-improvements/mlp-rust-*.log`.
 
-Доставка пока в работе: следующий шаг commit/push и проверка CI. Frontend-код
-не менялся; GitHub Pages продолжает обслуживать предыдущую проверенную сборку.
+Runtime commit `83628fa13697f4a7c4f0eeecfedac507cd8b0388` отправлен обычным push,
+local=remote подтверждено. [CI38475789454](https://github.com/iliskhan/rust_ml/actions/runs/38475789454)
+SUCCESS: Rust1.87 Windows/Linux, current stable и frontend Node24.
+Закрывающий checkpoint меняет только документацию; его итоговый SHA, remote и CI
+фиксируются в `work/comprehensive-improvements/mlp-delivery.json` и итоговом ответе.
+Frontend-код не менялся; GitHub Pages обслуживает предыдущую проверенную сборку.
 Ранее зафиксированный отдельный blocker production-env grader сохраняется.
 
 ### Пять веток объединены и опубликованы — 2026-10-13, 21:15 MSK
