@@ -3,6 +3,7 @@ import './PracticeAccountPanel.css';
 
 export type PracticeAccountPanelProps = {
   cloudAvailable: boolean;
+  emailAuthAvailable?: boolean;
   user: { id: string; email?: string } | null;
   busy: boolean;
   status: string;
@@ -15,7 +16,7 @@ export type PracticeAccountPanelProps = {
   signOut: () => Promise<void>;
 };
 
-export function PracticeAccountPanel({ cloudAvailable, user, busy, status, error, confirmationEmail, signInWithPassword, signUpWithPassword, resendConfirmation, signIn, signOut }: PracticeAccountPanelProps) {
+export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true, user, busy, status, error, confirmationEmail, signInWithPassword, signUpWithPassword, resendConfirmation, signIn, signOut }: PracticeAccountPanelProps) {
   const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in');
   const [showConfirmation, setShowConfirmation] = useState(true);
   const emailInput = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ export function PracticeAccountPanel({ cloudAvailable, user, busy, status, error
         {user ? <>
           <p>Вы вошли: {user.email || 'аккаунт GitHub'}</p>
           <div className="button-row"><button type="button" disabled={busy} onClick={() => void signOut()}>{busy ? 'Выходим…' : 'Выйти из аккаунта'}</button></div>
-        </> : confirmationEmail && showConfirmation ? <div className="practice-account-confirmation">
+        </> : emailAuthAvailable && confirmationEmail && showConfirmation ? <div className="practice-account-confirmation">
           <h3>Подтвердите email</h3>
           <p>Если регистрация для {confirmationEmail} требует подтверждения, откройте ссылку из письма, затем войдите. Проверьте также папку «Спам».</p>
           <p>Откройте письмо в этом же браузере. Если подтвердили email на другом устройстве, вернитесь сюда и войдите с email и паролем.</p>
@@ -55,6 +56,7 @@ export function PracticeAccountPanel({ cloudAvailable, user, busy, status, error
             <button type="button" disabled={busy} onClick={() => { setMode('sign-in'); setShowConfirmation(false); }}>Вернуться ко входу</button>
           </div>
         </div> : <>
+          {emailAuthAvailable && <>
           <div className="button-row" role="group" aria-label="Вход или регистрация">
             <button type="button" aria-pressed={!signingUp} disabled={busy} onClick={() => setMode('sign-in')}>Войти</button>
             <button type="button" aria-pressed={signingUp} disabled={busy} onClick={() => setMode('sign-up')}>Создать аккаунт</button>
@@ -71,7 +73,9 @@ export function PracticeAccountPanel({ cloudAvailable, user, busy, status, error
             </fieldset>
           </form>
           <p className="practice-account-alternative">Или используйте GitHub:</p>
-          <div className="button-row"><button type="button" disabled={busy} onClick={() => void signIn()}>Войти через GitHub</button></div>
+          </>}
+          {!emailAuthAvailable && <p>Вход через GitHub. При первом входе аккаунт создаётся автоматически; отдельный пароль для учебника не нужен.</p>}
+          <div className="button-row"><button className={emailAuthAvailable ? undefined : 'primary'} type="button" disabled={busy} onClick={() => void signIn()}>Войти через GitHub</button></div>
         </>}
       </div>
       {error && <p className="practice-account-error" role="alert">{error}</p>}

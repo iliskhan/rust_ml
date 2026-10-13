@@ -12,6 +12,7 @@ const AccountContext = createContext<AccountState | null>(null);
 export function usePracticeAccount() { return useContext(AccountContext); }
 
 export function PracticeCloudProvider({ children }: { children: ReactNode }) {
+  const emailAuthAvailable = import.meta.env.VITE_PRACTICE_AUTH_PROVIDER !== 'github';
   const [cloud] = useState(() => {
     const url = import.meta.env.VITE_SUPABASE_URL;
     const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
@@ -110,7 +111,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     restore.current.then(session => {
       if (!active || epoch !== authEpoch.current) return;
       applySession(session);
-      if (callbackError) { setError('Подтверждение или вход не завершены. Запросите новое письмо или повторите вход.'); return; }
+      if (callbackError) { setError(emailAuthAvailable ? 'Подтверждение или вход не завершены. Запросите новое письмо или повторите вход.' : 'Вход через GitHub не завершён. Повторите вход.'); return; }
       setStatus(session ? 'Аккаунт подключён. Черновики сохраняются в облако по вашей команде.' : 'Войдите, чтобы сохранять черновики в аккаунте.');
     }).catch(value => { if (active && epoch === authEpoch.current) authError(value); })
       .finally(() => {
@@ -122,7 +123,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
         }
       });
     return () => { active = false; };
-  }, [cloud]);
+  }, [cloud, emailAuthAvailable]);
   async function signIn() {
     if (!cloud || busyRef.current) return;
     busyRef.current = true; setBusy(true); setError(''); setStatus('Открываем вход через GitHub…'); setConfirmationEmail(null);
@@ -223,7 +224,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     await cloud.chooseLanguage(variant.release_id, scope.language);
     assertOwner();
   }
-  return <AccountContext.Provider value={{ cloud, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
+  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
 }
 
 export function PracticeSection({ lessonId, topicId, initialSelection }: { lessonId: string; topicId?: string; initialSelection?: PracticeSelection }) {
