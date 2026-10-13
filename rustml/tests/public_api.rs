@@ -1,6 +1,27 @@
 use rustml::{DeviceKind, Result, Scalar, Tensor, TensorOps, Variable};
 
 #[test]
+fn facade_exposes_a_real_training_step() -> Result<()> {
+    use rustml::{mse_loss, Linear, Sgd};
+    let mut model = Linear::<f64>::new(1, 1)?;
+    let input = Variable::from_vec(vec![-1.0_f64, 0.0, 1.0], [3, 1], false)?;
+    let target = Variable::from_vec(vec![-1.0, 1.0, 3.0], [3, 1], false)?;
+    let optimizer = Sgd::new(0.1)?;
+    let prediction = model.forward(&input)?;
+    let loss = mse_loss(&prediction, &target)?;
+    let initial = loss.item()?;
+    loss.backward()?;
+    drop(loss);
+    drop(prediction);
+    for parameter in model.parameters_mut() {
+        optimizer.step(parameter)?;
+    }
+    assert!(mse_loss(&model.forward(&input)?, &target)?.item()? < initial);
+    let _: &rustml::nn::Linear<f64> = &model;
+    Ok(())
+}
+
+#[test]
 fn facade_supports_cpu_broadcasting_and_autograd() -> Result<()> {
     let matrix = Tensor::from_vec(vec![1.0f64, 2.0, 3.0, 4.0, 5.0, 6.0], [2, 3])?;
     let bias = Tensor::from_vec(vec![10.0, 20.0, 30.0], [3])?;
