@@ -28,7 +28,8 @@ Windows x86_64 MSVC; direct stable Rust 1.87.0. Для команд Cargo уст
 `RUSTC` и `RUSTDOC` в executables
 `C:/Users/lomaster/.rustup/toolchains/stable-x86_64-pc-windows-msvc/bin/`;
 для fmt/Clippy этот каталог поставлен первым в PATH.
-Все команды выполнялись из указанного worktree; код ещё не committed.
+Все команды выполнялись из указанного worktree перед implementation commit
+`4f355bfb8fdb4abd56e2e6a9ca37843ebb144872`; после проверок код не изменялся.
 
 - `cargo run -p rustml-nn --example linear_regression --offline` — PASS:
   100 шагов, loss `9.000000 -> 4.150e-20`, `w=2.0000000000`, `b=0.9999999998`.
@@ -57,9 +58,13 @@ Windows x86_64 MSVC; direct stable Rust 1.87.0. Для команд Cargo уст
 
 ## Ограничения и следующий шаг
 
-Все локальные проверки PASS. Следующий шаг этого worktree — commit, обычный push
-собственной ветки и сверка SHA; результат доставки сообщается в итоговом ответе.
-После доставки родительскому чату нужно проверить/объединить ветку и обновить
+Все локальные проверки PASS. Implementation commit
+`4f355bfb8fdb4abd56e2e6a9ca37843ebb144872` отправлен обычным
+`git push -u origin codex/rust-training`; `git rev-parse HEAD` и
+`git ls-remote --heads origin codex/rust-training` совпали, worktree чистый.
+Этот последующий checkpoint меняет только документацию; итоговый SHA ветки
+сообщается в финальном ответе после его commit/push и повторной сверки.
+Родительскому чату нужно проверить/объединить ветку и обновить
 общие PLAN/PROGRESS/README: старое описание этапа 2 там намеренно не изменялось.
 SGD обновляет один параметр за вызов; цикл по параметрам не транзакционный.
 Нет batched/general-broadcast matmul, reductions по выбранным осям, random init,
