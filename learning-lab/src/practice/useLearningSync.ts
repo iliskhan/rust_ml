@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import type { PracticeCloud } from './cloud'
-import { practiceRelease, practiceTopics } from './all-catalog'
 import { browserPracticeStore } from './local-progress'
 import { syncLearningProgress } from './progress-sync'
 
@@ -31,6 +30,8 @@ export function useLearningSync(cloud: PracticeCloud | null, owner?: string) {
       running = true; dirty = false
       publish({ busy: true, error: false, message: 'Синхронизируем историю, помощь и основной язык…' })
       try {
+        assertOwner()
+        const { practiceRelease, practiceTopics } = await import('./all-catalog')
         assertOwner()
         releaseId ??= (await client.progressCatalog(practiceRelease)).releaseId
         assertOwner()

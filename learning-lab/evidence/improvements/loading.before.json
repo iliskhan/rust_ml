@@ -1,0 +1,631 @@
+{
+  "measuredAt": "2026-10-13T17:28:44.985Z",
+  "mode": "production; default env; base /; pnpm build --manifest",
+  "firstEntry": {
+    "bytes": 1019011,
+    "gzipBytes": 304572
+  },
+  "chunks": [
+    {
+      "key": "_PredictionExperiment-AzAug7I-.js",
+      "file": "assets/PredictionExperiment-AzAug7I-.js",
+      "initial": false,
+      "bytes": 1823,
+      "gzipBytes": 925,
+      "sha256": "6358de168b94099c4c21c352c1a224b0f2d55fd73e00170388b926ae1acf9288",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "_RLCourse-CMnIoBPZ.js",
+      "file": "assets/RLCourse-CMnIoBPZ.js",
+      "initial": false,
+      "bytes": 48367,
+      "gzipBytes": 14853,
+      "sha256": "a6e67d9e96fa4ee030fec5ab44962b8bdfabaadc3ef09d92cbb74fbdf5e21781",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": [
+        "src/PolicyVarianceLab.tsx"
+      ]
+    },
+    {
+      "key": "_TransformerHeadLab-CSb_gdgv.js",
+      "file": "assets/TransformerHeadLab-CSb_gdgv.js",
+      "initial": false,
+      "bytes": 15922,
+      "gzipBytes": 5649,
+      "sha256": "ece485eea0d8a2b8f4542968ceadb5614bc0aa6478d96941cc0877186063dd46",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": [
+        "src/HeadGeometryLab.tsx"
+      ]
+    },
+    {
+      "key": "_decisionBoundaryMath-D2_VyEF5.js",
+      "file": "assets/decisionBoundaryMath-D2_VyEF5.js",
+      "initial": false,
+      "bytes": 2697,
+      "gzipBytes": 1319,
+      "sha256": "2208d048c2dc4a6ee19b8fb833d3e9a383ff574339dd00c3a882f49989a41923",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "_generativeSceneMath-CMlwrVhv.js",
+      "file": "assets/generativeSceneMath-CMlwrVhv.js",
+      "initial": false,
+      "bytes": 6380,
+      "gzipBytes": 2813,
+      "sha256": "2f4b1f579724bd6f0c7c4a324fa734aed8477614d0966d645cedda63fc647f77",
+      "imports": [
+        "_vaeGanMath-C0Vp19Xo.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "_placement-Ctq2Jf49.js",
+      "file": "assets/placement-Ctq2Jf49.js",
+      "initial": false,
+      "bytes": 2740,
+      "gzipBytes": 1078,
+      "sha256": "0102dccf9d762cb7cc3f6cfe4f279d24ea796069638dfaa386652f95b0b8379a",
+      "imports": [],
+      "dynamicImports": []
+    },
+    {
+      "key": "_scene3dMath-B0VK_gBr.js",
+      "file": "assets/scene3dMath-B0VK_gBr.js",
+      "initial": false,
+      "bytes": 2876,
+      "gzipBytes": 1434,
+      "sha256": "be05850a6c888792c58243965c7f508b11091906ac14d519615f1ef9ff11dcba",
+      "imports": [],
+      "dynamicImports": []
+    },
+    {
+      "key": "_spatialSceneMath-D7gCK2Dp.js",
+      "file": "assets/spatialSceneMath-D7gCK2Dp.js",
+      "initial": false,
+      "bytes": 1612,
+      "gzipBytes": 923,
+      "sha256": "652635ac77f8459be0b0c64b20de2c0be7f54fc5868cffcae55bcbc615c4ca75",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "_transformer-visual-experiments-B_C0vhkw.js",
+      "file": "assets/transformer-visual-experiments-B_C0vhkw.js",
+      "initial": false,
+      "bytes": 1364,
+      "gzipBytes": 788,
+      "sha256": "1e105e58e7d3a2c90e5b96ee4f405d2f651c48a801a48f6a3e2f0e31f1f4b652",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "_vaeGanMath-C0Vp19Xo.js",
+      "file": "assets/vaeGanMath-C0Vp19Xo.js",
+      "initial": false,
+      "bytes": 5742,
+      "gzipBytes": 2522,
+      "sha256": "aa80138a95a224af190a5f21f1b026db6bd687b6666a7aaf29dab8dabaf14505",
+      "imports": [],
+      "dynamicImports": []
+    },
+    {
+      "key": "_visionRoutingMath-CyJjRUmw.js",
+      "file": "assets/visionRoutingMath-CyJjRUmw.js",
+      "initial": false,
+      "bytes": 5594,
+      "gzipBytes": 2601,
+      "sha256": "0c469ae521e6a7db03e1c83b5f1c5679336bf737b2b5f747acd8add5d49821b4",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "index.html",
+      "file": "assets/index-DIJrJQ1F.js",
+      "initial": true,
+      "bytes": 1019011,
+      "gzipBytes": 304572,
+      "sha256": "7e674b575e32ab7ea089b1cbf6ec8fed3e90fb94f2e6489ed5f5754a8130a1d9",
+      "imports": [],
+      "dynamicImports": [
+        "src/Scene3D.tsx",
+        "src/practice/PracticePanel.tsx",
+        "src/NetworkFlow3D.tsx",
+        "src/DecisionBoundaryLesson.tsx",
+        "src/BoundaryPlayground.tsx",
+        "src/AdvancedConceptLesson.tsx",
+        "src/practice/PracticeWorkspace.tsx",
+        "src/ArchitectureLesson.tsx",
+        "src/TransformerCourse.tsx",
+        "src/AdvancedArchitecturesCourse.tsx",
+        "src/FrontierCourse.tsx",
+        "src/VAECourse.tsx",
+        "src/GANCourse.tsx",
+        "src/DiffusionCourse.tsx",
+        "src/GNNCourse.tsx",
+        "_RLCourse-CMnIoBPZ.js"
+      ]
+    },
+    {
+      "key": "src/AdvancedArchitecturesCourse.tsx",
+      "file": "assets/AdvancedArchitecturesCourse-BvIMLLpC.js",
+      "initial": false,
+      "bytes": 5460,
+      "gzipBytes": 2171,
+      "sha256": "59b593e369adcc692c2b3e84a2e52dda60fec324540c2519b17b35cc64f8d085",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": [
+        "src/TinyTransformerLab.tsx",
+        "src/TokenAdaptationLabs.tsx",
+        "src/TokenAdaptationLabs.tsx",
+        "src/TokenAdaptationLabs.tsx",
+        "src/VisionRoutingLabs.tsx",
+        "src/VisionRoutingLabs.tsx",
+        "src/VisionRoutingLabs.tsx",
+        "src/EfficientSequenceLabs.tsx",
+        "src/EfficientSequenceLabs.tsx",
+        "src/EfficientSequenceLabs.tsx"
+      ]
+    },
+    {
+      "key": "src/AdvancedConceptLesson.tsx",
+      "file": "assets/AdvancedConceptLesson-DmxcrqQD.js",
+      "initial": false,
+      "bytes": 15546,
+      "gzipBytes": 4994,
+      "sha256": "588f3b985cb4ddab4b1a1ee5e884197ea341e2f00fa3f4d3c99417804ce99025",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/ArchitectureLesson.tsx",
+      "file": "assets/ArchitectureLesson-DjsQOfUj.js",
+      "initial": false,
+      "bytes": 39923,
+      "gzipBytes": 13263,
+      "sha256": "0757b2f7c5fa7b3f081838c1b3023589fde63a9a60a6b53a68c51c75cdc7b806",
+      "imports": [
+        "index.html",
+        "_spatialSceneMath-D7gCK2Dp.js"
+      ],
+      "dynamicImports": [
+        "src/BpttLab.tsx",
+        "src/CnnTrainingLab.tsx",
+        "src/CnnShiftLab.tsx"
+      ]
+    },
+    {
+      "key": "src/ArchitectureTrainingLabs.tsx",
+      "file": "assets/ArchitectureTrainingLabs-g-cvR6_T.js",
+      "initial": false,
+      "bytes": 32595,
+      "gzipBytes": 11947,
+      "sha256": "ac672a7844186e3e65c3a56b0f2a604b6100ce18739c9ca33c4388d7b7dbddc3",
+      "imports": [
+        "index.html",
+        "_visionRoutingMath-CyJjRUmw.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/BoundaryPlayground.tsx",
+      "file": "assets/BoundaryPlayground-CQrSr8XR.js",
+      "initial": false,
+      "bytes": 87652,
+      "gzipBytes": 27925,
+      "sha256": "082b59d97be0d0c00c68447e53db8cedf797feb4aca9255c3591bc70c26d645d",
+      "imports": [
+        "index.html",
+        "_decisionBoundaryMath-D2_VyEF5.js",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/BpttLab.tsx",
+      "file": "assets/BpttLab-BwZbxKCb.js",
+      "initial": false,
+      "bytes": 17444,
+      "gzipBytes": 6386,
+      "sha256": "2c6fd84b6264cb259a35573148f85c495d3a720b1d50a620eb4c3b33fa9f0bcc",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": [
+        "src/RnnGradientGeometry.tsx"
+      ]
+    },
+    {
+      "key": "src/CnnShiftLab.tsx",
+      "file": "assets/CnnShiftLab-Bx1sHIIW.js",
+      "initial": false,
+      "bytes": 11198,
+      "gzipBytes": 4374,
+      "sha256": "f46ee16c237b3f28538345081e2cdda3a847747f2fc602a9e4357d237c167d95",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/CnnTrainingLab.tsx",
+      "file": "assets/CnnTrainingLab-C3UXg3cz.js",
+      "initial": false,
+      "bytes": 17625,
+      "gzipBytes": 6263,
+      "sha256": "75d3f049c5a487fbc331b21516b2becc5dbed718cedb55452516986e0edc6f98",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/DecisionBoundaryLesson.tsx",
+      "file": "assets/DecisionBoundaryLesson-CiRl4-lM.js",
+      "initial": false,
+      "bytes": 15951,
+      "gzipBytes": 5690,
+      "sha256": "62e04d31e1f7d4af7bfa3363616ad9135163136fc0bf593ff670abba86aaf3ea",
+      "imports": [
+        "index.html",
+        "_decisionBoundaryMath-D2_VyEF5.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/DiffusionCourse.tsx",
+      "file": "assets/DiffusionCourse-D1Avo236.js",
+      "initial": false,
+      "bytes": 52863,
+      "gzipBytes": 15640,
+      "sha256": "21b31c1da19576f32a22860651c1b0ea6b9ebe12e6012a31d736dd5c7a0432aa",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js",
+        "_generativeSceneMath-CMlwrVhv.js",
+        "_vaeGanMath-C0Vp19Xo.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/EfficientSequenceLabs.tsx",
+      "file": "assets/EfficientSequenceLabs-SEJ0-E6J.js",
+      "initial": false,
+      "bytes": 19497,
+      "gzipBytes": 7721,
+      "sha256": "4d2c594e2d28ab7e68d4eea821bb832b817ed7b66abf0c587763870504b5e5f8",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/FlowGeometryLabs.tsx",
+      "file": "assets/FlowGeometryLabs-DifpQWG8.js",
+      "initial": false,
+      "bytes": 42094,
+      "gzipBytes": 14482,
+      "sha256": "e0aaf3504e28d4b033ae3445d8dbc264cc6bc9a11b017081d6fe43f1145a1748",
+      "imports": [
+        "index.html",
+        "src/Scene3D.tsx",
+        "_scene3dMath-B0VK_gBr.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/FrontierCourse.tsx",
+      "file": "assets/FrontierCourse-Dm4hW7Gs.js",
+      "initial": false,
+      "bytes": 7303,
+      "gzipBytes": 2575,
+      "sha256": "df34e6ee589c78dbd25207850a9f1bbb1668dc0d7eb591e2244f3659c10f5033",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": [
+        "src/RepresentationFrontierLabs.tsx",
+        "src/RepresentationFrontierLabs.tsx",
+        "src/RepresentationFrontierLabs.tsx",
+        "src/RepresentationFrontierLabs.tsx",
+        "src/FlowGeometryLabs.tsx",
+        "src/FlowGeometryLabs.tsx",
+        "src/FlowGeometryLabs.tsx",
+        "src/InferenceFrontierLabs.tsx",
+        "src/InferenceFrontierLabs.tsx",
+        "src/InferenceFrontierLabs.tsx",
+        "src/InferenceFrontierLabs.tsx",
+        "src/InferenceFrontierLabs.tsx",
+        "src/ArchitectureTrainingLabs.tsx",
+        "src/ArchitectureTrainingLabs.tsx",
+        "src/ArchitectureTrainingLabs.tsx",
+        "src/ArchitectureTrainingLabs.tsx"
+      ]
+    },
+    {
+      "key": "src/GANCourse.tsx",
+      "file": "assets/GANCourse-DSIDSUNf.js",
+      "initial": false,
+      "bytes": 40996,
+      "gzipBytes": 12200,
+      "sha256": "dbe92f5f18648a90c4da8cb0025458b57a64e7367f44a453df9679f7d3395d98",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js",
+        "_vaeGanMath-C0Vp19Xo.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/GNNCourse.tsx",
+      "file": "assets/GNNCourse-DOcaqRZY.js",
+      "initial": false,
+      "bytes": 40974,
+      "gzipBytes": 13432,
+      "sha256": "846156a80f73741c8f7616c61249c4592eefa1ad3d649da6abad3bcf9ebeff88",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/HeadGeometryLab.tsx",
+      "file": "assets/HeadGeometryLab-9aFJJxLP.js",
+      "initial": false,
+      "bytes": 9552,
+      "gzipBytes": 3935,
+      "sha256": "abb61e51261e8d3282bbfb00dbfbf8708828e727b5438bb39735ec8bd44c601d",
+      "imports": [
+        "index.html",
+        "_TransformerHeadLab-CSb_gdgv.js",
+        "_transformer-visual-experiments-B_C0vhkw.js",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/InferenceFrontierLabs.tsx",
+      "file": "assets/InferenceFrontierLabs-CxxK14-b.js",
+      "initial": false,
+      "bytes": 35157,
+      "gzipBytes": 11747,
+      "sha256": "fc6a8fc3785a35b99420e4b21b37d2830b42cab6217218fa52182a0a4419f371",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/NetworkFlow3D.tsx",
+      "file": "assets/NetworkFlow3D-Bi8flgjW.js",
+      "initial": false,
+      "bytes": 27103,
+      "gzipBytes": 8998,
+      "sha256": "2d8f52a6140818459d16738c06330bcba299277ca28c5a409c6f1dd80932ba1e",
+      "imports": [
+        "index.html",
+        "_scene3dMath-B0VK_gBr.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/NormalizationGeometryLab.tsx",
+      "file": "assets/NormalizationGeometryLab-TcowsCYA.js",
+      "initial": false,
+      "bytes": 5949,
+      "gzipBytes": 2654,
+      "sha256": "7708e381b0432c9d5cd6a995733ae48f8076e6a11ddc73d993d241effb9ee8cb",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js",
+        "_transformer-visual-experiments-B_C0vhkw.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/PolicyVarianceLab.tsx",
+      "file": "assets/PolicyVarianceLab-CcEAsXLW.js",
+      "initial": false,
+      "bytes": 9017,
+      "gzipBytes": 3542,
+      "sha256": "e9f5e59be94a527441ff04f66a13a31e67376bf9cc7251782e4deaed345cb578",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js",
+        "_RLCourse-CMnIoBPZ.js",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/RepresentationFrontierLabs.tsx",
+      "file": "assets/RepresentationFrontierLabs-XBizp0s0.js",
+      "initial": false,
+      "bytes": 47660,
+      "gzipBytes": 15314,
+      "sha256": "8fedcb60e55d3387b9343269468d614fd9675547af6937764656834c0bf56125",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/ResidualGradientLab.tsx",
+      "file": "assets/ResidualGradientLab-BGw7F_PR.js",
+      "initial": false,
+      "bytes": 7487,
+      "gzipBytes": 2690,
+      "sha256": "7b0d39455c21649127e2316902c12f13fe229aada05343d910615f8225e7454e",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js",
+        "_transformer-visual-experiments-B_C0vhkw.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/RnnGradientGeometry.tsx",
+      "file": "assets/RnnGradientGeometry-BSB-nqWT.js",
+      "initial": false,
+      "bytes": 6668,
+      "gzipBytes": 2907,
+      "sha256": "5ae5313d5e1a706e4ebf45768621c74ed8a5df9df9060df298b6025a995ea2a2",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/Scene3D.tsx",
+      "file": "assets/Scene3D-50BIvCtY.js",
+      "initial": false,
+      "bytes": 9213,
+      "gzipBytes": 3897,
+      "sha256": "799c3592956b1c096ea7d8c0de72cd034749a27e8ee851cabccf1dcf1890ff47",
+      "imports": [
+        "index.html",
+        "_scene3dMath-B0VK_gBr.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/TinyTransformerLab.tsx",
+      "file": "assets/TinyTransformerLab-CmNh-9NY.js",
+      "initial": false,
+      "bytes": 22275,
+      "gzipBytes": 7682,
+      "sha256": "3090e20dd7a7fbd6080dc18e6da3f12f1a194c5f0c85395dc72991ab1dd4d922",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/TokenAdaptationLabs.tsx",
+      "file": "assets/TokenAdaptationLabs-CwsZw_tE.js",
+      "initial": false,
+      "bytes": 31701,
+      "gzipBytes": 10497,
+      "sha256": "b213d287a01de74200113cfecb315e821113d2dbf8eaccd167017fb0bdb31734",
+      "imports": [
+        "index.html",
+        "_PredictionExperiment-AzAug7I-.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/TransformerCourse.tsx",
+      "file": "assets/TransformerCourse-CjTEPVV9.js",
+      "initial": false,
+      "bytes": 76738,
+      "gzipBytes": 23388,
+      "sha256": "3970f279d40cdea1ec0dc66994fb4c2451ebb3291da45b7269627a13351a3b9a",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js",
+        "_spatialSceneMath-D7gCK2Dp.js"
+      ],
+      "dynamicImports": [
+        "src/NormalizationGeometryLab.tsx",
+        "src/ResidualGradientLab.tsx",
+        "_TransformerHeadLab-CSb_gdgv.js"
+      ]
+    },
+    {
+      "key": "src/VAECourse.tsx",
+      "file": "assets/VAECourse-BAfF1Y4M.js",
+      "initial": false,
+      "bytes": 37511,
+      "gzipBytes": 11661,
+      "sha256": "1de949adf12759710516b40145767777b6dbc9518ac8554606281218ae75d6e1",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js",
+        "_generativeSceneMath-CMlwrVhv.js",
+        "_vaeGanMath-C0Vp19Xo.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/VisionRoutingLabs.tsx",
+      "file": "assets/VisionRoutingLabs-BUotJJTU.js",
+      "initial": false,
+      "bytes": 21625,
+      "gzipBytes": 6735,
+      "sha256": "2ab4df437454887339c23ba163431d66f8449b577b3a9ef81c3534d4a7200131",
+      "imports": [
+        "index.html",
+        "_visionRoutingMath-CyJjRUmw.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/practice/PracticeLearningProgress.tsx",
+      "file": "assets/PracticeLearningProgress-Dka7pmEh.js",
+      "initial": false,
+      "bytes": 12434,
+      "gzipBytes": 4524,
+      "sha256": "8c562529497e339a0e5ecadceeda6b9754318b662a450640a45b3e21a5155899",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/practice/PracticePanel.tsx",
+      "file": "assets/PracticePanel-CWkcW1GY.js",
+      "initial": false,
+      "bytes": 19048,
+      "gzipBytes": 6180,
+      "sha256": "5823c532714c971f7dc1117ef0cbd1d6f17dcbbb8f8bd0a0a43a791382739f3d",
+      "imports": [
+        "index.html"
+      ],
+      "dynamicImports": []
+    },
+    {
+      "key": "src/practice/PracticeWorkspace.tsx",
+      "file": "assets/PracticeWorkspace-Drly_-np.js",
+      "initial": false,
+      "bytes": 2292,
+      "gzipBytes": 1263,
+      "sha256": "7cebf44ae9bfee18363c95a763730795cc96e3f1c2928ea13863964311e729b7",
+      "imports": [
+        "index.html",
+        "_placement-Ctq2Jf49.js"
+      ],
+      "dynamicImports": [
+        "src/practice/PracticeLearningProgress.tsx"
+      ]
+    }
+  ]
+}
