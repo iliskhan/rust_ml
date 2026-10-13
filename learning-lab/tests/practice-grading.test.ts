@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { createPracticeCloud, validateCloudConfig, type CloudAttempt } from '../src/practice/cloud.ts'
+import { createPracticeCloud, PracticeCloudError, validateCloudConfig, type CloudAttempt } from '../src/practice/cloud.ts'
 import { createGrading, gradeMessage, validateGradeAttempt } from '../src/practice/grading.ts'
 const locks = { request: async <T,>(_name: string, options: LockOptions | (() => T | PromiseLike<T>), callback?: () => T | PromiseLike<T>) =>
   (typeof options === 'function' ? options : callback!)() } as Pick<LockManager, 'request'>
@@ -202,10 +202,12 @@ test('unresolved prepare releases Web Lock on abort/deadline and late completion
 
 test('catalogue/session/help/draft prepare requests accept the shared cancellation signal', async () => {
   const storage = memory(), observed: RequestInit[] = [], control = new AbortController()
+  let hanging = false
   const cloud = createPracticeCloud(config, { storage, fetch: async (input, init) => {
     const url = String(input)
     if (url.includes('/verify')) return Response.json({ access_token: 'access', refresh_token: 'refresh', expires_at: Date.now()/1000+3600, user: { id: owner } })
     observed.push(init!)
+    if (hanging) return new Promise<Response>(() => {})
     if (url.includes('practice_variants')) return Response.json([])
     if (url.includes('/rpc/practice_start')) return Response.json(session)
     if (url.includes('practice_sessions?')) return Response.json([{ id: session, variant_id: variant, release_id: release }])
@@ -218,5 +220,18 @@ test('catalogue/session/help/draft prepare requests accept the shared cancellati
   await cloud.openHelp(session, 'solution', control.signal)
   await cloud.saveDraft(session, 3, 'code', 'editor', control.signal)
   assert.equal(observed.length, 6)
-  assert.ok(observed.every(init => init.signal === control.signal))
+  assert.ok(observed.every(init => init.signal && !init.signal.aborted))
+  hanging = true
+  for (const operation of [
+    (signal: AbortSignal) => cloud.catalog(undefined, signal),
+    (signal: AbortSignal) => cloud.startSession(variant, signal),
+    (signal: AbortSignal) => cloud.openHelp(session, 'solution', signal),
+    (signal: AbortSignal) => cloud.saveDraft(session, 3, 'code', 'editor', signal),
+  ]) {
+    const caller = new AbortController()
+    const pending = assert.rejects(operation(caller.signal), (error: unknown) => error instanceof PracticeCloudError && error.code === 'request_aborted')
+    caller.abort()
+    await pending
+    assert.equal(observed.at(-1)?.signal?.aborted, true)
+  }
 })
