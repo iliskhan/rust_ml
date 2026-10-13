@@ -1,5 +1,23 @@
 # Прогресс RustML
 
+### Причина browser-блокера подтверждена локально — 2026-10-13, 13:37 MSK (UTC+3)
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master `35586f5` до этой записи.
+Read-only диагностика исходного чата независимо проверена по точечным локальным
+строкам: `C:/Users/lomaster/.codex/config.toml:185–186` содержит Supabase
+`access="allow"`; `browser/config.toml:13–14` содержит сайт в allowed и пустой
+denied. В `browser/sessions/01a13055-8c77-7293-95a4-ac6e884eb382.toml:2`
+сохранён отдельный deny для `https://supabase.com`.
+В browser plugin26.1007.21434 `scripts/browser-service.mjs:4469` этот deny
+имеет приоритет при выборе решения, а строка1104 связывает его источник с
+`persisted_user_denied`. Вывод относится к этой установленной версии.
+
+Настройки не менялись; браузер и сеть для диагностики не использовались.
+Подтверждённого штатного UI/action снятия conversation deny пока не найдено;
+эффект перезапуска не проверен. Повторное добавление global allow не является
+следующим шагом. Hosted-подключение остаётся заблокированным до штатного
+разрешения этого состояния; локальная интеграция и её проверки сохраняются.
+
 ### Интеграция опубликована; hosted Supabase остаётся заблокирован — 2026-10-13
 
 Итоговый checkpoint `5c15a9348254da65da1e6d0858c5f3a85c9dae6f` committed/pushed;
@@ -29,13 +47,13 @@ runtime source после неё не менялся. Подключения clo
 portable копия report сохранена в `learning-lab/evidence/auth-progress/sql-recheck.json`.
 Это auth.uid stub, не hosted JWT/PostgREST/OAuth или реальные concurrent connections.
 
-Хотя владелец прямо разрешил подключение и сообщил о добавлении site allow rule,
-browser исходного чата повторно отверг https://supabase.com:
-`A saved user permission setting blocks this action`. Этот чат не использует своё
-ранее работавшее подключение для обхода того отказа. Удалённая БД/Auth settings
-не изменены; hosted Auth/RLS/CAS двух реальных аккаунтов и доставка писем ещё не
-проверены. Следующий hosted шаг — устранить конкретный saved site-rule blocker,
-после чего исходный чат применяет целые migrations и выполняет hosted приёмку.
+Владелец прямо разрешил подключение; global allow настроен правильно, но browser
+исходного чата вернул `A saved user permission setting blocks this action`.
+Причина уточнена в checkpoint выше: отдельный conversation deny имеет приоритет.
+Этот чат не использует своё ранее работавшее подключение для обхода того отказа.
+Удалённая БД/Auth settings не изменены; hosted Auth/RLS/CAS двух реальных аккаунтов
+и доставка писем ещё не проверены. После штатного разрешения browser-блокера
+исходный чат применяет целые migrations и выполняет hosted приёмку.
 
 Рабочая копия содержит посторонние .codex-remote-attachments и два author preview
 файла; они не включены в commit. После LF-нормализации `git status` также показывал
