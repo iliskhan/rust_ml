@@ -1,5 +1,29 @@
 # Прогресс RustML
 
+### Нелинейный MLP проверен локально — 2026-10-14
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master, база `430cdc5`.
+Следующий этап PLAN.md: `Variable::relu`, `Linear::with_seed` и пример XOR 2→8→1.
+За 2000 шагов SGD0.05, seeds42/43: MSE0.706369→1.220e-23, ответы4/4.
+Это проверка фиксированного учебного примера; сходимость любого seed не заявлена.
+
+Два агента разделили реализацию и read-only review. Проверены производные всех
+9 параметров составной сети, NaN/signed-zero/empty/CPU, владение графом и
+воспроизводимость. Существенных findings нет; уточнено округление seed samples
+к dtype. Родитель обновил README/doctest, учебный guide, status, roadmap и CI.
+CI теперь исполняет XOR example на Windows/Linux. Новых зависимостей нет.
+
+Windows/Rust1.87: `cargo fmt --all -- --check`, strict workspace Clippy,
+`cargo test --workspace --all-features --locked --offline` debug/release,
+strict rustdoc и запуск всех6examples PASS: **77 тестов +8 doctests** в каждом режиме.
+После последнего pin4RNG samples отдельно повторены nonlinear debug/release,
+focused Clippy и workspacefmt. Подробные команды: `docs/improvements/mlp-implementation.md`;
+логи родителя: `work/comprehensive-improvements/mlp-rust-*.log`.
+
+Доставка пока в работе: следующий шаг commit/push и проверка CI. Frontend-код
+не менялся; GitHub Pages продолжает обслуживать предыдущую проверенную сборку.
+Ранее зафиксированный отдельный blocker production-env grader сохраняется.
+
 ### Пять веток объединены и опубликованы — 2026-10-13, 21:15 MSK
 
 Runtime commit **`8d747ac086c6a88cf9c1cd876026f64db6666aa0`** отправлен в master;

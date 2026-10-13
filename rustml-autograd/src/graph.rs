@@ -10,6 +10,7 @@ pub(crate) enum Operation<T: FloatDType> {
     Sub([Variable<T>; 2]),
     Matmul([Variable<T>; 2]),
     Mean([Variable<T>; 1], T),
+    Relu([Variable<T>; 1]),
 }
 
 impl<T: FloatDType> Operation<T> {
@@ -18,7 +19,7 @@ impl<T: FloatDType> Operation<T> {
             Self::Add(inputs) | Self::Mul(inputs) | Self::Sub(inputs) | Self::Matmul(inputs) => {
                 inputs
             }
-            Self::Mean(inputs, _) => inputs,
+            Self::Mean(inputs, _) | Self::Relu(inputs) => inputs,
         }
     }
 
@@ -49,6 +50,20 @@ impl<T: FloatDType> Operation<T> {
             Self::Mean(_, count) => {
                 let mut result = inputs[0].data().clone();
                 result.data_mut().fill(grad.item()? / *count);
+                Ok(result)
+            }
+            Self::Relu(_) => {
+                let mut result = grad.clone();
+                for (output, &value) in result.data_mut().iter_mut().zip(inputs[0].data().data()) {
+                    let derivative = if value.is_nan() {
+                        value
+                    } else if value > <T as rustml_core::DType>::zero() {
+                        <T as rustml_core::DType>::one()
+                    } else {
+                        <T as rustml_core::DType>::zero()
+                    };
+                    *output = *output * derivative;
+                }
                 Ok(result)
             }
         }

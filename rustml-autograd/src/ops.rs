@@ -1,4 +1,4 @@
-//! Differentiable arithmetic, 2D matrix multiplication and all-element mean.
+//! Differentiable arithmetic, ReLU, 2D matrix multiplication and all-element mean.
 
 use crate::{graph::Operation, Variable};
 use rustml_core::{FloatDType, Result, RustMLError};
@@ -6,6 +6,32 @@ use rustml_tensor::{ops::TensorOps, Tensor};
 use std::ops::{Add, Mul, Sub};
 
 impl<T: FloatDType> Variable<T> {
+    /// Element-wise ReLU on available CPU devices, preserving shape and dtype.
+    /// The derivative is 1 for positive inputs and 0 for negative inputs and
+    /// both signed zeros. NaN inputs remain NaN in the output and derivative;
+    /// gradient multiplication otherwise follows IEEE 754. Empty inputs work.
+    pub fn relu(&self) -> Result<Self> {
+        if self.data().device().kind() != rustml_core::DeviceKind::Cpu
+            || !self.data().device().is_available()
+        {
+            return Err(RustMLError::backend_error(
+                "only available CPU devices are supported",
+            ));
+        }
+        let mut data = self.data().clone();
+        data.data_mut().mapv_inplace(|value| {
+            if value.is_nan() || value > <T as rustml_core::DType>::zero() {
+                value
+            } else {
+                <T as rustml_core::DType>::zero()
+            }
+        });
+        let operation = self
+            .requires_grad()
+            .then(|| Operation::Relu([self.clone()]));
+        Ok(Self::from_operation(data, self.requires_grad(), operation))
+    }
+
     /// Multiply two 2D matrices. Vector, batched and broadcast matmul are unsupported.
     pub fn matmul(&self, other: &Self) -> Result<Self> {
         let data = self.data().matmul(other.data())?;

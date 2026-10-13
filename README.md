@@ -1,7 +1,7 @@
 # RustML
 
 Учебная CPU-библиотека для изучения Rust и автоматического дифференцирования.
-Реализованы численное ядро и небольшая обучаемая модель `Linear + MSE + SGD`.
+Реализованы численное ядро, линейная регрессия и небольшой MLP `Linear → ReLU → Linear`.
 Это ещё не готовый фреймворк для обучения нейросетей.
 
 ## Интерактивный учебник
@@ -45,6 +45,7 @@ cargo run --locked --example autograd_test
 cargo run --locked --example milestone_check
 cargo run --locked --example scalar_demo
 cargo run -p rustml-nn --locked --example linear_regression
+cargo run -p rustml-nn --locked --example xor_mlp
 ```
 
 ## Использование
@@ -81,6 +82,24 @@ assert_eq!(x.grad().unwrap().item()?, 4.0);
 `backward_with_grad()` принимает начальный градиент точной формы результата.
 Повторный backward накапливает новые вклады; `zero_grad()` очищает градиент одной переменной.
 
+Для нескольких слоёв используйте воспроизводимую инициализацию, чтобы нарушить
+симметрию нейронов. У каждого слоя свой seed:
+
+```rust
+use rustml::{Linear, Variable};
+
+let hidden = Linear::<f64>::with_seed(2, 8, 42)?;
+let output = Linear::<f64>::with_seed(8, 1, 43)?;
+let input = Variable::from_vec(vec![0.0, 1.0], [1, 2], false)?;
+let prediction = output.forward(&hidden.forward(&input)?.relu()?)?;
+assert_eq!(prediction.data().shape().dims(), &[1, 1]);
+# Ok::<(), rustml::RustMLError>(())
+```
+
+Полный цикл обучения четырёх точек XOR находится в `examples/xor_mlp.rs`.
+Его выход — число, обучаемое MSE к целям 0/1; порог 0.5 даёт класс,
+но не превращает число в калиброванную вероятность.
+
 ## Контракты и ограничения
 
 - Shapes проверяются во время исполнения; generic dtype не гарантирует совместимость форм при компиляции.
@@ -90,11 +109,13 @@ assert_eq!(x.grad().unwrap().item()?, 4.0);
   Удобные `zeros`/`ones` сохраняют явно документированный panic-контракт.
 - Копия `Variable` разделяет идентичность и градиент. Изменение допускается только у уникального листа,
   который больше не удерживается графом; иначе возвращается ошибка. `detach()` создаёт независимую переменную.
-- Реализованы CPU tensor matmul/transpose, autograd для add/sub/mul, 2D matmul и среднего.
+- Реализованы CPU tensor matmul/transpose, autograd для add/sub/mul, ReLU, 2D matmul и среднего.
   `Linear`, `mse_loss` и `Sgd` обучают линейную регрессию; MSE требует одинаковых
   непустых форм. SGD обновляет один уникальный leaf-параметр и очищает его градиент.
   Перед обновлением нужно освободить граф; следующий проход строит новый граф.
-  MLP, batched matmul и сохранение моделей ещё предстоят.
+  Небольшой MLP собирается из Linear/ReLU; batched matmul и сохранение моделей ещё предстоят.
+  Для ReLU принята производная 0 в нуле. `Linear::new` оставляет прежнюю нулевую
+  инициализацию; `Linear::with_seed` задаёт веса He uniform и нулевой bias.
 - `cuda`/`opencl` в core — только зарезервированные варианты устройств, не GPU-исполнение.
   Производные высших порядков и конкурентный backward с мутацией не заявлены.
 
@@ -105,7 +126,7 @@ assert_eq!(x.grad().unwrap().item()?, 4.0);
 | `rustml-core` | Числовые типы, ошибки и CPU device |
 | `rustml-tensor` | Хранение ndarray, формы и операции |
 | `rustml-autograd` | Variable, граф и первые производные |
-| `rustml-nn` | CPU Linear, MSE и SGD |
+| `rustml-nn` | CPU Linear, воспроизводимая инициализация, MSE и SGD |
 | `rustml` | Общий публичный вход и реэкспорты |
 
 ## Документация и обучение

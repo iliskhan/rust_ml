@@ -76,6 +76,8 @@ jobs:
         run: cargo run -p rustml-autograd --example scalar_demo --locked
       - name: Train linear regression
         run: cargo run -p rustml-nn --example linear_regression --locked
+      - name: Train nonlinear XOR network
+        run: cargo run -p rustml-nn --example xor_mlp --locked
 
   stable:
     name: Current stable compatibility

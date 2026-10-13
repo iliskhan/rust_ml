@@ -2,7 +2,8 @@
 //!
 //! Each forward pass creates a new autograd graph. Drop the loss and predictions
 //! before updating parameters: saved graph values and aliases cannot be mutated.
-//! No Module framework, random initialization or optimizer state is required.
+//! Supports floating-point `f32`/`f64` tensors on available CPU devices only.
+//! Compose layers directly; seeded initialization needs no global RNG state.
 //!
 //! ```
 //! use rustml_autograd::Variable;
@@ -41,6 +42,7 @@ pub struct Linear<T: FloatDType> {
 
 impl<T: FloatDType> Linear<T> {
     /// Deterministic zero initialization, sufficient for one affine layer.
+    /// Use [`Self::with_seed`] for hidden layers to break neuron symmetry.
     pub fn new(in_features: usize, out_features: usize) -> Result<Self> {
         if in_features == 0 || out_features == 0 {
             return Err(RustMLError::invalid_shape(
@@ -52,6 +54,30 @@ impl<T: FloatDType> Linear<T> {
             Tensor::try_zeros([in_features, out_features])?,
             Tensor::try_zeros([out_features])?,
         )
+    }
+
+    /// Reproducible He-uniform weights and zero bias. Samples from `[-1, 1)` are
+    /// scaled by `sqrt(6/in)` in f64, then rounded to the layer's dtype.
+    /// Uses fixed SplitMix64 and the top 53 bits per sample; all seeds, including
+    /// zero, work. Equal dimensions, seed and dtype produce equal parameters.
+    /// Use a different seed for each layer. This generator is not cryptographic.
+    pub fn with_seed(in_features: usize, out_features: usize, seed: u64) -> Result<Self> {
+        let mut layer = Self::new(in_features, out_features)?;
+        let bound = (6.0 / in_features as f64).sqrt();
+        let mut state = seed;
+        for weight in layer.weight.data_mut()?.data_mut().iter_mut() {
+            state = state.wrapping_add(0x9e3779b97f4a7c15);
+            let mut bits = state;
+            bits = (bits ^ (bits >> 30)).wrapping_mul(0xbf58476d1ce4e5b9);
+            bits = (bits ^ (bits >> 27)).wrapping_mul(0x94d049bb133111eb);
+            bits ^= bits >> 31;
+            let unit = (bits >> 11) as f64 / (1_u64 << 53) as f64;
+            *weight =
+                T::from((2.0 * unit - 1.0) * bound).ok_or_else(|| RustMLError::NumericalError {
+                    message: "initial weight cannot be represented".into(),
+                })?;
+        }
+        Ok(layer)
     }
 
     /// Use explicit initial tensors, making independent trainable leaves.

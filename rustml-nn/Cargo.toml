@@ -19,5 +19,9 @@ rustml-autograd = { path = "../rustml-autograd", version = "0.1.0" }
 name = "linear_regression"
 path = "../examples/linear_regression.rs"
 
+[[example]]
+name = "xor_mlp"
+path = "../examples/xor_mlp.rs"
+
 [package.metadata.docs.rs]
 all-features = true
