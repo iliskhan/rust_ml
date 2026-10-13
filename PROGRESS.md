@@ -1,5 +1,88 @@
 # Прогресс RustML
 
+### Auth/Progress: общая локальная интеграция проверена — 2026-10-13, 13:01 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база
+`e45127662c7a5e0c61d30d40d5a3ea4d439876ab` плюс текущие изменения интеграции.
+Auth уже committed/pushed в `dc98372`/`e451276`; авторский Progress остановлен
+после targeted21/21 и входит в проверенную интеграцию. Оба авторских чата idle;
+их source scopes приняты основным чатом. Посторонние .codex-remote-attachments
+и два learning-lab/work/practice-progress-preview файла не включаются в commit.
+
+Общий UI открывает «Мой прогресс», использует проверенный owner из provider,
+читает карту тем через публичный release-filtered API и продолжает точное
+упражнение/язык с фокусом textarea. Сохранение кода не меняет cloud primary;
+он меняется только по явной команде. Исправлен provider stale401 после same-tab
+refresh; повреждённая Auth-запись безопасна для UI getter, строгие restore/RPC
+сохраняют проверку сессии. Наблюдённый React dev prop logger error устранён.
+
+Node24.19 / Python3.12.14 / direct rustc1.87, cwd learning-lab:
+**464/464 PASS, 0 skipped** с PRACTICE_VERIFY_ALL_LANGUAGES=1 и точными runtime paths;
+typecheck и Pages build native loader PASS. Production IAB5233/rust_ml:
+desktop1280x720/mobile390x844/320x568, без overflow/duplicateIDs, keyboard/reload PASS,
+прежние neuron/network practice panels отрендерились, console error/warn=[].
+Local fixture5231/5232: guest/A/B, Python/Rust, transfer navigation, hint/quiz reload,
+late401 после refresh, explicit language, malformed/revoked session PASS.
+Это synthetic Auth, не hosted JWT/RLS. Доказательства/команды/границы/hash snapshot:
+`learning-lab/evidence/auth-progress/README.md`. Rust-ядро и migrations не менялись.
+Финальный read-only review не нашёл нового подтверждённого дефекта.
+
+В исходном чате владелец прямо разрешил подключить Supabase; исходный чат взял
+dashboard/migrations/settings. Здесь удалённая база и настройки параллельно не
+меняются. Hosted Auth/JWT/PostgREST/RLS/CAS двух реальных аккаунтов и доставка
+писем ещё ожидают проверенных результатов. Grading disabled. Следующий локальный
+шаг — serialized commit/push, SHA match и Pages deployment.
+
+Первая техническая escalation commit/push отклонена auto-review: remote не был
+признан доверенным. Назначение перепроверено GitHub connector: public repo
+`iliskhan/rust_ml`, owner id30693661 совпал с authenticated profile, admin/push=true;
+`git remote get-url origin` совпал с clone_url. Первая попытка не создала staged diff.
+Повторная попытка использует тот же narrow file list и Git-lock, без обхода проверки.
+
+### Supabase: доступ восстановлен, миграции ожидают разрешения — 2026-10-13, 02:25 MSK
+
+Прямое человеческое поручение «создал проект, проверяй» найдено чтением исходного
+чата `01a13055-8c77-7293-95a4-ac6e884eb382`. Повторный browser вызов к тому же
+dashboard разрешён. Проект `phnjcmahugetofwvnbto` — `rustml-learning-lab`, Free,
+Healthy, Central EU Frankfurt, Nano. SELECT из pg_class/pg_namespace вернул
+`Success. No rows returned`: объектов practice_* в public/private ещё нет.
+
+Первая миграция 202610120001 подготовлена в SQL Editor. Editor предупредил о RLS;
+исходный SQL включает его динамическим loop для public-таблиц и явно для двух private.
+Запуск через кнопку Run without RLS отклонён auto-review: поручение «проверяй»
+признано разрешением только на чтение, а не на удалённую миграцию. База не изменена.
+Отдельное разрешение на три миграции и настройку практики запрошено у владельца.
+Экран конкретного действия сохранён в ignored
+`work/practice-integration/supabase-migration-approval.png`; dashboard помечен handoff.
+
+Auth-файлы уже committed в `dc98372`; окончание автора/push ещё не подтверждены.
+Progress продолжает собственные проверки. Общий suite и UI-интеграция пока ожидают.
+Фактические permissions этого чата остаются авторитетными. Глобально сохранено
+`progress-widget enabled=false`; новые виджеты не публикуются, native plan сохранён.
+Hosted JWT/Auth/RLS/CAS двух настоящих аккаунтов ещё не проверены.
+
+### Продолжение основного чата — 2026-10-13, 02:13 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, ветка `master`,
+readiness checkpoint `add184e02b224c5a78dd17c34282dd596aeb58f0`.
+Файл `work/practice-chat-handoff/ready-20261013.json` подтверждает окончание передачи,
+обычный push исходного чата и local/remote SHA match. До readiness общий источник
+и документы основным чатом не изменялись. Auth и Progress активны в своих scopes;
+их изменения ещё не являются проверенной общей интеграцией.
+
+Фактический shell нового основного чата — `CodexSandboxOffline`: обычный `git status`
+отклонён из-за dubious ownership, read-only команды прошли с command-scoped
+`git -c safe.directory=C:/Users/lomaster/Desktop/dev/rust_ml`. Запись `.git`
+этим чатом ещё не проверялась. Сообщение о danger-full-access относилось к исходному
+чату; профиль нового чата проверяется отдельно по его действующим permissions.
+
+Browser `cua.createBrowserTab('iab', dashboard)` отклонён auto-review:
+не найдено прямое разрешение на приватный Supabase-проект `phnjcmahugetofwvnbto`.
+Запрошено прямое разрешение владельца; обход через CLI/API/другой браузер не выполнялся.
+Backend/JWT/OAuth/PostgREST/RLS/CAS двух настоящих аккаунтов пока не проверены.
+Серверный grading остаётся disabled. Следующий локальный шаг — дождаться окончания
+авторов, интегрировать общие UI-контракты и выполнить актуальный suite/UI-приёмку.
+
 ### Передача в три новых чата — 2026-10-13
 
 Пользователь попросил перенести работу в новый основной чат и запустить отдельные
@@ -8,9 +91,10 @@
 в новые prompts не передаются. Созданный владельцем project ref: `phnjcmahugetofwvnbto`.
 Предыдущая попытка create_thread для Auth была отвергнута до создания: «MCP tool call
 requires approval, but approval policy is never». Тогда новых чатов/ID не было.
-Теперь пользователь переключил профиль на danger-full-access: filesystem/network
-unrestricted, approval policy never; sandbox_permissions запрещён, обычный exec
-работает как lomaster. Повторное создание succeeded, без обхода:
+В исходном чате пользователь переключил профиль на danger-full-access:
+filesystem/network unrestricted, approval policy never; обычный exec там работал
+как lomaster. Это наблюдение исходного чата, а не гарантия профиля созданных чатов.
+Повторное создание succeeded, без обхода:
 
 - основной `01a13261-d4bd-7170-9a0b-eb1e8db01e0c`;
 - Auth `01a13260-77c8-79d1-af8e-b94b8f436859`;
@@ -33,8 +117,9 @@ Backend ещё не подключён и не проверен: browser tool д
 Профиль разрешений команд и browser permissions независимы. Новый чат не доказывает
 устранение этих ограничений. Постоянное разрешение на commit/push основного branch
 явно сохранено в AGENTS.md, commit `a3a1946`; дополнительные вопросы о намерении
-commit/push main/master не нужны. Теперь sandbox отключён: команды выполняются
-обычно, без sandbox_permissions. Отдельные browser permissions не изменяются этим доказательством.
+commit/push main/master не нужны. В исходном чате sandbox был отключён и команды
+выполнялись обычно. Отдельные browser permissions и профиль новых чатов этим
+доказательством не подтверждаются.
 
 Перед передачей проверены документы/JSON, commit `7f5cfd09def8b5bdc308514fbb6f770ae7b7ef40`
 обычно pushed, local/remote master SHA совпали. Runtime срез публичной публикации

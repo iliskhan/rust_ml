@@ -1,0 +1,10 @@
+.practice-progress { min-width: 0; overflow-wrap: anywhere; }
+.practice-progress-controls, .practice-progress-languages { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; }
+.practice-progress-controls label { flex: 1 1 12rem; min-width: 0; }
+.practice-progress-controls select { display: block; width: 100%; }
+.practice-progress-languages > p { flex: 1 1 14rem; }
+.practice-progress-topic { padding: .75rem 0; }
+.practice-progress-topic summary { padding: .5rem 0; }
+.practice-progress-topic li { margin: .75rem 0; }
+.practice-progress-topic button { display: block; margin-top: .5rem; max-width: 100%; white-space: normal; }
+@media (pointer: coarse) { .practice-progress button, .practice-progress summary, .practice-progress select { min-height: 44px; } }

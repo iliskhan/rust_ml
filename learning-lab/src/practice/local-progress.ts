@@ -9,6 +9,8 @@ export type StorageLike = Pick<Storage, 'getItem' | 'setItem'>
 export type PracticeLock = <T>(name: string, action: () => T) => Promise<T>
 const languages: PracticeLanguage[] = ['python', 'javascript', 'rust']
 const emptyRecord = (): LocalPracticeRecord => ({ version: 1, draft: null, help: [], history: [] })
+// Storage events reach other tabs; this event refreshes summaries in the writing tab.
+function notifyPracticeChange() { if (typeof window !== 'undefined') window.dispatchEvent(new Event('rustml-practice-change')) }
 // Existing three-part records remain guest data; an account never reads or sends them implicitly.
 export const practiceStorageKey = (scope: PracticeScope) => `rustml-practice:v1:${JSON.stringify(scope.ownerId ? [scope.releaseId, scope.exerciseId, scope.language, scope.ownerId] : [scope.releaseId, scope.exerciseId, scope.language])}`
 export const primaryLanguageKey = (releaseId: string, ownerId?: string) => `rustml-practice:language:${ownerId ? JSON.stringify([releaseId, ownerId]) : releaseId}`
@@ -63,6 +65,7 @@ export class LocalPracticeStore {
       const next = update(this.read(scope))
       try { this.storage.setItem(practiceStorageKey(scope), JSON.stringify(next)) }
       catch { throw new PracticeStorageError('unavailable', 'Черновик не сохранён: хранилище недоступно или заполнено. Скачайте файл перед уходом.') }
+      notifyPracticeChange()
       return next
     })
   }
@@ -105,6 +108,7 @@ export class LocalPracticeStore {
     await this.lock(primaryLanguageKey(releaseId, ownerId), () => {
       try { this.storage.setItem(primaryLanguageKey(releaseId, ownerId), language) }
       catch { throw new PracticeStorageError('unavailable', 'Основной язык не сохранён: хранилище недоступно или заполнено.') }
+      notifyPracticeChange()
     })
   }
 }

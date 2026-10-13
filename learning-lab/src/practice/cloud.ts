@@ -4,7 +4,7 @@ export type CloudAuthSession = { access_token: string; refresh_token: string; ex
 export type CloudDraft = { session_id: string; source: string; revision: number; origin: string; updated_at: string }
 export type CloudSession = { id: string; variant_id: string; release_id: string; draft: CloudDraft }
 export type CloudVariant = { id: string; exercise_id: string; release_id: string; language: CloudLanguage; starter_code: string; practice_exercises: { exercise_key: string }; practice_releases: { release_key: string } }
-export type CloudProgress = { topic_id: string; language: CloudLanguage; is_primary_language: boolean; required_total: number; required_completed: number; required_passed: number }
+export type CloudProgress = { user_id: string; release_id: string; topic_id: string; language: CloudLanguage; is_primary_language: boolean; required_total: number; required_completed: number; required_passed: number }
 export class PracticeCloudError extends Error {
   readonly code: string
   readonly status: number
@@ -177,7 +177,8 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     return { ...rows[0], draft: drafts[0] }
   }
   return {
-    get session() { session = readSession(); return session },
+    // UI snapshots stay readable; restoreSession and authenticated requests report storage errors.
+    get session() { try { session = readSession() } catch { session = null } return session },
     storageKey,
     async restoreSession(): Promise<CloudAuthSession | null> {
       session = readSession()
@@ -247,6 +248,28 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
         rows.push(...page)
         if (page.length < 500) return rows
       }
+    },
+    async progressCatalog(releaseKey: string) {
+      const query = new URLSearchParams({ select: 'id,topic_key,release_id,practice_releases!inner(release_key)',
+        'practice_releases.release_key': `eq.${releaseKey}`, order: 'id.asc', limit: '500' })
+      const topicIds: Record<string, string> = Object.create(null), ids = new Set<string>()
+      let releaseId: string | undefined
+      for (let offset = 0; ; offset += 500) {
+        query.set('offset', String(offset))
+        const page = await request<{ id: string; topic_key: string; release_id: string; practice_releases: { release_key: string } }[]>(`/rest/v1/practice_topics?${query}`)
+        if (!Array.isArray(page)) throw new PracticeCloudError('Некорректный каталог тем.', 'invalid_catalog')
+        for (const row of page) {
+          if (!row || typeof row.id !== 'string' || !row.id || typeof row.topic_key !== 'string' || !row.topic_key ||
+            typeof row.release_id !== 'string' || !row.release_id || row.practice_releases?.release_key !== releaseKey ||
+            (releaseId && row.release_id !== releaseId) || Object.hasOwn(topicIds, row.topic_key) || ids.has(row.id)) {
+            throw new PracticeCloudError('Некорректный каталог тем.', 'invalid_catalog')
+          }
+          releaseId = row.release_id; topicIds[row.topic_key] = row.id; ids.add(row.id)
+        }
+        if (page.length < 500) break
+      }
+      if (!releaseId) throw new PracticeCloudError('Выпуск практики ещё не опубликован в облачном каталоге.', 'catalog_unavailable')
+      return { releaseKey, releaseId, topicIds }
     },
     async startSession(variantId: string) { return getSession(await rpc<string>('practice_start', { p_variant: variantId })) },
     getSession,

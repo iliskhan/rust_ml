@@ -76,7 +76,9 @@ Hash пакета задаёт доверенная сборка: канонич
 
 ## Доступ и Supabase Auth
 
-Вход MVP — email OTP; GitHub OAuth можно добавить позже. Неавторизованный гость
+Первоначально планировался email OTP; текущий клиент по поручению 2026-10-13
+поддерживает email/password и GitHub PKCE. Hosted Auth ещё не настроен и не проверен.
+Это не меняет правила владения SQL ниже. Неавторизованный гость
 имеет только локальные черновики. Это не Supabase anonymous Auth user:
 у последнего роль `authenticated`, что отличается от роли `anon` обычного
 посетителя. [Supabase: RLS](https://supabase.com/docs/guides/database/postgres/row-level-security)

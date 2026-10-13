@@ -9,6 +9,8 @@ const languageLabels: Record<PracticeLanguage, string> = { python: 'Python', jav
 const extensions: Record<PracticeLanguage, string> = { python: 'py', javascript: 'js', rust: 'rs' }
 export type SaveCloudDraft = (scope: PracticeScope, source: string, revision: number) => Promise<string | void>
 export type LoadCloudDraft = (scope: PracticeScope) => Promise<string>
+export type PracticeSelection = { topicId: string; scope: PracticeScope }
+export type ChooseCloudLanguage = (scope: PracticeScope) => Promise<void>
 const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Не удалось сохранить данные. Скачайте код в файл.'
 // Unsaved edits survive route/language changes during this page session, including storage failure.
 const pendingEdits = new Map<string, string>()
@@ -16,18 +18,19 @@ const scopeKey = (scope: PracticeScope) => JSON.stringify(scope)
 const blankRecord = (): LocalPracticeRecord => ({ version: 1, draft: null, help: [], history: [] })
 const prerequisiteTitle = (key: string) => practiceTopics.find(topic => topic.id === key)?.title ?? getConcept(key.replace(/^concept\./, ''))?.title ?? ({ 'concept.chain-rule': 'Правило цепочки', 'concept.partial-derivative': 'Частная производная' } as Record<string, string>)[key] ?? 'Основание из объяснения темы'
 
-export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, onSaveCloudDraft, onLoadCloudDraft }: { lessonId: string; topicId?: string; ownerId?: string; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft }) {
+export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initialSelection, onSaveCloudDraft, onLoadCloudDraft, onChooseCloudLanguage }: { lessonId: string; topicId?: string; ownerId?: string; initialSelection?: PracticeSelection; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft; onChooseCloudLanguage?: ChooseCloudLanguage }) {
   const id = useId()
   const [store] = useState(browserPracticeStore)
   const topics = practiceTopics.filter(topic => topic.lessonId === lessonId && (!chapterTopic || topic.id === chapterTopic || topic.id.startsWith(chapterTopic + '.') || topic.id.startsWith(chapterTopic + '-')))
-  const [topicId, setTopicId] = useState('')
-  const [exerciseId, setExerciseId] = useState('')
+  const selected = initialSelection && initialSelection.scope.ownerId === ownerId && initialSelection.scope.releaseId === practiceRelease ? initialSelection : undefined
+  const [topicId, setTopicId] = useState(selected?.topicId ?? '')
+  const [exerciseId, setExerciseId] = useState(selected?.scope.exerciseId ?? '')
   const [preference] = useState(() => {
     try { return { language: store.getPrimaryLanguage(practiceRelease, ownerId), error: '' } }
     catch (error) { return { language: 'python' as PracticeLanguage, error: errorMessage(error) } }
   })
   const [primary, setPrimary] = useState(preference.language)
-  const [language, setLanguage] = useState(preference.language)
+  const [language, setLanguage] = useState(selected?.scope.language ?? preference.language)
   const [notice, setNotice] = useState(preference.error)
   const [saving, setSaving] = useState(false)
   useEffect(() => {
@@ -53,20 +56,28 @@ export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, onSave
         <label htmlFor={`${id}-exercise`}>Задание<select id={`${id}-exercise`} value={exercise.id} disabled={saving} onChange={event => setExerciseId(event.target.value)}>{topic.exercises.map(e => <option key={e.id} value={e.id}>{e.mode === 'transfer' ? 'Перенос · ' : ''}{e.title}</option>)}</select></label>
         <label htmlFor={`${id}-language`}>Язык черновика<select id={`${id}-language`} value={language} disabled={saving} onChange={event => setLanguage(event.target.value as PracticeLanguage)}>{Object.entries(languageLabels).map(([key, title]) => <option value={key} key={key}>{title}{key === primary ? ' · основной' : ''}</option>)}</select></label>
       </div>
-      <div className="button-row"><button type="button" disabled={language === primary || saving} onClick={async () => {
-        try { await store.setPrimaryLanguage(practiceRelease, language, ownerId); setPrimary(language); window.dispatchEvent(new Event('rustml-practice-language')); setNotice(`Основной язык: ${languageLabels[language]}. История других языков сохранена.`) }
-        catch (error) { setNotice(errorMessage(error)) }
+      <div className="button-row"><button type="button" disabled={(language === primary && !onChooseCloudLanguage) || saving} onClick={async () => {
+        setSaving(true)
+        try {
+          await store.setPrimaryLanguage(practiceRelease, language, ownerId); setPrimary(language); window.dispatchEvent(new Event('rustml-practice-language'))
+          if (onChooseCloudLanguage) {
+            try { await onChooseCloudLanguage({ releaseId: practiceRelease, exerciseId: exercise.id, language, ownerId }) }
+            catch (error) { setNotice(`Основной язык на этом устройстве: ${languageLabels[language]}. Аккаунт не подтвердил смену: ${errorMessage(error)}`); return }
+          }
+          setNotice(`Основной язык${onChooseCloudLanguage ? ' на этом устройстве и в аккаунте' : ' на этом устройстве'}: ${languageLabels[language]}. История других языков сохранена.`)
+        } catch (error) { setNotice(errorMessage(error)) }
+        finally { setSaving(false) }
       }}>Сделать {languageLabels[language]} основным</button></div>
       <p className="note">Основной маршрут: {languageLabels[primary]}. Работа на других языках сохраняется отдельно. Смена языка открывает его собственный черновик.</p>
       {topic.sourceSection && <p>{topic.id.startsWith('concept.') ? <ConceptLink concept={topic.id.slice(8)}>Разобрать основание: {topic.title}</ConceptLink> : <a href={`#${lessonId}`}>Вернуться к объяснению: {topic.title}</a>}</p>}
       <p className="note">Предпосылки: {topic.prerequisites.map(prerequisiteTitle).join(', ') || 'достаточно текущего объяснения'}.</p>
-      <PracticeEditor key={`${ownerId || 'guest'}/${practiceRelease}/${exercise.id}/${language}`} exercise={exercise} scope={{ releaseId: practiceRelease, exerciseId: exercise.id, language, ownerId }} store={store} onSaving={setSaving} onSaveCloudDraft={onSaveCloudDraft} onLoadCloudDraft={onLoadCloudDraft} />
+      <PracticeEditor key={`${ownerId || 'guest'}/${practiceRelease}/${exercise.id}/${language}`} exercise={exercise} scope={{ releaseId: practiceRelease, exerciseId: exercise.id, language, ownerId }} store={store} autoFocus={Boolean(selected)} onSaving={setSaving} onSaveCloudDraft={onSaveCloudDraft} onLoadCloudDraft={onLoadCloudDraft} />
     </>}
     {notice && <p role="status" aria-live="polite" className="practice-notice">{notice}</p>}
   </section>
 }
 
-function PracticeEditor({ exercise, scope, store, onSaving, onSaveCloudDraft, onLoadCloudDraft }: { exercise: PracticeExercise; scope: PracticeScope; store: LocalPracticeStore; onSaving: (saving: boolean) => void; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft }) {
+function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveCloudDraft, onLoadCloudDraft }: { exercise: PracticeExercise; scope: PracticeScope; store: LocalPracticeStore; autoFocus: boolean; onSaving: (saving: boolean) => void; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft }) {
   const id = useId()
   const [initial] = useState(() => {
     try { return { record: store.read(scope), error: '' } }
@@ -133,7 +144,7 @@ function PracticeEditor({ exercise, scope, store, onSaving, onSaveCloudDraft, on
       </div>
       <div className="practice-code">
         <label htmlFor={`${id}-code`}>Ваш код · {languageLabels[scope.language]}</label>
-        <textarea id={`${id}-code`} value={code} spellCheck={false} autoCapitalize="off" autoCorrect="off" wrap="off" rows={16} aria-describedby={`${id}-save ${id}-execution`} onChange={event => { setCode(event.target.value); persist(event.target.value) }} />
+        <textarea id={`${id}-code`} autoFocus={autoFocus} value={code} spellCheck={false} autoCapitalize="off" autoCorrect="off" wrap="off" rows={16} aria-describedby={`${id}-save ${id}-execution`} onChange={event => { setCode(event.target.value); persist(event.target.value) }} />
         <p id={`${id}-save`} role="status" aria-live="polite" aria-atomic="true" className="practice-save">{status}</p>
         <div className="button-row">
           <button type="button" onClick={() => download()}>Скачать .{extensions[scope.language]}</button>

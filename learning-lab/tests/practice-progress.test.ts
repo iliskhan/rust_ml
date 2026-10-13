@@ -128,6 +128,28 @@ test('denied storage access is surfaced without dropping the error', () => {
   assert.throws(() => store.read(scope), (error: unknown) => error instanceof PracticeStorageError && error.kind === 'unavailable')
 })
 
+test('successful writes notify summaries in the same tab; a failed write does not', async () => {
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'window')
+  const target = new EventTarget()
+  let changes = 0
+  target.addEventListener('rustml-practice-change', () => changes++)
+  Object.defineProperty(globalThis, 'window', { value: target, configurable: true })
+  try {
+    const { storage, store } = setup()
+    await store.saveDraft(scope, 'saved', 0)
+    await store.recordHelp(scope, 'hint-0')
+    await store.recordQuiz(scope, 0, true)
+    await store.setPrimaryLanguage(scope.releaseId, 'rust')
+    assert.equal(changes, 4)
+    storage.quota = true
+    await assert.rejects(store.saveDraft(scope, 'not saved', 1), PracticeStorageError)
+    assert.equal(changes, 4)
+  } finally {
+    if (original) Object.defineProperty(globalThis, 'window', original)
+    else Reflect.deleteProperty(globalThis, 'window')
+  }
+})
+
 test('without cross-tab locks persistent writes are refused rather than pretending CAS is atomic', async () => {
   const original = Object.getOwnPropertyDescriptor(globalThis, 'navigator')
   Object.defineProperty(globalThis, 'navigator', { value: {}, configurable: true })

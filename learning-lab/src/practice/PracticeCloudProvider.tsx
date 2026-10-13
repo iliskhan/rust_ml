@@ -1,12 +1,12 @@
 import { createContext, lazy, Suspense, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPracticeCloud, PracticeCloudError, type CloudAuthSession, type PracticeCloud } from './cloud';
 import { PracticeAccountPanel, type PracticeAccountPanelProps } from './account/PracticeAccountPanel';
-import type { SaveCloudDraft, LoadCloudDraft } from './PracticePanel';
+import type { SaveCloudDraft, LoadCloudDraft, PracticeSelection, ChooseCloudLanguage } from './PracticePanel';
 import type { PracticeScope } from './local-progress';
 import { browserPracticeStore } from './local-progress';
 const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ default: module.PracticePanel })));
 
-type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft };
+type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; choosePrimaryLanguage?: ChooseCloudLanguage };
 const AccountContext = createContext<AccountState | null>(null);
 
 export function usePracticeAccount() { return useContext(AccountContext); }
@@ -39,7 +39,7 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!cloud) return;
     let active = true;
-    let syncing = false;
+    let syncing = 0;
     async function sync(storageChange = false) {
       if (!cloud || (!storageChange && (syncing || busyRef.current))) return;
       let changed = false;
@@ -47,9 +47,15 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
       catch (value) { authError(value); applySession(null); return; }
       const epoch = storageChange ? ++authEpoch.current : authEpoch.current;
       if (changed) { applySession(null); busyRef.current = true; setBusy(true); }
-      syncing = true;
+      syncing++;
       try {
-        const session = await cloud.restoreSession();
+        let session: CloudAuthSession | null;
+        try { session = await cloud.restoreSession(); }
+        catch (value) {
+          if (!active || epoch !== authEpoch.current || !(value instanceof PracticeCloudError) || value.code !== 'unauthenticated' || !ownerRef.current || cloud.session?.user.id !== ownerRef.current) throw value;
+          // A late 401 may belong to a token replaced by another same-tab request.
+          session = await cloud.restoreSession();
+        }
         if (active && epoch === authEpoch.current) {
           applySession(session);
           setError('');
@@ -58,10 +64,14 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
       } catch (value) {
         if (active && epoch === authEpoch.current) {
           authError(value);
-          if (value instanceof PracticeCloudError && ['unauthenticated', 'account_changed', 'invalid_session'].includes(value.code)) applySession(null);
+          if (value instanceof PracticeCloudError && ['unauthenticated', 'account_changed', 'invalid_session'].includes(value.code)) {
+            try {
+              if (value.code !== 'unauthenticated' || !ownerRef.current || cloud.session?.user.id !== ownerRef.current) applySession(null);
+            } catch (sessionError) { authError(sessionError); applySession(null); }
+          }
         }
       } finally {
-        syncing = false;
+        syncing--;
         if (active && epoch === authEpoch.current && changed) { busyRef.current = false; setBusy(false); }
       }
     }
@@ -182,8 +192,6 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
       await cloud.openHelp(known.sessionId, hint ? `hint:${Number(hint[1]) + 1}` : receipt.kind);
       assertOwner();
     }
-    await cloud.chooseLanguage(variant.release_id, store.getPrimaryLanguage(scope.releaseId, user.id));
-    assertOwner();
     const revision = await cloud.saveDraft(known.sessionId, known.revision, source);
     assertOwner();
     cloudDrafts.current.set(key, { ...known, revision, source });
@@ -201,12 +209,26 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     cloudDrafts.current.set(`${user.id}/${variant.id}`, { sessionId: remote.id, revision: remote.draft.revision, source: remote.draft.source });
     return remote.draft.source;
   }
-  return <AccountContext.Provider value={{ cloud, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined }}>{children}</AccountContext.Provider>;
+  async function choosePrimaryLanguage(scope: PracticeScope) {
+    const epoch = authEpoch.current;
+    const assertOwner = () => { if (epoch !== authEpoch.current || !cloud || !user || scope.ownerId !== user.id || cloud.session?.user.id !== user.id) throw new Error('Аккаунт изменился. Повторите выбор языка после входа.'); };
+    assertOwner();
+    if (!cloud) return;
+    const variants = await cloud.catalog({ releaseKey: scope.releaseId, exerciseKey: scope.exerciseId, language: scope.language });
+    assertOwner();
+    const variant = variants.find(v => v.language === scope.language && v.practice_exercises.exercise_key === scope.exerciseId && v.practice_releases.release_key === scope.releaseId);
+    if (!variant) throw new Error('Выпуск практики ещё не опубликован в аккаунте.');
+    await cloud.startSession(variant.id);
+    assertOwner();
+    await cloud.chooseLanguage(variant.release_id, scope.language);
+    assertOwner();
+  }
+  return <AccountContext.Provider value={{ cloud, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined }}>{children}</AccountContext.Provider>;
 }
 
-export function PracticeSection({ lessonId, topicId }: { lessonId: string; topicId?: string }) {
+export function PracticeSection({ lessonId, topicId, initialSelection }: { lessonId: string; topicId?: string; initialSelection?: PracticeSelection }) {
   const account = useContext(AccountContext);
-  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} /></Suspense>;
+  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} initialSelection={initialSelection} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} onChooseCloudLanguage={account?.choosePrimaryLanguage} /></Suspense>;
 }
 
 export function PracticeAccount() {

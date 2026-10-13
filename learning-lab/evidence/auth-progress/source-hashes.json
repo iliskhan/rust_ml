@@ -1,0 +1,154 @@
+[
+  {
+    "path": "learning-lab/src/practice\\account\\PracticeAccountPanel.css",
+    "sha256": "6c4ae271caa0f10a5446bf0f9158d8594cc0738317d8febe4a91b9ba069c7ba8"
+  },
+  {
+    "path": "learning-lab/src/practice\\account\\PracticeAccountPanel.tsx",
+    "sha256": "704aee614b976fd56aed068a23c54033393a24588f8af57a3bcf2800904b7dbd"
+  },
+  {
+    "path": "learning-lab/src/practice\\advanced-catalog.ts",
+    "sha256": "c7938ed69382ad127499c5a8eb204d2e952a86d53824a10332de24c95a0ff174"
+  },
+  {
+    "path": "learning-lab/src/practice\\all-catalog.ts",
+    "sha256": "4669fad4bf867e6cd8bcfda00021e9a5462788df76684dc3b75d6f129e771ef4"
+  },
+  {
+    "path": "learning-lab/src/practice\\architecture-catalog.ts",
+    "sha256": "a89826ed552315ff41514476d8b8a38274b2351901b5c9f22a98fd71fcac1258"
+  },
+  {
+    "path": "learning-lab/src/practice\\catalog.ts",
+    "sha256": "15289526fbb859ef1b585a6087df6c7f2641b3488fef76ef488ec7fe69ec1f5e"
+  },
+  {
+    "path": "learning-lab/src/practice\\cloud.ts",
+    "sha256": "d9801c6dc7c34e734afc705e727f5bf6f1c85c86531281c6423c453935d7c3ee"
+  },
+  {
+    "path": "learning-lab/src/practice\\concept-advanced-catalog.ts",
+    "sha256": "b4d9fad719e14bd7db50e1223fa6022408e233ad8ce8fe6c03de1dc4765179ae"
+  },
+  {
+    "path": "learning-lab/src/practice\\concept-core-catalog.ts",
+    "sha256": "50ae58e7f22e3e752474ca0b993f3533d2f02572256eaa55244e40eb9f3d6a1c"
+  },
+  {
+    "path": "learning-lab/src/practice\\generative-catalog.ts",
+    "sha256": "1d1d035ac4dc7f300b51cbaf8cffa2cdac53f894a1a383b6aec9d10724c41d25"
+  },
+  {
+    "path": "learning-lab/src/practice\\local-progress.ts",
+    "sha256": "8f17d8a9afed4966c9a57e1acacab88970f4c72dd915fedc8da853031aa72b8b"
+  },
+  {
+    "path": "learning-lab/src/practice\\placement.json",
+    "sha256": "2c4bfb7d30614627e1187f740241f24b90150cd489d3617bef8bc801111969c3"
+  },
+  {
+    "path": "learning-lab/src/practice\\placement.ts",
+    "sha256": "f671fabddea9a0795fb21b560cc56d56040af511a344c8e97b505a5832c6cc39"
+  },
+  {
+    "path": "learning-lab/src/practice\\practice.css",
+    "sha256": "abdbb0f03127ed055627ffa15f11c19970a02bb96a7f80507e4bda6a64c4b019"
+  },
+  {
+    "path": "learning-lab/src/practice\\PracticeCloudProvider.tsx",
+    "sha256": "4e129633bfe74a5df16f9aca0b18a9039ecf2c8191001c898459efc6e16a9e6f"
+  },
+  {
+    "path": "learning-lab/src/practice\\PracticeLearningProgress.tsx",
+    "sha256": "3595e2344a1e19470341be8ef9b5638639a9dbbc76b7b090ba5fd64495bf6f3b"
+  },
+  {
+    "path": "learning-lab/src/practice\\PracticePanel.tsx",
+    "sha256": "9f36713ace9388a80ff8e9127ac29f1f3b17ee8a61d52650717913453c334a73"
+  },
+  {
+    "path": "learning-lab/src/practice\\PracticeWorkspace.tsx",
+    "sha256": "cb8f8b69770e8e9b03eb64a0b57c775f53ac3a0fada0d7e6835dbb582c73b636"
+  },
+  {
+    "path": "learning-lab/src/practice\\progress\\learning-progress.ts",
+    "sha256": "d63274423d94a05af10529d65731604a463c6d35007d787f31e06b57fc074a2f"
+  },
+  {
+    "path": "learning-lab/src/practice\\progress\\practice-progress.css",
+    "sha256": "5d04dd5b1bbafe071ce0b2d954df8127e38752172b4cbbf5a2a8b7814645c912"
+  },
+  {
+    "path": "learning-lab/src/practice\\progress\\PracticeProgress.tsx",
+    "sha256": "3569ba922576f601c3f6ee06925c9fbd0eb156e9a7979dcec9d6b6317cf2d4df"
+  },
+  {
+    "path": "learning-lab/src/practice\\progress\\README.md",
+    "sha256": "b70c3ac79affea8314ab79e4fe90634daa90621fe060293396cc09fbe025443b"
+  },
+  {
+    "path": "learning-lab/tests\\fixtures\\practice-integration.html",
+    "sha256": "e949a3712fff9f810a775a3f12212a1172102818620a28ef718f2c089c7d937a"
+  },
+  {
+    "path": "learning-lab/tests\\fixtures\\practice-integration.mjs",
+    "sha256": "79e556fffd38f592d9e48eb094e34edc876b2e391c3082d943cf154a163a92e0"
+  },
+  {
+    "path": "learning-lab/tests\\fixtures\\practice-integration.tsx",
+    "sha256": "44e08a5b2206fac4c434a34b2e87417d944b9d3647d8d020939f8a1f68950757"
+  },
+  {
+    "path": "learning-lab/tests\\practice-advanced.test.ts",
+    "sha256": "2210ac70199f27d051374b97ddf5bee5a309d651905012874220ac34abe75be7"
+  },
+  {
+    "path": "learning-lab/tests\\practice-architecture.test.ts",
+    "sha256": "7e22083b2f7d8c12993ec3c9299a92418a3452a86f7af2c8d2c624b04de0482d"
+  },
+  {
+    "path": "learning-lab/tests\\practice-auth.test.ts",
+    "sha256": "c683c3e90e21a54ba3309119c4d1b2daa603a0eb242366692e73129dea1251a8"
+  },
+  {
+    "path": "learning-lab/tests\\practice-catalog.test.ts",
+    "sha256": "acae16838c75be80028f1a0613f226837b8c1d39b721eb89218d5a4772bb7189"
+  },
+  {
+    "path": "learning-lab/tests\\practice-cloud-progress.test.ts",
+    "sha256": "6b9b38ee7107b689b09787806e4445752d2dbff1c1ec398b54de56a03deb2665"
+  },
+  {
+    "path": "learning-lab/tests\\practice-cloud.test.ts",
+    "sha256": "f9afa90a552d96c8f4fbc8b57f823f4d2bc3540fbbbfba20044825220fcfd0f2"
+  },
+  {
+    "path": "learning-lab/tests\\practice-concept-advanced.test.ts",
+    "sha256": "afcf1f70df62218ef33cc5cd78f5ea4a88ab824cef90a1617a7e78daee70fa6f"
+  },
+  {
+    "path": "learning-lab/tests\\practice-concept-core.test.ts",
+    "sha256": "dd5e28fc7b07efc102d82b6000bb7fffed190110a05fdf6d2e94e7cb7a42e9f9"
+  },
+  {
+    "path": "learning-lab/tests\\practice-generative.test.ts",
+    "sha256": "c2fdb869c41bf019bb4c7ac7527f59c5a906215460c3c8400ce69d6445d49863"
+  },
+  {
+    "path": "learning-lab/tests\\practice-learning-progress.test.ts",
+    "sha256": "11310e0f96f8a8db67f9ae49fdaa854a0aebb6e098357e7180228086b2f6f3b6"
+  },
+  {
+    "path": "learning-lab/tests\\practice-placement.test.ts",
+    "sha256": "b2f794b1fc452df66a2fac3f420ad54f9608a97ce0bb376253ec6443b2b02357"
+  },
+  {
+    "path": "learning-lab/tests\\practice-progress.test.ts",
+    "sha256": "f6d6e88953511b51b6c189ec4fcde693d3fd1f20a0741413ca42ba5a5fa45f6d"
+  },
+  {
+    "path": "learning-lab/tests\\practice-session-recovery.test.ts",
+    "sha256": "adf2b11a4ac78a85cf3d0f051222ca8277e2443c3e2be0c62b564ddb96e7c161"
+  }
+]
