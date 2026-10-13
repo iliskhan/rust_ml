@@ -1,0 +1,282 @@
+{
+  "checked_at": "2026-10-13T15:20:51.5737957+03:00",
+  "checkout": "C:/Users/lomaster/Desktop/dev/rust_ml",
+  "runtime_commit": "ce1d3b648b75b8c7d631ce6eaf5d20d94d66ec78",
+  "site": "https://iliskhan.github.io/rust_ml/#practice",
+  "project": "phnjcmahugetofwvnbto",
+  "result": "PASS",
+  "migrations": {
+    "mode": "migrate",
+    "checkedAt": "2026-10-13T11:44:14.511Z",
+    "migrationLedgerPresent": false,
+    "migrations": [
+      {
+        "name": "202610120001_practice.sql",
+        "sha256": "22d612a5f149caf23f5fbdebd6940b39a70f686ac8ae8b4e5b1857ac49ab192c",
+        "status": "applied"
+      },
+      {
+        "name": "202610120002_practice_rpc.sql",
+        "sha256": "ba5af138a64dbf176597460eba8aa0426aa5615d73d48e4a3b79ea554fb0ffc7",
+        "status": "applied"
+      },
+      {
+        "name": "202610120003_anchor_content.sql",
+        "sha256": "e8686b2c2de9313bdae282494d8b5c38ab32cb814e765ee16ca8b8963d85fa83",
+        "status": "applied"
+      }
+    ]
+  },
+  "sql_acceptance": {
+    "sets": 17,
+    "triggers": 6,
+    "acl_violations": 0,
+    "functions": 16,
+    "relations": 14,
+    "rls_tables": 13,
+    "result": "PASS",
+    "policies": 12,
+    "seed_checks": 20
+  },
+  "public_api": {
+    "checks": [
+      {
+        "label": "catalog:practice_releases",
+        "status": 200,
+        "code": null,
+        "count": "0-0/1",
+        "rows": 1
+      },
+      {
+        "label": "catalog:practice_topics",
+        "status": 206,
+        "code": null,
+        "count": "0-49/136",
+        "rows": 50
+      },
+      {
+        "label": "catalog:practice_requirements",
+        "status": 206,
+        "code": null,
+        "count": "0-49/276",
+        "rows": 50
+      },
+      {
+        "label": "catalog:practice_exercises",
+        "status": 206,
+        "code": null,
+        "count": "0-49/412",
+        "rows": 50
+      },
+      {
+        "label": "catalog:practice_variants",
+        "status": 206,
+        "code": null,
+        "count": "0-49/1236",
+        "rows": 50
+      },
+      {
+        "label": "topics:page1",
+        "status": 206,
+        "code": null,
+        "count": "0-49/136",
+        "rows": 50
+      },
+      {
+        "label": "topics:page2",
+        "status": 206,
+        "code": null,
+        "count": "50-99/136",
+        "rows": 50
+      },
+      {
+        "label": "variants:inner",
+        "status": 200,
+        "code": null,
+        "count": "0-0/*",
+        "rows": 1
+      },
+      {
+        "label": "anon:own-data",
+        "status": 401,
+        "code": "42501",
+        "count": null,
+        "rows": null
+      },
+      {
+        "label": "anon:practice_start",
+        "status": 401,
+        "code": "42501",
+        "count": null,
+        "rows": null
+      },
+      {
+        "label": "anon:private-schema",
+        "status": 406,
+        "code": "PGRST106",
+        "count": null,
+        "rows": null
+      },
+      {
+        "label": "auth:settings",
+        "status": 200,
+        "code": null,
+        "count": null,
+        "rows": null
+      }
+    ],
+    "checked_at": "2026-10-13T11:53:33.366Z",
+    "github_provider_after_configuration": {
+      "checkedAt": "2026-10-13T12:01:36.386Z",
+      "path": "/auth/v1/settings",
+      "status": 200,
+      "githubEnabled": true
+    }
+  },
+  "auth_acceptance": {
+    "checks": [
+      {
+        "check": "Two server-verified real user JWTs; providers may differ",
+        "result": "PASS"
+      },
+      {
+        "check": "Anonymous published catalog + real PostgREST inner embeddings",
+        "result": "PASS"
+      },
+      {
+        "check": "Anonymous own-data/RPC and private schema access denied",
+        "result": "PASS"
+      },
+      {
+        "check": "Distinct owner sessions, idempotent start, pristine test drafts",
+        "result": "PASS"
+      },
+      {
+        "check": "Foreign session/draft reads empty; save/help RPCs reject foreign owner",
+        "result": "PASS"
+      },
+      {
+        "check": "Concurrent real HTTP CAS: exactly one winner, one conflict, persisted winner revision1",
+        "result": "PASS"
+      },
+      {
+        "check": "Direct draft UPDATE and attempt INSERT denied",
+        "result": "PASS"
+      },
+      {
+        "check": "Help idempotence; 408 isolated progress rows/account; independent primary-language preference",
+        "result": "PASS"
+      },
+      {
+        "check": "Disabled grading returns expected error and creates no attempt",
+        "result": "PASS"
+      },
+      {
+        "check": "Real Auth refresh and logout revoke refresh tokens for both test accounts",
+        "result": "PASS"
+      }
+    ],
+    "checked_at": "2026-10-13T12:10:23.608Z",
+    "temporary_key_transport_files_removed": true,
+    "disposable_test_users_removed": 2,
+    "result": "PASS"
+  },
+  "browser_acceptance": {
+    "checkedAt": "2026-10-13T12:20:19.929Z",
+    "url": "https://iliskhan.github.io/rust_ml/#practice",
+    "runtimeCommit": "ce1d3b648b75b8c7d631ce6eaf5d20d94d66ec78",
+    "result": "PASS",
+    "checks": [
+      "Real GitHub first login creates account; OAuth callback and PKCE complete; callback query removed",
+      "Cloud draft save version1; reload preserves authenticated session",
+      "Opening cloud comparison preserves a different local draft and displays the saved cloud marker",
+      "Explicit replacement restores cloud code locally",
+      "Original starter restored and saved to cloud revision2; no test markers remain",
+      "Logout returns guest UI and disables cloud save",
+      "Repeat GitHub login succeeds; cloud reload matches original starter exactly",
+      "Progress loads 136/136 Python topic rows, 0/276 confirmed requirements as expected with grading disabled",
+      "Desktop 1280x720 and mobile390x844 inspected; no horizontal overflow",
+      "Browser console warnings/errors and DOM alerts:0"
+    ],
+    "screenshots": [
+      "hosted-github-account-desktop.png",
+      "hosted-github-account-mobile.png"
+    ],
+    "limitations": [
+      "Understanding self-check history remains on this device",
+      "Production code grading is disabled"
+    ]
+  },
+  "local_validation": {
+    "typecheck": "PASS",
+    "cwd": "learning-lab",
+    "skipped": 0,
+    "environment": "Windows; bundled Node; PRACTICE_PYTHON=bundled Python; PRACTICE_RUSTC=direct stable-x86_64-pc-windows-msvc rustc (no rustup proxy)",
+    "tests": 465,
+    "production_build": "PASS",
+    "command": "PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test tests/*.test.ts",
+    "failures": 0
+  },
+  "deployment": {
+    "repo": "iliskhan/rust_ml",
+    "commit": "ce1d3b648b75b8c7d631ce6eaf5d20d94d66ec78",
+    "sampled_at_utc": "2026-10-13T12:07:26Z",
+    "runs": [
+      {
+        "jobs": [
+          {
+            "name": "Rust 1.87 / ubuntu-latest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.87 / windows-latest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Learning lab / Node 24",
+            "conclusion": "success"
+          },
+          {
+            "name": "Current stable compatibility",
+            "conclusion": "success"
+          }
+        ],
+        "id": 38394725524,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "jobs": [
+          {
+            "name": "build",
+            "conclusion": "success"
+          },
+          {
+            "name": "deploy",
+            "conclusion": "success"
+          }
+        ],
+        "id": 38394725921,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "note": "Workflow deploy job succeeded. This records GitHub Actions status only; interactive site readiness was not assessed."
+  },
+  "boundaries": [
+    "GitHub sign-in creates the account at first login; email sign-up is hidden in the deployed configuration.",
+    "Cloud drafts are saved explicitly; help events, language preferences and own progress API are isolated by account.",
+    "Understanding self-check history remains local to the device.",
+    "Production code grading is disabled; saving a draft does not mark a requirement completed.",
+    "Migrations were executed through a verified TLS database connection; no Supabase CLI migration ledger was created. Do not replay migrations blindly."
+  ],
+  "final_copy_followup": {
+    "targeted_tests": 43,
+    "typecheck": "PASS",
+    "skipped": 0,
+    "source_sha256": "a4926b317090f9d01ce7696aea1bfd61feb8c068cfb31d1065dff7acf18d24d5",
+    "change": "Only missing_verifier message is provider-neutral; authentication behavior unchanged",
+    "failed": 0,
+    "command": "node --test tests/practice-cloud.test.ts tests/practice-auth.test.ts tests/practice-account-panel.test.ts tests/practice-cloud-progress.test.ts"
+  }
+}

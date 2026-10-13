@@ -215,7 +215,7 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
     async completeOAuth(code: string) {
       const pending = beginSignIn()
       const verifier = storage.getItem(`${storageKey}:pkce`)
-      if (!verifier) throw new PracticeCloudError('Откройте ссылку в браузере, где начали вход. Если email уже подтверждён, войдите с email и паролем.', 'missing_verifier')
+      if (!verifier) throw new PracticeCloudError('Откройте ссылку в браузере, где начали вход, или вернитесь в учебник и начните вход заново.', 'missing_verifier')
       const response = await request<CloudAuthSession>('/auth/v1/token?grant_type=pkce', { method: 'POST', body: JSON.stringify({ auth_code: code, code_verifier: verifier }) })
       assertSignIn(pending)
       if (storage.getItem(`${storageKey}:pkce`) !== verifier) throw changedAccount()

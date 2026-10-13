@@ -56,28 +56,34 @@ Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, исходная ветка `c
 изменения занятого worktree6209. Последнее поручение — реализация, не только проект.
 
 Авторитетные этапы подключения Supabase после нового поручения 2026-10-13:
-1. Проверить состояние исходного чата и штатное снятие запрета — блокер:
-   global allow правильный, отдельный conversation deny имеет приоритет.
-   Проверены app26.1007.2314.0 и browser26.1007.21434: UI сбрасывает только
-   global rules; документированный conversation reset не найден. Инструмент
-   возвращает неретрайный persisted_user_denied и запрещает обход. Нужен
-   штатный сброс этого разрешения средствами приложения/поддержки.
-2. Применить миграции и настроить Auth существующего Supabase — ожидает:
-   до DDL проверить practice roles, использование private и Data API exposure;
-   применить целиком001→002→003, выполнить catalog smoke, настроить URL/redirect.
-3. Проверить облачные аккаунты, изоляцию и синхронизацию прогресса — ожидает:
-   два контролируемых подтверждённых аккаунта, реальные JWT/REST/RPC/RLS/CAS,
-   доставка письма, refresh/sign-out; SQL auth.uid stub этого не доказывает.
-4. Подключить Pages, проверить публикацию и сохранить commit/push — ожидает:
-   после backend-проверок задать public variables, проверить build/deploy и
-   настоящий desktop/mobile, сохранить evidence и сверить local/remote SHA.
+1. Проверить состояние исходного чата и восстановить доступ — готово:
+   13.10 повторное открытие того же Supabase dashboard через поддержанный browser
+   прошло; прежний conversation deny снят без изменения файлов разрешений.
+2. Применить миграции и настроить Auth существующего Supabase — готово:
+   pristine preflight, целые SQL001→002→003 применены; независимый hosted catalog
+   smoke 17 наборов PASS, публичный anon API и запрет private проверены через HTTP.
+   Site URL и точный redirect `https://iliskhan.github.io/rust_ml/` сохранены;
+   GitHub OAuth app создан и provider включён. CLI migration ledger отсутствует.
+3. Проверить облачные аккаунты, изоляцию и синхронизацию прогресса — готово:
+   реальный GitHub OAuth callback → Pages PKCE, cloud save/load/reload/logout
+   и повторный вход проверены в браузере. Два временных пользователя с настоящими
+   JWT прошли 10 hosted групп: RLS, RPC, CAS, прогресс, refresh/logout и grading
+   disabled. Desktop1280/mobile390 осмотрены без overflow и ошибок консоли.
+4. Подключить Pages, проверить публикацию и сохранить commit/push — готово:
+   public variables заданы; `ce1d3b6` обычным push отправлен на master, local/remote
+   SHA совпали. CI38394725524 (4 jobs) и Pages38394725921 (build/deploy) SUCCESS.
+   Публичный GitHub-only вход и cloud-сценарий проверены на deployed `ce1d3b6`;
+   [переносимый отчёт](learning-lab/evidence/auth-progress/hosted-20261013.json)
+   хранит доказательства. Документальные доказательства включены в сопровождающий
+   checkpoint; SHA его push сообщается в итоговом отчёте.
 
 Локальная интеграция Auth/Progress завершена: readiness `add184e`, код `46235ac`,
 checkpoint `5c15a93` pushed, local/remote match; 464/464 без пропусков,
 typecheck/build, desktop1280/mobile390/320, keyboard/persistence PASS.
 CI38382326428 и Pages38382326404 SUCCESS; публичный desktop/mobile проверен,
 runtime source hashes совпадают с прошедшим срезом. Диагностика разрешений
-сохранена и отправлена отдельно в `bf49ebf`; backend остаётся незавершённым.
+сохранена и отправлена отдельно в `bf49ebf`; на том checkpoint backend ещё
+оставался незавершённым.
 
 Полный inventory реализован: 83 units и 51 mathematical concepts; общий suite
 422/422 PASS. Полный SQL seed:12403 assertions PASS; production/UI/typecheck/build проверены.
@@ -93,21 +99,23 @@ local/remote master SHA совпали, CI и Pages на этом checkpoint PAS
 Supabase project `phnjcmahugetofwvnbto` прочитан 13.10: Free/Healthy, Frankfurt;
 SELECT pg_catalog не нашёл существующих practice_* объектов. Доступ восстановлен
 после проверки исходного прямого поручения «создал проект, проверяй».
-Первое выполнение миграции было отклонено auto-review. Теперь владелец прямо
-разрешил подключение в исходном чате `01a13055-8c77-7293-95a4-ac6e884eb382`;
-этот чат взял hosted migrations/settings. Основной чат сохраняет локальную
-интеграцию и ожидает его проверенные результаты; hosted готовность не заявляется.
+Первая попытка миграции была отклонена auto-review; позднее владелец прямо
+разрешил подключение в исходном чате `01a13055-8c77-7293-95a4-ac6e884eb382`.
+Проверенные hosted migrations, catalog, JWT/RLS/CAS, публичный OAuth и cloud UI
+записаны в PROGRESS и переносимом отчёте.
 Свежий local PGlite13.10:12403 PASS после исправления CRLF/LF в checkout;
 правило migrations eol=lf committed/pushed в `3df41d3`, local/remote match исходного
 чата проверен. SQL Git content не изменён. Это не hosted JWT/RLS/CAS.
-После этого остаётся hosted-приёмка Auth/RLS/CAS; полная система пока не завершена.
+Browser-приёмка cloud-сценария пройдена. Серверное освоение по коду пока не включено:
+для него нужен отдельный проверенный runner.
 Самопроверка в браузере
 не является серверным освоением. Исполнение learner-кода остаётся закрытым,
 пока не проверены изоляция и бесплатный доступный runner. Бесплатный frontend
 может быть опубликован независимо; frontend хранит только public Supabase config.
-RLS требует реального выполнения SQL; hosted Auth — отдельной проверки.
+RLS включён и пользовательская изоляция проверена реальными JWT двух временных
+аккаунтов; они удалены после приёмки.
 
-Передача 2026-10-13 по запросу владельца: создать новый основной чат для продолжения
+Историческая передача 2026-10-13 по запросу владельца: создать новый основной чат для продолжения
 и интеграции, отдельный чат регистрации/входа Supabase и отдельный чат прогресса обучения.
 Основной чат сохраняет общий план, собирает изменения, проверяет hosted сценарии
 после снятия browser запрета и публикует результат. Auth владеет cloud.ts,

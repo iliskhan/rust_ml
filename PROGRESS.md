@@ -1,6 +1,104 @@
 # Прогресс RustML
 
-### Подключение Supabase: запрет чата остаётся — 2026-10-13, 13:58 MSK (UTC+3)
+Финальный review не нашёл материальных проблем Auth/RLS/CAS. В сопровождающем
+checkpoint исправлен только текст `missing_verifier`: он предлагает повторить
+вход без предположения об email/password. После этой правки 43 адресных теста
+auth/cloud/account/progress и `tsc --noEmit` PASS. Полные 465 тестов и browser
+приёмка относятся к runtime `ce1d3b6`; поведение этим текстовым уточнением не меняется.
+
+### Публичная практика: browser cloud-приёмка прошла — 2026-10-13, 15:20 MSK (UTC+3)
+
+Опубликованный runtime `ce1d3b648b75b8c7d631ce6eaf5d20d94d66ec78`
+проверен в настоящем браузере после успешных CI38394725524 и Pages38394725921.
+GitHub signup/login → Supabase callback → Pages PKCE привёл к подключённому
+аккаунту. Облачное сохранение тестового комментария дало version 1; reload
+сохранил сессию. После другого локального изменения сравнение показало серверный
+вариант и сохранило локальный текст; явная замена восстановила облачный код.
+Исходный starter code затем восстановлен и сохранён в cloud как version 2.
+После logout UI показал гостя и отключил cloud save; повторный GitHub login прошёл,
+cloud load вернул точный starter без тестовых маркеров.
+
+Панель прогресса различает локальные 1 тему/1 черновик и серверные 136/136 тем
+для Python; 0/276 требований остаются ожидаемыми, потому что grading выключен.
+Desktop 1280×720 и mobile 390×844 осмотрены: горизонтального overflow нет,
+console warnings/errors 0, alerts 0. Переносимые результаты, deployment runs
+и имена скриншотов — в [отчёте](learning-lab/evidence/auth-progress/hosted-20261013.json).
+Граница текущего облака — черновики,
+предпочтение языка, помощь и собственный прогресс. Локальные самопроверки остаются
+на устройстве; production grader disabled.
+
+Серверная приёмка 10/10 hosted групп и браузерная приёмка завершены.
+Документальные доказательства включены в сопровождающий checkpoint; SHA его
+push сообщается в итоговом отчёте. Проверенный runtime — `ce1d3b6`.
+
+### Исторический checkpoint: серверная приёмка прошла, browser-проверки ожидали — 2026-10-13, 15:12 MSK (UTC+3)
+
+В `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, commit
+`ce1d3b648b75b8c7d631ce6eaf5d20d94d66ec78` отправлен обычным push под
+Git-lock; local/remote SHA совпали. GitHub CI `38394725524` завершил все четыре
+jobs успешно, Pages `38394725921` завершил build и deploy успешно
+(`work/practice-supabase-connect/ci-ce1d3b6.json`). Публичный `/rust_ml/#practice`
+действительно показывает только GitHub-вход. В реальном браузере пройдены GitHub
+authorize со scope `user:email` → Supabase callback → Pages PKCE; `?code` удалён
+из адреса, UI показал «Вы вошли» и подключённый аккаунт.
+
+Два одноразовых аккаунта, созданных для приёмки через Auth Admin API, прошли
+10/10 hosted групп (`hosted-auth-acceptance-result.json`): настоящие JWT проверены
+`/auth/v1/user`; own/foreign RLS и inner embeds, одновременный HTTP CAS с одним
+победителем и одним конфликтом, запрет прямой записи, idempotent help,
+408 изолированных строк прогресса на аккаунт и независимый выбор основного языка,
+отключённый grading, refresh и logout с отзывом refresh tokens. Оба тестовых
+аккаунта удалены; одноразовый зашифрованный credential file и временный public key
+после запуска отсутствуют. Это серверная проверка созданных через Admin API
+аккаунтов; публичная GitHub-регистрация отдельно подтверждена браузером.
+
+Третий этап остаётся в работе: проверить облачное save/load/reload/logout в UI,
+затем финальный mobile-осмотр. После него обновить документы по итоговым данным,
+создать отдельный документальный commit/push и сверить SHA. Серверный зачёт кода
+остаётся выключенным.
+
+### Исторический checkpoint: схема и GitHub Auth настроены — 2026-10-13, 15:03 MSK (UTC+3)
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, базовый HEAD
+`ab1f83f9180dac1694754dc7d8e52151ce908fba`; рабочее дерево содержит
+незафиксированные изменения workflow, GitHub UI и теста, а также посторонние
+untracked файлы. В старых разделах ниже описаны состояния на указанные даты;
+запрет browser и ожидание миграций более не являются текущими блокерами.
+
+13.10 тот же исходный чат успешно открыл Supabase dashboard поддержанным browser.
+Для проекта `phnjcmahugetofwvnbto` pristine preflight проверил отсутствие
+`practice_*`, конфликтующих ролей и использования `private`. Через pg 8.23.1 и
+Frankfurt session pooler с проверкой TLS по официальному CA применены целиком
+`202610120001_practice.sql` → `002_practice_rpc.sql` → `003_anchor_content.sql`.
+CLI migration ledger при прямом SQL-применении не появился. Файлы и SHA256:
+`work/practice-supabase-connect/hosted-migrations-20261013.json`.
+
+Независимый hosted catalog smoke (`hosted-schema-smoke-20261013.json`) проверил
+17 SQL-наборов: 14 relations, 16 functions, 20 seed checks PASS; 13 RLS-таблиц,
+12 policies, 6 triggers, без выявленных ACL-нарушений таблиц, столбцов и функций.
+Публичный anon HTTP (`public-api-result.json`) прочитал опубликованный каталог;
+попытки доступа к собственным данным/RPC без входа дали HTTP401, к `private`
+через Data API — HTTP406 `PGRST106`. Это не подтверждает пользовательский JWT/RLS.
+
+Auth Site URL и единственный точный redirect сохранены как
+`https://iliskhan.github.io/rust_ml/`. Создан GitHub OAuth app RustML Learning Lab
+`3928667`; secret сохранён только в настройках provider. GitHub provider включён:
+последующий `/auth/v1/settings` вернул `githubEnabled=true` (`public-api-github-settings-result.json`).
+Пользователь выбрал GitHub вход вместо email/SMTP. Repository variables
+`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` сохранены; workflow локально
+задаёт `VITE_PRACTICE_AUTH_PROVIDER=github`. Секреты в frontend/Git не записаны.
+
+Локальный suite с явно заданными bundled Python и stable Rust: 465/465 PASS,
+0 skipped (`work/practice-supabase-connect/test-suite-github-verified.log`);
+production build PASS после разрешённого чтения esbuild parent executable.
+Локальный production UI осмотрен в браузере при desktop 1280×720 и mobile
+390×844: одна кнопка GitHub, email fields отсутствуют, overflow не обнаружен.
+Эти проверки относятся к незакоммиченному срезу поверх `ab1f83f` и не доказывают
+работу опубликованного Pages. Остались реальный OAuth callback, две учётные записи,
+JWT/REST/RPC/RLS/CAS, refresh/logout, desktop/mobile в браузере, Pages deploy,
+commit/push и local/remote SHA match. Серверный зачёт кода по-прежнему выключен.
+
+### Исторический checkpoint: запрет чата сохранялся — 2026-10-13, 13:58 MSK (UTC+3)
 
 Новое прямое поручение — устранить запрет исходного чата и закончить подключение.
 Checkout общий, master `bf49ebfc13455ce0474a70591951154f8d105795` до этой записи;
