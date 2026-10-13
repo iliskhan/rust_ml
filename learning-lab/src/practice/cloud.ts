@@ -42,7 +42,7 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
   const storage = options.storage ?? globalThis.localStorage
   const storageKey = `rustml-auth:${url}`
   let session: CloudAuthSession | null = null
-  let refreshInFlight: Promise<void> | null = null
+  let refreshInFlight: { promise: Promise<CloudAuthSession>; waiters: number; settled: boolean } | null = null
   let authGeneration = 0
   const readSession = (): CloudAuthSession | null => {
     try {
@@ -75,78 +75,125 @@ export function createPracticeCloud(config: CloudConfig, options: { fetch?: type
   }
   async function request<T>(path: string, init: RequestInit = {}, authenticated = false, grader = false): Promise<T> {
     if (grader && !graderUrl) throw new PracticeCloudError('Серверная проверка пока недоступна.', 'grading_unavailable')
-    let owner: string | undefined
-    const generation = authGeneration
-    if (authenticated) {
-      const previousOwner = session?.user.id
-      session = readSession()
-      if (previousOwner && previousOwner !== session?.user.id) throw changedAccount()
-      if (!session) throw new PracticeCloudError('Сначала войдите в аккаунт.', 'unauthenticated', 401)
-      owner = session.user.id
-      if (session.expires_at < Date.now() / 1000 + 30) {
-        const refreshing = session
-        refreshInFlight ??= request<CloudAuthSession>('/auth/v1/token?grant_type=refresh_token', {
-          method: 'POST', body: JSON.stringify({ refresh_token: session.refresh_token })
-        }).then(value => {
-          const current = readSession()
-          if (generation !== authGeneration || current?.user.id !== refreshing.user.id || current.refresh_token !== refreshing.refresh_token) throw changedAccount()
-          if (value.user?.id !== refreshing.user.id) throw new PracticeCloudError('Сервер вернул другую сессию. Войдите снова.', 'invalid_session')
-          acceptSession(value)
-        }).catch(error => { if (error instanceof PracticeCloudError && error.code === 'unauthenticated' && generation === authGeneration && readSession()?.refresh_token === refreshing.refresh_token) persist(null); throw error }).finally(() => { refreshInFlight = null })
-        await refreshInFlight
-        if (generation !== authGeneration || readSession()?.user.id !== owner) throw changedAccount()
-      }
+    const controller = new AbortController()
+    let stop!: (reason: PracticeCloudError) => void
+    const stopped = new Promise<never>((_, reject) => { stop = reject })
+    const cancel = (reason: PracticeCloudError) => { controller.abort(reason); stop(reason) }
+    const abort = () => cancel(new PracticeCloudError('Запрос отменён. Код остаётся в редакторе.', 'request_aborted'))
+    if (init.signal?.aborted) throw new PracticeCloudError('Запрос отменён. Код остаётся в редакторе.', 'request_aborted')
+    init.signal?.addEventListener('abort', abort, { once: true })
+    const timeout = setTimeout(() => cancel(new PracticeCloudError(
+      'Сервер не ответил вовремя. Результат запроса неизвестен. Код остаётся в редакторе; проверьте облачное состояние перед повтором.', 'request_timeout'
+    )), 30_000)
+    // Race every asynchronous stage against the same deadline, even for injected
+    // fetch/body implementations that ignore AbortSignal. Check before side effects.
+    const wait = async <U>(work: Promise<U>): Promise<U> => {
+      const value = await Promise.race([work, stopped])
+      controller.signal.throwIfAborted()
+      return value
     }
-    const headers: Record<string, string> = { ...(grader ? {} : { apikey: publishableKey }), 'Content-Type': 'application/json' }
-    if (authenticated && session) headers.Authorization = `Bearer ${session.access_token}`
-    const requestToken = session?.access_token
-    let response: Response
-    try { response = await requestFetch(grader ? graderUrl! : `${url}${path}`, { ...init, ...(grader ? { redirect: 'error' as const } : {}), headers: { ...headers, ...init.headers } }) }
-    catch { throw new PracticeCloudError(path.startsWith('/auth/') ? 'Сеть недоступна. Повторите подключение позже.' : 'Сеть недоступна. Код остаётся в редакторе; скачайте файл.', 'network_error') }
-    if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
-    const body = await response.json().catch(() => null)
-    if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
-    if (!response.ok) {
-      if (grader) {
-        const messages: Record<string, string> = {
-          unauthenticated: 'Сессия истекла. Войдите снова.', auth_unavailable: 'Сервис входа временно недоступен.',
-          grading_unavailable: 'Серверная проверка пока недоступна.', grading_budget_exhausted: 'Лимит проверок сервиса исчерпан. Повторите позже.',
-          submission_limit: 'Лимит отправок достигнут. Дождитесь текущей проверки.', grading_capacity: 'Все исполнители заняты. Повторите позже.',
-          draft_conflict: 'Облачный черновик изменился. Откройте его перед отправкой.',
-          invalid_submission: 'Отправка не принята. Сохраните черновик и повторите.',
-          idempotency_key_reused_with_different_request: 'Параметры отправки изменились. Откройте задание заново.',
+    try {
+      let owner: string | undefined
+      const generation = authGeneration
+      if (authenticated) {
+        const previousOwner = session?.user.id
+        session = readSession()
+        if (previousOwner && previousOwner !== session?.user.id) throw changedAccount()
+        if (!session) throw new PracticeCloudError('Сначала войдите в аккаунт.', 'unauthenticated', 401)
+        owner = session.user.id
+        if (session.expires_at < Date.now() / 1000 + 30) {
+          const refreshing = session
+          if (!refreshInFlight) {
+            const pending = { promise: request<CloudAuthSession>('/auth/v1/token?grant_type=refresh_token', {
+              method: 'POST', body: JSON.stringify({ refresh_token: session.refresh_token })
+            }), waiters: 0, settled: false }
+            pending.promise = pending.promise.finally(() => {
+              pending.settled = true
+              if (!pending.waiters && refreshInFlight === pending) refreshInFlight = null
+            })
+            refreshInFlight = pending
+          }
+          const pending = refreshInFlight
+          pending.waiters++
+          try {
+            let value: CloudAuthSession
+            try { value = await wait(pending.promise); controller.signal.throwIfAborted() }
+            catch (error) {
+              controller.signal.throwIfAborted()
+              if (error instanceof PracticeCloudError && error.code === 'unauthenticated' && generation === authGeneration && readSession()?.refresh_token === refreshing.refresh_token) persist(null)
+              throw error
+            }
+            // Shared refresh only returns data. A cancelled waiter cannot persist it;
+            // another live waiter may accept the same refreshed tokens once.
+            const current = readSession()
+            if (generation !== authGeneration || current?.user.id !== refreshing.user.id) throw changedAccount()
+            if (value.user?.id !== refreshing.user.id) throw new PracticeCloudError('Сервер вернул другую сессию. Войдите снова.', 'invalid_session')
+            if (current.refresh_token === refreshing.refresh_token) acceptSession(value)
+            else if (current.refresh_token === value.refresh_token && current.access_token === value.access_token) session = current
+            else throw changedAccount()
+            if (generation !== authGeneration || readSession()?.user.id !== owner) throw changedAccount()
+          } finally {
+            pending.waiters--
+            // Keep the shared result until every live waiter has accepted it.
+            if (pending.settled && !pending.waiters && refreshInFlight === pending) refreshInFlight = null
+          }
         }
-        const code = typeof body?.code === 'string' && messages[body.code] ? body.code : response.status === 401 ? 'unauthenticated' : 'grading_error'
-        throw new PracticeCloudError(messages[code] ?? 'Сервер не подтвердил проверку. Сохранённая отправка доступна для повтора.', code, response.status)
       }
-      // Only map known server codes. Raw SQL/Auth bodies can contain sensitive context.
-      const hint = typeof body?.message === 'string' ? body.message : ''
-      const authCode = path.startsWith('/auth/') ? body?.code ?? body?.error_code : undefined
-      const authMessages: Record<string, string> = {
-        invalid_credentials: 'Неверный email или пароль.',
-        email_not_confirmed: 'Подтвердите email по ссылке в письме, затем войдите снова.',
-        weak_password: 'Пароль не соответствует требованиям проекта. Выберите более длинный и надёжный пароль.',
-        signup_disabled: 'Регистрация в этом проекте пока отключена.',
-        email_provider_disabled: 'Вход по email в этом проекте пока отключён.',
-        over_email_send_rate_limit: 'Лимит писем достигнут. Повторите позже.',
-        over_request_rate_limit: 'Слишком много запросов. Повторите позже.',
-        otp_expired: 'Ссылка или код подтверждения истекли. Запросите новое письмо.',
-        flow_state_not_found: 'Ссылка входа недействительна. Начните вход заново.',
-        flow_state_expired: 'Ссылка входа истекла. Начните вход заново.',
+      const headers: Record<string, string> = { ...(grader ? {} : { apikey: publishableKey }), 'Content-Type': 'application/json' }
+      if (authenticated && session) headers.Authorization = `Bearer ${session.access_token}`
+      const requestToken = session?.access_token
+      let response: Response
+      try { response = await wait(requestFetch(grader ? graderUrl! : `${url}${path}`, { ...init, signal: controller.signal, ...(grader ? { redirect: 'error' as const } : {}), headers: { ...headers, ...init.headers } })); controller.signal.throwIfAborted() }
+      catch { controller.signal.throwIfAborted(); throw new PracticeCloudError(path.startsWith('/auth/') ? 'Сеть недоступна. Повторите подключение позже.' : 'Сеть недоступна. Код остаётся в редакторе; скачайте файл.', 'network_error') }
+      if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
+      const body = await wait(response.json().catch(() => null))
+      controller.signal.throwIfAborted()
+      if (authenticated && (generation !== authGeneration || readSession()?.user.id !== owner)) throw changedAccount()
+      if (!response.ok) {
+        if (grader) {
+          const messages: Record<string, string> = {
+            unauthenticated: 'Сессия истекла. Войдите снова.', auth_unavailable: 'Сервис входа временно недоступен.',
+            grading_unavailable: 'Серверная проверка пока недоступна.', grading_budget_exhausted: 'Лимит проверок сервиса исчерпан. Повторите позже.',
+            submission_limit: 'Лимит отправок достигнут. Дождитесь текущей проверки.', grading_capacity: 'Все исполнители заняты. Повторите позже.',
+            draft_conflict: 'Облачный черновик изменился. Откройте его перед отправкой.',
+            invalid_submission: 'Отправка не принята. Сохраните черновик и повторите.',
+            idempotency_key_reused_with_different_request: 'Параметры отправки изменились. Откройте задание заново.',
+          }
+          const code = typeof body?.code === 'string' && messages[body.code] ? body.code : response.status === 401 ? 'unauthenticated' : 'grading_error'
+          throw new PracticeCloudError(messages[code] ?? 'Сервер не подтвердил проверку. Сохранённая отправка доступна для повтора.', code, response.status)
+        }
+        // Only map known server codes. Raw SQL/Auth bodies can contain sensitive context.
+        const hint = typeof body?.message === 'string' ? body.message : ''
+        const authCode = path.startsWith('/auth/') ? body?.code ?? body?.error_code : undefined
+        const authMessages: Record<string, string> = {
+          invalid_credentials: 'Неверный email или пароль.',
+          email_not_confirmed: 'Подтвердите email по ссылке в письме, затем войдите снова.',
+          weak_password: 'Пароль не соответствует требованиям проекта. Выберите более длинный и надёжный пароль.',
+          signup_disabled: 'Регистрация в этом проекте пока отключена.',
+          email_provider_disabled: 'Вход по email в этом проекте пока отключён.',
+          over_email_send_rate_limit: 'Лимит писем достигнут. Повторите позже.',
+          over_request_rate_limit: 'Слишком много запросов. Повторите позже.',
+          otp_expired: 'Ссылка или код подтверждения истекли. Запросите новое письмо.',
+          flow_state_not_found: 'Ссылка входа недействительна. Начните вход заново.',
+          flow_state_expired: 'Ссылка входа истекла. Начните вход заново.',
+        }
+        if (typeof authCode === 'string' && authMessages[authCode]) throw new PracticeCloudError(authMessages[authCode], authCode, response.status)
+        const expired = response.status < 500 && response.status !== 429 && (response.status === 401 || ['refresh_token_not_found', 'refresh_token_already_used', 'session_not_found', 'session_expired', 'bad_jwt'].includes(authCode))
+        if (expired && path === '/auth/v1/user' && generation === authGeneration && readSession()?.access_token === requestToken) persist(null)
+        if (expired && path.startsWith('/auth/')) throw new PracticeCloudError('Сессия истекла. Войдите снова.', 'unauthenticated', response.status)
+        if (hint.includes('learning_rate_limit')) throw new PracticeCloudError('Слишком много новых записей. Синхронизация повторится через минуту.', 'learning_rate_limit', 429)
+        if (hint.includes('learning_storage_limit')) throw new PracticeCloudError('Достигнут лимит истории аккаунта. Новые записи остаются на устройстве; обратитесь к владельцу учебника.', 'learning_storage_limit', 409)
+        const code = hint.includes('draft_conflict') ? 'draft_conflict' : hint.includes('grading_unavailable') ? 'grading_unavailable' : response.status === 401 ? 'unauthenticated' : 'cloud_error'
+        const message = code === 'draft_conflict' ? 'Облачный черновик уже изменился. Загрузите его перед сохранением.' :
+          code === 'grading_unavailable' ? 'Серверная проверка пока недоступна.' : code === 'unauthenticated' ? 'Сессия истекла. Войдите снова.' :
+          response.status === 429 ? 'Слишком много запросов. Повторите позже.' : 'Облачный запрос не выполнен. Проверьте настройки Supabase и повторите.'
+        throw new PracticeCloudError(message, code, code === 'draft_conflict' ? 409 : response.status)
       }
-      if (typeof authCode === 'string' && authMessages[authCode]) throw new PracticeCloudError(authMessages[authCode], authCode, response.status)
-      const expired = response.status < 500 && response.status !== 429 && (response.status === 401 || ['refresh_token_not_found', 'refresh_token_already_used', 'session_not_found', 'session_expired', 'bad_jwt'].includes(authCode))
-      if (expired && path === '/auth/v1/user' && generation === authGeneration && readSession()?.access_token === requestToken) persist(null)
-      if (expired && path.startsWith('/auth/')) throw new PracticeCloudError('Сессия истекла. Войдите снова.', 'unauthenticated', response.status)
-      if (hint.includes('learning_rate_limit')) throw new PracticeCloudError('Слишком много новых записей. Синхронизация повторится через минуту.', 'learning_rate_limit', 429)
-      if (hint.includes('learning_storage_limit')) throw new PracticeCloudError('Достигнут лимит истории аккаунта. Новые записи остаются на устройстве; обратитесь к владельцу учебника.', 'learning_storage_limit', 409)
-      const code = hint.includes('draft_conflict') ? 'draft_conflict' : hint.includes('grading_unavailable') ? 'grading_unavailable' : response.status === 401 ? 'unauthenticated' : 'cloud_error'
-      const message = code === 'draft_conflict' ? 'Облачный черновик уже изменился. Загрузите его перед сохранением.' :
-        code === 'grading_unavailable' ? 'Серверная проверка пока недоступна.' : code === 'unauthenticated' ? 'Сессия истекла. Войдите снова.' :
-        response.status === 429 ? 'Слишком много запросов. Повторите позже.' : 'Облачный запрос не выполнен. Проверьте настройки Supabase и повторите.'
-      throw new PracticeCloudError(message, code, code === 'draft_conflict' ? 409 : response.status)
+      return body as T
+    } finally {
+      clearTimeout(timeout)
+      init.signal?.removeEventListener('abort', abort)
     }
-    return body as T
   }
   const redirectUrl = (redirectTo: string) => {
     const redirect = new URL(redirectTo)
