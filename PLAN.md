@@ -67,9 +67,10 @@ Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, исходная ветка `c
    сообщения владельца о добавлении разрешающего правила. Обход не выполняется.
 4. Проверить затронутые механизмы и весь учебник — готово:464/464 без пропусков,
    typecheck/build, настоящий desktop1280/mobile390/320 и keyboard/persistence.
-5. Сохранить checkpoint, commit, обычный push и публикацию Pages — интеграция
-   `46235ac` pushed, local/remote match. CI38381096306 и Pages38381096383 SUCCESS;
-   публичный desktop/mobile проверен. Сохраняется итоговая запись доказательств.
+5. Сохранить checkpoint, commit, обычный push и публикацию Pages — готово:
+   код `46235ac` и checkpoint `5c15a93` pushed, local/remote match;
+   CI38382326428 и Pages38382326404 SUCCESS. Публичный desktop/mobile проверен,
+   runtime source hashes совпадают с прошедшим срезом.
 
 Полный inventory реализован: 83 units и 51 mathematical concepts; общий suite
 422/422 PASS. Полный SQL seed:12403 assertions PASS; production/UI/typecheck/build проверены.

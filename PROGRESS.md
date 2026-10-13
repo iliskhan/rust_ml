@@ -2,6 +2,11 @@
 
 ### Интеграция опубликована; hosted Supabase остаётся заблокирован — 2026-10-13
 
+Итоговый checkpoint `5c15a9348254da65da1e6d0858c5f3a85c9dae6f` committed/pushed;
+local/remote master SHA совпали под Git-lock. Его CI38382326428 и Pages38382326404
+SUCCESS, включая Windows job. Последующее завершение записи меняет только PLAN/PROGRESS;
+runtime hashes прежние, проверки ниже сохраняют применимость.
+
 Общая интеграция committed/pushed в `46235ac4feaa9f6262186088e9add60064cc8e28`;
 под FileShare.None Git-lock подтверждён local=remote master. Source hash snapshot
 после commit совпал для всех38 файлов. CI38381096306 SUCCESS, Pages38381096383
