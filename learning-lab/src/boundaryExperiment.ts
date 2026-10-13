@@ -194,6 +194,38 @@ export function readBoundaryStorage(storage: Pick<Storage, 'getItem'>): Boundary
   return text === null ? null : decodeBoundaryWorkspace(text);
 }
 
+type BoundaryLock = <T>(name: string, action: () => T) => Promise<T>;
+async function boundaryLock<T>(name: string, action: () => T): Promise<T> {
+  if (typeof navigator === 'undefined' || !navigator.locks) throw new Error('Браузер не поддерживает безопасное сохранение между вкладками. Экспортируйте JSON.');
+  return navigator.locks.request(name, action);
+}
+
+/** A stale tab must keep its work in memory instead of replacing another tab's workspace. */
+export class BoundaryStorageWriter {
+  private storage: Pick<Storage, 'getItem' | 'setItem'>;
+  private expected: string | null;
+  private lock: BoundaryLock;
+  constructor(storage: Pick<Storage, 'getItem' | 'setItem'>, expected: string | null, lock: BoundaryLock = boundaryLock) { this.storage = storage; this.expected = expected; this.lock = lock; }
+  save(current: SavedBoundaryRun, slots: BoundarySlots, isCurrent = () => true): Promise<boolean> {
+    return this.lock(boundaryStorageKey, () => {
+      if (!isCurrent()) return false;
+      if (this.storage.getItem(boundaryStorageKey) !== this.expected) throw new Error('В другой вкладке сохранён новый опыт или A/B. Экспортируйте текущий JSON и перезагрузите страницу для чтения новой копии.');
+      const text = encodeBoundaryWorkspace(current, slots);
+      decodeBoundaryWorkspace(text);
+      this.storage.setItem(boundaryStorageKey, text);
+      this.expected = text;
+      return true;
+    });
+  }
+}
+
+export async function readBoundaryImport(file: Pick<File, 'size' | 'text'>, isCurrent: () => boolean): Promise<BoundaryWorkspace> {
+  if (file.size > boundaryFileLimit) throw new Error('Файл слишком большой: максимум 2 МиБ.');
+  const text = await file.text();
+  if (!isCurrent()) throw new Error('Опыт изменился во время чтения файла. Повторите импорт, если хотите заменить новые изменения.');
+  return decodeBoundaryWorkspace(text);
+}
+
 export function writeBoundaryStorage(storage: Pick<Storage, 'setItem'>, current: SavedBoundaryRun, slots: BoundarySlots): void {
   const text = encodeBoundaryWorkspace(current, slots);
   // Validate all slots before writing; invalid input must not replace a previous local record.

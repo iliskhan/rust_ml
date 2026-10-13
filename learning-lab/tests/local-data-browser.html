@@ -1,0 +1,39 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Boundary local data regression harness</title>
+<style>body{margin:0;font:16px system-ui}nav{padding:8px;display:flex;gap:8px;flex-wrap:wrap}iframe{width:100%;height:1400px;border:0}button{padding:8px}</style>
+<nav>
+  <button id="show-a">Показать A</button>
+  <button id="show-b">Показать B</button>
+  <button id="import">Начать отложенный импорт в B</button>
+  <button id="resolve">Завершить чтение файла</button>
+  <button id="inspect">Проверить сохранённые A/B</button>
+  <span id="status" role="status">Два reader одного origin</span>
+</nav>
+<iframe id="a" title="Reader A" src="/#network"></iframe>
+<iframe id="b" title="Reader B" src="/#network" hidden></iframe>
+<script type="module">
+  const a = document.getElementById('a'), b = document.getElementById('b'), status = document.getElementById('status');
+  document.getElementById('show-a').onclick = () => { a.hidden = false; b.hidden = true; };
+  document.getElementById('show-b').onclick = () => { a.hidden = true; b.hidden = false; };
+  document.getElementById('inspect').onclick = () => {
+    status.textContent = [a, b].map(frame => {
+      const record = JSON.parse(frame.contentWindow.localStorage.getItem('rustml-boundary-v1'));
+      return `${frame.id}: τ=${record.current.threshold}, A=${record.slots.A?.optimizer.step ?? 'null'}, B=${record.slots.B?.optimizer.step ?? 'null'}`;
+    }).join(' / ');
+  };
+  let finish;
+  document.getElementById('import').onclick = () => {
+    const win = b.contentWindow, original = win.File.prototype.text;
+    const record = JSON.parse(win.localStorage.getItem('rustml-boundary-v1'));
+    record.current.threshold = .9;
+    win.File.prototype.text = () => new Promise(resolve => { finish = () => { win.File.prototype.text = original; resolve(JSON.stringify(record)); }; });
+    const transfer = new win.DataTransfer();
+    transfer.items.add(new win.File(['delayed'], 'boundary.json', { type: 'application/json' }));
+    const input = win.document.querySelector('.boundary-import-input');
+    input.files = transfer.files;
+    input.dispatchEvent(new win.Event('change', { bubbles: true }));
+    status.textContent = 'Чтение ожидает завершения; сделайте новое действие в B';
+  };
+  document.getElementById('resolve').onclick = () => { finish(); status.textContent = 'Чтение завершено'; };
+</script>

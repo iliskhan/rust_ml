@@ -5,6 +5,7 @@ import { practiceRelease, practiceTopics, type PracticeExercise, type PracticeLa
 import { browserPracticeStore, primaryLanguageKey, PracticeStorageError, type LocalPracticeStore, type LocalPracticeRecord, type PracticeScope } from './local-progress'
 import './practice.css'
 import type { GradeCode } from './grading'
+import { languagePreferenceKey } from './progress-sync'
 
 const languageLabels: Record<PracticeLanguage, string> = { python: 'Python', javascript: 'JavaScript', rust: 'Rust' }
 const extensions: Record<PracticeLanguage, string> = { python: 'py', javascript: 'js', rust: 'rs' }
@@ -39,7 +40,7 @@ export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initia
       try { setPrimary(store.getPrimaryLanguage(practiceRelease, ownerId)) }
       catch (error) { setNotice(errorMessage(error)) }
     }
-    const syncStorage = (event: StorageEvent) => { if (event.key === null || event.key === primaryLanguageKey(practiceRelease, ownerId)) syncPrimary() }
+    const syncStorage = (event: StorageEvent) => { if (event.key === null || event.key === primaryLanguageKey(practiceRelease, ownerId) || (ownerId && event.key === languagePreferenceKey(practiceRelease, ownerId))) syncPrimary() }
     window.addEventListener('rustml-practice-language', syncPrimary)
     window.addEventListener('rustml-practice-change', syncPrimary)
     window.addEventListener('storage', syncStorage)

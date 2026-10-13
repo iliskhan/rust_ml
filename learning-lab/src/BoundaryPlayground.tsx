@@ -1,6 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { boundaryBatchIndices, boundaryBatchProgress, boundaryL2, boundaryMetrics, boundaryParameterCount, predictBoundary, type BoundaryConfig, type BoundaryKind } from './boundaryNetworkMath';
-import { advanceBoundaryExperiment as advance, boundaryFileLimit, boundaryStepLimit as stepLimit, boundaryStepsToEpoch, boundaryTrainingSettings, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryStorage, restoreBoundaryRun, saveBoundaryRun, writeBoundaryStorage, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
+import { advanceBoundaryExperiment as advance, BoundaryStorageWriter, boundaryStorageKey, boundaryStepLimit as stepLimit, boundaryStepsToEpoch, boundaryTrainingSettings, createBoundaryExperiment as createExperiment, decodeBoundaryWorkspace, encodeBoundaryWorkspace, initialBoundarySettings as initialSettings, readBoundaryImport, restoreBoundaryRun, saveBoundaryRun, type BoundarySettings as Settings, type BoundarySlots, type SavedBoundaryRun } from './boundaryExperiment';
 import { BoundaryComparison } from './BoundaryComparison';
 import { BoundaryDiagnostics } from './BoundaryDiagnostics';
 import { probabilityGrid } from './decisionBoundaryMath';
@@ -19,8 +19,11 @@ const regionColors = ['#e0ecf4', '#c6dfd0'];
 const boundaryColor = '#8c411d', probeColor = '#694799';
 
 function readInitialWorkspace() {
-  try { return { saved: readBoundaryStorage(window.localStorage), error: null }; }
-  catch (error) { return { saved: null, error: error instanceof Error ? error.message : 'Хранилище браузера недоступно.' }; }
+  try {
+    const raw = window.localStorage.getItem(boundaryStorageKey);
+    return { saved: raw === null ? null : decodeBoundaryWorkspace(raw), raw, error: null };
+  }
+  catch (error) { return { saved: null, raw: null, error: error instanceof Error ? error.message : 'Хранилище браузера недоступно.' }; }
 }
 
 export function BoundaryPlayground() {
@@ -30,6 +33,12 @@ export function BoundaryPlayground() {
   const [threshold, setThreshold] = useState(initial.saved?.current.threshold ?? .5);
   const [probe, setProbe] = useState<[number, number]>(initial.saved?.current.probe ?? [.5, .5]);
   const [slots, setSlots] = useState<BoundarySlots>(initial.saved?.slots ?? { A: null, B: null });
+  const [storageWriter] = useState(() => new BoundaryStorageWriter({ getItem: key => window.localStorage.getItem(key), setItem: (key, value) => window.localStorage.setItem(key, value) }, initial.raw));
+  const workspaceVersion = useRef(0);
+  useLayoutEffect(() => {
+    workspaceVersion.current++;
+    return () => { workspaceVersion.current++; };
+  }, [experiment, threshold, probe, slots]);
   const [saveEnabled, setSaveEnabled] = useState(!initial.error);
   const [saveAttempt, setSaveAttempt] = useState(0);
   const [storageError, setStorageError] = useState(initial.error);
@@ -55,16 +64,19 @@ export function BoundaryPlayground() {
 
   useEffect(() => {
     if (!saveEnabled) return;
-    try {
-      writeBoundaryStorage(window.localStorage, saveBoundaryRun(experiment, threshold, probe), slots);
+    let cancelled = false;
+    void storageWriter.save(saveBoundaryRun(experiment, threshold, probe), slots, () => !cancelled).then(saved => {
+      if (!saved || cancelled) return;
       setStorageError(null);
       setStorageStatus('Текущий опыт и A/B сохранены в этом браузере. После перезагрузки обучение будет на паузе.');
-    } catch (error) {
+    }).catch(error => {
+      if (cancelled) return;
       setStorageError(error instanceof Error ? error.message : 'Хранилище браузера недоступно.');
       setStorageStatus('Текущие изменения не сохранены локально. Экспорт JSON доступен.');
       setSaveEnabled(false);
-    }
-  }, [experiment, threshold, probe, slots, saveEnabled, saveAttempt]);
+    });
+    return () => { cancelled = true; };
+  }, [experiment, threshold, probe, slots, saveEnabled, saveAttempt, storageWriter]);
 
   useEffect(() => {
     if (!active) setExperiment(current => current.auto || current.remaining ? { ...current, auto: false, remaining: 0 } : current);
@@ -119,11 +131,11 @@ export function BoundaryPlayground() {
     }
   }
   async function importFile(file: File) {
+    const version = workspaceVersion.current;
     setImporting(true);
     setFileError(null);
     try {
-      if (file.size > boundaryFileLimit) throw new Error('Файл слишком большой: максимум 2 МиБ.');
-      const imported = decodeBoundaryWorkspace(await file.text());
+      const imported = await readBoundaryImport(file, () => workspaceVersion.current === version);
       loadRun(imported.current, 'Файл импортирован');
       setSlots(imported.slots);
       setSaveEnabled(true);

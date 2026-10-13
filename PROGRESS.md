@@ -1,5 +1,22 @@
 # Прогресс RustML
 
+### Интеграция проверена, публикация в работе — 2026-10-13, 21:08 MSK
+
+Объединены loading `5cf8c2d`, practice UX `6bdb5ee`, Rust `f7440b1`, cloud
+`6a8a791`; local-data `5cd4e5b` прошёл в общем снимке, сверяется перед merge.
+Родительский checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master.
+Полные команды, доказательства и дальнейшие приоритеты: `docs/improvements/integrated-review.md`.
+
+Node24.19/direct Python/rustc1.87: **561/561 frontend PASS**, 0 skipped; production
+build/typecheck PASS. Rust debug/release: **69 tests +7 doctests** в каждом режиме;
+fmt, strict Clippy/rustdoc и пять запущенных examples PASS. Linear за100 шагов:
+loss9→4.150e-20, w2, b0.9999999998. Начальный JS402831 B /124834 B gzip.
+Reviewer нашёл две refresh-гонки; исправлены и независимо перепроверены в80 порядках.
+Root исправил listener нового receipt языка, проверил в двух настоящих вкладках
+без сети: изменение primary вA обновляетB, console0. Desktop, mobile390/320,
+поиск/Enter, Continue, разделение языковых drafts/reload PASS. Viewport восстановлен.
+Текущая публикация/CI/hosted smoke ещё не объявлены готовыми; следующий шаг — push.
+
 ### Пять отдельных worktree для комплексного улучшения — 2026-10-13
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база `1e3ba80`.

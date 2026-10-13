@@ -15,7 +15,7 @@ const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v ===
 const date = (v: unknown): v is string => typeof v === 'string' && Number.isFinite(Date.parse(v))
 const integer = (v: unknown): v is number => typeof v === 'number' && Number.isSafeInteger(v) && v >= 0
 const instant = (value: string) => new Date(value).toISOString()
-const languageKey = (release: string, owner: string) => `rustml-practice:learning-language:v1:${JSON.stringify([release, owner])}`
+export const languagePreferenceKey = (release: string, owner: string) => `rustml-practice:learning-language:v1:${JSON.stringify([release, owner])}`
 
 function validEvent(v: unknown): v is LearningEvent {
   if (!object(v) || typeof v.event_id !== 'string' || !uuid.test(v.event_id) || !languages.includes(v.language as PracticeLanguage)
@@ -115,7 +115,7 @@ function learningEventFields({ event_id, exercise_key, language, kind, occurred_
 }
 
 export function readLanguagePreference(storage: StorageLike, release: string, owner: string): LearningEvent | null {
-  const raw = storage.getItem(languageKey(release, owner))
+  const raw = storage.getItem(languagePreferenceKey(release, owner))
   if (raw === null) return null
   const event: unknown = JSON.parse(raw)
   if (!validEvent(event) || event.kind !== 'language') throw new Error('Настройка синхронизации языка повреждена.')
@@ -123,7 +123,7 @@ export function readLanguagePreference(storage: StorageLike, release: string, ow
 }
 export function rememberLanguagePreference(storage: StorageLike, release: string, owner: string, event: LearningEvent): void {
   if (!owner || !validEvent(event) || event.kind !== 'language') throw new Error('Некорректная настройка языка.')
-  storage.setItem(languageKey(release, owner), JSON.stringify(learningEventFields(event)))
+  storage.setItem(languagePreferenceKey(release, owner), JSON.stringify(learningEventFields(event)))
 }
 export function recordLanguagePreference(storage: StorageLike, release: string, owner: string, language: PracticeLanguage, at = new Date().toISOString()): LearningEvent {
   const event: LearningEvent = { event_id: crypto.randomUUID(), exercise_key: null, language, kind: 'language', occurred_at: at, payload: {} }

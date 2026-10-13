@@ -74,6 +74,8 @@ jobs:
         run: cargo run -p rustml-autograd --example milestone_check --locked
       - name: Run scalar example
         run: cargo run -p rustml-autograd --example scalar_demo --locked
+      - name: Train linear regression
+        run: cargo run -p rustml-nn --example linear_regression --locked
 
   stable:
     name: Current stable compatibility

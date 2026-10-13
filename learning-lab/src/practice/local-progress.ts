@@ -108,7 +108,6 @@ export class LocalPracticeStore {
       const local = readLanguagePreference(this.storage, releaseId, ownerId)
       const newest = newestLanguagePreference([...events, ...(local ? [local] : [])])
       if (!newest) return null
-      this.storage.setItem(primaryLanguageKey(releaseId, ownerId), newest.language)
       rememberLanguagePreference(this.storage, releaseId, ownerId, newest)
       notifyPracticeChange('cloud')
       return newest.language
@@ -117,6 +116,9 @@ export class LocalPracticeStore {
 
   getPrimaryLanguage(releaseId: string, ownerId?: string): PracticeLanguage {
     try {
+      // Account preferences have one atomic source; the old key remains a read-only fallback.
+      const preference = ownerId && readLanguagePreference(this.storage, releaseId, ownerId)
+      if (preference) return preference.language
       const raw = this.storage.getItem(primaryLanguageKey(releaseId, ownerId))
       if (raw === null) return 'python'
       if (languages.includes(raw as PracticeLanguage)) return raw as PracticeLanguage
@@ -130,9 +132,11 @@ export class LocalPracticeStore {
   async setPrimaryLanguage(releaseId: string, language: PracticeLanguage, ownerId?: string): Promise<void> {
     if (!languages.includes(language)) throw new Error('Неизвестный язык')
     await this.lock(primaryLanguageKey(releaseId, ownerId), () => {
-      try { this.storage.setItem(primaryLanguageKey(releaseId, ownerId), language) }
+      try {
+        if (ownerId) recordLanguagePreference(this.storage, releaseId, ownerId, language, this.now())
+        else this.storage.setItem(primaryLanguageKey(releaseId), language)
+      }
       catch { throw new PracticeStorageError('unavailable', 'Основной язык не сохранён: хранилище недоступно или заполнено.') }
-      if (ownerId) recordLanguagePreference(this.storage, releaseId, ownerId, language, this.now())
       notifyPracticeChange()
     })
   }
