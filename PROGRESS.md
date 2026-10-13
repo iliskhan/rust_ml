@@ -1,5 +1,44 @@
 # Прогресс RustML
 
+### SQL006 применена; проект Vercel создан — 2026-10-13, 18:58 MSK
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, база `e47f639`, `master`.
+Пользователь разрешил пропустить предложение отдельной Vercel 2FA; `Skip
+securing my account` выполнено, предложение исчезло. Создан отдельный проект
+`rustml-grader` команды `iliskhans-projects`, Hobby. Карта и платные ресурсы
+не подключались. Dashboard Usage показывает Sandbox creations 0/5000,
+CPU 0s/5h, memory 0/420 GB-hours, snapshots 0/15 GB за выбранные Last 30 Days;
+это ещё не доказательство lifetime остатка snapshots или реального запуска VM.
+
+Vercel CLI63.1.2 / Node24.19 запущен через штатный device login. Встроенный
+браузер показывает `Allow Access` disabled, без пояснения; reload и показ формы
+не помогли, console warnings/errors отсутствуют. Причина не установлена.
+Пользователю отправлена просьба завершить вход обычным браузером; CLI завершился
+exit1 без выдачи credentials, старый device code не считать действующим.
+Нужно начать новый login, когда пользователь сможет подтвердить его. Повторное
+согласие на пропуск 2FA и отключение обучения не требуется.
+
+Supabase preflight: 1236 published variants, pending jobs 0, attempts 0, SQL006
+absent. SQL006 `daac23c832ecca6192906b2c03b9cbd99b87a49ef3e28a6ef44c0afeb2a6e5c5`
+применена ровно один раз; повторно **не выполнять**, как и SQL001–005.
+Admission OFF, billing window NULL, reservations 0; manifests/runtime pins и
+dedicated logins пока не созданы. Первая postcheck ошибочно ожидала отсутствие
+всех административных прав service_role на learning_events. Read-only diagnostic
+подтвердил только прежние REFERENCES/TRIGGER/TRUNCATE на этой таблице (SQL004);
+права не менялись. Исправленная проверка: 20 private-table assertions,
+60 public-write assertions, 85 function assertions PASS, без dedicated logins.
+
+Cleanup provider теперь всегда сохраняет snapshots, включая unknown-create
+recovery и повтор cleanup; cases persistent:false. 17/17 targeted provider
+tests PASS на Node24.19, 0 skipped; это SDK mocks, не hosted isolation.
+Подготовлены ignored deployment helpers и checkpoints:
+`work/practice-grader/runtime-prep/`, `work/practice-grader/db-deploy/`.
+Официальный SHA256 Rust1.90.0 скачан; local-check построил adapters трёх языков.
+Hosted runtime receipt отсутствует, allowlist пуст; frontend grader выключен.
+Следующий шаг: Vercel CLI login → link rustml-grader → проверить бесплатную VM
+и lifetime storage → trusted snapshot/hosted acceptance → minimal DB logins/env,
+immutable publication, включение после тестов. Общая задача не завершена.
+
 ### Подготовка grader сохранена; frontend опубликован — 2026-10-13, 18:10 MSK
 
 Runtime `4cb5a08a8c3454d27b03c449f56145371ecc979c` отправлен обычным push

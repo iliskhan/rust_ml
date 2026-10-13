@@ -56,7 +56,8 @@ export function createVercelProvider({ createSandbox = options => Sandbox.create
     const pending=(async()=>{
       let stopped=false, deleted=false
       try { await sandbox.stop({signal:AbortSignal.timeout(CLEANUP_MS)}); stopped=true } catch {}
-      try { await sandbox.delete({deleteOrphanSnapshots:true,signal:AbortSignal.timeout(CLEANUP_MS)}); deleted=true } catch {}
+      // Cases are nonpersistent; preserve reusable trusted source snapshots.
+      try { await sandbox.delete({deleteOrphanSnapshots:false,signal:AbortSignal.timeout(CLEANUP_MS)}); deleted=true } catch {}
       if(!stopped || !deleted)removals.delete(sandbox)
       return stopped && deleted
     })()

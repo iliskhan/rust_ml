@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-10-13T15:56:38.737Z",
+  "project": "phnjcmahugetofwvnbto",
+  "mode": "privileges",
+  "checks": [
+    {
+      "check": "Schema preflight; migration ledger intentionally unused",
+      "result": "PASS",
+      "sql006": "present",
+      "counts": {
+        "variants": 1236,
+        "pending_jobs": 0,
+        "attempts": 0
+      }
+    },
+    {
+      "check": "Admission disabled",
+      "result": "PASS",
+      "settings": {
+        "enabled": false,
+        "billing_period_start": null,
+        "billing_period_end": null,
+        "reserved_cpu_ms": "0",
+        "reserved_creations": 0
+      }
+    },
+    {
+      "check": "Existing SQL004 administrative learning-event privileges",
+      "result": "PASS",
+      "roles": [
+        {
+          "rolname": "service_role",
+          "relname": "practice_learning_events",
+          "allowed": false
+        }
+      ]
+    },
+    {
+      "check": "Effective table/function grants and login role memberships",
+      "result": "PASS",
+      "privateTableAssertions": 20,
+      "writeAssertions": 60,
+      "functionAssertions": 85,
+      "includesLogins": false
+    }
+  ],
+  "result": "PASS",
+  "migrationSha256": "daac23c832ecca6192906b2c03b9cbd99b87a49ef3e28a6ef44c0afeb2a6e5c5",
+  "limitations": [
+    "Grouped roles checked; dedicated server logins not created.",
+    "Admission disabled; no runtime manifests, Sandbox or hosted grading acceptance yet.",
+    "Earlier postcheck assumption corrected after read-only diagnostic; existing service_role REFERENCES/TRIGGER/TRUNCATE on learning_events unchanged."
+  ]
+}

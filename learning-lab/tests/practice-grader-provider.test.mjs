@@ -10,7 +10,7 @@ const scope={attemptId:'10000000-0000-4000-8000-000000000001',jobId:'20000000-00
 const execution=buildExecution('function solve(x){return x}',{language:'javascript',protocol:1,adapter:'rustml-public-values-v1',entrypoint:'solve'},{id:'case1',input:{x:2}})
 const raw='{"protocol":1,"case_id":"case1","value":2}'
 function fixture(options={}) {
-  const state={creates:[],commands:[],stops:0,deletes:0,reads:0,writes:[],stats:0,failCleanup:false}
+  const state={creates:[],commands:[],stops:0,deletes:0,deleteOptions:[],reads:0,writes:[],stats:0,failCleanup:false}
   const user={async mkDir(path){assert.equal(path,'/home/rustml/work')},async writeFiles(files){state.writes=files},async runCommand(command){
     state.commands.push(command)
     const index=state.commands.length-1
@@ -27,7 +27,7 @@ function fixture(options={}) {
     asUser(name){assert.equal(name,'root');return {async runCommand(command,args){assert.ok(['/usr/bin/pkill','/usr/bin/pgrep','/usr/bin/chmod'].includes(command));return {exitCode:command==='/usr/bin/pgrep'?1:0}}}},
     fs:{async lstat(path){state.stats++;if(options.missing){const error=Error('missing');error.code='ENOENT';throw error}return {isDirectory:()=>!options.directorySymlink,isFile:()=>!options.notRegular,isSymbolicLink:()=>path.endsWith('/work')?!!options.directorySymlink:!!options.symlink,nlink:options.hardlink?2:1,size:options.size??Buffer.byteLength(raw)}}},
     readFile,
-    async stop(){state.stops++;if(state.failCleanup)throw Error('stop failed')},async delete(){state.deletes++;if(state.failCleanup)throw Error('delete failed')},
+    async stop(){state.stops++;if(state.failCleanup)throw Error('stop failed')},async delete(params){state.deletes++;state.deleteOptions.push(params);if(state.failCleanup)throw Error('delete failed')},
   }
   const provider=createVercelProvider({createSandbox:async params=>{state.creates.push(params);if(options.createDelay)await new Promise(resolve=>setTimeout(resolve,10));if(options.createError)throw Error('secret provision error');return sandbox},getSandbox:async()=>{if(options.recoverCreate)return sandbox;throw Error('not found')}})
   const run=(changes={})=>provider.executeCase({execution,runtime,scope,deadline:Date.now()+45000,...changes})
@@ -131,4 +131,19 @@ test('trusted prepared snapshot is mutually exclusive with image and verified ag
   const mismatch=fixture({snapshotId:'snp_wrong'})
   assert.deepEqual(await mismatch.run({runtime:{...runtime,snapshotId}}),{error:'infrastructure'})
   assert.equal(mismatch.state.commands.length,0);assert.equal(mismatch.state.deletes,1)
+})
+
+test('normal, recovered unknown-create and retried cleanup always preserve pinned source snapshots',async()=>{
+  const snapshotId='snp_reusable_toolchain_001'
+  for(const options of [{},{createError:true,recoverCreate:true},{retryCleanup:true}]){
+    const f=fixture({snapshotId,...options})
+    if(options.retryCleanup)f.state.failCleanup=true
+    const result=await f.run({runtime:{...runtime,snapshotId}})
+    assert.deepEqual(result,options.createError || options.retryCleanup?{error:'infrastructure'}:{raw})
+    if(options.retryCleanup){f.state.failCleanup=false;await f.provider.stopAttempt(scope)}
+    assert.ok(f.state.deleteOptions.length>0)
+    assert.ok(f.state.deleteOptions.every(params=>params.deleteOrphanSnapshots===false))
+    assert.equal(f.state.creates[0].persistent,false)
+    assert.deepEqual(f.state.creates[0].source,{type:'snapshot',snapshotId})
+  }
 })
