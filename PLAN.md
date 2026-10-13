@@ -63,7 +63,7 @@ Supabase, подключить изолированную проверку Pytho
    и 8 hosted-групп PASS; миграции 004–005 применены. Локальные desktop/mobile
    проверены. Runtime `6b97845` опубликован, CI/Pages SUCCESS; signed-in,
    automatic/manual sync, reload и progress panel проверены на публичном сайте.
-3. Подключить изолированную серверную проверку кода — в работе.
+3. Подключить изолированную серверную проверку кода — блокер настройки Vercel.
    Пользователь уточнил: только бесплатно, без карты и своего сервера.
    Vercel Sandbox Hobby даёт ежемесячную квоту с блокировкой вместо доплат;
    вход через GitHub выполнен, существующий Hobby подтверждён. Пользователь
@@ -74,6 +74,7 @@ Supabase, подключить изолированную проверку Pytho
    admission. Локально 530 тестов PASS; две найденные review причины исправлены.
    Ежедневная резервная очистка принадлежащих grader сред реализована и проверена
    локально; реальные Sandbox и hosted SQL006 ещё ожидают подключения.
+   Подготовка сохранена в `4cb5a08`, local/remote match, CI/Pages SUCCESS.
    Проверки открытых примеров публикуются отдельными immutable manifests для
    прежних variant IDs: история, черновики и помощь не переносятся в новый release.
    GitHub Actions не использовать как production serverless исполнитель.
@@ -85,6 +86,8 @@ Supabase, подключить изолированную проверку Pytho
    Синхронизация опубликована независимо от ожидающего executor (`6b97845`).
    CI38402567929 и Pages38402567784 SUCCESS, hosted desktop/mobile PASS.
    Повторить этот этап после реального подключения проверки кода.
+   Подготовленный frontend `4cb5a08` также опубликован; public signed-in и
+   automatic/manual sync проверены desktop/mobile. Grader остаётся выключенным.
    Desktop/mobile, meaningful tests, обычный commit/push, local/remote SHA,
    CI/Pages и настоящая hosted приёмка.
 

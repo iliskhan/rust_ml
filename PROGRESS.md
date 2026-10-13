@@ -1,5 +1,25 @@
 # Прогресс RustML
 
+### Подготовка grader сохранена; frontend опубликован — 2026-10-13, 18:10 MSK
+
+Runtime `4cb5a08a8c3454d27b03c449f56145371ecc979c` отправлен обычным push
+в `master` под общим Git-lock; local/remote SHA совпали. CI `38419210175`
+и Pages `38419210352` SUCCESS. Новый public bundle `index-B2VIeTyF.js`
+проверен на https://iliskhan.github.io/rust_ml/#practice: прежний аккаунт
+восстановлен, automatic/manual sync-ready, desktop1280/mobile390 без
+overflow/alerts/console warnings/errors. Grader ожидаемо отключён.
+Скриншоты `work/practice-grader/hosted-desktop.png`, `hosted-mobile.png`.
+Локальные preview этой задачи 6963–6965 остановлены; чужие untracked attachments
+и прежние preview-файлы не включены в commit. Credential-marker scan изменённых
+файлов не нашёл секретов; public CA и publishable config являются публичными.
+
+Общая задача НЕ завершена: реальный Vercel Sandbox, hosted SQL006 и включение
+проверки кода ожидают продолжения после ответа на уже отправленный вопрос
+`Skip securing my account`. Автоматическая проверка требует отдельного согласия
+на пропуск предложения 2FA; браузерная вкладка сохранена. Передачу данных для
+обучения уже отключили, повторное разрешение на неё не нужно. Инструкции и
+следующие шаги — в checkpoint ниже; повторно применять SQL001–005 нельзя.
+
 ### Серверная проверка реализована локально; Vercel ожидает решения по 2FA — 2026-10-13, 18:00 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, HEAD `47de654`.
