@@ -76,7 +76,19 @@ gzip **124834 B**, против исходных **1019011 B / 304572 B**. Эт�
   видимый конфликт и отмену delayed file import после нового шага обучения.
   Loading worktree проверил все18 routes, 503/reload и сохранность draft, Escape/focus.
 
-Hosted Auth/sync и CI/Pages проверяются после push; результат добавляется в PROGRESS.md.
+## Публикация и приёмка
+
+Runtime `8d747ac086c6a88cf9c1cd876026f64db6666aa0` отправлен обычным push master,
+local=remote. CI [38444605895](https://github.com/iliskhan/rust_ml/actions/runs/38444605895)
+и Pages [38444605966](https://github.com/iliskhan/rust_ml/actions/runs/38444605966) SUCCESS.
+Все четыре CI jobs успешны, включая Windows/Linux Rust1.87 и current stable.
+
+На https://iliskhan.github.io/rust_ml/#practice после публикации проверены:
+восстановление существующей сессии, automatic/manual progress sync, поискSOFTMAX
+с двумя результатами, Enter→упражнение и загрузка панели истории аккаунта.
+Console errors/warnings0. Публичный screenshot — `public-preview.png` рядом с этим файлом.
+Проверка не создавала новые облачные черновики и не включала grader.
+Закрывающий checkpoint меняет только документацию; runtime-код после приёмки неизменен.
 
 ## Что осталось и в каком порядке
 

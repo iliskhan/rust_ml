@@ -49,7 +49,7 @@ SGD обновляет веса. Минимальный CPU-сценарий р�
 
 ## Инженерные решения
 
-### Комплексное улучшение и объединение worktree — активно, 2026-10-13
+### Комплексное улучшение и объединение worktree — завершено, 2026-10-13
 
 Поручение: проверить оставшиеся слабые места, выполнить полезные улучшения в новых
 чатах и отдельных worktree, объединить проверенные результаты, commit/push и deploy.
@@ -64,7 +64,7 @@ SGD обновляет веса. Минимальный CPU-сценарий р�
    account language/receipt при quota и неограниченное ожидание cloud fetch.
    Поздний импорт Boundary может перезаписать новые действия (проверено по коду).
    pnpm audit: 132 зависимости, известных уязвимостей 0; это не полный security audit.
-2. Пять новых чатов/worktree — запущены от текущего remote master.
+2. Пять новых чатов/worktree — реализованы от базы `1e3ba80`, проверены и объединены.
    Loading: App/main/useLearningSync, lazy error recovery и измерение before/after.
    Practice UX: Workspace/Panel/progress и связанные CSS/tests; опубликованные
    contracts, owner/language scopes и помощь сохраняются.
@@ -73,9 +73,14 @@ SGD обновляет веса. Минимальный CPU-сценарий р�
    Cloud timeout: конечное ожидание refresh/fetch/body, отмена и поздние ответы.
    Local data: безопасная запись Boundary между вкладками, атомарный язык и
    защита от устаревшего импорта. Области записи между чатами не пересекаются.
-3. Родитель проверяет diff, объединяет commit веток, разрешает конфликты и
-   выполняет общие frontend/Rust проверки и реальные desktop/mobile сценарии.
-4. Обычный commit/push master, совпадение remote SHA, CI/Pages и public smoke.
+3. Родитель проверил diff и объединил все пять веток. Общие561 frontend tests,
+   Rust69 tests +7 doctests debug/release, fmt/Clippy/rustdoc/5examples PASS.
+   Desktop, mobile320/390 и два документа с общим storage проверены; найденные
+   две refresh-гонки и пропущенный listener receipt исправлены.
+4. Runtime `8d747ac` отправлен обычным push, local=remote; CI38444605895 и
+   Pages38444605966 SUCCESS. Public поиск/Enter, restored Auth, automatic/manual
+   progress sync и панель истории прошли, console0. Итог — в PROGRESS.md и
+   `docs/improvements/integrated-review.md`.
    Незавершённое включение grader остаётся отдельной зависимостью: прежний запрос
    на передачу конкретных секретов Vercel не получил ответа, обход запрещён.
 

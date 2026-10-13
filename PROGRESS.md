@@ -1,5 +1,31 @@
 # Прогресс RustML
 
+### Пять веток объединены и опубликованы — 2026-10-13, 21:15 MSK
+
+Runtime commit **`8d747ac086c6a88cf9c1cd876026f64db6666aa0`** отправлен в master;
+`git ls-remote` подтвердил local=remote. Все пять новых веток включены merge commits,
+история сохранена. Финальный merge добавил только evidence: SHA256 пяти local-data
+файлов совпали с общим проверенным снимком. Изменения закрывающего checkpoint —
+только документация; финальный SHA доставки фиксируется в
+`work/comprehensive-improvements/git-delivery.json` и итоговом ответе.
+
+GitHub **CI38444605895 SUCCESS**: Node24, Rust1.87 Windows/Linux и current stable.
+**Pages38444605966 SUCCESS**. Адрес: https://iliskhan.github.io/rust_ml/#practice.
+Публичный reload восстановил вошедший аккаунт; новая строка SOFTMAX нашла2темы,
+Enter открыл упражнение. Automatic/manual progress sync завершились, карта
+аккаунта и история136тем/412упражнений загрузились. Console errors/warnings0.
+Никаких новых пользовательских черновиков на сервер для этой проверки не писали.
+Grader остаётся disabled: это прежний отдельный blocker, описанный ниже.
+
+Итоговая локальная приёмка: **561 frontend-тест**, production build/typecheck,
+**69 Rust tests +7 doctests** в debug/release, fmt, strict Clippy/rustdoc и пять
+examples PASS. Mobile320/390 без переполнения страницы; отдельные drafts и reload
+проверены. Initial JS402831 B/124834 B gzip против1019011/304572; −59% gzip.
+Подробности, screenshots и следующие приоритеты: `docs/improvements/integrated-review.md`.
+Следующая самостоятельная функция Rust — ReLU/MLP с воспроизводимой инициализацией;
+следующая эксплуатационная задача — ранее подготовленный hosted grader после
+конкретного согласия на его production-env. Чужие attachments/preview не включены.
+
 ### Интеграция проверена, публикация в работе — 2026-10-13, 21:08 MSK
 
 Объединены loading `5cf8c2d`, practice UX `6bdb5ee`, Rust `f7440b1`, cloud
