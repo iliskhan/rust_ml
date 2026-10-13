@@ -1,5 +1,44 @@
 # Прогресс RustML
 
+### Подключение Supabase: запрет чата остаётся — 2026-10-13, 13:58 MSK (UTC+3)
+
+Новое прямое поручение — устранить запрет исходного чата и закончить подключение.
+Checkout общий, master `bf49ebfc13455ce0474a70591951154f8d105795` до этой записи;
+tracked дерево было чистым, три посторонних untracked пути сохранены.
+Текущие четыре этапа обновлены в PLAN; восстановление доступа — блокер,
+облачные migrations/Auth, реальная приёмка и Pages cloud config — ожидают.
+
+Независимая read-only проверка установленного UI app26.1007.2314.0:
+Settings→Browser содержит Remove custom permissions for {origin}, но
+`app.asar` asset `browser-use-origin-state-queries-9679b4061212.js` вызывает
+`browserUsePermissions.updateOriginRules`; `main-BklS_2Y2.js` направляет его
+в `browser/config.toml`. Параметров conversation/session у операции нет.
+Повторный global reset не является решением найденного conversation deny.
+Browser API/management не предоставляют подтверждённого reset чата;
+plugin_management.update_app_permissions меняет режим ChatGPT-плагина.
+Browser plugin26.1007.21434 `scripts/browser-service.mjs:1036` описывает
+persisted_user_denied как retryable=false и запрещает workaround/alternate
+surfaces/policy circumvention. Настройки, удалённая БД и Auth не изменены.
+Оснований утверждать, что владелец нажимал «Запретить», нет.
+
+Для обращения в поддержку подготовлены точные данные: исходный чат
+`01a13055-8c77-7293-95a4-ac6e884eb382`, app26.1007.2314.0,
+browser26.1007.21434, код persisted_user_denied; global allow Supabase верен,
+session deny остаётся, требуется штатный сброс разрешения этого чата.
+Доступные инструменты не выполняют такой сброс. Координационное сообщение
+исходному чату запрошено у владельца и до ответа не отправлялось.
+
+Независимый review migrations/приёмки на bf49ebf не обнаружил подтверждённого
+блокирующего дефекта. До DDL обязательно проверить также роли practice_api/
+practice_worker и использование существующей private: миграция создаёт роли
+без IF NOT EXISTS и отзывает grants ко всей private. После целых001→002→003
+нужен существующий read-only smoke, затем реальные JWT/RLS и два одновременных
+CAS запроса. Клиент нормализует draft_conflict к status409; raw HTTP409
+PostgREST не проверен. Уточнения внесены в deployment/data-model.
+Для полной email-приёмки нужны два контролируемых аккаунта/ящика и подходящая
+доставка SMTP; DB password/service_role/worker credentials браузеру не нужны.
+Изменения этого checkpoint только документальные; runtime не менялся.
+
 ### Причина browser-блокера подтверждена локально — 2026-10-13, 13:37 MSK (UTC+3)
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master `35586f5` до этой записи.
