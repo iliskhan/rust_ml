@@ -93,7 +93,7 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
       {shownTopics.map(topic => <details key={topic.id} className="practice-progress-topic">
         <summary>{topic.title} — черновики {topic.counts.drafts}/{topic.counts.exercisesTotal}; самопроверки {topic.counts.quizExercises}/{topic.counts.exercisesTotal}</summary>
         <ul>{topic.exercises.map(exercise => <li key={exercise.scope.exerciseId}>
-          <strong>{exercise.title}</strong>. {exercise.error ? 'Запись недоступна.' : `${exercise.hasDraft ? 'Черновик сохранён' : 'Черновика нет'}; ${exercise.helpKinds.length ? 'помощь открыта' : 'помощь не открыта'}; ${exercise.quizAttempts ? `ответов: ${exercise.quizAttempts}, последний ${exercise.latestQuizCorrect ? 'верен' : 'неверен'}` : 'самопроверки ещё нет'}.`}
+          <strong>{exercise.title}</strong>. {exercise.error ? 'Запись недоступна.' : `${exercise.hasDraft ? 'Черновик сохранён на этом устройстве' : 'Черновика нет на этом устройстве'}; ${exercise.helpKinds.length ? 'помощь открыта' : 'помощь не открыта'}; ${exercise.quizAttempts ? `ответов: ${exercise.quizAttempts}, последний ${exercise.latestQuizCorrect ? 'верен' : 'неверен'}` : 'самопроверки ещё нет'}.`}
           {onOpenExercise && <button type="button" onClick={() => onOpenExercise(exercise)}>Открыть {exercise.title}</button>}
         </li>)}</ul>
       </details>)}
