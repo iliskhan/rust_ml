@@ -57,11 +57,11 @@ node --test tests/*.test.ts
 node C:/Users/lomaster/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/bin/pnpm.mjs build
 ```
 
-- Full suite535/535 PASS, failed0, skipped0; `practice-ux-tests.txt`.
+- Full suite535/535 PASS, failed0, skipped0; результаты команды зафиксированы здесь.
 - Two added tests cover multi-word/course/exercise/case/empty search and
   continuation across languages, guests/accounts, releases, corrupt records,
   with no writes. Existing isolation/numerical/author-adapter tests retained.
-- `tsc --noEmit` PASS; final `pnpm build` PASS, `practice-ux-build.txt`.
+- `tsc --noEmit` PASS; final `pnpm build` PASS.
   Existing >500kB chunk warning remains; dependencies/chunk policy unchanged.
 - `git diff --check` PASS.
 - Real browser: search SOFTMAX → two topics → Enter opens guided softmax and
@@ -78,6 +78,25 @@ esbuild Access is denied reading ancestor/config → dev/build escalation;
 full suite first reached rustup denied temp write → direct installed rustc and
 explicit environment on permitted test run. No settings were weakened. First
 pnpm build spawned Node18 from PATH; final build uses Node24 PATH explicitly.
+
+## Стоимость обновления последней работы
+
+По замечанию родителя отдельно измерен реальный `readLearningProgress` в IAB
+localhost6972 при посимвольном вводе. Временный измеритель обрамлял только этот
+вызов через `performance.now()` и показывал его результаты в локальном `<output>`;
+после измерения instrumentation полностью удалён. Срез реализации `aee32a7`,
+каталог136 тем /412 упражнений ×3 языка =1236 чтений; два сохранённых guest drafts.
+Dev app использует StrictMode (`src/main.tsx`), поэтому16 последовательных
+символов дали32 измерения. Min2.5ms, median4.3ms, max6.2ms. Все16 символов
+появились в редакторе и сохранились. Заметной задержки в этом ограниченном
+сценарии не наблюдалось; debounce без доказанной потребности не добавлен.
+
+Это замер reader, не всего React commit или input-to-paint, и не приёмка слабого
+mobile устройства/заполненной истории. Длинный batch ввода в browser tool
+остановился по CDP input deadline после частичного ввода; причиной торможение
+приложения не установлено. Вместо повторения того же batch использован16символьный
+ввод и отдельные данные измерителя. Сырые test/build logs исключены из итоговой
+ветки по уточнению родителя; команды и итоги сохранены в этом checkpoint.
 
 ## Следующие действия родителя
 
