@@ -1,0 +1,2 @@
+# Preserve literal source code and bundle hashes in SQL on Windows and CI.
+learning-lab/supabase/migrations/*.sql text eol=lf
