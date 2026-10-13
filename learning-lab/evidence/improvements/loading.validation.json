@@ -1,0 +1,72 @@
+{
+  "initialFailure": "RUSTC used instead of supported PRACTICE_RUSTC; rustup component download failed. Final direct-rustc run passed.",
+  "rustc": "stable direct 1.87",
+  "build": {
+    "passed": true,
+    "summary": [
+      "dist/assets/CurriculumView-CVCu2yr9.js                    55.63 kB │ gzip:  16.29 kB",
+      "dist/assets/TransformerCourse-DWrYaJmR.js                 76.92 kB │ gzip:  23.46 kB",
+      "dist/assets/BoundaryPlayground-_nlfSzui.js                87.71 kB │ gzip:  27.96 kB",
+      "dist/assets/index-Cjkw0g9G.js                            402.80 kB │ gzip: 124.83 kB",
+      "dist/assets/all-catalog-DWoYPmvs.js                      456.97 kB │ gzip: 134.27 kB",
+      "✓ built in 2.84s"
+    ]
+  },
+  "checkout": "C:/Users/lomaster/.codex/worktrees/f782/rust_ml",
+  "checkedAt": "2026-10-13T20:42:32.9313884+03:00",
+  "browser": {
+    "port": 6971,
+    "hostedAuthSync": "parent pending",
+    "viewport": "default desktop; screenshot1265x712; no resize",
+    "bodyOverflowAfterClose": "",
+    "lesson503Recovery": true,
+    "routes": 18,
+    "escapeReturnFocus": "градиент↗",
+    "explorer503Recovery": true,
+    "savedDraftAfterLessonReload": true,
+    "mobile": "parent pending"
+  },
+  "node": "24.19.0",
+  "targetedTests": {
+    "skipped": 0,
+    "failed": 0,
+    "passed": 57
+  },
+  "base": "1e3ba80b9056489ec2aceacfdfaef383b52d8936",
+  "branch": "codex/loading-recovery",
+  "sourceHashes": [
+    {
+      "sha256": "bfb345cb30018ee1fc7affefd840f5c74ccb3d2c524b449685653b481cd648f1",
+      "path": "learning-lab/src/App.tsx"
+    },
+    {
+      "sha256": "200cd0a46fcbd8d7d50e28f6daae6eddfad923cd7c03b2510cbd6bfd4d0bf14b",
+      "path": "learning-lab/src/SectionBoundary.tsx"
+    },
+    {
+      "sha256": "b185a36d84ecc0e641557a39ca65882efa5ff94502d86f07d2b285ed2aa9cc3d",
+      "path": "learning-lab/src/practice/useLearningSync.ts"
+    },
+    {
+      "sha256": "076c7077eb62f7be6cbfaa91c4a99c1fdad95283ab5dcb7da7b93cd9fdc1706d",
+      "path": "learning-lab/tests/section-loading.test.ts"
+    }
+  ],
+  "fullSuite": {
+    "skipped": 0,
+    "failed": 0,
+    "summary": [
+      "✔ invalid image, capacity, top-k, and timestep inputs are rejected (1.4021ms)",
+      "ℹ tests 534",
+      "ℹ suites 0",
+      "ℹ pass 534",
+      "ℹ fail 0",
+      "ℹ cancelled 0",
+      "ℹ skipped 0",
+      "ℹ todo 0",
+      "ℹ duration_ms 22306.8814"
+    ],
+    "durationMs": 22306.8814,
+    "passed": 534
+  }
+}

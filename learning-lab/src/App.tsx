@@ -1,12 +1,16 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { BackpropLesson, LossLesson, NeuronLesson } from './Foundations';
-import { NetworkLesson, OptimizerLesson } from './Experiments';
-import { CurriculumView } from './CurriculumView';
 import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './learning-context';
-import { KnowledgeExplorer } from './KnowledgeExplorer';
 import { ConceptSearch } from './ConceptSearch';
 import { PracticeCloudProvider } from './practice/PracticeCloudProvider';
+import { ExplorerLoading, SectionBoundary, SectionLoadError } from './SectionBoundary';
 
+const NeuronLesson = lazy(() => import('./Foundations').then(module => ({ default: module.NeuronLesson })));
+const LossLesson = lazy(() => import('./Foundations').then(module => ({ default: module.LossLesson })));
+const BackpropLesson = lazy(() => import('./Foundations').then(module => ({ default: module.BackpropLesson })));
+const NetworkLesson = lazy(() => import('./Experiments').then(module => ({ default: module.NetworkLesson })));
+const OptimizerLesson = lazy(() => import('./Experiments').then(module => ({ default: module.OptimizerLesson })));
+const CurriculumView = lazy(() => import('./CurriculumView').then(module => ({ default: module.CurriculumView })));
+const KnowledgeExplorer = lazy(() => import('./KnowledgeExplorer').then(module => ({ default: module.KnowledgeExplorer })));
 const PracticeWorkspace = lazy(() => import('./practice/PracticeWorkspace').then(module => ({ default: module.PracticeWorkspace })));
 
 const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
@@ -56,7 +60,7 @@ function LearningShell() {
   const routePositions = useRef(new Map<string, number>());
   const previousRoute = useRef(lesson.id);
   const routeChanged = useRef(false);
-  const { navigation, close } = useLearning();
+  const { navigation, close, returnFocus } = useLearning();
   const closeExplorer = useRef(close);
   closeExplorer.current = close;
   useEffect(() => {
@@ -94,11 +98,13 @@ function LearningShell() {
     <div className="app-layout"><aside className="sidebar"><span className="eyebrow sidebar-label">Учебник / навигация</span><nav className="desktop-lesson-nav" aria-label="Уроки">{lessonGroups.map(group => <div className="nav-group" key={group}><span className="nav-group-title">{group}</span>{lessons.filter(item => item.group === group).map(l => <a key={l.id} href={`#${l.id}`} aria-current={lesson.id === l.id ? 'page' : undefined}><span className="nav-number" aria-hidden="true">{String(lessons.indexOf(l) + 1).padStart(2, '0')}</span><span>{l.title}</span>{lesson.id === l.id && <span className="nav-arrow" aria-hidden="true">→</span>}</a>)}</div>)}</nav><label className="mobile-lesson-nav">Открыть раздел<select value={lesson.id} onChange={event => navigate(event.target.value)}>{lessonGroups.map(group => <optgroup key={group} label={group}>{lessons.filter(item => item.group === group).map(l => <option key={l.id} value={l.id}>{l.title}</option>)}</optgroup>)}</select></label><div className="sidebar-note"><span className="status-dot" />Ваш эксперимент — на месте<p>Уроки и настройки сохраняются при переходах в этой вкладке.</p><a href="#curriculum">Выбрать маршрут →</a></div></aside>
     <main id="content" className="main-content" ref={main} tabIndex={-1}>
       <div className="lesson-header"><span className="eyebrow">{index === 0 ? 'От первого нейрона до внимания' : lesson.group}</span><h1 tabIndex={-1}>{lesson.title}</h1><p className="lesson-subtitle">{lesson.hint}</p></div>
-      {visited.map(id => { const item = lessons.find(entry => entry.id === id)!; const Component = item.component; return <div key={id} className="lesson-body" data-lesson={id} hidden={id !== lesson.id}><LearningActivity active={id === lesson.id && !navigation.path.length && !searchOpen}><Suspense fallback={<section className="panel" role="status"><p>Загружаем раздел «{item.title}»…</p></section>}><Component /></Suspense></LearningActivity></div>; })}
+      {visited.map(id => { const item = lessons.find(entry => entry.id === id)!; const Component = item.component; return <div key={id} className="lesson-body" data-lesson={id} hidden={id !== lesson.id}><LearningActivity active={id === lesson.id && !navigation.path.length && !searchOpen}><SectionBoundary title={item.title}><Suspense fallback={<section className="panel" role="status"><p>Загружаем раздел «{item.title}»…</p></section>}><Component /></Suspense></SectionBoundary></LearningActivity></div>; })}
       {index > 0 && index < lessons.length - 1 && <div className="lesson-next"><span>Следующий раздел</span><a href={`#${lessons[index + 1].id}`}>{lessons[index + 1].title} →</a></div>}
       <footer>RustML Learning Lab · расчёты в вашем браузере<p>Лаборатория границ сохраняется в этом браузере и загружается на паузе. Остальные опыты сохраняются в этой вкладке до перезагрузки.</p></footer>
     </main></div>
-    <KnowledgeExplorer lessonTitle={lesson.title} />
+    {!!navigation.visited.length && <SectionBoundary title="Разбор понятия" fallback={navigation.path.length ? <ExplorerLoading close={close} returnFocus={returnFocus}><SectionLoadError title="Разбор понятия" /></ExplorerLoading> : null}>
+      <Suspense fallback={navigation.path.length ? <ExplorerLoading close={close} returnFocus={returnFocus}><p role="status">Загружаем разбор понятия…</p></ExplorerLoading> : null}><KnowledgeExplorer lessonTitle={lesson.title} /></Suspense>
+    </SectionBoundary>}
   </>;
 }
 
