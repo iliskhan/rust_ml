@@ -1,5 +1,33 @@
 # Прогресс RustML
 
+### Пять отдельных worktree для комплексного улучшения — 2026-10-13
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база `1e3ba80`.
+Аудит выбрал измеримое ускорение загрузки, практику и первый Rust training path.
+Независимый read-only аудит дополнительно воспроизвёл потерю Boundary A/B между
+вкладками, частичную запись языка при quota и зависание cloud fetch. Поздний
+file.text также может перезаписать новые действия (проверено по механизму кода).
+`pnpm audit --json`: 132 зависимости, 0 известных уязвимостей всех уровней.
+
+Пользователь поручил новые чаты/worktree с последующим объединением и deploy:
+
+- Loading: чат `01a1364b-9a2b-78d0-ad0d-42dd97d236fc`, worktree `f782`.
+- Practice UX: чат `01a1364c-3358-7dd0-bbf8-ed4641be7773`, worktree `6eed`.
+- Rust training: чат `01a1364c-8c89-7f93-a155-eb74243848c7`, worktree `305f`.
+- Cloud timeout: чат `01a13651-49c3-7991-b5da-d9faabb2f7c5`, worktree `8e9e`.
+- Local data: чат `01a13652-a9cb-7771-9c30-b7acca2bc081`, worktree `01db`.
+
+Все пять работают от `1e3ba80`, с раздельными файлами и ветками `codex/*`.
+Родитель проверяет diff, объединяет готовые commits и выполняет общие frontend,
+Rust и desktop/mobile проверки. Дочерние локальные результаты ещё не означают
+готовность интегрированной версии. Следующий шаг: review и объединение веток.
+Итоговые доказательства — `learning-lab/evidence/improvements/` и
+`docs/improvements/`. Чужие attachments и practice preview исключены.
+
+Прежняя hosted-активация grader остаётся отдельным незавершённым пунктом:
+конкретный запрос на DB URLs/CRON_SECRET в Vercel пока не получил ответа.
+Новые чаты не меняют secrets, admission, миграции, provider settings и runtime pins.
+
 ### Реальный runtime проверен; остаётся окружение Vercel — 2026-10-13, 19:40 MSK
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, `master`, база `b2c6a95`.
