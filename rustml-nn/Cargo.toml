@@ -6,11 +6,18 @@ rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 repository.workspace = true
-description = "Planned neural-network components for the educational RustML library"
+description = "Minimal CPU Linear layer, MSE loss and SGD for educational RustML"
 keywords.workspace = true
 categories.workspace = true
 
 [dependencies]
+rustml-core = { path = "../rustml-core", version = "0.1.0" }
+rustml-tensor = { path = "../rustml-tensor", version = "0.1.0" }
+rustml-autograd = { path = "../rustml-autograd", version = "0.1.0" }
+
+[[example]]
+name = "linear_regression"
+path = "../examples/linear_regression.rs"
 
 [package.metadata.docs.rs]
 all-features = true

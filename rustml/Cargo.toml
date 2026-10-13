@@ -14,6 +14,7 @@ categories.workspace = true
 rustml-core = { path = "../rustml-core", version = "0.1.0" }
 rustml-tensor = { path = "../rustml-tensor", version = "0.1.0" }
 rustml-autograd = { path = "../rustml-autograd", version = "0.1.0" }
+rustml-nn = { path = "../rustml-nn", version = "0.1.0" }
 
 [package.metadata.docs.rs]
 all-features = true
