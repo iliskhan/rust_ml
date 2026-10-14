@@ -1,0 +1,53 @@
+{
+  "title": "Учебник RustML",
+  "language": "ru",
+  "updated_at": "2026-10-11T06:12:31+03:00",
+  "focus": "Готовая локальная версия: http://127.0.0.1:5177/",
+  "steps": [
+    {
+      "id": "scope",
+      "title": "Изоляция и структура",
+      "status": "done",
+      "result": "Отдельный worktree; только learning-lab",
+      "evidence": [
+        "Git: detached 9e6606a; tracked файлы неизменны"
+      ]
+    },
+    {
+      "id": "math",
+      "title": "Математика и проверки",
+      "status": "done",
+      "result": "22 теста и конечные разности проходят",
+      "evidence": [
+        "pnpm test: 22 passed / 0 failed; numerical-results.json"
+      ]
+    },
+    {
+      "id": "lessons",
+      "title": "Учебные эксперименты",
+      "status": "done",
+      "result": "Цикл обучения работает; XOR — 4/4",
+      "evidence": [
+        "Production XOR: BCE 0.0001015905 после 3000 шагов, seed 42"
+      ]
+    },
+    {
+      "id": "families",
+      "title": "Семейства архитектур",
+      "status": "done",
+      "result": "Шесть семейств, реальные forward и варианты",
+      "evidence": [
+        "Conv/затворы/attention/causality: 10 независимых тестов и UI controls"
+      ]
+    },
+    {
+      "id": "qa",
+      "title": "Проверка и передача",
+      "status": "done",
+      "result": "Desktop, 390/320 px и production проверены",
+      "evidence": [
+        "pnpm typecheck/build exit 0; console []; VALIDATION.md и PROGRESS.md сохранены"
+      ]
+    }
+  ]
+}

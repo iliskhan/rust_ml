@@ -1,0 +1,120 @@
+{
+  "auditedBase": "78e664faf1ae91dac899f15e579670b4f8c8fa66",
+  "integrationCommit": "8571351",
+  "files": [
+    {
+      "path": "worktree-3061/learning-lab/PROGRESS.md",
+      "kind": "original",
+      "bytes": 3802,
+      "sha256": "00139920dd7ee52b2c6ce65e91e7f5707fbabaa83ad0682582318f0d1664e510"
+    },
+    {
+      "path": "worktree-3061/learning-lab/README.md",
+      "kind": "original",
+      "bytes": 8778,
+      "sha256": "af43ea2d35f30c828be4ed01cd3a8bf8120cd149e96dd639251a6b19f24ed247"
+    },
+    {
+      "path": "worktree-3061/learning-lab/docs/architectures.md",
+      "kind": "original",
+      "bytes": 8476,
+      "sha256": "4342bf54f126664a1e1f3f1fbb9a1ef4c41a5306fb67f3fc1862a74f3f762238"
+    },
+    {
+      "path": "worktree-3061/learning-lab/package.json",
+      "kind": "original",
+      "bytes": 591,
+      "sha256": "91eb6118350cdabf116f5520e83f99ae1a0e818f685637fe5083c08250041662"
+    },
+    {
+      "path": "worktree-3061/learning-lab/pnpm-workspace.yaml",
+      "kind": "original",
+      "bytes": 29,
+      "sha256": "ac02d96368617c760f093cfe61fdec64b6244007ab3553e0d6621f706f54a353"
+    },
+    {
+      "path": "worktree-3061/learning-lab/src/App.tsx",
+      "kind": "original",
+      "bytes": 15612,
+      "sha256": "8eea613d2d3cec7e2621f5c921de3041d3ea8459f77d135b6b09d98cd68631b2"
+    },
+    {
+      "path": "worktree-3061/learning-lab/src/ArchitectureLesson.tsx",
+      "kind": "original",
+      "bytes": 38243,
+      "sha256": "436375ece9718c89f732531e297ba3856a7a00614de6e0786cfce6ae0c5f50d3"
+    },
+    {
+      "path": "worktree-3061/learning-lab/src/Experiments.tsx",
+      "kind": "original",
+      "bytes": 18379,
+      "sha256": "601af43e0db63cbf487c88caf0c51eba1cc29b55386071a6f7ec192aeb678cf2"
+    },
+    {
+      "path": "worktree-3061/learning-lab/src/Foundations.tsx",
+      "kind": "original",
+      "bytes": 26530,
+      "sha256": "d043eeb3960934f8154b4b770a7ee3d2130d2a6d468c8376af36c8efb34a66f2"
+    },
+    {
+      "path": "worktree-3061/learning-lab/src/styles.css",
+      "kind": "original",
+      "bytes": 13785,
+      "sha256": "17b702007a6c0702e062d313b3c7eb9a9f185ffebf82eb5035744e34b0cdf1b4"
+    },
+    {
+      "path": "worktree-3061/learning-lab/work/progress.json",
+      "kind": "original",
+      "bytes": 1798,
+      "sha256": "039ed930a4e48c375848e4208d5f7b3305fec0c6a81677a06248d87ccd52f89a"
+    },
+    {
+      "path": "branch-notes/bptt-progress.md",
+      "kind": "historical-note",
+      "bytes": 7606,
+      "sha256": "3302c24b04ec2d22759bd0e60a9559759115c408dd32a9b3c8a77ddac69cce3c"
+    },
+    {
+      "path": "branch-notes/cnn-training-progress.md",
+      "kind": "historical-note",
+      "bytes": 5510,
+      "sha256": "1c59a582bf2db80e0123849a97ebcc1ec636c1cda183e7f8d452ad70e9884f59"
+    },
+    {
+      "path": "branch-notes/minibatch-progress.md",
+      "kind": "historical-note",
+      "bytes": 5809,
+      "sha256": "70283bb4e63459d7bf2149827af2ce3232b7dffb38a20a31fdab0b7ba8943c57"
+    },
+    {
+      "path": "branch-notes/minibatch-build.log",
+      "kind": "historical-note",
+      "bytes": 2440,
+      "sha256": "f6fbccd851ac7c37382cf8ad57db2801f822d74d54cdc2859edeab1ca760f120"
+    },
+    {
+      "path": "branch-notes/minibatch-tests.log",
+      "kind": "historical-note",
+      "bytes": 21539,
+      "sha256": "2cacdf80158b864111cb9d91c09e9726b2047f6732aa99e48243a7f874dcf99d"
+    },
+    {
+      "path": "branch-notes/transformer-head-progress.md",
+      "kind": "historical-note",
+      "bytes": 7645,
+      "sha256": "e02a05af127e4c3e8421d9376adb4dff3c858fc41ab6a79e765bf2e0109ff44a"
+    },
+    {
+      "path": "preview/practice-progress-preview.html",
+      "kind": "test-preview",
+      "bytes": 286,
+      "sha256": "d7a2697e183e9d5fa127d101d85b273c26e98c1abf788a2a116c0d496953845b"
+    },
+    {
+      "path": "preview/practice-progress-preview.tsx",
+      "kind": "test-preview",
+      "bytes": 3462,
+      "sha256": "780889c613a84dfd79016ffddb17b8c962e5e9e4699b0e780eb75f3ea2b45da1"
+    }
+  ]
+}

@@ -24,3 +24,8 @@ Thumbs.db
 /work/practice-*/
 /work/comprehensive-improvements/
 /learning-lab/work/comprehensive-improvements/
+
+# Chat attachments and original local QA harness (preserved in docs/archive)
+/.codex-remote-attachments/
+/learning-lab/work/practice-progress-preview.html
+/learning-lab/work/practice-progress-preview.tsx
