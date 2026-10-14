@@ -1,5 +1,58 @@
 # Прогресс RustML
 
+### Аудит всей локальной работы и доставки — 2026-10-14
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master; исходная локальная
+вершина `c95dca4`, затем fetch/fast-forward до удалённого `78e664f`.
+Последний уже содержал исследовательскую документацию с другого компьютера;
+его CI38494053471 SUCCESS подтверждён через GitHub API.
+
+Проверены 12 рабочих копий и 12 локальных веток. Все их вершины совпали с
+GitHub через `git ls-remote --heads origin`; открытых PR не найдено.
+У четырёх лабораторий код ранее включён через `8571351`, но вершины веток
+ещё не были предками master. Математика/тесты идентичны, UI позже расширен;
+merge `b6a7a9b` фиксирует их включение и сохраняет текущую реализацию.
+После него `git merge-base --is-ancestor` прошёл для всех 12 веток.
+
+В detached `3061` оставались 42 старых файла: 26 совпадают с master,
+5 точных версий уже есть в его истории, 11 оригиналов сохранены в
+[историческом архиве](docs/archive/local-delivery-2026-10-14/README.md).
+Там же сохранены четыре notes, два старых лога и mock preview: всего 19 файлов.
+Два независимых read-only аудита подтвердили перенос функциональности и архив;
+SHA256/размеры всех 19 Git blobs совпали с исходниками и manifest.
+Scoped `.gitattributes` сохраняет точные байты, включая CRLF. Runtime/config diff
+`git diff --exit-code 78e664f HEAD -- crates learning-lab .github` пустой.
+Новые исходники продукта не добавлялись; старые логи не являются новыми тестами.
+Локальные оригиналы preview и вложения чата сохранены на диске; preview имеет
+Git-копию в архиве, attachments исключены из публичного репозитория.
+
+Обычный push `d0c74114fff3f88f6d89d278115000d7eefef264` выполнен;
+`git ls-remote` подтвердил local=remote.
+[CI38560444697](https://github.com/iliskhan/rust_ml/actions/runs/38560444697) SUCCESS:
+Node24, Rust1.87 Windows/Linux и current stable.
+[Pages38560452709](https://github.com/iliskhan/rust_ml/actions/runs/38560452709) SUCCESS;
+адрес [RustML](https://iliskhan.github.io/rust_ml/).
+Публичный настоящий browser показал работающие карту, вход и практику;
+после новой публикации выполнен reload, осмотр mobile320/390, загрузка practice
+и проверка document scrollWidth/clientWidth: горизонтального переполнения нет.
+Console errors/warnings — 0; кнопка серверной проверки выключена.
+Пользовательские решения и самопроверки не отправлялись. Это smoke/визуальная
+проверка доставки; новый полный usability-аудит не проводился.
+
+Закрывающий checkpoint меняет только PLAN/PROGRESS. Итоговые SHA, результаты CI
+и публикации итогового коммита фиксируются в
+`work/comprehensive-improvements/local-delivery.json` и итоговом ответе;
+они не записываются в собственный commit рекурсивно.
+
+Отдельный прежний blocker grader перепроверен: точный GET
+`https://rustml-grader.vercel.app/api/practice-grade` вернул
+503 `grading_unavailable`. Конкретный запрос на передачу
+PRACTICE_API_DATABASE_URL, PRACTICE_WORKER_DATABASE_URL и нового CRON_SECRET
+только production-env Vercel-проекта rustml-grader отправлен повторно.
+Ответ пока не получен; secrets/admission/миграции этой задачей не менялись.
+Остальная Git/Pages-доставка выполняется независимо. Следующий серверный шаг
+после разрешения — подготовленный provision-env, redeploy и hosted-приёмка.
+
 ### Исследование педагогики и план развития учебника — 2026-10-14
 
 Локальная копия создана в `C:/Users/iliskhan/Documents/Codex/2026-10-14/rust-ml`
