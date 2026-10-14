@@ -1,0 +1,2 @@
+# Preserve original bytes and SHA256 evidence across checkouts.
+* -text whitespace=cr-at-eol
