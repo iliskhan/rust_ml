@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Анимации остальных тем — реализация проверена, доставка в работе, 2026-10-16
+### Анимации остальных тем — опубликовано, 2026-10-16
 
 Основной checkout master4065f9f исходно чистый. Добавлены63сцены рядом с
 соответствующими лабораториями: основы4,core21,frontier16,generative/graph/RL22.
@@ -31,7 +31,19 @@ Mobile390×844:66видимыхвидеоблоков без pageoverflow, пл�
 главы≥44px,captionsdisabled;attention320×760также720pбезoverflow.
 5family-блоков mobileкликами не переключены. Фактические экраны и границы
 проверки — [VALIDATION](learning-lab/evidence/all-topic-animations-2026-10-16/VALIDATION.md).
-Следующий шаг: итоговый commit/push,CI/Pages и публичная проверка файлов.
+После сверки новой геометрии обновлены8прежнихVTT;11/11затронутых
+регрессионных тестов повторены. Финальный tsc/buildexit0,213/213SHAсовпали.
+Релиз63930f3bc890059e4afb96db145cc8cf395c9030 отправлен обычнымpush,
+local=remote; [CI38963965181](https://github.com/iliskhan/rust_ml/actions/runs/38963965181)
+и[Pages38963965078](https://github.com/iliskhan/rust_ml/actions/runs/38963965078)
+SUCCESS. HTTPHEAD16октября20:42:38UTC:71/71публичныхMP4HTTP200/video/mp4,
+Content-Length совпал с финальными локальными файлами. Это проверка доставки
+и размеров, не удалённый SHA. Публичный нейрон:1280×720/44.033s,
+autoplayfalse,captionsdisabled; consoleerrors/warnings0, реальный экран
+сохранён. Поздняя проверка главы снова оставилаtime0; ограничения UI выше
+остаются открытыми. Закрывающий checkpoint меняет только журнал/доказательства;
+его SHA/local=remote проверяются послеpush. Собственные5191/5192 остановлены,
+слушающих портов нет. Временная viewport-эмуляция сброшена.
 Весь B12/U00/U07,real-device/screen-reader и эффект обучения не закрыты.
 
 ### Постоянная работа grader — production проверен, 2026-10-16

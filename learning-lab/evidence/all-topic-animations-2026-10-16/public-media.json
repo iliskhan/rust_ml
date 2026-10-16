@@ -1,0 +1,648 @@
+{
+  "checked_at_utc": "2026-10-16T20:42:38.411404+00:00",
+  "code_revision": "63930f3bc890059e4afb96db145cc8cf395c9030",
+  "method": "HTTP HEAD; expected local byte length and video/mp4; no remote body/hash check",
+  "count": 71,
+  "passed": 71,
+  "files": [
+    {
+      "scene": "activations",
+      "url": "https://iliskhan.github.io/rust_ml/animations/activations/activations.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 44469,
+      "public_bytes": 44469,
+      "passed": true
+    },
+    {
+      "scene": "attention",
+      "url": "https://iliskhan.github.io/rust_ml/animations/attention/attention.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 221923,
+      "public_bytes": 221923,
+      "passed": true
+    },
+    {
+      "scene": "backprop",
+      "url": "https://iliskhan.github.io/rust_ml/animations/backprop/backprop.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 224375,
+      "public_bytes": 224375,
+      "passed": true
+    },
+    {
+      "scene": "bce",
+      "url": "https://iliskhan.github.io/rust_ml/animations/bce/bce.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 36868,
+      "public_bytes": 36868,
+      "passed": true
+    },
+    {
+      "scene": "boundary",
+      "url": "https://iliskhan.github.io/rust_ml/animations/boundary/boundary.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 84525,
+      "public_bytes": 84525,
+      "passed": true
+    },
+    {
+      "scene": "bpe",
+      "url": "https://iliskhan.github.io/rust_ml/animations/bpe/bpe.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 350010,
+      "public_bytes": 350010,
+      "passed": true
+    },
+    {
+      "scene": "bptt",
+      "url": "https://iliskhan.github.io/rust_ml/animations/bptt/bptt.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 138862,
+      "public_bytes": 138862,
+      "passed": true
+    },
+    {
+      "scene": "clip",
+      "url": "https://iliskhan.github.io/rust_ml/animations/clip/clip.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 91197,
+      "public_bytes": 91197,
+      "passed": true
+    },
+    {
+      "scene": "cnnforward",
+      "url": "https://iliskhan.github.io/rust_ml/animations/cnnforward/cnnforward.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 203925,
+      "public_bytes": 203925,
+      "passed": true
+    },
+    {
+      "scene": "cnntraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/cnntraining/cnntraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 129001,
+      "public_bytes": 129001,
+      "passed": true
+    },
+    {
+      "scene": "crossmask",
+      "url": "https://iliskhan.github.io/rust_ml/animations/crossmask/crossmask.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 204400,
+      "public_bytes": 204400,
+      "passed": true
+    },
+    {
+      "scene": "dense",
+      "url": "https://iliskhan.github.io/rust_ml/animations/dense/dense.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 188854,
+      "public_bytes": 188854,
+      "passed": true
+    },
+    {
+      "scene": "descent",
+      "url": "https://iliskhan.github.io/rust_ml/animations/descent/descent.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 131244,
+      "public_bytes": 131244,
+      "passed": true
+    },
+    {
+      "scene": "diffusionforward",
+      "url": "https://iliskhan.github.io/rust_ml/animations/diffusionforward/diffusionforward.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 41026,
+      "public_bytes": 41026,
+      "passed": true
+    },
+    {
+      "scene": "diffusionguidance",
+      "url": "https://iliskhan.github.io/rust_ml/animations/diffusionguidance/diffusionguidance.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 37000,
+      "public_bytes": 37000,
+      "passed": true
+    },
+    {
+      "scene": "diffusionreverse",
+      "url": "https://iliskhan.github.io/rust_ml/animations/diffusionreverse/diffusionreverse.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 39874,
+      "public_bytes": 39874,
+      "passed": true
+    },
+    {
+      "scene": "diffusionsampling",
+      "url": "https://iliskhan.github.io/rust_ml/animations/diffusionsampling/diffusionsampling.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 78744,
+      "public_bytes": 78744,
+      "passed": true
+    },
+    {
+      "scene": "diffusiontraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/diffusiontraining/diffusiontraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 68206,
+      "public_bytes": 68206,
+      "passed": true
+    },
+    {
+      "scene": "dpo",
+      "url": "https://iliskhan.github.io/rust_ml/animations/dpo/dpo.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 55999,
+      "public_bytes": 55999,
+      "passed": true
+    },
+    {
+      "scene": "egnn",
+      "url": "https://iliskhan.github.io/rust_ml/animations/egnn/egnn.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 68810,
+      "public_bytes": 68810,
+      "passed": true
+    },
+    {
+      "scene": "embeddings",
+      "url": "https://iliskhan.github.io/rust_ml/animations/embeddings/embeddings.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 141930,
+      "public_bytes": 141930,
+      "passed": true
+    },
+    {
+      "scene": "exactsoftmax",
+      "url": "https://iliskhan.github.io/rust_ml/animations/exactsoftmax/exactsoftmax.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 190853,
+      "public_bytes": 190853,
+      "passed": true
+    },
+    {
+      "scene": "flowmatching",
+      "url": "https://iliskhan.github.io/rust_ml/animations/flowmatching/flowmatching.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 69254,
+      "public_bytes": 69254,
+      "passed": true
+    },
+    {
+      "scene": "gandiversity",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gandiversity/gandiversity.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 79726,
+      "public_bytes": 79726,
+      "passed": true
+    },
+    {
+      "scene": "ganforward",
+      "url": "https://iliskhan.github.io/rust_ml/animations/ganforward/ganforward.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 111387,
+      "public_bytes": 111387,
+      "passed": true
+    },
+    {
+      "scene": "ganobjectives",
+      "url": "https://iliskhan.github.io/rust_ml/animations/ganobjectives/ganobjectives.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 36102,
+      "public_bytes": 36102,
+      "passed": true
+    },
+    {
+      "scene": "gantraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gantraining/gantraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 72913,
+      "public_bytes": 72913,
+      "passed": true
+    },
+    {
+      "scene": "generation",
+      "url": "https://iliskhan.github.io/rust_ml/animations/generation/generation.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 59455,
+      "public_bytes": 59455,
+      "passed": true
+    },
+    {
+      "scene": "gnnadjacency",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gnnadjacency/gnnadjacency.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 43114,
+      "public_bytes": 43114,
+      "passed": true
+    },
+    {
+      "scene": "gnndepth",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gnndepth/gnndepth.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 84452,
+      "public_bytes": 84452,
+      "passed": true
+    },
+    {
+      "scene": "gnnmessage",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gnnmessage/gnnmessage.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 42023,
+      "public_bytes": 42023,
+      "passed": true
+    },
+    {
+      "scene": "gnntraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gnntraining/gnntraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 43914,
+      "public_bytes": 43914,
+      "passed": true
+    },
+    {
+      "scene": "gnnvariants",
+      "url": "https://iliskhan.github.io/rust_ml/animations/gnnvariants/gnnvariants.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 54849,
+      "public_bytes": 54849,
+      "passed": true
+    },
+    {
+      "scene": "heads",
+      "url": "https://iliskhan.github.io/rust_ml/animations/heads/heads.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 223471,
+      "public_bytes": 223471,
+      "passed": true
+    },
+    {
+      "scene": "imagedenoisertraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/imagedenoisertraining/imagedenoisertraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 159678,
+      "public_bytes": 159678,
+      "passed": true
+    },
+    {
+      "scene": "jepa",
+      "url": "https://iliskhan.github.io/rust_ml/animations/jepa/jepa.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 61901,
+      "public_bytes": 61901,
+      "passed": true
+    },
+    {
+      "scene": "kan",
+      "url": "https://iliskhan.github.io/rust_ml/animations/kan/kan.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 148768,
+      "public_bytes": 148768,
+      "passed": true
+    },
+    {
+      "scene": "longcontext",
+      "url": "https://iliskhan.github.io/rust_ml/animations/longcontext/longcontext.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 106641,
+      "public_bytes": 106641,
+      "passed": true
+    },
+    {
+      "scene": "lora",
+      "url": "https://iliskhan.github.io/rust_ml/animations/lora/lora.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 181829,
+      "public_bytes": 181829,
+      "passed": true
+    },
+    {
+      "scene": "maskedtext",
+      "url": "https://iliskhan.github.io/rust_ml/animations/maskedtext/maskedtext.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 53335,
+      "public_bytes": 53335,
+      "passed": true
+    },
+    {
+      "scene": "mla",
+      "url": "https://iliskhan.github.io/rust_ml/animations/mla/mla.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 173006,
+      "public_bytes": 173006,
+      "passed": true
+    },
+    {
+      "scene": "moe",
+      "url": "https://iliskhan.github.io/rust_ml/animations/moe/moe.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 168135,
+      "public_bytes": 168135,
+      "passed": true
+    },
+    {
+      "scene": "moetraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/moetraining/moetraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 224755,
+      "public_bytes": 224755,
+      "passed": true
+    },
+    {
+      "scene": "mse",
+      "url": "https://iliskhan.github.io/rust_ml/animations/mse/mse.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 36416,
+      "public_bytes": 36416,
+      "passed": true
+    },
+    {
+      "scene": "neuralfield",
+      "url": "https://iliskhan.github.io/rust_ml/animations/neuralfield/neuralfield.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 80019,
+      "public_bytes": 80019,
+      "passed": true
+    },
+    {
+      "scene": "neuron",
+      "url": "https://iliskhan.github.io/rust_ml/animations/neuron/neuron.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 141434,
+      "public_bytes": 141434,
+      "passed": true
+    },
+    {
+      "scene": "outputtraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/outputtraining/outputtraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 202981,
+      "public_bytes": 202981,
+      "passed": true
+    },
+    {
+      "scene": "qlora",
+      "url": "https://iliskhan.github.io/rust_ml/animations/qlora/qlora.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 53711,
+      "public_bytes": 53711,
+      "passed": true
+    },
+    {
+      "scene": "recurrent",
+      "url": "https://iliskhan.github.io/rust_ml/animations/recurrent/recurrent.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 162267,
+      "public_bytes": 162267,
+      "passed": true
+    },
+    {
+      "scene": "rlbellman",
+      "url": "https://iliskhan.github.io/rust_ml/animations/rlbellman/rlbellman.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 96514,
+      "public_bytes": 96514,
+      "passed": true
+    },
+    {
+      "scene": "rlpolicy",
+      "url": "https://iliskhan.github.io/rust_ml/animations/rlpolicy/rlpolicy.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 53823,
+      "public_bytes": 53823,
+      "passed": true
+    },
+    {
+      "scene": "rlqlearning",
+      "url": "https://iliskhan.github.io/rust_ml/animations/rlqlearning/rlqlearning.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 54991,
+      "public_bytes": 54991,
+      "passed": true
+    },
+    {
+      "scene": "rltransition",
+      "url": "https://iliskhan.github.io/rust_ml/animations/rltransition/rltransition.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 33889,
+      "public_bytes": 33889,
+      "passed": true
+    },
+    {
+      "scene": "rope",
+      "url": "https://iliskhan.github.io/rust_ml/animations/rope/rope.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 184424,
+      "public_bytes": 184424,
+      "passed": true
+    },
+    {
+      "scene": "sampling",
+      "url": "https://iliskhan.github.io/rust_ml/animations/sampling/sampling.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 141271,
+      "public_bytes": 141271,
+      "passed": true
+    },
+    {
+      "scene": "speculative",
+      "url": "https://iliskhan.github.io/rust_ml/animations/speculative/speculative.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 55937,
+      "public_bytes": 55937,
+      "passed": true
+    },
+    {
+      "scene": "ssm",
+      "url": "https://iliskhan.github.io/rust_ml/animations/ssm/ssm.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 221186,
+      "public_bytes": 221186,
+      "passed": true
+    },
+    {
+      "scene": "ssmtraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/ssmtraining/ssmtraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 85914,
+      "public_bytes": 85914,
+      "passed": true
+    },
+    {
+      "scene": "superposition",
+      "url": "https://iliskhan.github.io/rust_ml/animations/superposition/superposition.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 72596,
+      "public_bytes": 72596,
+      "passed": true
+    },
+    {
+      "scene": "swiglu",
+      "url": "https://iliskhan.github.io/rust_ml/animations/swiglu/swiglu.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 179806,
+      "public_bytes": 179806,
+      "passed": true
+    },
+    {
+      "scene": "tinytraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/tinytraining/tinytraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 164793,
+      "public_bytes": 164793,
+      "passed": true
+    },
+    {
+      "scene": "transformerblock",
+      "url": "https://iliskhan.github.io/rust_ml/animations/transformerblock/transformerblock.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 169034,
+      "public_bytes": 169034,
+      "passed": true
+    },
+    {
+      "scene": "transformerforward",
+      "url": "https://iliskhan.github.io/rust_ml/animations/transformerforward/transformerforward.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 176638,
+      "public_bytes": 176638,
+      "passed": true
+    },
+    {
+      "scene": "unetdit",
+      "url": "https://iliskhan.github.io/rust_ml/animations/unetdit/unetdit.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 290426,
+      "public_bytes": 290426,
+      "passed": true
+    },
+    {
+      "scene": "vaeelbo",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vaeelbo/vaeelbo.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 49355,
+      "public_bytes": 49355,
+      "passed": true
+    },
+    {
+      "scene": "vaegeneration",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vaegeneration/vaegeneration.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 71343,
+      "public_bytes": 71343,
+      "passed": true
+    },
+    {
+      "scene": "vaeposterior",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vaeposterior/vaeposterior.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 71163,
+      "public_bytes": 71163,
+      "passed": true
+    },
+    {
+      "scene": "vaetraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vaetraining/vaetraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 29292,
+      "public_bytes": 29292,
+      "passed": true
+    },
+    {
+      "scene": "vit",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vit/vit.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 174330,
+      "public_bytes": 174330,
+      "passed": true
+    },
+    {
+      "scene": "vittraining",
+      "url": "https://iliskhan.github.io/rust_ml/animations/vittraining/vittraining.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 69147,
+      "public_bytes": 69147,
+      "passed": true
+    },
+    {
+      "scene": "xor",
+      "url": "https://iliskhan.github.io/rust_ml/animations/xor/xor.mp4",
+      "status": 200,
+      "content_type": "video/mp4",
+      "expected_bytes": 157214,
+      "public_bytes": 157214,
+      "passed": true
+    }
+  ]
+}

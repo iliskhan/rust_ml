@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-10-16T20:43:15.039Z",
+  "code_revision": "63930f3bc890059e4afb96db145cc8cf395c9030",
+  "observation": {
+    "autoplay": false,
+    "captions": [
+      "disabled"
+    ],
+    "duration": 44.033333,
+    "height": 720,
+    "paused": true,
+    "src": "https://iliskhan.github.io/rust_ml/animations/neuron/neuron.mp4",
+    "time": 0,
+    "width": 1280
+  },
+  "console": [],
+  "input_limitation": "Chapter click did not change currentTime; click acceptance remains limited. Actual final poster and 720p metadata observed."
+}
