@@ -1,4 +1,4 @@
-learning-lab\animations\neuron\neuron.py: NeuronActivation, 44.00 s, 38 plays
+learning-lab\animations\neuron\neuron.py: NeuronActivation, 44.00 s, 39 plays
 storyboard: work\backprop-pilot\neuron-inspect.png, work\backprop-pilot\neuron-inspect-2.png, work\backprop-pilot\neuron-inspect-3.png
   #0   0.00– 0.60s  neuron.py:52  FadeIn(Text 'Нейрон: от входов к выходу')
   #1   0.60– 1.40s  neuron.py:53  Write(MathTex 'x_1=1,\\quad w_1=1')
@@ -28,14 +28,15 @@ storyboard: work\backprop-pilot\neuron-inspect.png, work\backprop-pilot\neuron-i
   #25 26.00–26.60s  neuron.py:126  FadeIn(Text 'Меняем только смещение')
   #26 26.60–27.40s  neuron.py:127  FadeIn(MathTex 'b:0\\longrightarrow 2')
   #27 27.40–29.00s  neuron.py:128  wait
-  #28 29.00–30.20s  neuron.py:129  ReplacementTransform(MathTex 'z=-1\\quad a=0'), Dot.animate.move_to(…).set_color(…), ReplacementTransform(MathTex 'b:0\\longrightarrow 2')
-  #29 30.20–32.00s  neuron.py:132  wait
-  #30 32.00–32.60s  neuron.py:133  Create(Group)
-  #31 32.60–33.40s  neuron.py:135  ReplacementTransform(Text 'Меняем только смещение')
-  #32 33.40–37.40s  neuron.py:136  wait
-  #33 37.40–38.00s  neuron.py:137  FadeOut(MathTex 'a=\\max(0,z)'), FadeOut(MathTex 'z=1\\quad a=1'), FadeOut(MathTex '1+(-2)+2=1'), FadeOut(Group), FadeOut(Dot), FadeOut(Group), FadeOut(Text 'При z > 0 выход равен z')
-  #34 38.00–38.60s  neuron.py:144  FadeIn(Text 'Те же входы и веса. Меняем b'), FadeIn(Text 'Когда выход будет больше ну…')
-  #35 38.60–40.80s  neuron.py:145  wait
-  #36 40.80–41.40s  neuron.py:146  FadeIn(Text 'Предскажите и проверьте в л…')
-  #37 41.40–44.00s  neuron.py:147  wait
-layout: no problems in 13 samples
+  #28 29.00–29.60s  neuron.py:132  Dot.animate.move_to(…)
+  #29 29.60–30.20s  neuron.py:133  Dot.animate.move_to(…).set_color(…)
+  #30 30.20–32.00s  neuron.py:137  wait
+  #31 32.00–32.60s  neuron.py:138  Create(Group)
+  #32 32.60–33.40s  neuron.py:140  ReplacementTransform(Text 'Меняем только смещение')
+  #33 33.40–37.40s  neuron.py:141  wait
+  #34 37.40–38.00s  neuron.py:142  FadeOut(MathTex 'a=\\max(0,z)'), FadeOut(MathTex 'z=1\\quad a=1'), FadeOut(MathTex '1+(-2)+2=1'), FadeOut(Group), FadeOut(Dot), FadeOut(Group), FadeOut(Text 'При z > 0 выход равен z')
+  #35 38.00–38.60s  neuron.py:149  FadeIn(Text 'Те же входы и веса. Меняем b'), FadeIn(Text 'Когда выход будет больше ну…')
+  #36 38.60–40.80s  neuron.py:150  wait
+  #37 40.80–41.40s  neuron.py:151  FadeIn(Text 'Предскажите и проверьте в л…')
+  #38 41.40–44.00s  neuron.py:152  wait
+layout: no problems in 16 samples

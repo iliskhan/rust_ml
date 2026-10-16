@@ -10,10 +10,12 @@
 U02/U04/U05/U07/U08. Фиксированные примеры экспортированы из `linear`/`activate`
 и `projectTokens`/`attentionTrace`; существующие лаборатории сохраняются.
 Сцены44/50с720p30, русские VTT и общий player готовы;38/38 численных и
-регрессионных тестов, typecheck/build и inspect13/14 кадров PASS.
+регрессионных тестов, typecheck/build и inspect16/14 кадров PASS.
 Chrome desktop1440/mobile390/320 и production preview `/rust_ml/` проверены:
 главы, captions, pause, fallback/retry, возврат к лабораториям и backprop.
-Commit/push и CI/Pages впереди. [Приёмка и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
+Первый commit1c8b3dd отправлен, CI/Pages SUCCESS. Дополнительная проверка
+исправила путь точки ReLU через0; новый ролик проверен, доставка исправления
+в работе. [Приёмка и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
 Просмотр не засчитывает освоение; весь B12/U00/U07 этим срезом не закрывается.
 
 ## Пилот ManimGX backprop — готово, 2026-10-16

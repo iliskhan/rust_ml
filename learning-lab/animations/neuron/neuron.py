@@ -126,9 +126,14 @@ class NeuronActivation(m.Scene):
         self.play(m.FadeIn(title), run_time=0.6)
         self.play(m.FadeIn(bias), run_time=0.8)
         self.wait(1.6)
-        self.play(m.ReplacementTransform(answer, positive),
-                  marker.animate.move_to(point(final["z"], final["output"])).set_color(RESULT),
-                  m.ReplacementTransform(bias, relation), run_time=1.2)
+        # Hide endpoint numbers while moving. Each segment stays on ReLU;
+        # final numbers appear only after the marker reaches the final state.
+        self.remove(answer)
+        self.play(marker.animate.move_to(point(0, 0)), run_time=0.6)
+        self.play(marker.animate.move_to(point(final["z"], final["output"])).set_color(RESULT),
+                  run_time=0.6)
+        self.remove(bias)
+        self.add(positive, relation)
         self.wait(1.8)
         self.play(m.Create(guide), run_time=0.6)
         branch = text("При z > 0 выход равен z", y=3.05, size=66, color=RESULT)

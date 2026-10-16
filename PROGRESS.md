@@ -15,7 +15,10 @@ Attention inspect14 кадров PASS, финальный MP450с720p30/poster40
 Chrome desktop1440/mobile390/320: главы/keyboard, pause/возврат/текст,
 fallback/retry, живые расчёты; production preview `/rust_ml/` и backprop PASS.
 [Полные свидетельства и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
-Следующий шаг: commit/push, CI/Pages и публичная сверка двух новых роликов.
+Первый commit1c8b3dd local=remote; CI38911718961/Pages38911719216 SUCCESS.
+Дополнительно исправлена траектория точки ReLU: два участка через0 вместо
+прямой над графиком. Финальный inspect16 кадров, включая29.3/29.6/29.9s,
+PASS; новый ролик создан. Осталось отправить исправление и сверить публикацию.
 
 ### Пилот ManimGX backprop — 2026-10-16
 

@@ -1,8 +1,8 @@
 [
   {
     "path": "learning-lab/animations/neuron/neuron.py",
-    "bytes": 7823,
-    "sha256": "32546b2193d6ff27718efb40d269ca88fc56b93fbd80703fec6dc457ab256dd8"
+    "bytes": 8035,
+    "sha256": "82e329cb69408f353a85e856f92824314b13656e593cc3a43bb3b81698c8a9ba"
   },
   {
     "path": "learning-lab/animations/neuron/fixture.json",
@@ -41,8 +41,8 @@
   },
   {
     "path": "learning-lab/public/animations/neuron/neuron.mp4",
-    "bytes": 509070,
-    "sha256": "4bdd37daa22c02fa4d78ec697b85586f512f95d0f63363f01fe8ce546570de3d"
+    "bytes": 475909,
+    "sha256": "5405ae69bb34b4a75086115da48e354ea18aef60c2855e6ec9f18aea64b7b896"
   },
   {
     "path": "learning-lab/public/animations/neuron/poster.png",
