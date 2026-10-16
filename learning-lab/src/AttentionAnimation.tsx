@@ -2,6 +2,7 @@ import type { RefObject } from 'react'
 import fixture from '../animations/attention/fixture.json'
 import { LessonAnimation } from './LessonAnimation'
 import { fmt } from './ui'
+import type { AnimationExampleControls } from './useAnimationExample'
 
 const chapters = [
   { title: 'Роли Q, K и V', start: 0, frame: 6 },
@@ -14,13 +15,16 @@ const vec = (values: number[]) => `[${values.map(value => fmt(value, 6)).join(';
 const row = fixture.queryIndex
 const trace = fixture.trace
 
-export function AttentionAnimation({ videoRef, query, causal, temperature }: {
+export function AttentionAnimation({ videoRef, query, causal, temperature, example }: {
   videoRef: RefObject<HTMLVideoElement | null>; query: number; causal: boolean; temperature: number
+  example: AnimationExampleControls
 }) {
   return <LessonAnimation videoRef={videoRef} media="attention" title="Как attention собирает одно сообщение"
     label="Attention: Q, K, V, причинная маска, softmax и смесь"
     description={<>Фиксированный пример: <strong>«кот · ест · рыбу», запрос 1 («ест»), causal-маска, деление на √2, T = 1</strong>. Настройки лаборатории не меняют ролик. Сейчас в лаборатории: запрос {query} («{fixture.tokens[query]}»), causal {causal ? 'включён' : 'выключен'}, T = {fmt(temperature)}.</>}
-    chapters={chapters} target="attention-controls" jumpLabel="Разобрать свой attention ↓">
+    chapters={chapters} target="attention-controls" jumpLabel="Разобрать свой attention ↓" example={example}
+    question={{ time: 21.8, question: 'Какой вес получит будущий ключ 2 для запроса 1 с causal-маской?', options: ['Нулевой', 'Самый большой', 'Одна треть'], correct: 0, explanation: 'Будущий score заменяется на −∞. Его экспонента и вес после softmax равны нулю.' }}
+    practice={{ question: 'Новый случай: у запроса 0 causal attention разрешает только ключ 0. Каковы веса трёх ключей?', options: ['[1; 0; 0]', '[⅓; ⅓; ⅓]', '[0; 0; 1]'], correct: 0, explanation: 'Единственный разрешённый ключ получает весь вес 1; будущее получает 0 независимо от исходных scores.' }}>
     <ol className="lesson-animation-transcript">
       <li><strong>Роли Q, K и V.</strong> Q = XWQ — запросы, K = XWK — ключи для сравнения, V = XWV — передаваемые значения. Для «ест» q₁ = {vec(trace.q[row])}. Это одна голова; слова служат подписями учебных векторов.</li>
       <li><strong>Скалярные произведения.</strong> q₁ сравниваем с каждым K: получаем {vec(trace.rawScores[row])}. Делим на √dₖ = √2: {vec(trace.scaledScores[row])}. Больший разрешённый score даст больший вес.</li>

@@ -1,7 +1,7 @@
 # Attention: scores, маска и смесь V
 
-Сцена `AttentionMixture` в `attention.py`: **50 секунд**, 2D, русский текст,
-без аудио. Продолжает стиль backprop pilot: конкретные числа, последовательное
+Сцена `AttentionMixture` в `attention.py`: **50 секунд**, 2D, русский текст
+и русская синтезированная озвучка. Продолжает стиль backprop pilot: конкретные числа, последовательное
 раскрытие, пауза для предсказания и переход к действию в лаборатории.
 Родитель B12; уточнения R01/R04/R06 и U02/U04/U05/U07/U08.
 Просмотр — разобранный пример, а не самостоятельная проверка.
@@ -69,6 +69,8 @@ python -m venv work/backprop-pilot/venv
 work/backprop-pilot/venv/Scripts/python.exe -m pip install -r learning-lab/animations/attention/requirements.txt
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/attention/attention.py learning-lab/animations/attention/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/attention/attention.py AttentionMixture -t 6,10,11.5,16,20,22.7,24,29,33,37,40,43.8,48,end -o work/backprop-pilot/attention-inspect.png
+learning-lab/animations/synthesize-narration.ps1 -Scenes attention
+work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py attention
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/attention/render-assets.py
 ```
 
@@ -80,7 +82,10 @@ GPU-рендеры и inspect запускать последовательно 
 переходы, субтитры, альтернативу и desktop/mobile поверхность.
 
 Исходная композиция, геометрия и текст созданы для RustML под лицензией
-проекта `MIT OR Apache-2.0`. Сторонних кадров, голоса и музыки нет.
+проекта `MIT OR Apache-2.0`. Сторонних кадров, записей голоса и музыки нет.
+Текущая русская речь синтезируется локально голосом Microsoft Irina Desktop
+через Windows SAPI по `narration.ru.json` и включается в MP4 как AAC.
+Подготовка WAV и общий pipeline: [README анимаций](../README.md#русская-озвучка).
 Лицензионные сведения о движке и native wheel сохранены в
 [backprop README](../backprop/README.md); wheel не включён в сайт.
 
@@ -98,6 +103,10 @@ GPU-рендеры и inspect запускать последовательно 
    Предскажите, как вес позиции 2 изменит обе координаты выхода, и проверьте.
 
 ## Проверки и передача — 2026-10-16
+
+Историческая запись ниже описывает прежний выпуск без аудио. Его проверки
+не подтверждают озвучку текущего выпуска; актуальная подготовка звука —
+в [общем pipeline](../README.md#русская-озвучка).
 
 Исходники и fixture подготовлены в основном checkout
 `C:/Users/lomaster/Desktop/dev/rust_ml`; использованы Node v24 из bundled

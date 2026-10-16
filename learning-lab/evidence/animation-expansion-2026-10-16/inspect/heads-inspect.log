@@ -1,0 +1,31 @@
+learning-lab\animations\heads\heads.py: AttentionHeads, 50.00 s, 28 plays
+storyboard: work\backprop-pilot\heads-inspect.png, work\backprop-pilot\heads-inspect-2.png
+  #0   0.00– 0.60s  heads.py:46  FadeIn(Text 'Четыре головы внимания'), FadeIn(Text 'Одна позиция 2 · causal att…'), FadeIn(Group)
+  #1   0.60– 1.40s  heads.py:47  FadeIn(Group), FadeIn(Text 'У каждой головы — свой отве…')
+  #2   1.40– 7.40s  heads.py:48  wait
+  #3   7.40– 8.00s  heads.py:49  FadeOut(Text 'Четыре головы внимания'), FadeOut(Text 'Одна позиция 2 · causal att…'), FadeOut(Text 'У каждой головы — свой отве…')
+  #4   8.00– 8.60s  heads.py:54  FadeIn(Text 'Склеиваем ответы: 4 × 2 = 8'), FadeIn(Text 'Concat сохраняет порядок го…')
+  #5   8.60– 9.40s  heads.py:57  Create(Group)
+  #6   9.40–14.80s  heads.py:58  wait
+  #7  14.80–15.40s  heads.py:60  ReplacementTransform(Text 'Concat сохраняет порядок го…')
+  #8  15.40–17.40s  heads.py:61  wait
+  #9  17.40–18.00s  heads.py:62  FadeOut(Text 'Склеиваем ответы: 4 × 2 = 8'), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(MathTex '[o_1\\mid o_2\\mid o_3\\mid o_…')
+  #10 18.00–18.60s  heads.py:69  FadeIn(Text 'Проекция возвращает ширину 4'), FadeIn(MathTex '(1\\times8)\\;W^O_{8\\times4}\\…')
+  #11 18.60–19.40s  heads.py:70  Write(MathTex 'o\\approx [0.551,\\,0.776,\\,0…'), FadeIn(Text 'Это проекция, а не усреднен…')
+  #12 19.40–25.40s  heads.py:71  wait
+  #13 25.40–26.00s  heads.py:72  FadeOut(Text 'Проекция возвращает ширину 4'), FadeOut(MathTex '(1\\times8)\\;W^O_{8\\times4}\\…'), FadeOut(MathTex 'o\\approx [0.551,\\,0.776,\\,0…'), FadeOut(Text 'Это проекция, а не усреднен…')
+  #14 26.00–26.60s  heads.py:78  FadeIn(Text 'Общие K/V: сколько запросов?'), FadeIn(Group), FadeIn(Group), FadeIn(Text 'MHA → GQA: 4 группы станут 2')
+  #15 26.60–31.60s  heads.py:79  wait
+  #16 31.60–32.00s  heads.py:80  FadeOut(Text 'Общие K/V: сколько запросов?'), FadeOut(Group), FadeOut(Text 'MHA → GQA: 4 группы станут 2')
+  #17 32.00–32.60s  heads.py:84  FadeIn(Text 'GQA: 4 запроса · 2 группы K…'), FadeIn(Group), FadeIn(Text 'Q1 и Q2 делят K/V, но имеют…')
+  #18 32.60–35.40s  heads.py:85  wait
+  #19 35.40–36.00s  heads.py:86  FadeOut(Text 'GQA: 4 запроса · 2 группы K…'), FadeOut(Group), FadeOut(Text 'Q1 и Q2 делят K/V, но имеют…')
+  #20 36.00–36.60s  heads.py:92  FadeIn(Text 'MQA: 4 запроса · 1 группа K…'), FadeIn(Group), FadeIn(Text 'Меньше K/V в кэше · по-преж…')
+  #21 36.60–40.00s  heads.py:93  wait
+  #22 40.00–40.60s  heads.py:94  FadeOut(Text 'MQA: 4 запроса · 1 группа K…'), FadeOut(Group), FadeOut(Group), FadeOut(Text 'Меньше K/V в кэше · по-преж…')
+  #23 40.60–41.20s  heads.py:99  FadeIn(Text 'Общие K/V не уравнивают веса'), FadeIn(Group)
+  #24 41.20–45.40s  heads.py:100  wait
+  #25 45.40–46.00s  heads.py:101  FadeOut(Text 'Общие K/V не уравнивают веса'), FadeOut(Group)
+  #26 46.00–46.60s  heads.py:107  FadeIn(Group)
+  #27 46.60–50.00s  heads.py:108  wait
+layout: no problems in 10 samples

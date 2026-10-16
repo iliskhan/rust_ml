@@ -1,0 +1,24 @@
+learning-lab\animations\xor\xor.py: XORNetwork, 50.00 s, 21 plays
+storyboard: work\backprop-pilot\xor-inspect.png, work\backprop-pilot\xor-inspect-2.png
+  #0   0.00– 0.60s  xor.py:55  FadeIn(Text 'Как устроен XOR?')
+  #1   0.60– 1.60s  xor.py:56  FadeIn(Group), FadeIn(Group)
+  #2   1.60– 9.40s  xor.py:57  wait
+  #3   9.40–10.00s  xor.py:58  FadeOut(Text 'Как устроен XOR?'), FadeOut(Group)
+  #4  10.00–10.80s  xor.py:64  FadeIn(Text 'Хватит ли одной прямой?'), FadeIn(Group)
+  #5  10.80–17.40s  xor.py:65  wait
+  #6  17.40–18.00s  xor.py:66  FadeOut(Text 'Хватит ли одной прямой?'), FadeOut(Group), FadeOut(Group)
+  #7  18.00–18.80s  xor.py:80  FadeIn(Text 'Одна прямая не разделит XOR'), FadeIn(Text 'Четыре нелинейных признака'), FadeIn(MathTex 'x=(0,1)')
+  #8  18.80–19.20s  xor.py:82  FadeIn(Group)
+  #9  19.20–19.60s  xor.py:82  FadeIn(Group)
+  #10 19.60–20.00s  xor.py:82  FadeIn(Group)
+  #11 20.00–20.40s  xor.py:82  FadeIn(Group)
+  #12 20.40–21.00s  xor.py:83  FadeIn(Group), FadeIn(Text 'Сумма + смещение +4.36 → si…')
+  #13 21.00–27.40s  xor.py:84  wait
+  #14 27.40–28.00s  xor.py:85  FadeOut(Text 'Одна прямая не разделит XOR'), FadeOut(Text 'Четыре нелинейных признака'), FadeOut(MathTex 'x=(0,1)'), FadeOut(Group), FadeOut(Text 'Сумма + смещение +4.36 → si…'), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group)
+  #15 28.00–28.80s  xor.py:96  FadeIn(Text 'Тысяча шагов Adam'), FadeIn(Group), FadeIn(Group), FadeIn(Group)
+  #16 28.80–30.00s  xor.py:97  FadeIn(Group)
+  #17 30.00–41.40s  xor.py:98  wait
+  #18 41.40–42.00s  xor.py:99  FadeOut(Text 'Тысяча шагов Adam'), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group)
+  #19 42.00–42.70s  xor.py:104  FadeIn(Group)
+  #20 42.70–50.00s  xor.py:105  wait
+layout: no problems in 10 samples

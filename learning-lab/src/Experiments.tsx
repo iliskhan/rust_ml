@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { createNetwork, createOptimizerState, networkLossGradient, optimizerStep, quadratic, XOR_DATA, type OptimizerKind, type OptimizerState } from './math';
 import { Chart, Exercise, Range, fmt } from './ui';
 import { ConceptLink, LearningActivity, useLearningActive } from './learning-context';
@@ -6,6 +6,8 @@ import { Scene3D } from './ThreeD';
 import { functionSurface, quadraticHeight, networkHeight } from './lessonSceneMath';
 import { LessonOutline } from './LessonOutline';
 import { PracticeSection } from './practice/PracticeCloudProvider';
+import { DescentAnimation, XorAnimation } from './FilmExamples';
+import { useAnimationExample } from './useAnimationExample';
 
 const NetworkFlow3D = lazy(() => import('./NetworkFlow3D').then(module => ({ default: module.NetworkFlow3D })));
 const DecisionBoundaryLesson = lazy(() => import('./DecisionBoundaryLesson').then(module => ({ default: module.DecisionBoundaryLesson })));
@@ -20,12 +22,16 @@ function makeTracks(): Record<OptimizerKind, Track> {
 }
 
 export function OptimizerLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const active = useLearningActive();
   const [sceneOpened, setSceneOpened] = useState(false);
   const [lr, setLr] = useState(.12), [momentum, setMomentum] = useState(.9);
   const [beta1, setBeta1] = useState(.9), [beta2, setBeta2] = useState(.999);
   const [tracks, setTracks] = useState(makeTracks), [running, setRunning] = useState(false);
   const [selected, setSelected] = useState<OptimizerKind>('adam');
+  const filmExample = useAnimationExample({ lr, momentum, beta1, beta2, tracks, selected }, value => {
+    setRunning(false); setLr(value.lr); setMomentum(value.momentum); setBeta1(value.beta1); setBeta2(value.beta2); setTracks(value.tracks); setSelected(value.selected);
+  }, { lr: .12, momentum: .9, beta1: .9, beta2: .999, tracks: makeTracks(), selected: 'sgd' });
   function step() {
     setTracks(previous => Object.fromEntries(kinds.map(kind => {
       const t = previous[kind];
@@ -49,8 +55,10 @@ export function OptimizerLesson() {
   return <>
     <p className="lesson-intro">Оптимизатор превращает <ConceptLink concept="gradient">градиент</ConceptLink> в изменение веса. Стохастический градиентный спуск (SGD), инерция (momentum) и Adam идут из одной точки по одной функции: L = ½(x² + 8y²). Здесь градиент вычисляется точно, без случайных мини-пакетов.</p>
     <p className="note">Разберите <ConceptLink concept="learning-rate">скорость обучения</ConceptLink> или отличие <ConceptLink concept="adamw">Adam от AdamW</ConceptLink>. При углублении или смене урока автоматические шаги останавливаются; продолжить можно кнопкой «Авто».</p>
+    <DescentAnimation videoRef={animationVideo} example={filmExample} onPlayback={() => setRunning(false)} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
     <div className="lab-grid">
-      <section className="panel"><h3>Общий эксперимент</h3>
+      <section className="panel"><h3 id="optimizer-controls" className="lesson-anchor" tabIndex={-1}>Общий эксперимент</h3>
         <Range label="Скорость обучения η" value={lr} min={.01} max={.4} step={.01} onChange={v => change(setLr, v)} />
         <details><summary>Инерция и оценки Adam</summary><div className="controls">
           <Range label="Momentum μ" value={momentum} min={0} max={.99} step={.01} onChange={v => change(setMomentum, v)} />
@@ -87,6 +95,7 @@ export function OptimizerLesson() {
     </section>
     <PracticeSection lessonId="optimizers" topicId={`unit.optimizer.${selected}`} />
     <Exercise question="У SGD градиент gₓ = −3, η = 0.1. Как изменится x?" options={['На −3', 'На +0.3', 'На −0.3']} correct={1} explanation="Обновление Δx = −ηgₓ = +0.3. Градиент указывает рост потери, шаг идёт в обратную сторону." />
+    </div>
   </>;
 }
 
@@ -96,12 +105,16 @@ function initialExperiment(seed: number) {
 }
 
 export function NetworkLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const active = useLearningActive();
   const [sceneOpened, setSceneOpened] = useState(false);
   const [flowOpen, setFlowOpen] = useState(false), [flowVisited, setFlowVisited] = useState(false);
   const [seed, setSeed] = useState(42), [lr, setLr] = useState(.03), [kind, setKind] = useState<OptimizerKind>('adam');
   const [experiment, setExperiment] = useState(() => initialExperiment(42)), [running, setRunning] = useState(false);
   const [sample, setSample] = useState(1), [hiddenNode, setHiddenNode] = useState(0);
+  const filmExample = useAnimationExample({ seed, lr, kind, experiment, sample, hiddenNode }, value => {
+    setRunning(false); setSeed(value.seed); setLr(value.lr); setKind(value.kind); setExperiment(value.experiment); setSample(value.sample); setHiddenNode(value.hiddenNode);
+  }, { seed: 42, lr: .03, kind: 'adam', experiment: initialExperiment(42), sample: 1, hiddenNode: 0 });
   const pauseTraining = useCallback(() => setRunning(false), []);
   const { state, history } = experiment, result = networkLossGradient(state.params);
   function train(count: number) {
@@ -138,6 +151,8 @@ export function NetworkLesson() {
     <h3 id="network-xor" className="lesson-anchor network-xor-heading" tabIndex={-1}>Пошаговый пример: сеть XOR 2 → 4 → 1</h3>
     <p className="lesson-intro">Теперь весь цикл работает вместе: сеть 2 → 4 → 1 учится XOR — выдавать 1, когда два бита различаются. Четыре скрытых нейрона с tanh позволяют построить нелинейную границу. Каждый шаг: прямой проход, средняя <ConceptLink concept="cross-entropy">BCE от логитов</ConceptLink>, <ConceptLink concept="backpropagation">обратный проход</ConceptLink> и изменение всех 17 параметров.</p>
     <p className="note">Здесь все четыре примера участвуют в обучении. Для новой задачи нужны <ConceptLink concept="train-validation-test">раздельные выборки</ConceptLink> и <ConceptLink concept="evaluation">проверка качества</ConceptLink>. Углубление ставит автоматическое обучение на паузу и сохраняет веса.</p>
+    <XorAnimation videoRef={animationVideo} example={filmExample} onPlayback={pauseTraining} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
     <details className="panel" onToggle={event => {
       const open = event.currentTarget.open;
       setFlowOpen(open);
@@ -147,7 +162,7 @@ export function NetworkLesson() {
         <NetworkFlow3D state={state} kind={kind} lr={lr} sample={sample} onSample={setSample} onTrainStep={() => train(1)} onPause={pauseTraining} />
       </Suspense></LearningActivity>}
     </details>
-    <div className="lab-grid"><section className="panel"><h3>Обучите маленькую сеть</h3>
+    <div className="lab-grid"><section className="panel"><h3 id="xor-controls" className="lesson-anchor" tabIndex={-1}>Обучите маленькую сеть</h3>
       <div className="controls"><label>Начальное состояние (seed)<select value={seed} onChange={e => { const v = Number(e.target.value); setSeed(v); reset(v); }}>{[42, 7, 1, 1337].map(v => <option value={v} key={v}>{v}</option>)}</select></label>
       <label>Оптимизатор<select value={kind} onChange={e => { setKind(e.target.value as OptimizerKind); reset(); }}>{kinds.map(k => <option value={k} key={k}>{names[k]}</option>)}</select></label>
       <Range label="Скорость обучения η" value={lr} min={.005} max={.1} step={.005} onChange={v => { setLr(v); reset(); }} /></div>
@@ -168,5 +183,6 @@ export function NetworkLesson() {
     </details>
     <PracticeSection lessonId="network" topicId="unit.network.xor" />
     <Exercise question="После сброса с тем же seed и настройками что произойдёт?" options={['Другие начальные веса', 'Те же веса и траектория обучения', 'Потеря сразу станет нулевой']} correct={1} explanation="Seed воспроизводит начальные параметры. Данные, порядок и вычисления здесь тоже фиксированы, поэтому повторяется весь эксперимент." />
+    </div>
   </>;
 }

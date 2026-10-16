@@ -11,6 +11,7 @@ import { PracticeSection } from './practice/PracticeCloudProvider'
 import { NEURON_PRACTICE_START, MSE_PRACTICE_START, BACKPROP_PRACTICE_START, checkNeuronPractice, checkMsePractice, checkBackpropPractice } from './actionExerciseMath'
 import { BackpropAnimation } from './BackpropAnimation'
 import { NeuronAnimation } from './NeuronAnimation'
+import { useAnimationExample } from './useAnimationExample'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
@@ -23,6 +24,9 @@ export function NeuronLesson() {
   const [w2, setW2] = useState(-0.4)
   const [bias, setBias] = useState(0.5)
   const [kind, setKind] = useState<Activation>('relu')
+  const filmExample = useAnimationExample({ x1, x2, w1, w2, bias, kind }, value => {
+    setX1(value.x1); setX2(value.x2); setW1(value.w1); setW2(value.w2); setBias(value.bias); setKind(value.kind)
+  }, { x1: 1, x2: 2, w1: 1, w2: -1, bias: 0, kind: 'relu' })
   const z = x1 * w1 + x2 * w2 + bias
   const output = activate(z, kind)
   const derivative = activationDerivative(z, kind)
@@ -35,7 +39,7 @@ export function NeuronLesson() {
     <p className="lesson-intro">Нейрон объединяет признаки: умножает каждый вход на вес, прибавляет смещение и применяет активацию. Вес задаёт влияние признака; смещение сдвигает границу реакции.</p>
     <p className="note">Входы образуют <ConceptLink concept="vector">вектор</ConceptLink>. Взвешенная сумма — это <ConceptLink concept="dot-product">скалярное произведение</ConceptLink>, а чувствительность выхода описывает <ConceptLink concept="derivative">производная</ConceptLink>.</p>
     <LessonOutline items={[{ id: 'neuron-controls', label: 'Собрать нейрон' }, { id: 'neuron-result', label: 'Разобрать результат' }, { id: 'neuron-activation', label: 'Активация и наклон' }, { id: 'neuron-batch', label: 'Пакет и слой' }]} />
-    <NeuronAnimation videoRef={animationVideo} z={z} output={output} activation={activationNames[kind]} />
+    <NeuronAnimation videoRef={animationVideo} z={z} output={output} activation={activationNames[kind]} example={filmExample} />
     <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
     <div className="lab-grid">
       <section className="panel">
@@ -205,6 +209,9 @@ export function BackpropLesson() {
   const [target, setTarget] = useState(1)
   const [step, setStep] = useState(0)
   const [epsilonPower, setEpsilonPower] = useState(-5)
+  const filmExample = useAnimationExample({ x, w, target, step, epsilonPower }, value => {
+    setX(value.x); setW(value.w); setTarget(value.target); setStep(value.step); setEpsilonPower(value.epsilonPower)
+  }, { x: 2, w: 3, target: 2, step: 0, epsilonPower: -5 })
   const graphRef = useRef<HTMLDivElement>(null)
   const [graphWidth, setGraphWidth] = useState(300)
   useEffect(() => {
@@ -241,13 +248,13 @@ export function BackpropLesson() {
   return <>
     <p className="lesson-intro"><ConceptLink concept="backpropagation">Обратное распространение</ConceptLink> вычисляет влияние каждого параметра на потерю. Если значение используется в двух ветвях, его <ConceptLink concept="gradient">градиент</ConceptLink> складывается из обоих путей — это ключ к правильному автодифференцированию.</p>
     <p className="note">Основа вычисления — <ConceptLink concept="chain-rule">правило цепочки</ConceptLink>. Внутри его разбора можно изучить производную, а затем вернуться к текущему шагу графа.</p>
-    <BackpropAnimation videoRef={animationVideo} x={x} w={w} target={target} />
+    <BackpropAnimation videoRef={animationVideo} x={x} w={w} target={target} example={filmExample} />
     <div className="lab-grid" onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
       <section className="panel">
         <h3>Один промежуточный узел, два пути</h3>
         <div className="controls">
           <Range label="Вход x" value={x} min={-2} max={2} step={0.1} onChange={value => resetOnChange(setX, value)} />
-          <Range label="Вес w" value={w} min={-2} max={2} step={0.1} onChange={value => resetOnChange(setW, value)} />
+          <Range label="Вес w" value={w} min={-3} max={3} step={0.1} onChange={value => resetOnChange(setW, value)} />
           <Range label="Цель y" value={target} min={-2} max={4} step={0.1} onChange={value => resetOnChange(setTarget, value)} />
         </div>
         <div className="formula">q = xw = ({fmt(x)})·({fmt(w)}) = {fmt(q)}<br />p = q² + q = {fmt(q * q)} + ({fmt(q)}) = {fmt(p)}<br />L = ½(p − y)² = ½({fmt(p)} − ({fmt(target)}))² = {fmt(loss)}</div>

@@ -2,8 +2,9 @@ import type { RefObject } from 'react'
 import { sharedGraph } from './math'
 import { fmt } from './ui'
 import { LessonAnimation } from './LessonAnimation'
+import type { AnimationExampleControls } from './useAnimationExample'
 
-const example = sharedGraph(2, 3, 2)
+const fixedExample = sharedGraph(2, 3, 2)
 const chapters = [
   { title: 'Прямой проход', start: 0, frame: 10 },
   { title: 'Предскажите два пути', start: 12, frame: 14 },
@@ -11,15 +12,18 @@ const chapters = [
   { title: 'Сложение и градиенты', start: 32, frame: 38 },
 ]
 
-export function BackpropAnimation({ videoRef, x, w, target }: {
+export function BackpropAnimation({ videoRef, x, w, target, example }: {
   videoRef: RefObject<HTMLVideoElement | null>; x: number; w: number; target: number
+  example: AnimationExampleControls
 }) {
-  const { values, gradients, qContributions } = example
+  const { values, gradients, qContributions } = fixedExample
   return <LessonAnimation videoRef={videoRef} className="backprop-animation" media="backprop"
     title="Почему в общем узле складываются градиенты"
     label="Обратный проход: два вклада в градиент общего узла"
     description={<>Короткая анимация: фиксированный пример <strong>x = 2, w = 3, y = 2</strong>. Ползунки лаборатории не меняют ролик. Сейчас в лаборатории: x = {fmt(x)}, w = {fmt(w)}, y = {fmt(target)}.</>}
-    chapters={chapters} target="backprop-walkthrough" jumpLabel="Разобрать свои числа по шагам ↓">
+    chapters={chapters} target="backprop-walkthrough" jumpLabel="Разобрать свои числа по шагам ↓" example={example}
+    question={{ time: 17, question: 'Две ветви зависят от q. Что делать с их обратными вкладами?', options: ['Сложить оба', 'Оставить только последний', 'Перемножить вклады'], correct: 0, explanation: 'Производная суммы равна сумме производных. Для общего q нужны оба пути: 480 + 40 = 520.' }}
+    practice={{ question: 'Новый случай: q = 2, p = q² + q, цель y = 1. Чему равен ∂L/∂q для L = ½(p−y)²?', options: ['5', '20', '25'], correct: 2, explanation: 'p = 6, ∂L/∂p = 5. Два пути дают 5·4 + 5·1 = 25.' }}>
       <ol className="lesson-animation-transcript">
         <li><strong>Прямой проход.</strong> x = 2 и w = 3 дают общий узел q = xw = 6. От него идут два пути: q² = 36 и q = 6. Их сумма p = 42; при цели y = 2 потеря L = ½(p − y)² = 800.</li>
         <li><strong>Локальные производные.</strong> ∂L/∂p = p − y = 40. У квадрата производная 2q = 12, у неизменённого q — 1. В каждой ветви умножаем производные вдоль пути.</li>

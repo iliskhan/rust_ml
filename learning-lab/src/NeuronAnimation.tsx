@@ -2,6 +2,7 @@ import type { RefObject } from 'react'
 import fixture from '../animations/neuron/fixture.json'
 import { LessonAnimation } from './LessonAnimation'
 import { fmt } from './ui'
+import type { AnimationExampleControls } from './useAnimationExample'
 
 const chapters = [
   { title: 'Входы и веса', start: 0, frame: 8 },
@@ -11,13 +12,16 @@ const chapters = [
   { title: 'Теперь ваша очередь', start: 38, frame: 41 },
 ]
 
-export function NeuronAnimation({ videoRef, z, output, activation }: {
+export function NeuronAnimation({ videoRef, z, output, activation, example }: {
   videoRef: RefObject<HTMLVideoElement | null>; z: number; output: number; activation: string
+  example: AnimationExampleControls
 }) {
   return <LessonAnimation videoRef={videoRef} media="neuron" title="Как смещение включает нейрон"
     label="Один нейрон: входы, веса, сумма и ReLU"
     description={<>Фиксированный пример: <strong>x = [1; 2], w = [1; −1], ReLU, b от 0 до 2</strong>. Ползунки лаборатории не меняют ролик. Сейчас в лаборатории: z = {fmt(z)}, a = {fmt(output)}, активация {activation}.</>}
-    chapters={chapters} target="neuron-controls" jumpLabel="Собрать свой нейрон ↓">
+    chapters={chapters} target="neuron-controls" jumpLabel="Собрать свой нейрон ↓" example={example}
+    question={{ time: 22.8, question: 'При z = −1 какой выход даст ReLU?', options: ['−1', '0', '1'], correct: 1, explanation: 'ReLU(−1) = max(0, −1) = 0. Отрицательная сумма не проходит дальше.' }}
+    practice={{ question: 'Новый случай: x = [2; −1], w = [0.5; 1], b = 0.5. Чему равен выход ReLU?', options: ['0', '0.5', '1.5'], correct: 1, explanation: 'z = 2·0.5 + (−1)·1 + 0.5 = 0.5. ReLU сохраняет это положительное значение.' }}>
     <ol className="lesson-animation-transcript">
       <li><strong>Входы и веса.</strong> Два входа x₁ = {fixture.inputs[0]}, x₂ = {fixture.inputs[1]} умножаем на веса w₁ = {fixture.weights[0]}, w₂ = {fixture.weights[1]}. Вес может усиливать вход или давать отрицательный вклад.</li>
       <li><strong>Сумма и смещение.</strong> x₁w₁ = {fmt(fixture.contributions[0])}, x₂w₂ = {fmt(fixture.contributions[1])}. Складываем произведения и смещение: z = 1 + (−2) + b. При b = {fixture.initial.bias} получаем z = {fixture.initial.z}.</li>

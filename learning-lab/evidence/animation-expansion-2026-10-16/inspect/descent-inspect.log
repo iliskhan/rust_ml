@@ -1,0 +1,26 @@
+learning-lab\animations\descent\descent.py: GradientDescent, 50.00 s, 23 plays
+storyboard: work\backprop-pilot\descent-inspect.png, work\backprop-pilot\descent-inspect-2.png
+  #0   0.00– 0.60s  descent.py:42  FadeIn(Text 'Как выбрать шаг?')
+  #1   0.60– 2.00s  descent.py:43  Create(Group), FadeIn(Dot), FadeIn(MathTex 'L=(x^2+8y^2)/2')
+  #2   2.00– 2.60s  descent.py:44  FadeIn(MathTex '(x,y)=(-3,1.5)'), FadeIn(Text 'Эллипс: одна потеря L')
+  #3   2.60– 9.40s  descent.py:45  wait
+  #4   9.40–10.00s  descent.py:46  FadeOut(Text 'Как выбрать шаг?'), FadeOut(MathTex 'L=(x^2+8y^2)/2'), FadeOut(MathTex '(x,y)=(-3,1.5)'), FadeOut(Text 'Эллипс: одна потеря L')
+  #5  10.00–10.80s  descent.py:52  FadeIn(Text 'Куда сдвинется y?'), FadeIn(Group)
+  #6  10.80–17.40s  descent.py:53  wait
+  #7  17.40–18.00s  descent.py:54  FadeOut(Text 'Куда сдвинется y?'), FadeOut(Group)
+  #8  18.00–18.80s  descent.py:63  FadeIn(Text 'Малый шаг и перелёт'), FadeIn(Group)
+  #9  18.80–20.00s  descent.py:64  Create(Line), Dot.animate.move_to(…)
+  #10 20.00–27.40s  descent.py:65  wait
+  #11 27.40–28.00s  descent.py:66  FadeOut(Text 'Малый шаг и перелёт'), FadeOut(Group), FadeOut(Line), FadeOut(Dot)
+  #12 28.00–28.60s  descent.py:78  FadeIn(Text 'Один старт, двадцать шагов'), FadeIn(Text 'η = 0.12 · μ = 0.9 · β₁ = 0…')
+  #13 28.60–30.00s  descent.py:80  Create(Group), FadeIn(Group)
+  #14 30.00–31.00s  descent.py:81  wait
+  #15 31.00–32.40s  descent.py:80  Create(Group), FadeIn(Group)
+  #16 32.40–33.40s  descent.py:81  wait
+  #17 33.40–34.80s  descent.py:80  Create(Group), FadeIn(Group)
+  #18 34.80–35.80s  descent.py:81  wait
+  #19 35.80–41.40s  descent.py:82  wait
+  #20 41.40–42.00s  descent.py:83  FadeOut(Text 'Один старт, двадцать шагов'), FadeOut(Text 'η = 0.12 · μ = 0.9 · β₁ = 0…'), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(Group)
+  #21 42.00–42.70s  descent.py:89  FadeIn(Group)
+  #22 42.70–50.00s  descent.py:90  wait
+layout: no problems in 10 samples

@@ -1,7 +1,7 @@
 # Один нейрон и активация ReLU
 
 Сцена `NeuronActivation` в `neuron.py`: **44,0 секунды**, русский текст,
-2D, без аудио. Родитель **B09**, уточнения R01/R04/R06 и U02/U04/U05/U07/U08.
+2D, с русской синтезированной озвучкой. Родитель **B09**, уточнения R01/R04/R06 и U02/U04/U05/U07/U08.
 Это разобранный пример и приглашение к действию; просмотр не засчитывается
 как самостоятельное решение. Пример совпадает с действием настройки ReLU
 в `NeuronLesson`: x=[1,2], w=[1,−1], сначала b=0, затем b=2.
@@ -18,8 +18,11 @@
 сверки с интерактивным уроком, в этой сцене они не объясняются.
 
 Авторские текст, геометрия и композиция распространяются под лицензией
-проекта `MIT OR Apache-2.0`. Сторонних кадров, персонажей, музыки или голоса
-нет. Устойчивые цвета: первый вклад — голубой, второй — золотой, смещение —
+проекта `MIT OR Apache-2.0`. Сторонних кадров, персонажей, музыки или записей
+голоса нет. Текущая речь синтезируется локально голосом Microsoft Irina Desktop
+через Windows SAPI по `narration.ru.json` и включается в MP4 как AAC.
+Подготовка WAV и общий pipeline: [README анимаций](../README.md#русская-озвучка).
+Устойчивые цвета: первый вклад — голубой, второй — золотой, смещение —
 фиолетовое, выход ReLU — зелёный. Цвет дублируется индексами, числами,
 положением и подписями. Нижняя полоса y < −1,8 отведена субтитрам и controls.
 Движение точки показывает изменение вычисленного состояния при изменении b.
@@ -37,6 +40,8 @@ Python ≥3.13; Pillow пишет PNG из кадра рендера, FFmpeg н�
 node learning-lab/animations/neuron/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/neuron/neuron.py learning-lab/animations/neuron/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/neuron/neuron.py NeuronActivation -t 3,8,12,15,20,22,24.5,28,31,34,37,41,end -o work/backprop-pilot/neuron-inspect.png
+learning-lab/animations/synthesize-narration.ps1 -Scenes neuron
+work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py neuron
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/neuron/render-assets.py
 ```
 
@@ -83,6 +88,10 @@ ReLU вычисляет a=max(0,z), поэтому выход a=0.
 примера условие a>0 означает b>1; при b=1 выход всё ещё нулевой.
 
 ## Проверка и продолжение — 2026-10-16
+
+Историческая запись ниже описывает прежний выпуск без аудио. Его проверки
+не подтверждают озвучку текущего выпуска; актуальная подготовка звука —
+в [общем pipeline](../README.md#русская-озвучка).
 
 Экспорт fixture, синтаксис Python и импорт `NeuronActivation` проверены
 в общем checkout RustML через bundled Node и `work/backprop-pilot/venv`.

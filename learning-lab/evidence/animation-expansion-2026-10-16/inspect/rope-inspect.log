@@ -1,0 +1,27 @@
+learning-lab\animations\rope\rope.py: RopeRotation, 50.00 s, 24 plays
+storyboard: work\backprop-pilot\rope-inspect.png, work\backprop-pilot\rope-inspect-2.png
+  #0   0.00– 0.60s  rope.py:45  FadeIn(Text 'RoPE поворачивает пары'), Create(Group)
+  #1   0.60– 1.40s  rope.py:46  Create(Arrow), Create(Arrow), FadeIn(Group)
+  #2   1.40– 7.40s  rope.py:47  wait
+  #3   7.40– 8.00s  rope.py:48  FadeOut(Group), FadeOut(Text 'RoPE поворачивает пары')
+  #4   8.00– 8.60s  rope.py:54  FadeIn(Text 'Q: позиция 1 · K: позиция 3'), FadeIn(Group)
+  #5   8.60–11.00s  rope.py:55  Rotate(Arrow), Rotate(Arrow)
+  #6  11.00–11.60s  rope.py:60  FadeIn(Group), FadeIn(Text 'Все 4 координаты Q и K')
+  #7  11.60–17.40s  rope.py:61  wait
+  #8  17.40–18.00s  rope.py:62  FadeOut(Text 'Q: позиция 1 · K: позиция 3'), FadeOut(Group)
+  #9  18.00–18.60s  rope.py:68  FadeIn(Text 'Сдвинем обе позиции на 2'), FadeIn(Group)
+  #10 18.60–25.40s  rope.py:69  wait
+  #11 25.40–26.00s  rope.py:70  FadeOut(Text 'Сдвинем обе позиции на 2'), FadeOut(Group), FadeOut(Group)
+  #12 26.00–26.60s  rope.py:76  FadeIn(Text 'Общий сдвиг сохраняет ответ'), FadeIn(Group)
+  #13 26.60–29.00s  rope.py:77  Rotate(Arrow), Rotate(Arrow)
+  #14 29.00–29.60s  rope.py:81  FadeIn(MathTex "Q'\\cdot K'\\approx -1.710"), FadeIn(Text 'Пара 2–3: в 100 раз медленн…')
+  #15 29.60–37.40s  rope.py:82  wait
+  #16 37.40–38.00s  rope.py:83  FadeOut(Text 'Общий сдвиг сохраняет ответ'), FadeOut(Group), FadeOut(MathTex "Q'\\cdot K'\\approx -1.710"), FadeOut(Text 'Пара 2–3: в 100 раз медленн…')
+  #17 38.00–38.60s  rope.py:89  FadeIn(Text 'Изменим только позицию K'), FadeIn(Group)
+  #18 38.60–40.40s  rope.py:90  Rotate(Arrow)
+  #19 40.40–41.00s  rope.py:92  FadeIn(MathTex "Q'\\cdot K'\\approx -0.710")
+  #20 41.00–45.40s  rope.py:93  wait
+  #21 45.40–46.00s  rope.py:94  FadeOut(Text 'Изменим только позицию K'), FadeOut(Group), FadeOut(MathTex "Q'\\cdot K'\\approx -0.710"), FadeOut(Text 'Все 4 координаты Q и K'), FadeOut(Group), FadeOut(Arrow), FadeOut(Arrow)
+  #22 46.00–46.60s  rope.py:101  FadeIn(Group)
+  #23 46.60–50.00s  rope.py:102  wait
+layout: no problems in 10 samples

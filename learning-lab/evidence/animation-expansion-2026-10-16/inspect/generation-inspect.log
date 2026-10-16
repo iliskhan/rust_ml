@@ -1,0 +1,29 @@
+learning-lab\animations\generation\generation.py: CachedGeneration, 50.00 s, 26 plays
+storyboard: work\backprop-pilot\generation-inspect.png, work\backprop-pilot\generation-inspect-2.png
+  #0   0.00– 0.60s  generation.py:40  FadeIn(Text 'Генерация: сохранить K и V'), FadeIn(Group)
+  #1   0.60– 1.40s  generation.py:41  FadeIn(Text 'x3'), FadeIn(Group)
+  #2   1.40– 7.40s  generation.py:42  wait
+  #3   7.40– 8.00s  generation.py:43  FadeOut(Text 'Генерация: сохранить K и V'), FadeOut(Group), FadeOut(Text 'x3'), FadeOut(Group)
+  #4   8.00– 8.60s  generation.py:51  FadeIn(Text 'Кэш после трёх позиций'), FadeIn(Group)
+  #5   8.60– 9.40s  generation.py:52  FadeIn(Group)
+  #6   9.40–17.40s  generation.py:53  wait
+  #7  17.40–18.00s  generation.py:54  FadeOut(Text 'Кэш после трёх позиций'), FadeOut(Group), FadeOut(Group)
+  #8  18.00–18.60s  generation.py:61  FadeIn(Text 'Пришёл вход позиции 3'), FadeIn(MathTex 'x_3=[-1.000,\\,0.500]'), FadeIn(Group)
+  #9  18.60–25.40s  generation.py:62  wait
+  #10 25.40–26.00s  generation.py:63  FadeOut(Text 'Пришёл вход позиции 3'), FadeOut(MathTex 'x_3=[-1.000,\\,0.500]'), FadeOut(Group)
+  #11 26.00–26.60s  generation.py:72  FadeIn(Text 'Старые K/V сохраняем'), FadeIn(Group), FadeIn(Group)
+  #12 26.60–28.00s  generation.py:73  wait
+  #13 28.00–28.80s  generation.py:74  FadeIn(Group)
+  #14 28.80–33.40s  generation.py:75  wait
+  #15 33.40–33.80s  generation.py:76  FadeOut(Text 'Старые K/V сохраняем')
+  #16 33.80–34.20s  generation.py:78  FadeIn(Text 'Новые Q/K вращаем на позици…')
+  #17 34.20–35.40s  generation.py:79  wait
+  #18 35.40–36.00s  generation.py:80  FadeOut(Text 'Новые Q/K вращаем на позици…'), FadeOut(Group), FadeOut(Group), FadeOut(Group)
+  #19 36.00–36.60s  generation.py:87  FadeIn(Text 'Ответ совпадает с полным ра…'), FadeIn(MathTex 'a_3\\approx[0.357,\\,0.106,\\,…')
+  #20 36.60–37.20s  generation.py:88  FadeIn(MathTex 'o_{cache}\\approx[0.152,\\,0.…')
+  #21 37.20–37.80s  generation.py:89  FadeIn(MathTex 'o_{full}\\approx[0.152,\\,0.4…')
+  #22 37.80–45.40s  generation.py:90  wait
+  #23 45.40–46.00s  generation.py:91  FadeOut(Text 'Ответ совпадает с полным ра…'), FadeOut(MathTex 'a_3\\approx[0.357,\\,0.106,\\,…'), FadeOut(MathTex 'o_{cache}\\approx[0.152,\\,0.…'), FadeOut(MathTex 'o_{full}\\approx[0.152,\\,0.4…')
+  #24 46.00–46.60s  generation.py:97  FadeIn(Group)
+  #25 46.60–50.00s  generation.py:98  wait
+layout: no problems in 9 samples

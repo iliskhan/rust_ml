@@ -17,6 +17,8 @@ import { ropePairPath, ropePairPoint } from './spatialSceneMath';
 import { AttentionGeometry } from './AttentionGeometry';
 import { selfAttentionChallenge } from './attentionGeometryMath';
 import { AttentionAnimation } from './AttentionAnimation';
+import { useAnimationExample } from './useAnimationExample';
+import { HeadsAnimation, RopeAnimation, GenerationAnimation } from './FilmExamples';
 
 const NormalizationGeometryLab = lazy(() => import('./NormalizationGeometryLab').then(module => ({ default: module.NormalizationGeometryLab })));
 const ResidualGradientLab = lazy(() => import('./ResidualGradientLab').then(module => ({ default: module.ResidualGradientLab })));
@@ -88,6 +90,11 @@ function AttentionLesson() {
   const [causal, setCausal] = useState(true), [scale, setScale] = useState(true), [temperature, setTemperature] = useState(1), [padding, setPadding] = useState(false);
   const [practiceStarted, setPracticeStarted] = useState(false);
   const [practiceResult, setPracticeResult] = useState<{ signature: string; passed: boolean; message: string } | null>(null);
+  const filmExample = useAnimationExample({ input, wq, wk, wv, step, query, key, causal, scale, temperature, padding, practiceStarted, practiceResult }, value => {
+    setInput(value.input); setWq(value.wq); setWk(value.wk); setWv(value.wv); setStep(value.step); setQuery(value.query); setKey(value.key);
+    setCausal(value.causal); setScale(value.scale); setTemperature(value.temperature); setPadding(value.padding);
+    setPracticeStarted(value.practiceStarted); setPracticeResult(value.practiceResult);
+  }, { input: SMALL_INPUT, wq: SMALL_PROJECTIONS.q, wk: SMALL_PROJECTIONS.k, wv: SMALL_PROJECTIONS.v, step: 0, query: 1, key: 0, causal: true, scale: true, temperature: 1, padding: false, practiceStarted: false, practiceResult: null });
   const trace = attentionTrace(projectTokens(input, wq), projectTokens(input, wk), projectTokens(input, wv), { causal, scale, temperature, allowedKeys: [true, true, !padding] });
   const practiceSignature = JSON.stringify([input, wq, wk, wv, query, causal, scale, temperature, padding]);
   const maximum = Math.max(...trace.scores[query]);
@@ -95,7 +102,7 @@ function AttentionLesson() {
   const entropy = -trace.weights[query].reduce((sum, p) => sum + (p ? p * Math.log(p) : 0), 0);
   return <>
     <LessonLead idea={<>Attention — смешивание сообщений. Q (query) задаёт запрос позиции; K (key) помогает оценить, насколько другая позиция подходит запросу; V (value) — числа, которые мы забираем. Q, K и V получаются из входа с помощью разных обучаемых матриц.</>} experiment={<>У позиции «кот» включите причинную маску: останется только её собственное сообщение. У последней позиции меняйте температуру, чтобы сравнить мягкую смесь и почти единственный выбор.</>} />
-    <AttentionAnimation videoRef={animationVideo} query={query} causal={causal} temperature={temperature} />
+    <AttentionAnimation videoRef={animationVideo} query={query} causal={causal} temperature={temperature} example={filmExample} />
     <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
     <div className="tc-columns"><section className="panel"><h4 id="attention-controls" className="lesson-anchor" tabIndex={-1}>Вход и настройки</h4><Grid label="X: три позиции × два признака" rows={TOKEN_LABELS} values={input} onChange={setInput} />
       <label>Чей запрос разбираем<select value={query} onChange={e => setQuery(Number(e.target.value))}>{TOKEN_LABELS.map((token, i) => <option key={i} value={i}>{i}: {token}</option>)}</select></label>
@@ -123,13 +130,20 @@ function AttentionLesson() {
 }
 
 function HeadsLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const [kvHeads, setKvHeads] = useState<1 | 2 | 4>(4), [head, setHead] = useState(0), [tokens, setTokens] = useState(4096);
   const [input, setInput] = useState<Matrix>(HEAD_INPUT.map(row => [...row]));
+  const filmExample = useAnimationExample({ kvHeads, head, tokens, input }, value => {
+    setKvHeads(value.kvHeads); setHead(value.head); setTokens(value.tokens); setInput(value.input);
+  }, { kvHeads: 4, head: 0, tokens: 4096, input: HEAD_INPUT });
   const trace = groupedAttention(input, kvHeads);
   const selected = trace.heads[head];
   const memoryMiB = kvCacheBytes(tokens, 32, kvHeads, 128) / 1024 ** 2;
   return <>
     <LessonLead idea={<>Одна голова строит одну смесь. Несколько голов делают это параллельно с разными проекциями. MQA и GQA сохраняют много запросов, но дают нескольким головам общие K и V, чтобы хранить меньше данных при генерации.</>} experiment={<>Переключите MHA → GQA → MQA. Число запросов остаётся 4. Выберите две головы одной группы: K/V одинаковы, но распределения внимания могут различаться.</>} />
+    <HeadsAnimation videoRef={animationVideo} example={filmExample} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+    <h4 id="heads-controls" className="lesson-anchor" tabIndex={-1}>Головы и группы K/V</h4>
     <div className="button-row" aria-label="Вариант multi-head attention">{([{ count: 4, name: 'MHA · 4 KV' }, { count: 2, name: 'GQA · 2 KV' }, { count: 1, name: 'MQA · 1 KV' }] as const).map(item => <button key={item.count} aria-pressed={kvHeads === item.count} onClick={() => setKvHeads(item.count)}>{item.name}</button>)}</div>
     <div className="tc-head-routes" aria-label="Как Q-головы используют группы K и V">{trace.heads.map((item, i) => <button key={i} className="tc-head-route" aria-pressed={head === i} onClick={() => setHead(i)} style={{ '--tc-group': ['#297f80', '#b75d24', '#6a52a0', '#2a7293'][item.group] } as CSSProperties}><strong>Q-голова {i + 1}</strong><span className="tc-route-line">↓</span><span>K/V-группа {item.group + 1}</span><small>Выход: {vec(item.output[2])}</small></button>)}</div>
     <div className="tc-columns"><section className="panel"><h4>Голова {head + 1}: запрос последней позиции</h4><ProbabilityBars values={selected.weights[2]} labels={TOKEN_LABELS} /><p>Q = {vec(selected.q[2])}; выход головы = {vec(selected.output[2])}.</p><Grid label={`K: общая группа ${selected.group + 1}`} values={selected.k} rows={TOKEN_LABELS} /><Grid label={`V: общая группа ${selected.group + 1}`} values={selected.v} rows={TOKEN_LABELS} /><details><summary>Вход и матрицы выбранной головы</summary><Grid label="X: редактируемый вход 3×4" values={input} onChange={setInput} /><Grid label={`WQ головы ${head + 1}`} values={QUERY_PROJECTIONS[head]} /><Grid label={`WK группы ${selected.group + 1}`} values={KEY_PROJECTIONS[selected.group]} /><Grid label={`WV группы ${selected.group + 1}`} values={VALUE_PROJECTIONS[selected.group]} /></details></section>
@@ -137,6 +151,7 @@ function HeadsLesson() {
       <h4>Оценка памяти KV-cache</h4><p>Отдельный пример размеров: 32 слоя, ширина головы 128, batch=1, по 2 байта на число. Число KV-голов взято из переключателя.</p><Range label="Токенов в контексте" value={tokens} min={512} max={32768} step={512} onChange={setTokens} /><p className="tc-answer">K и V: <strong>{fmt(memoryMiB, 1)} MiB</strong></p><p className="formula">2 × 32 × {tokens} × {kvHeads} × 128 × 2 байта</p><p className="note">Это только полезные данные K/V; веса, служебные буферы и накладные расходы не включены. Здесь MHA требует в {4 / kvHeads} раз больше KV-памяти, чем выбранный режим.</p>
     </section></div>
     <details><summary>Различия вариантов и честные ограничения</summary><table className="data-table"><thead><tr><th>Вариант</th><th>Ключи и значения</th><th>Что остаётся</th></tr></thead><tbody><tr><td>MHA</td><td>Свои K/V у каждой Q-головы</td><td>Максимум отдельных KV-проекций</td></tr><tr><td>GQA</td><td>Одна K/V-пара на группу Q-голов</td><td>Отдельные запросы и веса внимания</td></tr><tr><td>MQA</td><td>Одна K/V-пара для всех Q-голов</td><td>Все Q-головы сохраняются</td></tr></tbody></table><p>Модель здесь имеет d_model=4, четыре головы ширины 2 и Wᴼ:8×4. Такая размерность допустима; распространённый выбор d_model=h×d_head здесь намеренно не используется, чтобы показать итоговую проекцию. При переключении берутся первые 1, 2 или 4 фиксированные KV-проекции. Это демонстрация механизма, не преобразование обученного MHA-чекпойнта и не эксперимент по качеству. Сокращение памяти не означает равное сокращение всего времени расчёта.</p></details>
+    </div>
   </>;
 }
 
@@ -154,9 +169,13 @@ const RopePositionScene = memo(function RopePositionScene({ q, k, pair, queryPos
 }, (_previous, next) => !next.open);
 
 function RopeLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const [p, setP] = useState(1), [distance, setDistance] = useState(2), [shift, setShift] = useState(0), [pair, setPair] = useState(0);
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [q, setQ] = useState<Matrix>([[1, 0.5, 0.8, -0.4]]), [k, setK] = useState<Matrix>([[0.5, 1, -0.3, 0.9]]);
+  const filmExample = useAnimationExample({ p, distance, shift, pair, q, k }, value => {
+    setP(value.p); setDistance(value.distance); setShift(value.shift); setPair(value.pair); setQ(value.q); setK(value.k);
+  }, { p: 1, distance: 2, shift: 0, pair: 0, q: [[1, .5, .8, -.4]], k: [[.5, 1, -.3, .9]] });
   const rotatedQ = rope(q[0], p + shift), rotatedK = rope(k[0], p + distance + shift);
   const score = dotProduct(rotatedQ, rotatedK), baseScore = dotProduct(rope(q[0], p), rope(k[0], p + distance));
   const shown = [rotatedQ.slice(2 * pair, 2 * pair + 2), rotatedK.slice(2 * pair, 2 * pair + 2)];
@@ -165,10 +184,14 @@ function RopeLesson() {
   const id = useId().replace(/:/g, '');
   return <>
     <LessonLead idea={<>Порядок нужен, чтобы различить «кот ест рыбу» и «рыба ест кота». Позицию можно добавить к входу. RoPE делает другое: поворачивает пары координат Q и K. Их взаимный угол меняется с расстоянием между позициями.</>} experiment={<>Двигайте общий сдвиг: обе стрелки поворачиваются, а их скалярное произведение сохраняется. Измените расстояние — число изменится. Сравните быструю и медленную пару координат.</>} />
+    <RopeAnimation videoRef={animationVideo} example={filmExample} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+    <h4 id="rope-controls" className="lesson-anchor" tabIndex={-1}>Позиции и исходные векторы</h4>
     <div className="tc-columns"><section className="panel"><h4>Две позиции и две скорости вращения</h4><Range label="Базовая позиция запроса p" value={p} min={0} max={10} step={1} onChange={setP} /><Range label="Расстояние ключа Δ = m−p" value={distance} min={-10} max={10} step={1} onChange={setDistance} /><Range label="Общий сдвиг обеих позиций" value={shift} min={0} max={30} step={1} onChange={setShift} /><label>Пара координат<select value={pair} onChange={e => setPair(Number(e.target.value))}><option value={0}>0–1: угол = позиция</option><option value={1}>2–3: угол = позиция / 100</option></select></label><p>Позиции: Q={p + shift}, K={p + distance + shift}. Углы измеряются в радианах. Отрицательные позиции допустимы для этой математической демонстрации.</p><details><summary>Изменить исходные Q и K</summary><Grid label="Q до RoPE" values={q} onChange={setQ} /><Grid label="K до RoPE" values={k} onChange={setK} /></details></section>
     <section className="panel"><h4>Вращение пары {2 * pair}–{2 * pair + 1}</h4><svg className="tc-rope" viewBox="0 0 300 300" role="img" aria-label={`RoPE: Q ${vec(shown[0])}, K ${vec(shown[1])}. Полное скалярное произведение ${fmt(score)}.`}><defs>{['#287f80', '#b75d24'].map((color, i) => <marker key={color} id={`${id}-${i}`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill={color} /></marker>)}</defs><circle cx={center} cy={center} r={105} fill="none" stroke="currentColor" opacity="0.15" /><line x1="18" y1={center} x2="282" y2={center} stroke="currentColor" opacity="0.35" /><line x1={center} y1="18" x2={center} y2="282" stroke="currentColor" opacity="0.35" /><text x="280" y="171" textAnchor="end">x</text><text x="161" y="24">y</text>{shown.map((value, i) => <g key={i}><line x1={center} y1={center} x2={center + value[0] * scale} y2={center - value[1] * scale} stroke={i ? '#b75d24' : '#287f80'} strokeWidth="3" markerEnd={`url(#${id}-${i})`} /><circle cx={center + value[0] * scale} cy={center - value[1] * scale} r="3" fill={i ? '#b75d24' : '#287f80'} /></g>)}</svg><p className="tc-legend"><span>● Q — бирюзовая стрелка {vec(shown[0])}</span><span>● K — оранжевая стрелка {vec(shown[1])}</span></p><p className="tc-answer">Полный Q′·K′ = <strong>{fmt(score, 5)}</strong></p><p>Без общего сдвига: {fmt(baseScore, 5)}. Разница: {fmt(Math.abs(score - baseScore), 8)}.</p><p>Длина Q: {fmt(Math.hypot(...q[0]))} → {fmt(Math.hypot(...rotatedQ))}; длина K: {fmt(Math.hypot(...k[0]))} → {fmt(Math.hypot(...rotatedK))}.</p></section></div>
     <details onToggle={event => { setSceneOpen(event.currentTarget.open); if (event.currentTarget.open) setSceneVisited(true); }}><summary>3D: как пара RoPE вращается вдоль позиции</summary>{sceneVisited && <RopePositionScene q={q[0]} k={k[0]} pair={pair} queryPosition={p + shift} keyPosition={p + distance + shift} open={sceneOpen} />}</details>
     <details><summary>Точные формулы и отличие от добавления PE</summary><p className="formula">[x′; y′] = [x cos θ − y sin θ; x sin θ + y cos θ]<br />θᵢ(p)=p / 10000^(2i/d), d=4, i=0 или 1.<br />(Rₚq)ᵀ(Rₘk) = qᵀR₍ₘ₋ₚ₎k.</p><p>Для фиксированных исходных q и k общий сдвиг сокращается: остаётся относительное расстояние. Это не обещание, что вся модель с любыми масками и границами контекста инвариантна к сдвигу. В обычном варианте RoPE вращаются Q и K, а V не вращается. Вращение не делает score монотонно убывающим с расстоянием: даже одна пара даёт периодические значения.</p><Grid label={`Обычный добавляемый PE для позиций ${p}, ${p + distance}`} values={[sinusoidalPosition(p), sinusoidalPosition(p + distance)]} /><p>Синусоидальный PE складывают с embedding до Q/K/V-проекций. RoPE применяется к спроецированным Q/K внутри attention. Обучаемые абсолютные позиции и относительные bias, например в T5, — другие варианты; они здесь описаны, но не вычисляются.</p></details>
+    </div>
   </>;
 }
 
@@ -210,7 +233,11 @@ function FamiliesLesson() {
 
 const CACHE_INPUT = [[1, 0], [0, 1], [1, 1], [-1, 0.5], [0.25, -0.5], [0.5, 0.75]];
 function CacheLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const [length, setLength] = useState(3), [useCache, setUseCache] = useState(true), [rotary, setRotary] = useState(true);
+  const filmExample = useAnimationExample({ length, useCache, rotary }, value => {
+    setLength(value.length); setUseCache(value.useCache); setRotary(value.rotary);
+  }, { length: 3, useCache: true, rotary: true });
   const input = CACHE_INPUT.slice(0, length);
   let cached = cachedAttentionStep(input[0], undefined, rotary);
   let cache: KvCache = cached.cache;
@@ -220,9 +247,13 @@ function CacheLesson() {
   const error = Math.max(...selected.map((x, i) => Math.abs(x - (useCache ? full.output[length - 1][i] : cached.output[i]))));
   return <>
     <LessonLead idea={<>При генерации новый токен должен прочитать прошлое, но старые K и V уже вычислены. KV-cache — сохранённая таблица этих чисел для каждого слоя. Новая позиция дописывает одну строку и читает всю таблицу.</>} experiment={<>Добавляйте позиции по одной и переключайте кэш. Ответ последней позиции совпадёт. Посмотрите, сколько строк K/V пришлось бы заново вычислить без сохранения.</>} />
+    <GenerationAnimation videoRef={animationVideo} example={filmExample} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+    <h4 id="cache-controls" className="lesson-anchor" tabIndex={-1}>Префикс и настройки кэша</h4>
     <div className="tc-columns"><section className="panel"><h4>Шаг генерации в одной голове</h4><Range label="Префикс: сколько позиций уже поступило" value={length} min={1} max={6} step={1} onChange={setLength} /><div className="button-row"><button disabled={length === 1} onClick={() => setLength(length - 1)}>← Убрать позицию</button><button disabled={length === 6} onClick={() => setLength(length + 1)}>Добавить позицию →</button></div><label className="tc-check"><input type="checkbox" checked={useCache} onChange={e => setUseCache(e.target.checked)} />Использовать сохранённые K/V</label><label className="tc-check"><input type="checkbox" checked={rotary} onChange={e => setRotary(e.target.checked)} />RoPE с абсолютной позицией токена</label><Grid label="Входные векторы; последняя строка новая" values={input} selectedRow={length - 1} /><p className="tc-answer">Ответ новой позиции: <strong>{vec(selected, 5)}</strong></p><p>Максимальная разница cached/full: {fmt(error, 10)}.</p><ProbabilityBars values={cached.attention.weights[0]} labels={input.map((_, i) => `позиция ${i}`)} /></section>
     <section className="panel"><h4>{useCache ? 'Сохранить прошлое и дописать строку' : 'Заново спроецировать весь префикс'}</h4><div className="tc-cache-rows">{cache.keys.map((key, i) => <div className={i === length - 1 ? 'tc-cache-row tc-cache-new' : 'tc-cache-row'} key={i}><strong>t={i}</strong><span>K {vec(key)}</span><span>V {vec(cache.values[i])}</span><em>{i === length - 1 ? 'новая строка' : useCache ? 'сохранено' : 'пересчитано'}</em></div>)}</div><div className="tc-stat-pair"><div><span>K/V-пары для проекции на этом шаге</span><strong>{useCache ? 1 : length}</strong></div><div><span>Всего K/V-пар за {length} шагов</span><strong>{useCache ? length : length * (length + 1) / 2}</strong></div></div><p className="tc-observation">Даже с кэшем новый Q сравнивается со всеми {length} ключами. Кэш экономит пересчёт прошлого, а не отменяет чтение контекста.</p><p className="note">Счётчики — количество пар строк K/V, не миллисекунды и не полный FLOP-бюджет. Для проверки браузер вычисляет оба пути. Демонстрация содержит одну голову одного attention-подслоя без FFN и обучения.</p></section></div>
     <details><summary>Почему это работает и где перестаёт работать</summary><p>При causal attention старые позиции не зависят от новых. Поэтому при неизменных весах и префиксе их K/V на каждом слое остаются прежними. На первом проходе по длинному prompt (prefill) обрабатывают весь префикс; затем decode дописывает новые позиции. Здесь шаги начинаются с одного токена, чтобы видеть каждое добавление.</p><p>Если изменить уже обработанный токен, кэш зависимых последующих состояний нужно пересчитать. Обычный двусторонний encoder не допускает такого простого append-only-кэша: новый токен меняет доступный контекст старых позиций. Dropout при сравнении должен быть выключен; в настоящих вычислениях разные kernels могут давать малую погрешность округления.</p><p>При RoPE новый Q/K вращаются по настоящему номеру позиции {length - 1}, а старые ключи сохраняются уже повёрнутыми. Нельзя на каждом шаге начинать позицию с нуля. Для новой строки causal-маска должна учитывать длину кэша: ключи j ≤ past_length разрешены. Старые Q для обычного decode хранить не требуется.</p><p className="formula">Память K/V ≈ 2 × batch × layers × tokens × KV_heads × head_dim × bytes_per_value.</p></details>
+    </div>
   </>;
 }
 

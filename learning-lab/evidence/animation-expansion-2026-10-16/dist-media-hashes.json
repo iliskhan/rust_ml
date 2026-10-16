@@ -1,0 +1,122 @@
+[
+  {
+    "asset": "backprop/backprop.mp4",
+    "sha256": "908aa45d74f359af08ef1b4b830c3775d59fd234326bbd266cf26c60d38127e5",
+    "matches": true
+  },
+  {
+    "asset": "backprop/poster.png",
+    "sha256": "868717300686e1e262595b38c8faeabd6e823b340983b83b26aecc1f8f224567",
+    "matches": true
+  },
+  {
+    "asset": "backprop/captions.ru.vtt",
+    "sha256": "1163fd44cea932c7cbc3920dfea836213a2d8f952bb8a56ca69bd22638aea5d0",
+    "matches": true
+  },
+  {
+    "asset": "neuron/neuron.mp4",
+    "sha256": "fa9b2a8e3d1050fed6e7e6838d556d6f2bb0ea5967c3a0bc681fbf1145e5d055",
+    "matches": true
+  },
+  {
+    "asset": "neuron/poster.png",
+    "sha256": "7de8998d25e1b36218195655cd3ff20124c09715b9453c831d3da72329c0c813",
+    "matches": true
+  },
+  {
+    "asset": "neuron/captions.ru.vtt",
+    "sha256": "cb245576c1435c3e2a3f997d86e756954ca5f1b16a652e9fd407fa6ecdcf50ec",
+    "matches": true
+  },
+  {
+    "asset": "attention/attention.mp4",
+    "sha256": "c0c83beb5eaa4f8f581de0f58a128a4f646c4859995b1053daa4c601e03bac9f",
+    "matches": true
+  },
+  {
+    "asset": "attention/poster.png",
+    "sha256": "a0cfb17fb552c0e3acb0c6f13bca3c512809264b9a83adfa454d92d2db0d3849",
+    "matches": true
+  },
+  {
+    "asset": "attention/captions.ru.vtt",
+    "sha256": "847be111f09cf43e925528f5ee7cd1583a7cd1d2c54c5de76466e9c8f6298a6c",
+    "matches": true
+  },
+  {
+    "asset": "descent/descent.mp4",
+    "sha256": "a589e5a291365bb639335d474b4d9e496bfaad028a472a6e443c62c168c840c6",
+    "matches": true
+  },
+  {
+    "asset": "descent/poster.png",
+    "sha256": "e34301730254afe6a53fbe0378efea4bb05e1dfaadf5c0f85fd0fc5bcaa232f1",
+    "matches": true
+  },
+  {
+    "asset": "descent/captions.ru.vtt",
+    "sha256": "e34c169bd4fb8c49c9570336cc10a1f4309b78c61093bc239a9be3c8f0c748a3",
+    "matches": true
+  },
+  {
+    "asset": "xor/xor.mp4",
+    "sha256": "19e976d0514b0347ca72eccad762e2989dc2af4c279b1d11c077787c0a038318",
+    "matches": true
+  },
+  {
+    "asset": "xor/poster.png",
+    "sha256": "db4514cf6041b26129d6d6c19811146829cba1c96b1bdbe4977351b18355a3a6",
+    "matches": true
+  },
+  {
+    "asset": "xor/captions.ru.vtt",
+    "sha256": "761838a40cdb0dcf9f97b4542b13d46442eb5134ff5d249363ef6142681332b2",
+    "matches": true
+  },
+  {
+    "asset": "rope/rope.mp4",
+    "sha256": "27ad224a014d32290444a8f39a121e6fc4fff47cb63eb27423e1d5db8688ff22",
+    "matches": true
+  },
+  {
+    "asset": "rope/poster.png",
+    "sha256": "c26c17a99ebe4b3ce54adba03386feafb448f3a4112d24d3564b5611e335d51a",
+    "matches": true
+  },
+  {
+    "asset": "rope/captions.ru.vtt",
+    "sha256": "d0a1257c540550c47ffbac3eb0e71b31fff306e8bfd0c963a84a6ceb4c2fd335",
+    "matches": true
+  },
+  {
+    "asset": "heads/heads.mp4",
+    "sha256": "f39ab09d786dac38cb25d76c53dab2d208b969aa284deb840ef6130df392fdc3",
+    "matches": true
+  },
+  {
+    "asset": "heads/poster.png",
+    "sha256": "1beb572e312374a78243dc52228c224ddd438fbf4ad19b261fb15952741b10ec",
+    "matches": true
+  },
+  {
+    "asset": "heads/captions.ru.vtt",
+    "sha256": "2a77096fea8c4cf991500d6b7c5ad5ec3317518f9c4141e158d1273d85f40f3b",
+    "matches": true
+  },
+  {
+    "asset": "generation/generation.mp4",
+    "sha256": "186ae88a3a03ac3a0320764acf99cb257628a30e27f90e6cfea423f23626a75c",
+    "matches": true
+  },
+  {
+    "asset": "generation/poster.png",
+    "sha256": "f9792b26323d0627ebb9caef25f6062d7c4abbafd63e5e250d841055ba05a8f4",
+    "matches": true
+  },
+  {
+    "asset": "generation/captions.ru.vtt",
+    "sha256": "977f1422c67502f6ae50c0801587bc47bf059fb123c7660593ad71ebeeaf8a57",
+    "matches": true
+  }
+]

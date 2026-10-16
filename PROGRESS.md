@@ -29,6 +29,36 @@ Snapshotget15:17:10UTC: прежний trustedID,expiresAt=null,statuscreated.
 Доставка checkpoint завершается обычным push master; SHA/Actions проверяются
 после него и сообщаются в итоговом ответе без включения чужой текущей работы.
 
+
+### Пять сцен, озвучка и учебные действия — в работе, 2026-10-16
+
+Объём по прямому запросу:5 новых роликов + улучшение3 существующих, см.PLAN.
+Checkout master/a648708, исходное дерево чистое. Проверены текущие player,
+лаборатории и установленный голос Microsoft Irina Desktop Russian.
+Числа новых сцен экспортированы из math.ts/transformerMath.ts. Пять сцен
+отрендерены720p; inspect10/10/10/10/9 выбранных кадров PASS после исправления
+наложений. Все8MP4 содержат декодируемую ненулевую mono аудиодорожку:
+backprop/neuron44.033с, остальные50.033с. Голос локальный SAPI Irina;
+native ManimGX0.1.1 создал AAC без внешнего FFmpeg. Raw WAV игнорируются.
+Node24:48/48 релевантных тестов PASS, tsc и финальная Vite production-сборка
+PASS. Transfer/restore и локальные вопросы/новые случаи добавлены во все8.
+Браузер: Chrome baseline сохранён; соединение Chrome перестало отвечать,
+проверка продолжена во встроенном Chromium. Возврат b1.7/sigmoid нейрона,
+траекторий шага2/η.2 оптимизаторов и XOR seed7/шага100/предсказаний PASS.
+Повторный apply не затирает исходную копию. Нейрон останавливается22.986с
+перед ответом, выбор даёт feedback; продолжение вручную и пауза при открытии
+нового случая проверены. В production preview `/rust_ml/` дополнительно
+прошли transfer/repeat/restore входа/режима/головы heads, позиций/пары/Q RoPE,
+префикса/cache/RoPE, w.7/шага3 backprop и X/query/T/mask/scale/этапа attention.
+Вес backprop3 корректно представлен ползунком[−3;3]. Mobile390/320:
+page overflow0, главы≥44px, таблицы и локальный ответ про сменившийся префикс
+проверены. Скриншоты фактического UI сохранены. Финальный tsc повторён(exit0);
+24/24 dist MP4/PNG/VTT совпали с public по SHA256. Полная приёмка и ограничения —
+[VALIDATION](learning-lab/evidence/animation-expansion-2026-10-16/VALIDATION.md).
+Во время приёмки master получил соседний commit891be2f о grader; изменения
+math/player/сцен этой задачи им не затронуты. Осталось commit/push и
+CI/Pages/публичная загрузка.
+
 ### Анимации нейрона и attention — готово, 2026-10-16
 
 Основной checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master; исходные

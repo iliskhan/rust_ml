@@ -39,6 +39,17 @@
   border-radius: 8px;
 }
 
+.lesson-animation-question {
+  padding: 16px;
+  margin-block: 16px;
+  border: 2px solid var(--green);
+  border-radius: 8px;
+}
+
+.lesson-animation .button-row button { min-height: 44px; }
+.lesson-animation details { margin-block: 14px; }
+.lesson-animation .data-table { width: 100%; table-layout: fixed; overflow-wrap: anywhere; }
+
 @media (max-width: 560px) {
   .lesson-animation video {
     aspect-ratio: 1;

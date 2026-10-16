@@ -1,0 +1,202 @@
+{
+  "checked_at_utc": "2026-10-16T15:18:19.899071+00:00",
+  "checkout": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml",
+  "revision": "a648708c0c2830e783bf18638c61a0181c08b7c1",
+  "python": "3.13.2",
+  "manimgx": "0.1.1",
+  "command": "work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/verify-media.py",
+  "results": [
+    {
+      "name": "backprop",
+      "path": "learning-lab/public/animations/backprop/backprop.mp4",
+      "bytes": 1452764,
+      "sha256": "908aa45d74f359af08ef1b4b830c3775d59fd234326bbd266cf26c60d38127e5",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 571,
+        "average_encoded_fps": 12.967448902346707
+      },
+      "audio_track": {
+        "duration_seconds": 44.074666666666666
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 970935,
+        "duration_seconds": 44.03333333333333,
+        "peak": 0.4381379783153534,
+        "rms": 0.03823515755848508
+      }
+    },
+    {
+      "name": "neuron",
+      "path": "learning-lab/public/animations/neuron/neuron.mp4",
+      "bytes": 1330804,
+      "sha256": "fa9b2a8e3d1050fed6e7e6838d556d6f2bb0ea5967c3a0bc681fbf1145e5d055",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 546,
+        "average_encoded_fps": 12.399697199091598
+      },
+      "audio_track": {
+        "duration_seconds": 44.074666666666666
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 970935,
+        "duration_seconds": 44.03333333333333,
+        "peak": 0.43624600768089294,
+        "rms": 0.0400715080017369
+      }
+    },
+    {
+      "name": "attention",
+      "path": "learning-lab/public/animations/attention/attention.mp4",
+      "bytes": 1700778,
+      "sha256": "c0c83beb5eaa4f8f581de0f58a128a4f646c4859995b1053daa4c601e03bac9f",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 470,
+        "average_encoded_fps": 9.393737508327781
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.4050534665584564,
+        "rms": 0.038445626728999725
+      }
+    },
+    {
+      "name": "descent",
+      "path": "learning-lab/public/animations/descent/descent.mp4",
+      "bytes": 1380668,
+      "sha256": "a589e5a291365bb639335d474b4d9e496bfaad028a472a6e443c62c168c840c6",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 406,
+        "average_encoded_fps": 8.114590273151233
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.41055506467819214,
+        "rms": 0.03899024305930105
+      }
+    },
+    {
+      "name": "xor",
+      "path": "learning-lab/public/animations/xor/xor.mp4",
+      "bytes": 1425598,
+      "sha256": "19e976d0514b0347ca72eccad762e2989dc2af4c279b1d11c077787c0a038318",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 320,
+        "average_encoded_fps": 6.395736175882745
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.3888142704963684,
+        "rms": 0.040480714418055695
+      }
+    },
+    {
+      "name": "rope",
+      "path": "learning-lab/public/animations/rope/rope.mp4",
+      "bytes": 1554821,
+      "sha256": "27ad224a014d32290444a8f39a121e6fc4fff47cb63eb27423e1d5db8688ff22",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 480,
+        "average_encoded_fps": 9.593604263824117
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.38659897446632385,
+        "rms": 0.04269132317138388
+      }
+    },
+    {
+      "name": "heads",
+      "path": "learning-lab/public/animations/heads/heads.mp4",
+      "bytes": 1688994,
+      "sha256": "f39ab09d786dac38cb25d76c53dab2d208b969aa284deb840ef6130df392fdc3",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 363,
+        "average_encoded_fps": 7.255163224516989
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.3795374035835266,
+        "rms": 0.03931653755798005
+      }
+    },
+    {
+      "name": "generation",
+      "path": "learning-lab/public/animations/generation/generation.mp4",
+      "bytes": 1533785,
+      "sha256": "186ae88a3a03ac3a0320764acf99cb257628a30e27f90e6cfea423f23626a75c",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 338,
+        "average_encoded_fps": 6.755496335776149
+      },
+      "audio_track": {
+        "duration_seconds": 50.06933333333333
+      },
+      "decoded_audio": {
+        "sample_rate_hz": 22050,
+        "channels": 1,
+        "samples_per_channel": 1103235,
+        "duration_seconds": 50.03333333333333,
+        "peak": 0.38174811005592346,
+        "rms": 0.03870965875854179
+      }
+    }
+  ]
+}

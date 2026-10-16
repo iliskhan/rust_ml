@@ -1,0 +1,210 @@
+[
+  {
+    "path": "learning-lab/animations/assemble-narration.py",
+    "sha256": "9062f3665924dd2626f5acddbd28b4a0d3c6b0b56d06a5e6d6dbb44e3bb40244"
+  },
+  {
+    "path": "learning-lab/animations/attention/attention.py",
+    "sha256": "7f92a1b7a29b1bcf17df41562786729004247df8f100df27818c378df4647239"
+  },
+  {
+    "path": "learning-lab/animations/attention/export-fixture.ts",
+    "sha256": "3749e6647612a8df121fe1ae20eb5c7b2fbbeb250557088d973ba84084c6ab19"
+  },
+  {
+    "path": "learning-lab/animations/attention/fixture.json",
+    "sha256": "c2497c985b84041c19051bbc889c828dd1ad5c180b6665832b305fe8c6e66528"
+  },
+  {
+    "path": "learning-lab/animations/attention/narration.ru.json",
+    "sha256": "2170ac1a20a1f7f73109c55af0106b178b41b21cab49187d5f59016d67d2966e"
+  },
+  {
+    "path": "learning-lab/animations/attention/render-assets.py",
+    "sha256": "741ce6de703b702362023dfe11f0af4b54dff70e478ffaa3b9f39efffcf26d1e"
+  },
+  {
+    "path": "learning-lab/animations/backprop/backprop.py",
+    "sha256": "2ab0793e99df53e863bb13439903aa7ad4a30bf0584ea8fad7343806758261ab"
+  },
+  {
+    "path": "learning-lab/animations/backprop/export-fixture.ts",
+    "sha256": "f93f5075cc7b2402db9c14410f10bf0f896defc28e168fbc236f055e142c6d9a"
+  },
+  {
+    "path": "learning-lab/animations/backprop/fixture.json",
+    "sha256": "03b95806f18dba12ef1b01bbd5065f3c1ca1f029ac487dffa71af1135ee42f41"
+  },
+  {
+    "path": "learning-lab/animations/backprop/narration.ru.json",
+    "sha256": "bb4e5abb9705c2b95cbc2c2ba425385648ca3f6c89f6b0b6d51e50c1dd82e902"
+  },
+  {
+    "path": "learning-lab/animations/backprop/render-assets.py",
+    "sha256": "431a5162319685ff577e9210e5e9a0ac214d7961a26dfafceee91e06a5714267"
+  },
+  {
+    "path": "learning-lab/animations/descent/descent.py",
+    "sha256": "3c76554935f155f494055e4887fc7e8f609e8577f54b44687e033a83c525e593"
+  },
+  {
+    "path": "learning-lab/animations/descent/export-fixture.ts",
+    "sha256": "b2c76c128d9a93df774fab128847f7b5f3d666561e13881f80d8c04f2e408b28"
+  },
+  {
+    "path": "learning-lab/animations/descent/fixture.json",
+    "sha256": "45dee782c6a7a13a72695b18b6cdc9c18b011f4562d2e3f940c5617ee013c18f"
+  },
+  {
+    "path": "learning-lab/animations/descent/narration.ru.json",
+    "sha256": "100a10222aa942a1114f9ac9349b758b6649d9b25d00e7c10c6faf0b5d3fd74a"
+  },
+  {
+    "path": "learning-lab/animations/descent/render-assets.py",
+    "sha256": "2ad7c0928a6be6a1baace40a3a38f0f2ef50f4b991098bc3c80f248d932362fd"
+  },
+  {
+    "path": "learning-lab/animations/generation/export-fixture.ts",
+    "sha256": "b5261005120b924f8171dbf56049d3b251b4ceefa10002d81fce7aec97a522db"
+  },
+  {
+    "path": "learning-lab/animations/generation/fixture.json",
+    "sha256": "89cfe2471a51607a8fe9b4dc57b95cea3a497eecbffe6b556cc527691d6e5a02"
+  },
+  {
+    "path": "learning-lab/animations/generation/generation.py",
+    "sha256": "bd0f2f2cfa3b872ec541ebb7afdd4260d264dc51503b62eaf6055f604a3cce54"
+  },
+  {
+    "path": "learning-lab/animations/generation/narration.ru.json",
+    "sha256": "bd553ff93925272df7b3d1603d86655b13bf67fb025b9af4ed6ba27750d7d7e7"
+  },
+  {
+    "path": "learning-lab/animations/generation/render-assets.py",
+    "sha256": "96172716a2b82490b23ad646f89d22a84dbccad0f7f88c168dc0f4e615262977"
+  },
+  {
+    "path": "learning-lab/animations/heads/export-fixture.ts",
+    "sha256": "cf9fa5f31d9844f83a616956dded6960f77205d691d6495c62f5bc3290f14f9f"
+  },
+  {
+    "path": "learning-lab/animations/heads/fixture.json",
+    "sha256": "7993c07f64d705670e1c6c5325c984ed310ea31dbd0d4ae09b577cc1fc1b6a0f"
+  },
+  {
+    "path": "learning-lab/animations/heads/heads.py",
+    "sha256": "925201258d99e4835cacb0bdd360349139ce779334ea0a02414c8784927adafb"
+  },
+  {
+    "path": "learning-lab/animations/heads/narration.ru.json",
+    "sha256": "265350e86a5e3e7fa50fb7f00c37a3d078f4b5ba596b1641d4f9c8266cc60fdb"
+  },
+  {
+    "path": "learning-lab/animations/heads/render-assets.py",
+    "sha256": "42073cecf1cea18d5f742751408d5d7e932a7e4c6b02cc397d6480d8ff75c315"
+  },
+  {
+    "path": "learning-lab/animations/neuron/export-fixture.ts",
+    "sha256": "6744e3417aaae4daa8baddfc633b160871c8d40e79a55c41d4cdefcca657c2c7"
+  },
+  {
+    "path": "learning-lab/animations/neuron/fixture.json",
+    "sha256": "5d65c7605003763b050a2aec9f715257953ab5d9c7cf0f8763b2c7e45c9d4c3d"
+  },
+  {
+    "path": "learning-lab/animations/neuron/narration.ru.json",
+    "sha256": "0db9a4d486a3879c2c533df4cb70cbc22060dae98bfe51329bf308720d2bfe56"
+  },
+  {
+    "path": "learning-lab/animations/neuron/neuron.py",
+    "sha256": "82e329cb69408f353a85e856f92824314b13656e593cc3a43bb3b81698c8a9ba"
+  },
+  {
+    "path": "learning-lab/animations/neuron/render-assets.py",
+    "sha256": "0fa03faafec58d20e7711af7449de5f23e7f04c6dda18b772779a381d3d36894"
+  },
+  {
+    "path": "learning-lab/animations/render_support.py",
+    "sha256": "2c3049176eca582b00e329131fab1a93f59e48c36afc0891252955ee4ab819ee"
+  },
+  {
+    "path": "learning-lab/animations/rope/export-fixture.ts",
+    "sha256": "f858b4b999b96c73e56fe90768421a64e3068d0c965387036709bb34ba40173a"
+  },
+  {
+    "path": "learning-lab/animations/rope/fixture.json",
+    "sha256": "2ab1cb4a1caf086fddfb817c2952377d931152f575d8c017f966adca5150c5bd"
+  },
+  {
+    "path": "learning-lab/animations/rope/narration.ru.json",
+    "sha256": "c014591345c3ba34fc867cbcfe57254d05eba284215e75ba9a2895ee059c4b8c"
+  },
+  {
+    "path": "learning-lab/animations/rope/render-assets.py",
+    "sha256": "60a716e8ce03495806a8fc828ba2437d6e1b4ad4c51ab16cad004ba1cb374def"
+  },
+  {
+    "path": "learning-lab/animations/rope/rope.py",
+    "sha256": "404751914b8abcce9399d0096e16b25ce125097f2d481aba4cf92fae7b618ac1"
+  },
+  {
+    "path": "learning-lab/animations/synthesize-narration.ps1",
+    "sha256": "f597725e3a63f42b1778a95d3b2c5fd9fd24cf9ad1a21845cfee87b9c948be33"
+  },
+  {
+    "path": "learning-lab/animations/verify-media.py",
+    "sha256": "7081c7db42912d20f4229e67d2abf0ec4e81337c0eae9123fe92bcd4921bbbc4"
+  },
+  {
+    "path": "learning-lab/animations/xor/export-fixture.ts",
+    "sha256": "2a58a70b0ce945f28222e4ed21c4534caf840f06ca711d51defbdab367137595"
+  },
+  {
+    "path": "learning-lab/animations/xor/fixture.json",
+    "sha256": "7daf7b1c953527c65bb936ee2d798b5e631de08b675de140c168be22a7516be0"
+  },
+  {
+    "path": "learning-lab/animations/xor/narration.ru.json",
+    "sha256": "2f333b4f6d9ee2887fecdff91abbf0eee77f338c502bb5c2b4a7edbb3fc6e9cd"
+  },
+  {
+    "path": "learning-lab/animations/xor/render-assets.py",
+    "sha256": "eb24f95adcdecda47576bacc5b0045cf8aed6d454b4b7289ea3836c66eb03b55"
+  },
+  {
+    "path": "learning-lab/animations/xor/xor.py",
+    "sha256": "2e8bc186e013cc623a011288956c7161e489a97aedce4a85f0a2acc12a313375"
+  },
+  {
+    "path": "learning-lab/src/animationInteraction.ts",
+    "sha256": "67df20b2a1743ec752ae5ee9646ed8e2c3293e4a5947f64798612cd871ec609f"
+  },
+  {
+    "path": "learning-lab/src/backprop-animation.css",
+    "sha256": "90fdb2b4e0e61af1bfad72c2a8011bcdec16a170056b0f718aa011c761f194a4"
+  },
+  {
+    "path": "learning-lab/src/Experiments.tsx",
+    "sha256": "e64361c9c22fde54c265b647542ee60a403d7998e1b8c9d1d4f2e4efea3e85b9"
+  },
+  {
+    "path": "learning-lab/src/FilmExamples.tsx",
+    "sha256": "503df20896664591577a1537f2fae4c06c6d13fc4ba23471eb0298912a0115e3"
+  },
+  {
+    "path": "learning-lab/src/Foundations.tsx",
+    "sha256": "490960257db1b53d116c123b9a10ed51e14a530db059d2b1a2abf2e46cff7061"
+  },
+  {
+    "path": "learning-lab/src/LessonAnimation.tsx",
+    "sha256": "3b1e560342980d310da26167aca8dbbe8c1e4452cc6d4a1f5b436419cda4c705"
+  },
+  {
+    "path": "learning-lab/src/TransformerCourse.tsx",
+    "sha256": "3dfaaaa1b1ab51a14e0c2d3d148651368f4b6ea6894dac87950ba05e2dd942bd"
+  },
+  {
+    "path": "learning-lab/src/useAnimationExample.ts",
+    "sha256": "2fdee94078b70f057e622525fed6edbd8086c471f83e4a6e95f71578bcb743f8"
+  }
+]
