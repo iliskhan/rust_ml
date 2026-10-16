@@ -87,6 +87,6 @@ export function PracticeAccountPanel({ cloudAvailable, emailAuthAvailable = true
         <button type="button" disabled={learningSync.busy || busy} onClick={syncLearningNow}>Синхронизировать прогресс</button>
       </div>}
     </>}
-    <p className="note">Серверная оценка кода пока недоступна. Локальная самопроверка не подтверждает освоение темы на сервере.</p>
+    <p className="note">Локальная самопроверка не подтверждает освоение темы на сервере.</p>
   </section>;
 }
