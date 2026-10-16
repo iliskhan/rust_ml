@@ -36,7 +36,7 @@ test('raw SDK pagination uses name prefix/sort/limit/cursor and does not auto-co
   const f=fixture([page([item(1)],'page2'),page([item(2)])])
   const result=await f.reap()
   assert.equal(result.pages,2);assert.equal(result.deleted,2)
-  assert.equal(f.state.lists[0].namePrefix,'rustml-case-');assert.equal(f.state.lists[0].sortBy,'name');assert.equal(f.state.lists[0].limit,100)
+  assert.equal(f.state.lists[0].namePrefix,'rustml-case-');assert.equal(f.state.lists[0].sortBy,'name');assert.equal(f.state.lists[0].limit,50)
   assert.equal(f.state.lists[1].cursor,'page2')
 })
 test('owned case snapshot references are preserved while deleting only the ephemeral sandbox',async()=>{
@@ -77,7 +77,11 @@ test('an external abort prevents subsequent list/get/stop/delete calls',async()=
 test('installed SDK3.7 list raw numeric metadata and pagination are accepted without external traffic',async()=>{
   let requests=0
   const candidate={...item(),currentSessionId:'session-mock',status:'stopped'}
-  const list=options=>Sandbox.list({...options,token:'test-token',teamId:'test-team',projectId:'test-project',fetch:async()=>{requests++;return new Response(JSON.stringify(page([candidate])),{headers:{'content-type':'application/json'}})}})
+  const list=options=>Sandbox.list({...options,token:'test-token',teamId:'test-team',projectId:'test-project',fetch:async url=>{
+    requests++
+    if(Number(new URL(url).searchParams.get('limit'))>50)return Response.json({error:{message:'limit should be <=50'}},{status:400})
+    return new Response(JSON.stringify(page([candidate])),{headers:{'content-type':'application/json'}})
+  }})
   const f=fixture([page([candidate])])
   const reap=createReaper({list,get:async options=>{f.state.gets.push(options);return {...candidate,createdAt:new Date(old),updatedAt:new Date(old),stop:async()=>{},delete:async()=>{},currentSession:()=>({createdAt:new Date(old)})}},now:()=>clock})
   assert.equal((await reap()).deleted,1);assert.equal(requests,1);assert.equal(f.state.gets[0].resume,false)

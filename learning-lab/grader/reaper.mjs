@@ -3,7 +3,7 @@ import { createHash, timingSafeEqual } from 'node:crypto'
 
 const UUID='[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 const uuid=new RegExp(`^${UUID}$`,'i'), caseName=new RegExp(`^rustml-case-${UUID}$`,'i')
-const ageMs=10*60*1000, pageSize=100
+const ageMs=10*60*1000, pageSize=50
 const timestamp=value=>value instanceof Date?value.getTime():typeof value==='number'?value:NaN
 function owned(value,cutoff) {
   const tags=value?.tags, created=timestamp(value?.createdAt), updated=timestamp(value?.updatedAt)
