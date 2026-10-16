@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { lazy, Suspense, useState, type ReactNode } from 'react';
 import { Range, fmt } from './ui';
 import { TOY_VOCAB } from './transformerMath';
@@ -42,7 +43,7 @@ export function TransformerHeadLab() {
     setParameters(initialHeadParameters()); setActive(batch.targets.map(() => true));
     setSteps(0); setLast(null); setChecked(false); setRate(.1); setPack(20);
   }
-  return <section className="transformer-head-lab panel" aria-label="Обучение только выходного слоя Transformer">
+  return <CoreTopicFilm slug="outputtraining" current={{ parameters, active, position, coordinate, token, rate, pack, steps, last, checked }} example={{ parameters: initialHeadParameters(), active: batch.targets.map(()=>true), position: 1, coordinate: 0, token: 2, rate: .1, pack: 20, steps: 0, last: null, checked: false }} restore={value => { setParameters(value.parameters);setActive(value.active);setPosition(value.position);setCoordinate(value.coordinate);setToken(value.token);setRate(value.rate);setPack(value.pack);setSteps(value.steps);setLast(value.last);setChecked(value.checked); }}><section className="transformer-head-lab panel" aria-label="Обучение только выходного слоя Transformer">
     <h3>Обучается только выходной слой</h3>
     <p>Те же скрытые признаки h текущего учебного Transformer переводим в logits: z = hW + b.
       Embeddings, causal attention с RoPE и residual фиксированы. Меняются только 12 весов W и 6 bias;
@@ -155,5 +156,5 @@ export function TransformerHeadLab() {
         <li><a href="https://docs.pytorch.org/docs/2.14/generated/torch.nn.CrossEntropyLoss.html">PyTorch CrossEntropyLoss</a>: logits, цели и усреднение.</li>
         <li><a href="https://arxiv.org/html/1706.03762v7">Attention Is All You Need, §3.1 и §3.4</a>: causal-маска и linear + softmax.</li></ul>
     </details>
-  </section>;
+  </section></CoreTopicFilm>;
 }

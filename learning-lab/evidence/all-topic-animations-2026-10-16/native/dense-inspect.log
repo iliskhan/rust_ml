@@ -1,0 +1,41 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\dense\dense.py: TopicScene, 40.00 s, 38 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\dense.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\dense-2.png
+  #0   0.00– 0.60s  dense.py:54  FadeIn(Group), FadeIn(Group), FadeIn(Group), FadeIn(Group), FadeIn(Group)
+  #1   0.60– 6.00s  dense.py:59  wait
+  #2   6.00– 6.40s  dense.py:54  FadeIn(Text '?')
+  #3   6.40–12.00s  dense.py:59  wait
+  #4  12.00–12.25s  dense.py:54  FadeOut(Text '?')
+  #5  12.25–12.70s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #6  12.70–13.05s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #7  13.05–13.50s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #8  13.50–13.85s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #9  13.85–14.30s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #10 14.30–14.65s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #11 14.65–15.10s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #12 15.10–15.45s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #13 15.45–15.90s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #14 15.90–16.25s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #15 16.25–16.70s  dense.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #16 16.70–17.05s  dense.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #17 17.05–17.65s  dense.py:54  FadeIn(Text 'tanh(Wx + b)')
+  #18 17.65–26.00s  dense.py:59  wait
+  #19 26.00–26.60s  dense.py:54  Group.animate.scale(…).shift(…)
+  #20 26.60–27.10s  dense.py:54  FadeIn(Group), FadeIn(Text 'linear')
+  #21 27.10–27.35s  dense.py:54  FadeIn(Group)
+  #22 27.35–27.60s  dense.py:54  FadeIn(Group)
+  #23 27.60–27.85s  dense.py:54  FadeIn(Group)
+  #24 27.85–28.03s  dense.py:54  Line.animate.move_to(…)
+  #25 28.03–28.13s  dense.py:54  FadeOut(Line)
+  #26 28.13–28.25s  dense.py:54  FadeIn(Line)
+  #27 28.25–28.43s  dense.py:54  Line.animate.move_to(…)
+  #28 28.43–28.53s  dense.py:54  FadeOut(Line)
+  #29 28.53–28.65s  dense.py:54  FadeIn(Line)
+  #30 28.65–28.83s  dense.py:54  Line.animate.move_to(…)
+  #31 28.83–28.93s  dense.py:54  FadeOut(Line)
+  #32 28.93–29.05s  dense.py:54  FadeIn(Line)
+  #33 29.05–29.30s  dense.py:54  FadeOut(Line)
+  #34 29.30–34.00s  dense.py:59  wait
+  #35 34.00–34.50s  dense.py:54  Create(Rectangle), FadeIn(Text '?')
+  #36 34.50–35.00s  dense.py:54  Rectangle.animate.scale(…)
+  #37 35.00–40.00s  dense.py:59  wait
+layout: no problems in 7 samples

@@ -1,0 +1,37 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\sampling\sampling.py: TopicScene, 40.00 s, 34 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\sampling.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\sampling-2.png
+  #0   0.00– 0.60s  sampling.py:54  FadeIn(Group), FadeIn(Group)
+  #1   0.60– 6.00s  sampling.py:59  wait
+  #2   6.00– 6.40s  sampling.py:54  FadeIn(Text '?')
+  #3   6.40–12.00s  sampling.py:59  wait
+  #4  12.00–12.25s  sampling.py:54  FadeOut(Text '?')
+  #5  12.25–13.25s  sampling.py:54  FadeOut(Group), FadeOut(Group), FadeIn(Group)
+  #6  13.25–13.85s  sampling.py:54  FadeIn(Group)
+  #7  13.85–15.65s  sampling.py:54  Dot.animate.move_to(…)
+  #8  15.65–16.25s  sampling.py:54  FadeIn(Text 'u=0.42 → ID 2')
+  #9  16.25–16.85s  sampling.py:54  FadeIn(Text 'sampling')
+  #10 16.85–26.00s  sampling.py:59  wait
+  #11 26.00–26.60s  sampling.py:54  Group.animate.scale(…).shift(…)
+  #12 26.60–27.10s  sampling.py:54  FadeIn(Group), FadeIn(Text 'TF: цель')
+  #13 27.10–27.35s  sampling.py:54  FadeIn(Group)
+  #14 27.35–27.60s  sampling.py:54  FadeIn(Group)
+  #15 27.60–27.85s  sampling.py:54  FadeIn(Group)
+  #16 27.85–28.10s  sampling.py:54  FadeIn(Group)
+  #17 28.10–28.28s  sampling.py:54  Line.animate.move_to(…)
+  #18 28.28–28.38s  sampling.py:54  FadeOut(Line)
+  #19 28.38–28.50s  sampling.py:54  FadeIn(Line)
+  #20 28.50–28.68s  sampling.py:54  Line.animate.move_to(…)
+  #21 28.68–28.78s  sampling.py:54  FadeOut(Line)
+  #22 28.78–28.90s  sampling.py:54  FadeIn(Line)
+  #23 28.90–29.08s  sampling.py:54  Line.animate.move_to(…)
+  #24 29.08–29.18s  sampling.py:54  FadeOut(Line)
+  #25 29.18–29.30s  sampling.py:54  FadeIn(Line)
+  #26 29.30–29.48s  sampling.py:54  Line.animate.move_to(…)
+  #27 29.48–29.58s  sampling.py:54  FadeOut(Line)
+  #28 29.58–29.70s  sampling.py:54  FadeIn(Line)
+  #29 29.70–29.95s  sampling.py:54  FadeOut(Line)
+  #30 29.95–34.00s  sampling.py:59  wait
+  #31 34.00–34.50s  sampling.py:54  Create(Rectangle), FadeIn(Text '?')
+  #32 34.50–35.00s  sampling.py:54  Rectangle.animate.scale(…)
+  #33 35.00–40.00s  sampling.py:59  wait
+layout: no problems in 7 samples

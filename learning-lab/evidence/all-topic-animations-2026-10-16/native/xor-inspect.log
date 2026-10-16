@@ -1,0 +1,25 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\xor\xor.py: XORNetwork, 50.00 s, 22 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\xor.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\xor-2.png
+  #0   0.00– 1.20s  legacy_visuals.py:20  Create(Group)
+  #1   1.20–10.00s  legacy_visuals.py:27  wait
+  #2  10.00–10.70s  legacy_visuals.py:20  Create(Line), FadeIn(MathTex '?')
+  #3  10.70–12.70s  legacy_visuals.py:20  Rotate(Line)
+  #4  12.70–18.00s  legacy_visuals.py:27  wait
+  #5  18.00–18.70s  legacy_visuals.py:20  FadeOut(Line), FadeOut(MathTex '?'), FadeOut(Group)
+  #6  18.70–19.40s  legacy_visuals.py:20  Create(Group), FadeIn(Group), FadeIn(MathTex '(0,1)')
+  #7  19.40–19.75s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #8  19.75–20.10s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #9  20.10–20.45s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #10 20.45–20.80s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #11 20.80–21.15s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #12 21.15–21.50s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #13 21.50–21.85s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #14 21.85–22.20s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #15 22.20–22.90s  legacy_visuals.py:20  FadeIn(MathTex 'p=0.999')
+  #16 22.90–28.00s  legacy_visuals.py:27  wait
+  #17 28.00–28.70s  legacy_visuals.py:20  FadeOut(Group), FadeOut(Group), FadeOut(MathTex '(0,1)'), FadeOut(MathTex 'p=0.999')
+  #18 28.70–30.10s  legacy_visuals.py:20  Create(Group), Create(Group), FadeIn(Group)
+  #19 30.10–42.00s  legacy_visuals.py:27  wait
+  #20 42.00–43.00s  legacy_visuals.py:20  Indicate(Group)
+  #21 43.00–50.00s  legacy_visuals.py:27  wait
+layout: no problems in 7 samples

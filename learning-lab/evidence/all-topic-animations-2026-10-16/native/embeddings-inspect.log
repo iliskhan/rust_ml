@@ -1,0 +1,43 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\embeddings\embeddings.py: TopicScene, 40.00 s, 40 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\embeddings.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\embeddings-2.png
+  #0   0.00– 0.60s  embeddings.py:54  FadeIn(Group), FadeIn(Group), FadeIn(Group), FadeIn(Text 'ID'), FadeIn(Text 'E[id]')
+  #1   0.60– 6.00s  embeddings.py:59  wait
+  #2   6.00– 6.40s  embeddings.py:54  FadeIn(Text '?')
+  #3   6.40–12.00s  embeddings.py:59  wait
+  #4  12.00–12.25s  embeddings.py:54  FadeOut(Text '?')
+  #5  12.25–12.70s  embeddings.py:54  Create(Rectangle), Create(Arrow)
+  #6  12.70–12.95s  embeddings.py:54  Dot.animate.move_to(…)
+  #7  12.95–13.30s  embeddings.py:54  Dot.animate.move_to(…)
+  #8  13.30–13.65s  embeddings.py:54  Dot.animate.move_to(…)
+  #9  13.65–13.90s  embeddings.py:54  Dot.animate.move_to(…)
+  #10 13.90–14.30s  embeddings.py:54  FadeOut(Dot), FadeOut(Rectangle), FadeIn(Group)
+  #11 14.30–14.75s  embeddings.py:54  Create(Rectangle), Create(Arrow)
+  #12 14.75–15.00s  embeddings.py:54  Dot.animate.move_to(…)
+  #13 15.00–15.35s  embeddings.py:54  Dot.animate.move_to(…)
+  #14 15.35–15.70s  embeddings.py:54  Dot.animate.move_to(…)
+  #15 15.70–15.95s  embeddings.py:54  Dot.animate.move_to(…)
+  #16 15.95–16.35s  embeddings.py:54  FadeOut(Dot), FadeOut(Rectangle), FadeIn(Group)
+  #17 16.35–16.80s  embeddings.py:54  Create(Rectangle), Create(Arrow)
+  #18 16.80–17.05s  embeddings.py:54  Dot.animate.move_to(…)
+  #19 17.05–17.40s  embeddings.py:54  Dot.animate.move_to(…)
+  #20 17.40–17.75s  embeddings.py:54  Dot.animate.move_to(…)
+  #21 17.75–18.00s  embeddings.py:54  Dot.animate.move_to(…)
+  #22 18.00–18.40s  embeddings.py:54  FadeOut(Dot), FadeOut(Rectangle), FadeIn(Group)
+  #23 18.40–19.00s  embeddings.py:54  FadeIn(Text 'E[id]')
+  #24 19.00–26.00s  embeddings.py:59  wait
+  #25 26.00–26.60s  embeddings.py:54  Group.animate.scale(…).shift(…)
+  #26 26.60–27.10s  embeddings.py:54  FadeIn(Group), FadeIn(Text 'p=2')
+  #27 27.10–27.35s  embeddings.py:54  FadeIn(Group)
+  #28 27.35–27.60s  embeddings.py:54  FadeIn(Group)
+  #29 27.60–27.78s  embeddings.py:54  Line.animate.move_to(…)
+  #30 27.78–27.88s  embeddings.py:54  FadeOut(Line)
+  #31 27.88–28.00s  embeddings.py:54  FadeIn(Line)
+  #32 28.00–28.18s  embeddings.py:54  Line.animate.move_to(…)
+  #33 28.18–28.28s  embeddings.py:54  FadeOut(Line)
+  #34 28.28–28.40s  embeddings.py:54  FadeIn(Line)
+  #35 28.40–28.65s  embeddings.py:54  FadeOut(Line)
+  #36 28.65–34.00s  embeddings.py:59  wait
+  #37 34.00–34.50s  embeddings.py:54  Create(Rectangle), FadeIn(Text '?')
+  #38 34.50–35.00s  embeddings.py:54  Rectangle.animate.scale(…)
+  #39 35.00–40.00s  embeddings.py:59  wait
+layout: no problems in 7 samples

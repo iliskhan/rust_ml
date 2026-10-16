@@ -12,11 +12,12 @@ const chapters = [
   { title: 'Теперь ваша очередь', start: 38, frame: 41 },
 ]
 
-export function NeuronAnimation({ videoRef, z, output, activation, example }: {
+export function NeuronAnimation({ videoRef, z, output, activation, example, onPlayback }: {
   videoRef: RefObject<HTMLVideoElement | null>; z: number; output: number; activation: string
   example: AnimationExampleControls
+  onPlayback?: () => void
 }) {
-  return <LessonAnimation videoRef={videoRef} media="neuron" title="Как смещение включает нейрон"
+  return <LessonAnimation videoRef={videoRef} onPlayback={onPlayback} media="neuron" title="Как смещение включает нейрон"
     label="Один нейрон: входы, веса, сумма и ReLU"
     description={<>Фиксированный пример: <strong>x = [1; 2], w = [1; −1], ReLU, b от 0 до 2</strong>. Ползунки лаборатории не меняют ролик. Сейчас в лаборатории: z = {fmt(z)}, a = {fmt(output)}, активация {activation}.</>}
     chapters={chapters} target="neuron-controls" jumpLabel="Собрать свой нейрон ↓" example={example}

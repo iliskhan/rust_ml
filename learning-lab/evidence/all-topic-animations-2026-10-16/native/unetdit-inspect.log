@@ -1,0 +1,38 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\unetdit\unetdit.py: TopicScene, 40.00 s, 35 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\unetdit.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\unetdit-2.png
+  #0   0.00– 0.60s  unetdit.py:54  FadeIn(Group), FadeIn(Group), FadeIn(Group), FadeIn(Group), Create(Group), Create(Group)
+  #1   0.60– 1.20s  unetdit.py:54  FadeIn(Text 'U-Net: H × W')
+  #2   1.20– 6.00s  unetdit.py:59  wait
+  #3   6.00– 6.40s  unetdit.py:54  FadeIn(Text '?')
+  #4   6.40–12.00s  unetdit.py:59  wait
+  #5  12.00–12.25s  unetdit.py:54  FadeOut(Text '?')
+  #6  12.25–13.05s  unetdit.py:54  Dot.animate.move_to(…)
+  #7  13.05–13.85s  unetdit.py:54  Dot.animate.move_to(…)
+  #8  13.85–14.65s  unetdit.py:54  Dot.animate.move_to(…)
+  #9  14.65–15.25s  unetdit.py:54  FadeIn(Group)
+  #10 15.25–15.85s  unetdit.py:54  FadeIn(Group), FadeIn(Text 'DiT[0]')
+  #11 15.85–26.00s  unetdit.py:59  wait
+  #12 26.00–26.60s  unetdit.py:54  Group.animate.scale(…).shift(…)
+  #13 26.60–27.10s  unetdit.py:54  FadeIn(Group), FadeIn(Text 'без skip')
+  #14 27.10–27.35s  unetdit.py:54  FadeIn(Group)
+  #15 27.35–27.60s  unetdit.py:54  FadeIn(Group)
+  #16 27.60–27.85s  unetdit.py:54  FadeIn(Group)
+  #17 27.85–28.10s  unetdit.py:54  FadeIn(Group)
+  #18 28.10–28.28s  unetdit.py:54  Line.animate.move_to(…)
+  #19 28.28–28.38s  unetdit.py:54  FadeOut(Line)
+  #20 28.38–28.50s  unetdit.py:54  FadeIn(Line)
+  #21 28.50–28.68s  unetdit.py:54  Line.animate.move_to(…)
+  #22 28.68–28.78s  unetdit.py:54  FadeOut(Line)
+  #23 28.78–28.90s  unetdit.py:54  FadeIn(Line)
+  #24 28.90–29.08s  unetdit.py:54  Line.animate.move_to(…)
+  #25 29.08–29.18s  unetdit.py:54  FadeOut(Line)
+  #26 29.18–29.30s  unetdit.py:54  FadeIn(Line)
+  #27 29.30–29.48s  unetdit.py:54  Line.animate.move_to(…)
+  #28 29.48–29.58s  unetdit.py:54  FadeOut(Line)
+  #29 29.58–29.70s  unetdit.py:54  FadeIn(Line)
+  #30 29.70–29.95s  unetdit.py:54  FadeOut(Line)
+  #31 29.95–34.00s  unetdit.py:59  wait
+  #32 34.00–34.50s  unetdit.py:54  Create(Rectangle), FadeIn(Text '?')
+  #33 34.50–35.00s  unetdit.py:54  Rectangle.animate.scale(…)
+  #34 35.00–40.00s  unetdit.py:59  wait
+layout: no problems in 7 samples

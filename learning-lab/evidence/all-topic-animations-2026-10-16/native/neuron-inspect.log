@@ -1,0 +1,42 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\neuron\neuron.py: NeuronActivation, 44.00 s, 39 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\neuron.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\neuron-2.png
+  #0   0.00– 1.20s  neuron.py:37  Create(Group), Create(Group), FadeIn(Group), FadeIn(Group), Create(Circle), FadeIn(MathTex '\\Sigma'), FadeIn(Group)
+  #1   1.20– 2.00s  neuron.py:44  wait
+  #2   2.00– 3.70s  neuron.py:37  Dot.animate.move_to(…)
+  #3   3.70– 4.15s  neuron.py:37  FadeOut(Dot), FadeIn(MathTex '1')
+  #4   4.15– 5.30s  neuron.py:44  wait
+  #5   5.30– 7.00s  neuron.py:37  Dot.animate.move_to(…)
+  #6   7.00– 7.45s  neuron.py:37  FadeOut(Dot), FadeIn(MathTex '-2')
+  #7   7.45–10.00s  neuron.py:44  wait
+  #8  10.00–10.75s  neuron.py:37  Create(Arrow), Create(Group), FadeIn(Group), FadeIn(Text 'z'), Create(Circle), FadeIn(MathTex '0'), FadeIn(Text 'b'), Create(Line)
+  #9  10.75–11.20s  neuron.py:37  MathTex '1'.animate.move_to(…)
+  #10 11.20–12.50s  neuron.py:37  Create(Arrow), Dot.animate.move_to(…)
+  #11 12.50–12.75s  neuron.py:37  Create(Line)
+  #12 12.75–13.20s  neuron.py:37  MathTex '-2'.animate.move_to(…)
+  #13 13.20–14.50s  neuron.py:37  Create(Arrow), Dot.animate.move_to(…)
+  #14 14.50–14.75s  neuron.py:37  Create(Line)
+  #15 14.75–15.40s  neuron.py:37  FadeIn(Dot), Dot.animate.move_to(…)
+  #16 15.40–15.80s  neuron.py:37  FadeOut(MathTex '\\Sigma'), FadeIn(MathTex '-1')
+  #17 15.80–18.00s  neuron.py:44  wait
+  #18 18.00–18.90s  neuron.py:37  Create(Group), Create(Group), FadeIn(MathTex 'a=\\max(0,z)')
+  #19 18.90–19.30s  neuron.py:37  FadeIn(Text '?')
+  #20 19.30–22.00s  neuron.py:44  wait
+  #21 22.00–23.40s  neuron.py:44  wait
+  #22 23.40–23.60s  neuron.py:37  Create(Line), FadeOut(Text '?')
+  #23 23.60–24.20s  neuron.py:37  Dot.animate.move_to(…)
+  #24 24.20–24.50s  neuron.py:37  FadeOut(Dot), FadeIn(Dot), FadeIn(MathTex '0')
+  #25 24.50–26.00s  neuron.py:44  wait
+  #26 26.00–26.55s  neuron.py:37  Create(Circle)
+  #27 26.55–28.00s  neuron.py:44  wait
+  #28 28.00–28.20s  neuron.py:37  FadeOut(MathTex '-1'), FadeOut(MathTex '0'), FadeOut(MathTex '0'), FadeOut(Line)
+  #29 28.20–30.00s  neuron.py:37  Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #30 30.00–30.25s  neuron.py:37  FadeIn(MathTex '1'), FadeIn(MathTex '0')
+  #31 30.25–31.00s  neuron.py:44  wait
+  #32 31.00–31.20s  neuron.py:37  FadeOut(MathTex '1'), FadeOut(MathTex '0')
+  #33 31.20–33.00s  neuron.py:37  Transform(Line), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #34 33.00–33.50s  neuron.py:37  FadeIn(MathTex '2'), FadeIn(MathTex '1'), FadeIn(MathTex '1'), Create(Group)
+  #35 33.50–38.00s  neuron.py:44  wait
+  #36 38.00–38.50s  neuron.py:37  FadeIn(Text 'ваш b'), FadeOut(Circle)
+  #37 38.50–39.20s  neuron.py:37  Create(Circle)
+  #38 39.20–44.00s  neuron.py:44  wait
+layout: no problems in 7 samples

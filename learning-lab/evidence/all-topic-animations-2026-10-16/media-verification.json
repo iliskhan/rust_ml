@@ -1,0 +1,1293 @@
+{
+  "checked_at_utc": "2026-10-16T20:16:25.094411+00:00",
+  "checkout": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml",
+  "revision": "4065f9f565e45c5320a068a3619f25ab0f1356ba",
+  "python": "3.13.2",
+  "manimgx": "0.1.1",
+  "command": [
+    "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\work\\backprop-pilot\\venv\\Scripts\\python.exe",
+    "learning-lab/animations/verify-media.py",
+    "activations",
+    "attention",
+    "backprop",
+    "bce",
+    "boundary",
+    "bpe",
+    "bptt",
+    "clip",
+    "cnnforward",
+    "cnntraining",
+    "crossmask",
+    "dense",
+    "descent",
+    "diffusionforward",
+    "diffusionguidance",
+    "diffusionreverse",
+    "diffusionsampling",
+    "diffusiontraining",
+    "dpo",
+    "egnn",
+    "embeddings",
+    "exactsoftmax",
+    "flowmatching",
+    "gandiversity",
+    "ganforward",
+    "ganobjectives",
+    "gantraining",
+    "generation",
+    "gnnadjacency",
+    "gnndepth",
+    "gnnmessage",
+    "gnntraining",
+    "gnnvariants",
+    "heads",
+    "imagedenoisertraining",
+    "jepa",
+    "kan",
+    "longcontext",
+    "lora",
+    "maskedtext",
+    "mla",
+    "moe",
+    "moetraining",
+    "mse",
+    "neuralfield",
+    "neuron",
+    "outputtraining",
+    "qlora",
+    "recurrent",
+    "rlbellman",
+    "rlpolicy",
+    "rlqlearning",
+    "rltransition",
+    "rope",
+    "sampling",
+    "speculative",
+    "ssm",
+    "ssmtraining",
+    "superposition",
+    "swiglu",
+    "tinytraining",
+    "transformerblock",
+    "transformerforward",
+    "unetdit",
+    "vaeelbo",
+    "vaegeneration",
+    "vaeposterior",
+    "vaetraining",
+    "vit",
+    "vittraining",
+    "xor",
+    "--output",
+    "learning-lab/evidence/all-topic-animations-2026-10-16/media-verification.json"
+  ],
+  "results": [
+    {
+      "name": "activations",
+      "path": "learning-lab/public/animations/activations/activations.mp4",
+      "bytes": 44469,
+      "sha256": "02e51fa3aa2aed05fb9227c655d1c1fd9991fbfdaa3945f270ebd5ecc21a10a4",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 149,
+        "average_encoded_fps": 3.7218984179850128
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "attention",
+      "path": "learning-lab/public/animations/attention/attention.mp4",
+      "bytes": 221923,
+      "sha256": "6c00936622cdc65af3cfb01c427e0e434e4ab01dcb7981a623de73ae8b24d844",
+      "video": {
+        "duration_seconds": 50.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 626,
+        "average_encoded_fps": 12.503328894806923
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "backprop",
+      "path": "learning-lab/public/animations/backprop/backprop.mp4",
+      "bytes": 224375,
+      "sha256": "6dc0be5e06522b4cf814ae57f5c68da6623fc6efa5557bbe494a129946a41cf2",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 647,
+        "average_encoded_fps": 14.693414080242242
+      },
+      "audio_track": null,
+      "source_duration_seconds": 44,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "bce",
+      "path": "learning-lab/public/animations/bce/bce.mp4",
+      "bytes": 36868,
+      "sha256": "4649a59acc98162b888a10c574083f04225e233d0c0c2233ec20d11b8970c382",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 149,
+        "average_encoded_fps": 3.7218984179850128
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "boundary",
+      "path": "learning-lab/public/animations/boundary/boundary.mp4",
+      "bytes": 84525,
+      "sha256": "cc9bcdaf8b9f40d0fa8cebead9605107604b42f1e941aefcb34204e9d2418192",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 149,
+        "average_encoded_fps": 3.7218984179850128
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "bpe",
+      "path": "learning-lab/public/animations/bpe/bpe.mp4",
+      "bytes": 350010,
+      "sha256": "08a9c11b0f066d5c1143613d8d20134daed51653424cb845b2e6516524a76336",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 540,
+        "average_encoded_fps": 13.488759367194005
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "bptt",
+      "path": "learning-lab/public/animations/bptt/bptt.mp4",
+      "bytes": 138862,
+      "sha256": "bbeafa5675b822bb3e500541becf4e8255fd77ad25e0b50a128fada47b09f111",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 336,
+        "average_encoded_fps": 8.39300582847627
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "clip",
+      "path": "learning-lab/public/animations/clip/clip.mp4",
+      "bytes": 91197,
+      "sha256": "d38c5ac32a60cd145665d28e510dd015a9aa5c93c1a0d06292e023eee24eab2a",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 356,
+        "average_encoded_fps": 8.892589508742715
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "cnnforward",
+      "path": "learning-lab/public/animations/cnnforward/cnnforward.mp4",
+      "bytes": 203925,
+      "sha256": "f639d69684af167e1a87ffb27b5673ab7432621ab2dd785ed63ca050062d69c9",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 329,
+        "average_encoded_fps": 8.218151540383015
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "cnntraining",
+      "path": "learning-lab/public/animations/cnntraining/cnntraining.mp4",
+      "bytes": 129001,
+      "sha256": "387d587326fc6e6e8e31b8d1cb875349c9304d2613d97aedcb511e386876e369",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 304,
+        "average_encoded_fps": 7.593671940049958
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "crossmask",
+      "path": "learning-lab/public/animations/crossmask/crossmask.mp4",
+      "bytes": 204400,
+      "sha256": "36976acca75fc4ebebd122428dda2d9182908e4dda8f85d018002c862969b234",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 303,
+        "average_encoded_fps": 7.568692756036636
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "dense",
+      "path": "learning-lab/public/animations/dense/dense.mp4",
+      "bytes": 188854,
+      "sha256": "17cdcfb4174fc64fa44c16fb4f87269c851ad3bd38399750cd9243a71297168c",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 333,
+        "average_encoded_fps": 8.318068276436303
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "descent",
+      "path": "learning-lab/public/animations/descent/descent.mp4",
+      "bytes": 131244,
+      "sha256": "795716ecc701e44e9e3a00b39ffb10c7c9474eebec092aa1114bc922e9334236",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 490,
+        "average_encoded_fps": 9.793471019320453
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "diffusionforward",
+      "path": "learning-lab/public/animations/diffusionforward/diffusionforward.mp4",
+      "bytes": 41026,
+      "sha256": "277907a05a86c1f9b0a0cca162625b587a6cd713f0c5f21590e9471741f2b13c",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 266,
+        "average_encoded_fps": 6.644462947543714
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "diffusionguidance",
+      "path": "learning-lab/public/animations/diffusionguidance/diffusionguidance.mp4",
+      "bytes": 37000,
+      "sha256": "3229d5e445dec56f21e699f3117672d133356a6a5a86ac173819fbe3fe2b6f59",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 266,
+        "average_encoded_fps": 6.644462947543714
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "diffusionreverse",
+      "path": "learning-lab/public/animations/diffusionreverse/diffusionreverse.mp4",
+      "bytes": 39874,
+      "sha256": "2895fd7e5f9d7a72e41b72fb1c87d5589e45f828918471fcd8615216cfaf4b96",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 296,
+        "average_encoded_fps": 7.393838467943381
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "diffusionsampling",
+      "path": "learning-lab/public/animations/diffusionsampling/diffusionsampling.mp4",
+      "bytes": 78744,
+      "sha256": "d162a9c9b364cc8f97516faf67e1214a733071dcce19c391e0a785543a08b8ce",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 404,
+        "average_encoded_fps": 10.091590341382181
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "diffusiontraining",
+      "path": "learning-lab/public/animations/diffusiontraining/diffusiontraining.mp4",
+      "bytes": 68206,
+      "sha256": "27d1cca6a2f6b33eab9b4e79e7a45acad7032e8b7a8bf719f3ea0d405d13cafe",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 194,
+        "average_encoded_fps": 4.845961698584513
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "dpo",
+      "path": "learning-lab/public/animations/dpo/dpo.mp4",
+      "bytes": 55999,
+      "sha256": "954f038cde17915f98207ab538dc5d09372e1c6943e28d16cc32fd48300e9ab1",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 317,
+        "average_encoded_fps": 7.918401332223148
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "egnn",
+      "path": "learning-lab/public/animations/egnn/egnn.mp4",
+      "bytes": 68810,
+      "sha256": "df20bbc02891308d6ebc9b6fa24e0a511da955e32d5533b3f1197d0b437517c5",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 298,
+        "average_encoded_fps": 7.4437968359700255
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "embeddings",
+      "path": "learning-lab/public/animations/embeddings/embeddings.mp4",
+      "bytes": 141930,
+      "sha256": "59ffb21632be8bd17cafbce8077e2003ff66e5574087fb4eb24e7655024d232c",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 354,
+        "average_encoded_fps": 8.84263114071607
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "exactsoftmax",
+      "path": "learning-lab/public/animations/exactsoftmax/exactsoftmax.mp4",
+      "bytes": 190853,
+      "sha256": "d0b4f7c622c028d82a41132aa71f9ea4ffb8e2baf5e5679894cdf50ccbbf8a6b",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 388,
+        "average_encoded_fps": 9.691923397169026
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "flowmatching",
+      "path": "learning-lab/public/animations/flowmatching/flowmatching.mp4",
+      "bytes": 69254,
+      "sha256": "326cc1e7a28aac038cf443142ca5a5299b698d3e758ef7d721f093cda5e6f377",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 368,
+        "average_encoded_fps": 9.192339716902582
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gandiversity",
+      "path": "learning-lab/public/animations/gandiversity/gandiversity.mp4",
+      "bytes": 79726,
+      "sha256": "062091715d2d6cdf48f868d823c1107da83c9ff0ccad88554ecf6d4087e3f2ca",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 224,
+        "average_encoded_fps": 5.59533721898418
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "ganforward",
+      "path": "learning-lab/public/animations/ganforward/ganforward.mp4",
+      "bytes": 111387,
+      "sha256": "16cf5c34e906d99090b4f8b2f8dcace898b8bc11ff5eb44cde908afa263c901c",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 347,
+        "average_encoded_fps": 8.667776852622815
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "ganobjectives",
+      "path": "learning-lab/public/animations/ganobjectives/ganobjectives.mp4",
+      "bytes": 36102,
+      "sha256": "a61c6ba2200ba8ea4dda4092980d2c20a3e3318f39bdc6df46bc5dc58e743c3a",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 227,
+        "average_encoded_fps": 5.670274771024147
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gantraining",
+      "path": "learning-lab/public/animations/gantraining/gantraining.mp4",
+      "bytes": 72913,
+      "sha256": "37556e088ba0e1a6cbeb4b77e4f9401c716e1e51072d6144f667ab50482dee01",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 297,
+        "average_encoded_fps": 7.4188176519567035
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "generation",
+      "path": "learning-lab/public/animations/generation/generation.mp4",
+      "bytes": 59455,
+      "sha256": "97fcbe8fffe90d77c57d79a8ff56d91f840ffbb4ff9a0a19531d1434dc254b8e",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 327,
+        "average_encoded_fps": 6.53564290473018
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gnnadjacency",
+      "path": "learning-lab/public/animations/gnnadjacency/gnnadjacency.mp4",
+      "bytes": 43114,
+      "sha256": "cd0fcaa0f514c6beaf3ec0d670740eab8b68b14e177688858add2b3c7a55e038",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 161,
+        "average_encoded_fps": 4.02164862614488
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gnndepth",
+      "path": "learning-lab/public/animations/gnndepth/gnndepth.mp4",
+      "bytes": 84452,
+      "sha256": "c37018340c0dd58124e3069901732cc3f2a1c471422d97819dfc47eeee1fa3e2",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 332,
+        "average_encoded_fps": 8.293089092422981
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gnnmessage",
+      "path": "learning-lab/public/animations/gnnmessage/gnnmessage.mp4",
+      "bytes": 42023,
+      "sha256": "eff33238290c3898ff958bd09a8dbe76b336ebabf707259a5d149f9db7896967",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 248,
+        "average_encoded_fps": 6.194837635303914
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gnntraining",
+      "path": "learning-lab/public/animations/gnntraining/gnntraining.mp4",
+      "bytes": 43914,
+      "sha256": "2223bf8e509aabf9ff05c2aee05876ae13e612194d4ec784c52579435d753944",
+      "video": {
+        "duration_seconds": 40.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 236,
+        "average_encoded_fps": 5.890183028286189
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "gnnvariants",
+      "path": "learning-lab/public/animations/gnnvariants/gnnvariants.mp4",
+      "bytes": 54849,
+      "sha256": "1b3ddd4328c0dbf5979de272b0224bceafd6262770bea403816a0e77692c0363",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 206,
+        "average_encoded_fps": 5.1457119067443795
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "heads",
+      "path": "learning-lab/public/animations/heads/heads.mp4",
+      "bytes": 223471,
+      "sha256": "d78ffda0890a3dfbb2647e62111b15c795993764571e6f407c3ca4e8d48b29c8",
+      "video": {
+        "duration_seconds": 50.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 494,
+        "average_encoded_fps": 9.866844207723036
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "imagedenoisertraining",
+      "path": "learning-lab/public/animations/imagedenoisertraining/imagedenoisertraining.mp4",
+      "bytes": 159678,
+      "sha256": "716152a3a4790507c7b092fa9912de27b550f0704be5b23eef96c4f093aca7bc",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 384,
+        "average_encoded_fps": 9.592006661115738
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "jepa",
+      "path": "learning-lab/public/animations/jepa/jepa.mp4",
+      "bytes": 61901,
+      "sha256": "e0987c0b2127494a22aac7548cedfc2643a16a0bfefe2a119a1b0022cf1778fa",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 298,
+        "average_encoded_fps": 7.4437968359700255
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "kan",
+      "path": "learning-lab/public/animations/kan/kan.mp4",
+      "bytes": 148768,
+      "sha256": "2b1f86589b2ffeabe5b76226678cb30dc01f3c5d28dc7953d959d65f7a5ed056",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 317,
+        "average_encoded_fps": 7.918401332223148
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "longcontext",
+      "path": "learning-lab/public/animations/longcontext/longcontext.mp4",
+      "bytes": 106641,
+      "sha256": "53d83775c3f8fab0ebd9d62b69d8e2121e827b165b0b364f8afe50c3f1279ffe",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 328,
+        "average_encoded_fps": 8.193172356369692
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "lora",
+      "path": "learning-lab/public/animations/lora/lora.mp4",
+      "bytes": 181829,
+      "sha256": "64a35eb716151f0bf31d56a9d517db3e600158d857ab86524295aa1dedd00a47",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 371,
+        "average_encoded_fps": 9.267277268942548
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "maskedtext",
+      "path": "learning-lab/public/animations/maskedtext/maskedtext.mp4",
+      "bytes": 53335,
+      "sha256": "51586ca0b53f0a9981219725b36cce2654eb2dca294b41705af88b11c11b8f55",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 292,
+        "average_encoded_fps": 7.293921731890092
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "mla",
+      "path": "learning-lab/public/animations/mla/mla.mp4",
+      "bytes": 173006,
+      "sha256": "eee7147fc0812f7c115dac2abc1e9a3b5ab06dcd39b3f95210a5b11d5b0ce2c7",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 266,
+        "average_encoded_fps": 6.644462947543714
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "moe",
+      "path": "learning-lab/public/animations/moe/moe.mp4",
+      "bytes": 168135,
+      "sha256": "3398383bf04c4c9c27a3f30cdbd781655598fe3b22293e6f145a3d863207964e",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 310,
+        "average_encoded_fps": 7.743547044129892
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "moetraining",
+      "path": "learning-lab/public/animations/moetraining/moetraining.mp4",
+      "bytes": 224755,
+      "sha256": "e9e616de6754590fd3567b3972b48e7b7bbad245252c24d7882e09fb2734fed2",
+      "video": {
+        "duration_seconds": 40.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 380,
+        "average_encoded_fps": 9.484193011647253
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "mse",
+      "path": "learning-lab/public/animations/mse/mse.mp4",
+      "bytes": 36416,
+      "sha256": "fd65c163518dd958910e3cfbc5cde07fba52fea3d8a460bc154cf6510bc9670f",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 149,
+        "average_encoded_fps": 3.7218984179850128
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "neuralfield",
+      "path": "learning-lab/public/animations/neuralfield/neuralfield.mp4",
+      "bytes": 80019,
+      "sha256": "9d9d9a6c26950af4a433497ff8bf9f1fc9f9414c90c055c1ed51e45e5cf11cff",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 353,
+        "average_encoded_fps": 8.817651956702749
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "neuron",
+      "path": "learning-lab/public/animations/neuron/neuron.mp4",
+      "bytes": 141434,
+      "sha256": "4c152f7a5631f99ebac9a2523869a68eb6629040be245f941cc44ed58f4fe212",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 618,
+        "average_encoded_fps": 14.034822104466315
+      },
+      "audio_track": null,
+      "source_duration_seconds": 44,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "outputtraining",
+      "path": "learning-lab/public/animations/outputtraining/outputtraining.mp4",
+      "bytes": 202981,
+      "sha256": "5d2fe4dd464acaceaf0eeb2493aa579c0a2f36cb5afd826c7e5025386a084909",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 405,
+        "average_encoded_fps": 10.116569525395505
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "qlora",
+      "path": "learning-lab/public/animations/qlora/qlora.mp4",
+      "bytes": 53711,
+      "sha256": "ca9e4b6a89762d283c80d127b05d279cca8135a88c177ca98d2fc2d9aaa9420d",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 298,
+        "average_encoded_fps": 7.4437968359700255
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "recurrent",
+      "path": "learning-lab/public/animations/recurrent/recurrent.mp4",
+      "bytes": 162267,
+      "sha256": "0f6a84c89115d126504f410f5c2878e4ed122f773026d9e3f30d25ce14b8c0fc",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 317,
+        "average_encoded_fps": 7.918401332223148
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rlbellman",
+      "path": "learning-lab/public/animations/rlbellman/rlbellman.mp4",
+      "bytes": 96514,
+      "sha256": "7549bf0d9e9b786448c31effb46c0c37c97e9d1c9d5f16997fa46829ce0b8b89",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 236,
+        "average_encoded_fps": 5.8950874271440465
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rlpolicy",
+      "path": "learning-lab/public/animations/rlpolicy/rlpolicy.mp4",
+      "bytes": 53823,
+      "sha256": "670262012f911daf3dd01e896bac72e88ef7b7b974e2fa74bf85097bee010843",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 239,
+        "average_encoded_fps": 5.970024979184013
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rlqlearning",
+      "path": "learning-lab/public/animations/rlqlearning/rlqlearning.mp4",
+      "bytes": 54991,
+      "sha256": "07bebd5078e3d346d4468272608b9a518979dfd4d2dff9a2be28470ff9be2b56",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 305,
+        "average_encoded_fps": 7.618651124063281
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rltransition",
+      "path": "learning-lab/public/animations/rltransition/rltransition.mp4",
+      "bytes": 33889,
+      "sha256": "7c87190dc3c739779eb167051382a438355a8624601b4a9216015126cbc067fa",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 179,
+        "average_encoded_fps": 4.471273938384679
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rope",
+      "path": "learning-lab/public/animations/rope/rope.mp4",
+      "bytes": 184424,
+      "sha256": "fcb4a4f40db18d2f984eafce8c7dc527a64552f797ed7eaac2002df3c8526c61",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 454,
+        "average_encoded_fps": 9.073950699533645
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "sampling",
+      "path": "learning-lab/public/animations/sampling/sampling.mp4",
+      "bytes": 141271,
+      "sha256": "8b71c9765f6ff248eb216bd7ff4ca074c1f1f3db90907da537869a1fa63efe63",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 330,
+        "average_encoded_fps": 8.243130724396337
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "speculative",
+      "path": "learning-lab/public/animations/speculative/speculative.mp4",
+      "bytes": 55937,
+      "sha256": "ffa993b034b5b396359a1fbe71cc84eec42ff234d6b35f27ab37ac6d3ed94554",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 193,
+        "average_encoded_fps": 4.820982514571191
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "ssm",
+      "path": "learning-lab/public/animations/ssm/ssm.mp4",
+      "bytes": 221186,
+      "sha256": "001bd8aef8ed9335481f2e3d1b91f242d44fe1958eaa07ff8b197adf7d987967",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 486,
+        "average_encoded_fps": 12.139883430474605
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "ssmtraining",
+      "path": "learning-lab/public/animations/ssmtraining/ssmtraining.mp4",
+      "bytes": 85914,
+      "sha256": "4d1ace2223b711e5f64b48fcba5414e65d2139170a434c181c0034b6e79749cd",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 337,
+        "average_encoded_fps": 8.417985012489593
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "superposition",
+      "path": "learning-lab/public/animations/superposition/superposition.mp4",
+      "bytes": 72596,
+      "sha256": "9bebf3353c66a09e7d25e49eb8717348a439e39bc9bd30db3b5e3ce3868c152e",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 246,
+        "average_encoded_fps": 6.144879267277269
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "swiglu",
+      "path": "learning-lab/public/animations/swiglu/swiglu.mp4",
+      "bytes": 179806,
+      "sha256": "2fc5b2bf8c7ee4ddb71c12a0a17297486e3bc22dbb40f3c1be9978006d9b842e",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 352,
+        "average_encoded_fps": 8.792672772689427
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "tinytraining",
+      "path": "learning-lab/public/animations/tinytraining/tinytraining.mp4",
+      "bytes": 164793,
+      "sha256": "08c6e31c33092bc115e345904017e476d0435bcb45b2e9b93c01793b3c948b03",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 356,
+        "average_encoded_fps": 8.892589508742715
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "transformerblock",
+      "path": "learning-lab/public/animations/transformerblock/transformerblock.mp4",
+      "bytes": 169034,
+      "sha256": "6667f80cb93b503138ae4adab4932345b8a614ed526b91e9ebb58ed928dffceb",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 311,
+        "average_encoded_fps": 7.768526228143214
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "transformerforward",
+      "path": "learning-lab/public/animations/transformerforward/transformerforward.mp4",
+      "bytes": 176638,
+      "sha256": "2cb49987d3684cb0b0727dadda1ad1a8c28f9f184b90a8587df126b6538f08c1",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 329,
+        "average_encoded_fps": 8.218151540383015
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "unetdit",
+      "path": "learning-lab/public/animations/unetdit/unetdit.mp4",
+      "bytes": 290426,
+      "sha256": "dca8c5d464def09035d94eabb5dad93570e811ee8e054bac25e55c12e3a65890",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 318,
+        "average_encoded_fps": 7.94338051623647
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vaeelbo",
+      "path": "learning-lab/public/animations/vaeelbo/vaeelbo.mp4",
+      "bytes": 49355,
+      "sha256": "efce96492f145d72f4a9f3104a874d74558281e5fe4495f1788d0b218051d431",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 293,
+        "average_encoded_fps": 7.318900915903414
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vaegeneration",
+      "path": "learning-lab/public/animations/vaegeneration/vaegeneration.mp4",
+      "bytes": 71343,
+      "sha256": "5b419b595f6ab20efd9cdcae2db6ed6d86a20a3e3d79b2458e40c4ae966177ec",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 224,
+        "average_encoded_fps": 5.59533721898418
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vaeposterior",
+      "path": "learning-lab/public/animations/vaeposterior/vaeposterior.mp4",
+      "bytes": 71163,
+      "sha256": "7df4b6dcb003e13d2398fd8b655073848528f94f53c5e9c62ddd0c296d8815cc",
+      "video": {
+        "duration_seconds": 40.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 364,
+        "average_encoded_fps": 9.08485856905158
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vaetraining",
+      "path": "learning-lab/public/animations/vaetraining/vaetraining.mp4",
+      "bytes": 29292,
+      "sha256": "7860f4b5bd4812ed70eaf4414442c8e1d7a934e8d1815d623a55d2ad4975dbfd",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 170,
+        "average_encoded_fps": 4.24646128226478
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vit",
+      "path": "learning-lab/public/animations/vit/vit.mp4",
+      "bytes": 174330,
+      "sha256": "b149ddbdc9b516c8759248f9dc663aeb5e927b977097432b791e5c8329dcb6ef",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 333,
+        "average_encoded_fps": 8.318068276436303
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "vittraining",
+      "path": "learning-lab/public/animations/vittraining/vittraining.mp4",
+      "bytes": 69147,
+      "sha256": "941eaadb27ad9e78faba99377e382a3b619cbc4e5ec3f9a0f61f6343e591d75c",
+      "video": {
+        "duration_seconds": 40.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 283,
+        "average_encoded_fps": 7.069109075770192
+      },
+      "audio_track": null,
+      "source_duration_seconds": 40,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "xor",
+      "path": "learning-lab/public/animations/xor/xor.mp4",
+      "bytes": 157214,
+      "sha256": "bd5147377e53dd9f357dc64696a7254e5bb47c6dc6a3aa54ea0f63c68c883dd3",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 363,
+        "average_encoded_fps": 7.255163224516989
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    }
+  ]
+}

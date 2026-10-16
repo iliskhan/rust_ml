@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const a=R.trainKanComparison(0,7,.08,'additive'),b=R.trainKanComparison(200,7,.08,'additive'),grid=Array.from({length:31},(_,i)=>-1+i/15);
+const state={steps:200,knots:7,eta:.08,task:'additive',x:.2,y:.3,surface:'none'};
+const before=[0,1].map(j=>grid.map(x=>[x,R.kanEdge(a.kan,j,x)])),after=[0,1].map(j=>grid.map(x=>[x,R.kanEdge(b.kan,j,x)])),data={a:a.kan,b:b.kan,metrics:b.metrics};
+const headers=['Узел','phi x','phi y'],rows=b.kan.edges[0].map((v,i)=>[-1+2*i/6,v,b.kan.edges[1][i]]);
+const lesson={"media": "kan", "title": "KAN: функции на рёбрах", "label": "KAN: функции на рёбрах", "description": "Значения сплайнов обучаются на двух рёбрах сети.", "target": "kan-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Больше узлов добавит xy?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, сумма остаётся аддитивной.", "time": 9}, "practice": {"question": "Цель x+y+xy точно представима двумя аддитивными рёбрами?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, смешанная разность цели ненулевая."}, "transcript": ["Значения сплайнов обучаются на двух рёбрах сети.", "Больше узлов добавит xy?", "Нет, сумма остаётся аддитивной.", "Линейные сплайны, фиксированные узлы; ограничение относится к этой малой KAN.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Линейные сплайны, фиксированные узлы; ограничение относится к этой малой KAN."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Вход x или y",axisY:"Вклад функции ребра",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported kan');

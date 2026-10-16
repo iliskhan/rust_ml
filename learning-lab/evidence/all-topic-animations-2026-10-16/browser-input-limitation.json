@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-16T20:38:26.200Z",
+  "tabs": [
+    {
+      "id": 7,
+      "environment": "dev5191"
+    },
+    {
+      "id": 8,
+      "environment": "production5192"
+    },
+    {
+      "id": 9,
+      "environment": "fresh production5192"
+    }
+  ],
+  "widths": [
+    390,
+    1280
+  ],
+  "observed": [
+    "Apply did not enable Restore",
+    "Chapter click left currentTime at0",
+    "Native details summary click left open=false",
+    "Range numeric DOM draft changed, slider value did not",
+    "selectOption changed React route and chapter"
+  ],
+  "attempted_inputs": [
+    "Playwright.click",
+    "Playwright.press Enter/Space",
+    "Tab.click AX index",
+    "Tab.pressKey Return",
+    "Tab.click screenshot coordinates",
+    "explicit left button",
+    "fresh tab without viewport override",
+    "visible preview"
+  ],
+  "cause": "not established; source audit found no confirmed P1/P2; no speculative app change"
+}

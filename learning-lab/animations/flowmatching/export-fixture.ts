@@ -1,0 +1,13 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const initial=F.createFlowModel(),model=F.trainFlow(initial,'blobs',100),noise=F.flowNoise(4),a=noise.map(p=>F.integrateFlow(initial,p,32)),b=noise.map(p=>F.integrateFlow(model,p,32));
+const state={distribution:'blobs',model,time:.5,steps:32,selected:0,history:[],dataOpen:false},before=a,after=b,data={initial,noise,a,b};
+const headers=['Путь','x0','y0','x1','y1'],rows=noise.map((p,i)=>[i,...p,...b[i].at(-1)!]);
+const lesson={"media": "flowmatching", "title": "Flow matching: поле ведёт точку", "label": "Flow matching: поле ведёт точку", "description": "Поле скорости учится между шумом и данными.", "target": "flowmatching-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Генерации нужна готовая цель?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, интегратор читает только поле в текущей точке.", "time": 9}, "practice": {"question": "Удвоение шагов ODE обучит веса?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, меняется численное интегрирование того же поля."}, "transcript": ["Поле скорости учится между шумом и данными.", "Генерации нужна готовая цель?", "Нет, интегратор читает только поле в текущей точке.", "Траектории имеют реальные x,y; время задаёт порядок, а не пространственную ось.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Траектории имеют реальные x,y; время задаёт порядок, а не пространственную ось."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"x, данные",axisY:"y, данные",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported flowmatching');

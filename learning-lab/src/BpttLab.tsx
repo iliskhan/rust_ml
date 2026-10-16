@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { lazy, Suspense, useState } from 'react';
 import { ActionExercise } from './ActionExercise';
 import { ConceptLink } from './learning-context';
@@ -55,7 +56,7 @@ export function BpttLab() {
     change({ input: Array(12).fill(0), h0: 0, target: 0.5,
       weights: { wx: 0.8, wh: kind === 'vanish' ? 0.5 : 1.6, b: kind === 'saturate' ? 2 : 0 } });
   }
-  return <section className="bptt-lab" aria-label="Обучение RNN: обратный проход по времени">
+  return <CoreTopicFilm slug="bptt" current={{ lab, processed, eta, receipt, lossHistory, completedBackward, firstWeights, usedRequiredEta, error, geometryOpen, geometryVisited }} example={{ lab: initial(), processed: 1, eta: .05, receipt: null, lossHistory: [], completedBackward: false, firstWeights: null, usedRequiredEta: true, error: '', geometryOpen: geometryOpen, geometryVisited: geometryVisited }} restore={value => { setLab(value.lab);setProcessed(value.processed);setEta(value.eta);setReceipt(value.receipt);setLossHistory(value.lossHistory);setCompletedBackward(value.completedBackward);setFirstWeights(value.firstWeights);setUsedRequiredEta(value.usedRequiredEta);setError(value.error);setGeometryOpen(value.geometryOpen);setGeometryVisited(value.geometryVisited); }}><section className="bptt-lab" aria-label="Обучение RNN: обратный проход по времени">
     <h3>BPTT: как ошибка последнего состояния учит общие веса</h3>
     <p>Одна скалярная tanh-ячейка проходит всю последовательность. Ошибка есть только в конце:
       L = ½(hᵀ − y)². BPTT (Backpropagation Through Time) — <ConceptLink concept="backpropagation">обратный проход</ConceptLink> по
@@ -186,5 +187,5 @@ export function BpttLab() {
     <p className="note">Дальше: <ConceptLink concept="gradient">градиент</ConceptLink> и <ConceptLink concept="learning-rate">размер шага</ConceptLink>.
       {' '}Источники: <a href="https://www.deeplearningbook.org/contents/rnn.html" target="_blank" rel="noreferrer">Deep Learning, §10.2.2 и §10.7</a>;{' '}
       <a href="https://arxiv.org/abs/1211.5063" target="_blank" rel="noreferrer">Pascanu, Mikolov, Bengio: трудности обучения RNN</a>.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }

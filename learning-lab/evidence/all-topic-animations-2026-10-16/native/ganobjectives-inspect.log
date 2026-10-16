@@ -1,0 +1,16 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\ganobjectives\ganobjectives.py: TopicScene, 40.00 s, 13 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\ganobjectives.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\ganobjectives-2.png
+  #0   0.00– 0.70s  scene_geometry.py:30  FadeIn(Dot), Create(Line)
+  #1   0.70– 1.40s  scene_geometry.py:30  FadeIn(Dot), Create(Line)
+  #2   1.40– 6.00s  scene_geometry.py:36  wait
+  #3   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex '\\ell_D\\;?')
+  #4   6.50–12.00s  scene_geometry.py:36  wait
+  #5  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex '\\ell_D\\;?')
+  #6  12.30–14.30s  scene_geometry.py:30  Dot.animate.move_to(…), Create(Line)
+  #7  14.30–16.30s  scene_geometry.py:30  Dot.animate.move_to(…), Create(Line)
+  #8  16.30–17.00s  scene_geometry.py:30  FadeIn(MathTex '\\ell_D=-2')
+  #9  17.00–26.00s  scene_geometry.py:36  wait
+  #10 26.00–34.00s  scene_geometry.py:36  wait
+  #11 34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex '\\ell_D\\;?')
+  #12 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { ActionExercise } from './ActionExercise';
 import { useLearningActive } from './learning-context';
@@ -87,7 +88,7 @@ export function CnnTrainingLab() {
     }
   }
 
-  return <section className="cnn-training-lab" aria-labelledby={`${id}-title`}>
+  return <CoreTopicFilm slug="cnntraining" current={{ state, learningRate, scan, weightIndex, inputIndex, busy, error }} example={{ state: initialState(), learningRate: .05, scan: 0, weightIndex: 5, inputIndex: 12, busy: false, error: '' }} restore={value => { run.current++;setBusy(false);setState(value.state);setLearningRate(value.learningRate);setScan(value.scan);setWeightIndex(value.weightIndex);setInputIndex(value.inputIndex);setError(value.error); }} onPlayback={() => { run.current++;setBusy(false); }}><section className="cnn-training-lab" aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`}>Обучите один общий CNN-фильтр</h2>
     <p className="lesson-intro">Вход 5×5 содержит вертикальный переход от 0 к 1. Цель задана явно: ответ 1 у окон, пересекающих этот край, и 0 у однородных окон. Девять весов фильтра 3×3 и один bias общие для всех девяти выходов. Начните с нулевого фильтра и выполните шаг SGD.</p>
     <p className="note">Один канал, stride=1, padding=0, dilation=1, без активации и pooling. Используем cross-correlation: фильтр не переворачивается. Метки остаются фиксированными при изменении входа. Все числа без единиц; r — строка, c — столбец, нумерация с 1.</p>
@@ -162,5 +163,5 @@ export function CnnTrainingLab() {
     </section>
     <ActionExercise title="Научите общий фильтр отмечать вертикальный край" goal="Сделайте хотя бы один шаг SGD и уменьшите MSE ниже 0,05. Проверка использует настоящую loss и изменённые веса." startingConditions="исходный вход 5×5, цель [1,1,0] в каждой строке, нулевые веса и bias, η=0,05, история очищена." hint="Сначала выполните один шаг и сравните w до/после. Затем выполните 100 шагов с η=0,05. Для фиксированной матрицы ручные изменения входа не нужны." onStart={reset} check={() => checkCnnTrainingPractice(state.input, CNN_TRAINING_TARGET, state.parameters, state.steps, state.history[0].y)} stateKey={JSON.stringify([state.input, state.parameters, state.steps])} />
     <p className="note">Числа в таблицах округлены для чтения; расчёт использует полную точность JavaScript Number.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }

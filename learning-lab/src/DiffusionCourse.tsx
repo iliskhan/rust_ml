@@ -1,3 +1,4 @@
+import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -13,6 +14,11 @@ import {
 } from './diffusionMath';
 import type { DiffusionSchedule, NoiseSchedule, DiffusionTraining, DiffusionSampler } from './diffusionMath';
 import './diffusion-course.css';
+
+type FilmModel = { kind: NoiseSchedule; training: DiffusionTraining; learningRate: number; remaining: number };
+type FilmModelProps = { filmModel: FilmModel; restoreFilmModel: (value: FilmModel) => void; pauseFilm: () => void };
+const FIXED_DIFFUSION_MODEL: FilmModel = { kind: 'linear', training: initialTraining(diffusionSchedule()), learningRate: .003, remaining: 0 };
+
 
 const curve = (f: (x: number) => number, min = -4, max = 4, count = 161) => Array.from({ length: count }, (_, i) => {
   const x = min + (max - min) * i / (count - 1);
@@ -46,12 +52,12 @@ function ForwardDensityScene({ schedule, t }: { schedule: DiffusionSchedule; t: 
   </>;
 }
 
-function ForwardLesson({ schedule }: { schedule: DiffusionSchedule }) {
+function ForwardLesson({ filmModel, restoreFilmModel, pauseFilm, schedule }: { schedule: DiffusionSchedule } & FilmModelProps) {
   const [t, setT] = useState(24), [x0, setX0] = useState(1.5), [epsilon, setEpsilon] = useState(-0.8), [seed, setSeed] = useState(17);
   const [showDensityScene, setShowDensityScene] = useState(false);
   const bar = schedule.alphaBar[t], signal = Math.sqrt(bar) * x0, noise = Math.sqrt(1 - bar) * epsilon;
   const path = useMemo(() => forwardTrajectory(x0, schedule, seed), [x0, schedule, seed]);
-  return <>
+  return <><GenerativeTopicFilm slug="diffusionforward" current={{ filmModel, t, x0, epsilon, seed, showDensityScene }} update={value => { restoreFilmModel(value.filmModel); setT(value.t); setX0(value.x0); setEpsilon(value.epsilon); setSeed(value.seed); setShowDensityScene(value.showDensityScene); }} fixed={{ filmModel: FIXED_DIFFUSION_MODEL, t:24, x0:1.5, epsilon:-.8, seed:17, showDensityScene:false }} onPlayback={pauseFilm} /><h3 id="diffusionforward-lab" tabIndex={-1}>Ваш опыт</h3>
     <Lead idea={<>Сначала научимся портить данные предсказуемым способом. Наши данные — одно число: чаще около −1,5 или +1,5. На каждом шаге его немного сжимаем к нулю и добавляем <ConceptLink concept="gaussian">гауссов шум</ConceptLink>. Две группы постепенно смешиваются.</>} experiment={<>Сдвиньте t от 0 до 64 и проследите две вершины плотности. Затем измените ε при неизменном t: степень зашумления останется той же, но конкретное число xₜ изменится.</>} />
     <div className="dc-columns"><section className="panel"><h4>Один пример, одна порция шума</h4>
       <Range label="Шаг t · 0 означает чистые данные" value={t} min={0} max={schedule.steps} step={1} onChange={setT} />
@@ -79,13 +85,13 @@ function ForwardLesson({ schedule }: { schedule: DiffusionSchedule }) {
   </>;
 }
 
-function TrainingLesson({ schedule, training, remaining, learningRate, setLearningRate, run, pause, reset }: {
+function TrainingLesson({ schedule, training, remaining, learningRate, setLearningRate, run, pause, reset, filmModel, restoreFilmModel, pauseFilm }: {
   schedule: DiffusionSchedule; training: DiffusionTraining; remaining: number; learningRate: number; setLearningRate: (x: number) => void; run: (count: number) => void; pause: () => void; reset: () => void;
-}) {
+} & FilmModelProps) {
   const [t, setT] = useState(20), [x0, setX0] = useState(1.5), [epsilon, setEpsilon] = useState(-.8);
   const xt = forwardNoise(x0, epsilon, t, schedule), prediction = predictEpsilon(training.model, xt, t, schedule);
   const optimal = optimalEpsilon(xt, t, schedule), xhat = estimateClean(xt, prediction, t, schedule);
-  return <>
+  return <><GenerativeTopicFilm slug="diffusiontraining" current={{ filmModel, t, x0, epsilon }} update={value => { restoreFilmModel(value.filmModel); setT(value.t); setX0(value.x0); setEpsilon(value.epsilon); }} fixed={{ filmModel: FIXED_DIFFUSION_MODEL, t:20, x0:1.5, epsilon:-.8 }} onPlayback={pauseFilm} /><h3 id="diffusiontraining-lab" tabIndex={-1}>Ваш опыт</h3>
     <Lead idea={<>Модель получает только xₜ и номер шага t. Её задача — предсказать добавленный шум ε. Во время обучения мы сами создаём шум, поэтому знаем правильную цель. Кнопка ниже действительно меняет веса маленькой нейросети.</>} experiment={<>Запустите 2 000 обновлений. Сравните кривую нейросети с точным условным средним, затем поменяйте t. Ошибка отдельного примера и ошибка всей проверочной выборки могут двигаться по-разному.</>} />
     <div className="dc-columns"><section className="panel"><h4>Обучение здесь, в браузере</h4>
       <div className="dc-flow"><span>(xₜ, t)</span><b>→</b><span>{DENOISER_HIDDEN} tanh-нейрона</span><b>→</b><span>ε̂θ</span></div>
@@ -120,12 +126,12 @@ function TrainingLesson({ schedule, training, remaining, learningRate, setLearni
   </>;
 }
 
-function ReverseStepLesson({ schedule, training }: { schedule: DiffusionSchedule; training: DiffusionTraining }) {
+function ReverseStepLesson({ filmModel, restoreFilmModel, pauseFilm, schedule, training }: { schedule: DiffusionSchedule; training: DiffusionTraining } & FilmModelProps) {
   const [t, setT] = useState(24), [x0, setX0] = useState(1.5), [epsilon, setEpsilon] = useState(-.8), [z, setZ] = useState(.7), [known, setKnown] = useState(false);
   const xt = forwardNoise(x0, epsilon, t, schedule), predicted = predictEpsilon(training.model, xt, t, schedule);
   const used = known ? epsilon : predicted, step = ddpmStep(xt, used, t, schedule, z), truePosterior = posteriorParameters(xt, x0, t, schedule);
   const sd = Math.sqrt(step.variance), min = Math.min(step.mean, truePosterior.mean) - Math.max(.25, 3.5 * sd), max = Math.max(step.mean, truePosterior.mean) + Math.max(.25, 3.5 * sd);
-  return <>
+  return <><GenerativeTopicFilm slug="diffusionreverse" current={{ filmModel, t, x0, epsilon, z, known }} update={value => { restoreFilmModel(value.filmModel); setT(value.t); setX0(value.x0); setEpsilon(value.epsilon); setZ(value.z); setKnown(value.known); }} fixed={{ filmModel: FIXED_DIFFUSION_MODEL, t:24, x0:1.5, epsilon:-.8, z:.7, known:false }} onPlayback={pauseFilm} /><h3 id="diffusionreverse-lab" tabIndex={-1}>Ваш опыт</h3>
     <Lead idea={<>Убрать шум — не значит просто вычесть предсказанное ε. Обратный шаг DDPM сначала вычисляет среднее μθ, затем, кроме последнего шага, добавляет новый независимый шум. Так получается случайный xₜ₋₁.</>} experiment={<>Сначала меняйте z: среднее останется на месте, а выбранный xₜ₋₁ сдвинется. Затем поставьте t=1 — дополнительный шум исчезнет. Режим «знаем исходный пример» показывает, что доступно только во время разбора.</>} />
     <div className="dc-columns"><section className="panel"><h4>Разобрать переход t → t−1</h4>
       <Range label="Исходный шаг t" value={t} min={1} max={schedule.steps} step={1} onChange={setT} /><Range label="Чистое x₀ для учебного примера" value={x0} min={-2.5} max={2.5} step={.1} onChange={setX0} /><Range label="ε, которым испорчен пример" value={epsilon} min={-3} max={3} step={.1} onChange={setEpsilon} />
@@ -149,7 +155,7 @@ function ReverseStepLesson({ schedule, training }: { schedule: DiffusionSchedule
   </>;
 }
 
-function SamplingLesson({ schedule, training, active }: { schedule: DiffusionSchedule; training: DiffusionTraining; active: boolean }) {
+function SamplingLesson({ filmModel, restoreFilmModel, pauseFilm, schedule, training, active }: { schedule: DiffusionSchedule; training: DiffusionTraining; active: boolean } & FilmModelProps) {
   const [sampler, setSampler] = useState<DiffusionSampler>('ddpm'), [evaluations, setEvaluations] = useState(16), [initial, setInitial] = useState(.6), [noiseSeed, setNoiseSeed] = useState(31), [sampleSeed, setSampleSeed] = useState(120), [reference, setReference] = useState(false), [preview, setPreview] = useState(32);
   const result = useMemo(() => {
     if (!active) return null;
@@ -165,7 +171,7 @@ function SamplingLesson({ schedule, training, active }: { schedule: DiffusionSch
   const demonstrationT = 32, demonstrationEpsilon = predictAt(.6, demonstrationT);
   const withoutNoise = ddpmStep(.6, demonstrationEpsilon, demonstrationT, schedule).next;
   const deterministic = ddimStep(.6, demonstrationEpsilon, demonstrationT, demonstrationT - 1, schedule).next;
-  return <>
+  return <><GenerativeTopicFilm slug="diffusionsampling" current={{ filmModel, sampler, evaluations, initial, noiseSeed, sampleSeed, reference, preview }} update={value => { restoreFilmModel(value.filmModel); setSampler(value.sampler); setEvaluations(value.evaluations); setInitial(value.initial); setNoiseSeed(value.noiseSeed); setSampleSeed(value.sampleSeed); setReference(value.reference); setPreview(value.preview); }} fixed={{ filmModel: FIXED_DIFFUSION_MODEL, sampler:'ddpm' as DiffusionSampler, evaluations:16, initial:.6, noiseSeed:31, sampleSeed:120, reference:false, preview:32 }} onPlayback={pauseFilm} /><h3 id="diffusionsampling-lab" tabIndex={-1}>Ваш опыт</h3>
     <Lead idea={<>Генерация начинает с нового xₜ∼N(0,1) на последнем шаге T и последовательно строит x₀. Исходного чистого примера здесь нет. DDPM делает случайные переходы; DDIM с η=0 задаёт детерминированный путь при фиксированном начальном шуме.</>} experiment={<>Сначала обучите сеть в разделе 2. Здесь сравните распределение её новых чисел с данными. Затем выберите DDIM и измените seed обратного шума: две траектории совпадут. Изменение xₜ при t=T по-прежнему меняет результат.</>} />
     <div className="dc-columns"><section className="panel"><h4>Один старт — два обратных пути</h4>
       <label>Алгоритм sampling<select value={sampler} onChange={e => setSampler(e.target.value as DiffusionSampler)}><option value="ddpm">DDPM · 64 случайных шага</option><option value="ddim">DDIM · η=0, без нового шума</option></select></label>
@@ -196,12 +202,12 @@ function SamplingLesson({ schedule, training, active }: { schedule: DiffusionSch
   </>;
 }
 
-function GuidanceLesson({ schedule, active }: { schedule: DiffusionSchedule; active: boolean }) {
+function GuidanceLesson({ filmModel, restoreFilmModel, pauseFilm, schedule, active }: { schedule: DiffusionSchedule; active: boolean } & FilmModelProps) {
   const [condition, setCondition] = useState<-1 | 1>(1), [scale, setScale] = useState(1), [t, setT] = useState(24), [xt, setXt] = useState(-.2);
   const current = guidedEpsilon(xt, t, schedule, condition, scale), sigma = Math.sqrt(1 - schedule.alphaBar[t]);
   const samples = useMemo(() => active ? sampleDistribution((x, step) => guidedEpsilon(x, step, schedule, condition, scale).guided, schedule, 'ddpm', 256, 407) : [], [active, schedule, condition, scale]);
   const histogram = diffusionHistogram(samples), selected = samples.filter(x => condition * x > 0).length;
-  return <>
+  return <><GenerativeTopicFilm slug="diffusionguidance" current={{ filmModel, condition, scale, t, xt }} update={value => { restoreFilmModel(value.filmModel); setCondition(value.condition); setScale(value.scale); setT(value.t); setXt(value.xt); }} fixed={{ filmModel: FIXED_DIFFUSION_MODEL, condition:1 as -1 | 1, scale:1, t:24, xt:-.2 }} onPlayback={pauseFilm} /><h3 id="diffusionguidance-lab" tabIndex={-1}>Ваш опыт</h3>
     <Lead idea={<>Условие направляет генерацию: например, «число из правой группы». Classifier-free guidance смешивает прогноз без условия и прогноз с условием. Усиление увеличивает влияние условия, но не является универсальным регулятором качества.</>} experiment={<>Выберите правую или левую группу. Сравните s=0, s=1 и s=3 по распределению результатов. Затем посмотрите в одной точке, как два прогноза складываются в управляемое направление.</>} />
     <p className="dc-notice">Здесь отдельный аналитический эксперимент: условный и безусловный прогнозы вычисляются точно из известной смеси. Маленькая сеть из раздела 2 обучена без условий и в этой демонстрации не используется. Настоящее условное обучение не запускается.</p>
     <div className="dc-columns"><section className="panel"><h4>Из двух прогнозов — одно направление</h4>
@@ -263,17 +269,20 @@ export function DiffusionCourse() {
     setChapter(index);
     requestAnimationFrame(() => { heading.current?.focus({ preventScroll: true }); heading.current?.scrollIntoView({ block: 'start' }); });
   }
-  return <section className="diffusion-course" aria-label="Интерактивный курс диффузионных моделей">
+  const filmModel = { kind, training, learningRate, remaining };
+  const restoreFilmModel = (value: FilmModel) => { setRemaining(0); setKind(value.kind); setTraining(value.training); setLearningRate(value.learningRate); };
+  const filmProps = { filmModel, restoreFilmModel, pauseFilm: () => setRemaining(0) };
+  return <section onClickCapture={pauseCourseFilms} onChangeCapture={pauseCourseFilms} className="diffusion-course" aria-label="Интерактивный курс диффузионных моделей">
     <p className="dc-intro">От испорченного числа до генерации новых данных. Пять связанных экспериментов: обучение действительно меняет веса, а обратные шаги используют их предсказания. Математические ссылки открывают разбор с возвратом сюда.</p>
     <nav className="dc-chapters" aria-label="Разделы курса диффузии">{CHAPTERS.map((item, i) => <button key={item.title} aria-current={chapter === i ? 'step' : undefined} aria-pressed={chapter === i} aria-label={`${i + 1}. ${item.title}: ${item.subtitle}`} onClick={() => setChapter(i)}><span>{i + 1}</span><strong>{item.title}</strong></button>)}</nav>
     <label className="dc-mobile-navigation" htmlFor={mobileId}><span>Раздел диффузии</span><select id={mobileId} value={chapter} onChange={e => setChapter(Number(e.target.value))}>{CHAPTERS.map((item, i) => <option key={item.title} value={i}>{i + 1}. {item.title} — {item.subtitle}</option>)}</select></label>
     <div className="dc-model-setting"><label>Расписание модели · {DIFFUSION_STEPS} шага<select value={kind} onChange={e => changeSchedule(e.target.value as NoiseSchedule)}><option value="linear">Линейное β: 0,001 → 0,18</option><option value="cosine">Косинусное · ограничение β≤0,25</option></select></label><p>Смена расписания сбрасывает обучение. Сейчас: {training.updates} обновлений; ᾱ₆₄={fmt(schedule.alphaBar[64], 5)}. <span>Остальные настройки разделов сохраняются.</span></p></div>
     <div className="dc-heading"><span>Раздел {chapter + 1} из {CHAPTERS.length}</span><h2 ref={heading} tabIndex={-1}>{CHAPTERS[chapter].subtitle}</h2></div>
-    <div hidden={chapter !== 0}><ForwardLesson schedule={schedule} /></div>
-    <div hidden={chapter !== 1}><TrainingLesson schedule={schedule} training={training} remaining={remaining} learningRate={learningRate} setLearningRate={setLearningRate} run={count => setRemaining(Math.min(count, 6000 - training.updates))} pause={() => setRemaining(0)} reset={reset} /></div>
-    <div hidden={chapter !== 2}><ReverseStepLesson schedule={schedule} training={training} /></div>
-    <div hidden={chapter !== 3}><SamplingLesson schedule={schedule} training={training} active={active && chapter === 3} /></div>
-    <div hidden={chapter !== 4}><GuidanceLesson schedule={schedule} active={active && chapter === 4} /></div>
+    <div hidden={chapter !== 0}><ForwardLesson {...filmProps} schedule={schedule} /></div>
+    <div hidden={chapter !== 1}><TrainingLesson {...filmProps} schedule={schedule} training={training} remaining={remaining} learningRate={learningRate} setLearningRate={setLearningRate} run={count => setRemaining(Math.min(count, 6000 - training.updates))} pause={() => setRemaining(0)} reset={reset} /></div>
+    <div hidden={chapter !== 2}><ReverseStepLesson {...filmProps} schedule={schedule} training={training} /></div>
+    <div hidden={chapter !== 3}><SamplingLesson {...filmProps} schedule={schedule} training={training} active={active && chapter === 3} /></div>
+    <div hidden={chapter !== 4}><GuidanceLesson {...filmProps} schedule={schedule} active={active && chapter === 4} /></div>
     <PracticeSection lessonId="diffusion" topicId={practiceChapter('diffusion', chapter)} /><div className="dc-chapter-actions"><button disabled={chapter === 0} onClick={() => moveChapter(chapter - 1)}>← Предыдущий раздел</button><button disabled={chapter === CHAPTERS.length - 1} onClick={() => moveChapter(chapter + 1)}>Следующий раздел →</button></div>
     <details className="dc-sources"><summary>Первоисточники и точные границы реализации</summary>
       <p>Реализованы прямой гауссов процесс, две шумовые сетки, MLP с MSE и Adam, DDPM с σ²=β̃ₜ, DDIM с η=0, численная генерация и аналитическая демонстрация CFG. Все значения — JavaScript number, подписи округлены. Одномерные примеры показывают механизм, а не качество генерации изображений.</p>

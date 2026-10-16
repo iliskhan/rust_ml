@@ -1,0 +1,14 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\gnnadjacency\gnnadjacency.py: TopicScene, 40.00 s, 11 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnnadjacency.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnnadjacency-2.png
+  #0   0.00– 6.00s  scene_geometry.py:36  wait
+  #1   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex 'A_{Cj}\\;?')
+  #2   6.50–12.00s  scene_geometry.py:36  wait
+  #3  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex 'A_{Cj}\\;?')
+  #4  12.30–13.60s  scene_geometry.py:30  Dot.animate.move_to(…), Rectangle.animate.set_fill(…)
+  #5  13.60–14.90s  scene_geometry.py:30  Dot.animate.move_to(…), Rectangle.animate.set_fill(…)
+  #6  14.90–16.20s  scene_geometry.py:30  Dot.animate.move_to(…), Rectangle.animate.set_fill(…)
+  #7  16.20–26.00s  scene_geometry.py:36  wait
+  #8  26.00–34.00s  scene_geometry.py:36  wait
+  #9  34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex 'X_C\\;?')
+  #10 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

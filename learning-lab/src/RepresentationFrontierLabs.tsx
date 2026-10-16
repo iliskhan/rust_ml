@@ -1,3 +1,4 @@
+import { useFrontierFilm } from './FrontierTopicFilms';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
@@ -41,7 +42,8 @@ export function ClipLab() {
   const parameterChange = frontierParameterDistance([...trained.parameters.image.flat(), ...trained.parameters.text.flat()], [...clipInitial().image.flat(), ...clipInitial().text.flat()]);
   const queryProbabilities = current.imageToText[query], selected = queryProbabilities.indexOf(Math.max(...queryProbabilities));
   function restart(change: () => void) { change(); setSteps(0); }
-  return <section className="representation-frontier-lab" aria-label="Лаборатория контрастивных представлений CLIP">
+  const film = useFrontierFilm('clip', { steps, temperature, eta, query, geometry }, state => { setSteps(state.steps); setTemperature(state.temperature); setEta(state.eta); setQuery(state.query); setGeometry(state.geometry); });
+  return <section className="representation-frontier-lab" aria-label="Лаборатория контрастивных представлений CLIP" {...film.labEvents}>{film.animation}
     <h3>CLIP: сблизить верные пары в общем пространстве</h3>
     <p>Четыре картинки 3×3 и четыре описания проходят через разные обучаемые проекторы: Wᵢ[3×9] и Wₜ[3×4]. Их выходы нормируются до длины 1. Сходство — скалярное произведение настоящих трёхмерных embedding, а не расстояние между номерами классов.</p>
     <div className="frontier-pairs">{CLIP_PAIRS.map(pair => <figure key={pair.name}><Pattern pixels={pair.image} name={pair.name} /><figcaption>{pair.name}</figcaption></figure>)}</div>
@@ -90,7 +92,8 @@ export function InterpretabilityLab() {
   const measured = operation === 'ablation' ? causal.ablated : operation === 'patch' ? causal.patched : null;
   const reference = operation === 'patch' ? causal.corrupt : causal.clean;
   function causalChange(action: () => void) { action(); setOperation('none'); }
-  return <section className="representation-frontier-lab" aria-label="Лаборатория суперпозиции и причинных вмешательств">
+  const film = useFrontierFilm('superposition', { steps, frequency, first, second, pair, strength, signal, nuisance, neuron, baseline, corruption, operation }, state => { setSteps(state.steps); setFrequency(state.frequency); setFirst(state.first); setSecond(state.second); setPair(state.pair); setStrength(state.strength); setSignal(state.signal); setNuisance(state.nuisance); setNeuron(state.neuron); setBaseline(state.baseline); setCorruption(state.corruption); setOperation(state.operation); });
+  return <section className="representation-frontier-lab" aria-label="Лаборатория суперпозиции и причинных вмешательств" {...film.labEvents}>{film.animation}
     <h3>Пять признаков в двух координатах: суперпозиция</h3>
     <p>Обучаем tied autoencoder: h = Wx, x̂ = ReLU(Wᵀh + b), W[2×5]. Пять независимых разреженных признаков делят только две скрытые координаты. Веса важности [1; 0,8; 0,6; 0,4; 0,2] делают ошибку первого признака дороже ошибки пятого.</p>
     <div className="lab-grid">
@@ -144,7 +147,8 @@ export function JepaLab() {
   const trained = useMemo(() => trainJepa(steps, mask, eta, ema, collapsed), [steps, mask, eta, ema, collapsed]);
   const image = JEPA_IMAGES[sample], trace = jepaTrace(trained.parameters, image, mask), initial = jepaInitial(collapsed), metrics = trained.metrics;
   function restart(action: () => void) { action(); setSteps(0); }
-  return <section className="representation-frontier-lab" aria-label="Лаборатория предсказания скрытых представлений JEPA">
+  const film = useFrontierFilm('jepa', { steps, mask, ema, eta, collapsed, sample }, state => { setSteps(state.steps); setMask(state.mask); setEma(state.ema); setEta(state.eta); setCollapsed(state.collapsed); setSample(state.sample); });
+  return <section className="representation-frontier-lab" aria-label="Лаборатория предсказания скрытых представлений JEPA" {...film.labEvents}>{film.animation}
     <h3>JEPA: предсказать скрытый патч в пространстве представлений</h3>
     <p>Вместо восстановления пикселей context encoder видит три патча из четырёх. Predictor получает два context latent и one-hot позицию скрытого патча. Его цель — два latent target encoder для скрытого патча; target получает полный образец и не получает градиент loss.</p>
     <div className="lab-grid">
@@ -197,7 +201,8 @@ export function KanLab() {
   }, [surface, trained.kan, trained.mlp, task]);
   const heights = surfaceData.flat().map(point => point[2]), low = Math.min(-1.6, ...heights), high = Math.max(1.6, ...heights);
   function restart(action: () => void) { action(); setSteps(0); }
-  return <section className="representation-frontier-lab" aria-label="Лаборатория KAN и MLP на общей регрессии">
+  const film = useFrontierFilm('kan', { steps, knots, eta, task, x, y, surface }, state => { setSteps(state.steps); setKnots(state.knots); setEta(state.eta); setTask(state.task); setX(state.x); setY(state.y); setSurface(state.surface); });
+  return <section className="representation-frontier-lab" aria-label="Лаборатория KAN и MLP на общей регрессии" {...film.labEvents}>{film.animation}
     <h3>KAN: учить функцию на ребре, а MLP — вес перед активацией</h3>
     <p>Маленькая KAN считает f̂(x,y)=φₓ(x)+φᵧ(y)+b. Каждое ребро φ — обучаемый сплайн первой степени: линейная интерполяция значений в узлах. MLP 2→6→1 обучает обычные матрицы и bias с фиксированным tanh. Обе сети получают одни данные и полную MSE.</p>
     <div className="lab-grid">

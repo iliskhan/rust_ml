@@ -1,0 +1,1078 @@
+[
+  {
+    "media": "/animations/clip/clip.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/flowmatching/flowmatching.mp4",
+    "restored": true,
+    "controls": 12,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/superposition/superposition.mp4",
+    "restored": true,
+    "controls": 22,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/egnn/egnn.mp4",
+    "restored": true,
+    "controls": 36,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/neuralfield/neuralfield.mp4",
+    "restored": true,
+    "controls": 24,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/dpo/dpo.mp4",
+    "restored": true,
+    "controls": 8,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/qlora/qlora.mp4",
+    "restored": true,
+    "controls": 14,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/speculative/speculative.mp4",
+    "restored": true,
+    "controls": 11,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/longcontext/longcontext.mp4",
+    "restored": true,
+    "controls": 15,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/jepa/jepa.mp4",
+    "restored": true,
+    "controls": 17,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/maskedtext/maskedtext.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/kan/kan.mp4",
+    "restored": true,
+    "controls": 18,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vittraining/vittraining.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/moetraining/moetraining.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/ssmtraining/ssmtraining.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/imagedenoisertraining/imagedenoisertraining.mp4",
+    "restored": true,
+    "controls": 18,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vaeposterior/vaeposterior.mp4",
+    "restored": true,
+    "controls": 10,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vaeelbo/vaeelbo.mp4",
+    "restored": true,
+    "controls": 11,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vaetraining/vaetraining.mp4",
+    "restored": true,
+    "controls": 10,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vaegeneration/vaegeneration.mp4",
+    "restored": true,
+    "controls": 16,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/ganforward/ganforward.mp4",
+    "restored": true,
+    "controls": 10,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/ganobjectives/ganobjectives.mp4",
+    "restored": true,
+    "controls": 9,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gantraining/gantraining.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gandiversity/gandiversity.mp4",
+    "restored": true,
+    "controls": 12,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/diffusionforward/diffusionforward.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/diffusiontraining/diffusiontraining.mp4",
+    "restored": true,
+    "controls": 15,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/diffusionreverse/diffusionreverse.mp4",
+    "restored": true,
+    "controls": 16,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/diffusionsampling/diffusionsampling.mp4",
+    "restored": true,
+    "controls": 13,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/diffusionguidance/diffusionguidance.mp4",
+    "restored": true,
+    "controls": 14,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gnnadjacency/gnnadjacency.mp4",
+    "restored": true,
+    "controls": 11,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gnnmessage/gnnmessage.mp4",
+    "restored": true,
+    "controls": 8,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gnntraining/gnntraining.mp4",
+    "restored": true,
+    "controls": 9,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gnndepth/gnndepth.mp4",
+    "restored": true,
+    "controls": 9,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/gnnvariants/gnnvariants.mp4",
+    "restored": true,
+    "controls": 11,
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 0,
+    "width": 1280
+  },
+  {
+    "media": "/animations/rltransition/rltransition.mp4",
+    "restored": true,
+    "controls": 17,
+    "focus": {
+      "id": "rltransition-lab",
+      "text": "Ваш опыт"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/rlbellman/rlbellman.mp4",
+    "restored": true,
+    "controls": 7,
+    "focus": {
+      "id": "rlbellman-lab",
+      "text": "Ваш опыт"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/rlqlearning/rlqlearning.mp4",
+    "restored": true,
+    "controls": 17,
+    "focus": {
+      "id": "rlqlearning-lab",
+      "text": "Ваш опыт"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/rlpolicy/rlpolicy.mp4",
+    "restored": true,
+    "controls": 12,
+    "focus": {
+      "id": "rlpolicy-lab",
+      "text": "Ваш опыт"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/embeddings/embeddings.mp4",
+    "restored": true,
+    "controls": 22,
+    "focus": {
+      "id": "embeddings-controls_r_cj_",
+      "text": "Токен — кусочек текста с номером в словаре. Embedding — карточка с числами, или "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/attention/attention.mp4",
+    "restored": true,
+    "controls": 30,
+    "focus": {
+      "id": "attention-controls",
+      "text": "Вход и настройки"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 33,
+    "width": 1280
+  },
+  {
+    "media": "/animations/heads/heads.mp4",
+    "restored": true,
+    "controls": 20,
+    "focus": {
+      "id": "heads-controls",
+      "text": "Головы и группы K/V"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 29,
+    "width": 1280
+  },
+  {
+    "media": "/animations/rope/rope.mp4",
+    "restored": true,
+    "controls": 21,
+    "focus": {
+      "id": "rope-controls",
+      "text": "Позиции и исходные векторы"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 29,
+    "width": 1280
+  },
+  {
+    "media": "/animations/transformerblock/transformerblock.mp4",
+    "restored": true,
+    "controls": 15,
+    "focus": {
+      "id": "transformerblock-controls_r_d6_",
+      "text": "Attention обменивается сведениями между позициями. FFN затем обрабатывает призна"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/crossmask/crossmask.mp4",
+    "restored": true,
+    "controls": 6,
+    "focus": {
+      "id": "crossmask-controls_r_db_",
+      "text": "«Transformer» — семейство. Encoder читает доступный вход с обеих сторон. Авторег"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/generation/generation.mp4",
+    "restored": true,
+    "controls": 10,
+    "focus": {
+      "id": "cache-controls",
+      "text": "Префикс и настройки кэша"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 29,
+    "width": 1280
+  },
+  {
+    "media": "/animations/sampling/sampling.mp4",
+    "restored": false,
+    "controls": 17,
+    "focus": {
+      "id": "sampling-controls_r_dj_",
+      "text": "Attention ещё не выбирает слово. Выходная матрица переводит последнее состояние "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/sampling/sampling.mp4",
+    "restored": true,
+    "controls": 30,
+    "focus": {
+      "id": "sampling-controls_r_dj_",
+      "text": "Attention ещё не выбирает слово. Выходная матрица переводит последнее состояние "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/outputtraining/outputtraining.mp4",
+    "restored": true,
+    "controls": 30,
+    "focus": {
+      "id": "outputtraining-controls_r_e2_",
+      "text": "Обучается только выходной слойТе же скрытые признаки h текущего учебного Transfo"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/bpe/bpe.mp4",
+    "restored": true,
+    "controls": 11,
+    "focus": {
+      "id": "bpe-controls_r_em_",
+      "text": "BPE: учим правила слияния, затем применяем их к новому текстуByte Pair Encoding "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/swiglu/swiglu.mp4",
+    "restored": true,
+    "controls": 16,
+    "focus": {
+      "id": "swiglu-controls_r_es_",
+      "text": "FFN: нелинейность и умножающий gateОдин токен с тремя признаками проходит FFN 3 "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/lora/lora.mp4",
+    "restored": true,
+    "controls": 18,
+    "focus": {
+      "id": "lora-controls_r_f6_",
+      "text": "LoRA и полная адаптация: одна задача, два набора обучаемых весовЛинейный слой 8 "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/vit/vit.mp4",
+    "restored": true,
+    "controls": 10,
+    "focus": {
+      "id": "vit-controls_r_fg_",
+      "text": "ViT · изображение становится последовательностьюОт пикселей к вниманию между пат"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/moe/moe.mp4",
+    "restored": true,
+    "controls": 14,
+    "focus": {
+      "id": "moe-controls_r_fm_",
+      "text": "MoE · разреженный FFNРоутер выбирает, какие эксперты считатьЧетыре токена с двум"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/mla/mla.mp4",
+    "restored": true,
+    "controls": 12,
+    "focus": {
+      "id": "mla-controls_r_fu_",
+      "text": "Один латентный код вместо отдельных K/VЗдесь две головы используют общий код c р"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/ssm/ssm.mp4",
+    "restored": true,
+    "controls": 17,
+    "focus": {
+      "id": "ssm-controls_r_g6_",
+      "text": "Состояние: затухание, запись и адресная заменаВходной сигналИмпульс и затуханиеП"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/neuron/neuron.mp4",
+    "restored": true,
+    "controls": 32,
+    "focus": {
+      "id": "neuron-controls",
+      "text": "Соберите один нейрон"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 34,
+    "width": 1280
+  },
+  {
+    "media": "/animations/activations/activations.mp4",
+    "restored": true,
+    "controls": 32,
+    "focus": {
+      "id": "neuron-activation",
+      "text": "Форма активации и её наклон"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/mse/mse.mp4",
+    "restored": true,
+    "controls": 23,
+    "focus": {
+      "id": "loss-mse-controls",
+      "text": "MSE: насколько промахнулись числа"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/bce/bce.mp4",
+    "restored": true,
+    "controls": 23,
+    "focus": {
+      "id": "loss-bce-controls",
+      "text": "BCE: насколько уверенно выбран класс"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/backprop/backprop.mp4",
+    "restored": true,
+    "controls": 22,
+    "focus": {
+      "id": "backprop-walkthrough",
+      "text": "Пройдите вычисление по шагам"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 38,
+    "width": 1280
+  },
+  {
+    "media": "/animations/descent/descent.mp4",
+    "restored": false,
+    "controls": 15,
+    "focus": {
+      "id": "optimizer-controls",
+      "text": "Общий эксперимент"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 37,
+    "width": 1280
+  },
+  {
+    "media": "/animations/boundary/boundary.mp4",
+    "restored": true,
+    "controls": 89,
+    "focus": {
+      "id": "boundary-experiment",
+      "text": "Лаборатория границ: данные и сеть"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/xor/xor.mp4",
+    "restored": true,
+    "controls": 89,
+    "focus": {
+      "id": "xor-controls",
+      "text": "Обучите маленькую сеть"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 37,
+    "width": 1280
+  },
+  {
+    "media": "/animations/descent/descent.mp4",
+    "restored": true,
+    "controls": 15,
+    "domIdsChanged": true,
+    "focus": {
+      "id": "optimizer-controls",
+      "text": "Общий эксперимент"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 37,
+    "width": 1280
+  },
+  {
+    "media": "/animations/tinytraining/tinytraining.mp4",
+    "restored": true,
+    "controls": 14,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "tinytraining-controls_r_ec_",
+      "text": "Обучите Transformer целиком: от CE до embeddingsЗдесь SGD меняет все 208 парамет"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/exactsoftmax/exactsoftmax.mp4",
+    "restored": true,
+    "controls": 15,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "exactsoftmax-controls_r_j8_",
+      "text": "Точный softmax по частямОдна и та же строка Q обходит K/V плитками. Если новая п"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/unetdit/unetdit.mp4",
+    "restored": true,
+    "controls": 12,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "unetdit-controls_r_jg_",
+      "text": "U-Net → DiT · два предиктора шумаОдинаковые xₜ и t, разные пути вычисления ε̂U-N"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/dense/dense.mp4",
+    "restored": true,
+    "controls": 19,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "dense-controls_r_p_",
+      "text": "Dense — полносвязный слой: каждый вход связан со всеми нейронами следующего слоя"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 0,
+    "paused": true,
+    "time": 30,
+    "width": 0
+  },
+  {
+    "media": "/animations/cnnforward/cnnforward.mp4",
+    "restored": true,
+    "controls": 19,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "cnnforward-controls_r_jl_",
+      "text": "CNN (Convolutional Neural Network) — свёрточная нейронная сеть. Один фильтр скол"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/recurrent/recurrent.mp4",
+    "restored": true,
+    "controls": 13,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "recurrent-controls_r_jv_",
+      "text": "RNN (Recurrent Neural Network) — рекуррентная нейронная сеть: её состояние перед"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/recurrent/recurrent.mp4",
+    "restored": true,
+    "controls": 18,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "recurrent-controls_r_k6_",
+      "text": "LSTM (Long Short-Term Memory) — рекуррентная ячейка с долгой краткосрочной памят"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/recurrent/recurrent.mp4",
+    "restored": true,
+    "controls": 16,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "recurrent-controls_r_kg_",
+      "text": "GRU (Gated Recurrent Unit) — рекуррентная ячейка с затворами, управляющими одним"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/transformerforward/transformerforward.mp4",
+    "restored": true,
+    "controls": 17,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "transformerforward-controls_r_kp_",
+      "text": "Transformer — сеть на основе механизма внимания. Q (query) — запрос: что ищет по"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/cnntraining/cnntraining.mp4",
+    "restored": true,
+    "controls": 18,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "cnntraining-controls_r_l5_",
+      "text": "Обучите один общий CNN-фильтрВход 5×5 содержит вертикальный переход от 0 к 1. Це"
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  },
+  {
+    "media": "/animations/bptt/bptt.mp4",
+    "restored": true,
+    "controls": 30,
+    "domIdsChanged": false,
+    "focus": {
+      "id": "bptt-controls_r_lg_",
+      "text": "BPTT: как ошибка последнего состояния учит общие весаОдна скалярная tanh-ячейка "
+    },
+    "captions": [
+      "disabled"
+    ],
+    "height": 720,
+    "paused": true,
+    "time": 30,
+    "width": 1280
+  }
+]

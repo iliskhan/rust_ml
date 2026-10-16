@@ -1,0 +1,19 @@
+✔ descent film distinguishes a stable SGD step, sign change and growing oscillation (2.6233ms)
+✔ descent film replays every exported optimizer endpoint and true level set (1.5273ms)
+✔ XOR film is a deterministic replay of the existing lab, not a separately trained model (15.8959ms)
+✔ XOR film hidden contributions, logits and every probability cell agree with actual inputs (3.533ms)
+✔ RoPE film rotates actual coordinate pairs and preserves norm under a common shift (0.8277ms)
+✔ heads film concatenates individual weighted values before the actual output projection (1.8261ms)
+✔ generation film extends K/V without modifying old entries and matches every full prefix (1.13ms)
+✔ all eight films have nonempty, ordered captions covering their full source duration (3.5002ms)
+✔ neuron film matches the lab and both sides of ReLU (3.0963ms)
+✔ attention film preserves projections, mask, softmax and coordinate mixing (2.0491ms)
+✔ new films have ordered captions covering their source timelines (0.6953ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 186.4186

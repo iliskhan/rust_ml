@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Chart, Range, fmt } from './ui';
 import {
@@ -52,7 +53,7 @@ export function TinyTransformerLab() {
     setRun({ parameters, steps: run.steps + limit, history });
   }
 
-  return <section className="tiny-transformer-lab panel" aria-label="Полное обучение маленького Transformer">
+  return <CoreTopicFilm slug="tinytraining" current={{ run, rate, position, groupIndex, coordinate, stageIndex, checked }} example={{ run: newRun(), rate: .08, position: 2, groupIndex: 2, coordinate: 0, stageIndex: 6, checked: false }} restore={value => { setRun(value.run);setRate(value.rate);setPosition(value.position);setGroupIndex(value.groupIndex);setCoordinate(value.coordinate);setStageIndex(value.stageIndex);setChecked(value.checked); }}><section className="tiny-transformer-lab panel" aria-label="Полное обучение маленького Transformer">
     <h3>Обучите Transformer целиком: от CE до embeddings</h3>
     <p>Здесь SGD меняет все {TINY_PARAMETER_COUNT} параметров: E, позиции P, Q/K/V/O, оба LayerNorm, FFN и выходную голову.
       Одна causal-голова, d=4, FFN 4→8→4 с tanh, контекст до четырёх токенов. Backward вычисляется аналитически через скалярный граф операций.</p>
@@ -194,5 +195,5 @@ export function TinyTransformerLab() {
       Позиции P обучаются. Два pre-LayerNorm используют ε=10⁻⁵ и обучаемые γ/β; FFN использует гладкую tanh.
       Численные тесты сравнивают все 208 аналитических производных с центральными разностями и проверяют causal-маску.
       Такая сеть демонстрирует механизм обучения; она не воспроизводит масштаб современного LLM.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }

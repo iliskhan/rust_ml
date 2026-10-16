@@ -1,0 +1,18 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\gnntraining\gnntraining.py: TopicScene, 40.00 s, 15 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnntraining.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnntraining-2.png
+  #0   0.00– 6.00s  scene_geometry.py:36  wait
+  #1   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex '\\mathcal T\\;?')
+  #2   6.50–12.00s  scene_geometry.py:36  wait
+  #3  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex '\\mathcal T\\;?')
+  #4  12.30–14.80s  scene_geometry.py:30  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #5  14.80–15.45s  scene_geometry.py:30  Transform(Line)
+  #6  15.45–16.10s  scene_geometry.py:30  Transform(Line)
+  #7  16.10–16.75s  scene_geometry.py:30  Transform(Line)
+  #8  16.75–17.40s  scene_geometry.py:30  Transform(Line)
+  #9  17.40–18.05s  scene_geometry.py:30  Transform(Line)
+  #10 18.05–18.70s  scene_geometry.py:30  Transform(Line)
+  #11 18.70–26.00s  scene_geometry.py:36  wait
+  #12 26.00–34.00s  scene_geometry.py:36  wait
+  #13 34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex '\\eta\\;?')
+  #14 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

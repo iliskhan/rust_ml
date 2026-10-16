@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const p=I.SPEC_TARGET[0],q=I.specDraft(0,.4),kernel=I.speculativeKernel(p,q),block=I.speculativeBlock(0,4,.4,17);
+const state={previous:0,fidelity:.4,length:4,seed:17,histogram:null};
+const before=[q.map((v,i)=>[i,v]),kernel.acceptedMass.map((v,i)=>[i,v])],after=[kernel.exact.map((v,i)=>[i,v]),kernel.acceptedMass.map((v,i)=>[i,v])],data={p,q,kernel,block};
+const headers=['Токен','p','q','Принятая масса','Коррекция','Итог'],rows=p.map((v,i)=>[i,v,q[i],kernel.acceptedMass[i],kernel.rejected*kernel.residual[i],kernel.exact[i]]);
+const lesson={"media": "speculative", "title": "Speculative: восполнить массу", "label": "Speculative: восполнить массу", "description": "Черновик предлагает токен; target проверяет допустимую массу.", "target": "speculative-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "После отказа достаточно взять p?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, остаток max(p минус q,0) дополняет уже принятую массу.", "time": 9}, "practice": {"question": "При p=q возможен отказ?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, каждое предложенное значение принимается с вероятностью один."}, "transcript": ["Черновик предлагает токен; target проверяет допустимую массу.", "После отказа достаточно взять p?", "Нет, остаток max(p минус q,0) дополняет уже принятую массу.", "Точное распределение проверяется алгеброй; ускорение LLM здесь не измеряется.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Точное распределение проверяется алгеброй; ускорение LLM здесь не измеряется."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Токен, индекс категории",axisY:"Вероятностная масса",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported speculative');

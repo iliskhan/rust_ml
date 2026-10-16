@@ -1,0 +1,14 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\gnnvariants\gnnvariants.py: TopicScene, 40.00 s, 11 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnnvariants.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnnvariants-2.png
+  #0   0.00– 6.00s  scene_geometry.py:36  wait
+  #1   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex 'a_{Cj}\\;?')
+  #2   6.50–12.00s  scene_geometry.py:36  wait
+  #3  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex 'a_{Cj}\\;?')
+  #4  12.30–15.30s  scene_geometry.py:30  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #5  15.30–26.00s  scene_geometry.py:36  wait
+  #6  26.00–28.00s  scene_geometry.py:30  Transform(Line), Transform(Line), Transform(Line), Transform(Line)
+  #7  28.00–28.40s  scene_geometry.py:30  FadeOut(MathTex 'h_C=0.801'), FadeIn(MathTex 'h_C=0.438')
+  #8  28.40–34.00s  scene_geometry.py:36  wait
+  #9  34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex 'e_{Cj}=0\\;?')
+  #10 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

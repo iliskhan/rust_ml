@@ -68,19 +68,16 @@ logit, чтобы снизить BCE **этого примера**? Уменьш
 node learning-lab/animations/xor/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/xor/xor.py learning-lab/animations/xor/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/xor/xor.py XORNetwork -t 8,14,18.5,24,29,34,37,41,46,end -o work/backprop-pilot/xor-inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes xor
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py xor
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/xor/render-assets.py
 ```
 
-Общий helper `animations/render_support.py`:1280×720/30fps, постер37s,
-русская синтезированная речь из `narration.ru.json`, отдельно от VTT.
-Голос Microsoft Irina Desktop через Windows SAPI и сборка WAV описаны в
-[общем pipeline](../README.md#русская-озвучка); ManimGX включает звук в MP4 как AAC. Субтитры в
+Общий helper `animations/render_support.py`: немой MP4 1280×720/30fps, постер37s.
+`narration.ru.json` — исторические реплики; текущий процесс описан в
+[общем README](../README.md). VTT доступен по выбору, без автоматического включения. Субтитры в
 `public/animations/xor/captions.ru.vtt`. GPU-рендеры только последовательно.
 
-Историческая запись первичной передачи до рендера и озвучки приведена ниже;
-она не описывает состояние текущего звукового выпуска.
+Историческая запись первичной передачи приведена ниже;
+она не описывает состояние текущего немого выпуска.
 
 2026-10-16: exporter assertions прошли в общем checkout: BCE снизилась,
 все4класса верны, `traceNetwork` совпал с реальной вероятностью и суммой

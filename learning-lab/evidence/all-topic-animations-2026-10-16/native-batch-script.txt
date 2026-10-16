@@ -1,0 +1,48 @@
+"""Task-owned serial GPU checks; retain each scene's partial evidence."""
+import argparse
+import hashlib
+import json
+import os
+import subprocess
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[2]
+PY=ROOT/'work/backprop-pilot/venv/Scripts/python.exe'
+MANIM=ROOT/'work/backprop-pilot/venv/Scripts/manimgx.exe'
+CLASSES={'backprop':'BackpropSharedNode','neuron':'NeuronActivation','attention':'AttentionMixture','descent':'GradientDescent','xor':'XORNetwork','rope':'RopeRotation','heads':'AttentionHeads','generation':'CachedGeneration'}
+parser=argparse.ArgumentParser()
+parser.add_argument('stage',choices=['inspect','render','both'])
+parser.add_argument('scenes',nargs='+')
+args=parser.parse_args()
+folder=ROOT/'work/backprop-pilot/all-topic-inspect'
+folder.mkdir(exist_ok=True)
+report=[]
+source_files=sorted(p for p in (ROOT/'learning-lab/animations').rglob('*') if p.is_file() and (p.suffix=='.py' or p.name in ('fixture.json','narration.ru.json')))
+source_digest=hashlib.sha256()
+for p in source_files:
+    source_digest.update(p.relative_to(ROOT).as_posix().encode()); source_digest.update(p.read_bytes())
+source_tree_sha256=source_digest.hexdigest()
+env={**os.environ,'PYTHONUTF8':'1'}
+for name in args.scenes:
+    source=ROOT/f'learning-lab/animations/{name}/{name}.py'
+    entry={'scene':name,'started_at_utc':datetime.now(timezone.utc).isoformat(),'source_tree_sha256':source_tree_sha256,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
+    for stage in (['inspect','render'] if args.stage=='both' else [args.stage]):
+        command=([str(MANIM),'inspect',str(source),CLASSES.get(name,'TopicScene'),'-t',('6,14,22,30,37,42,end' if name in CLASSES else '4,9,15,22,30,37,end'),'-o',str(folder/f'{name}.png')]
+                 if stage=='inspect' else [str(PY),str(source.with_name('render-assets.py'))])
+        log=folder/f'{name}-{stage}.log'
+        started=time.monotonic()
+        try:
+            with log.open('w',encoding='utf-8') as output:
+                result=subprocess.run(command,cwd=ROOT,env=env,stdout=output,stderr=subprocess.STDOUT,timeout=180)
+            entry[stage]={'exit':result.returncode,'seconds':round(time.monotonic()-started,2)}
+        except subprocess.TimeoutExpired:
+            entry[stage]={'exit':'timeout','seconds':180}
+        if entry[stage]['exit']!=0:
+            break
+    report.append(entry)
+    (folder/f'batch-{args.scenes[0]}-{args.stage}.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps(entry),flush=True)
+if any(any(value.get('exit')!=0 for value in item.values() if isinstance(value,dict)) for item in report):
+    raise SystemExit(1)

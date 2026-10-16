@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { useState } from 'react';
 import { Exercise, Range, fmt } from './ui';
 import { VISION_IMAGE, PATCH_PROJECTION, VISION_Q, VISION_K, VISION_V, visionTransformerTrace, MOE_INPUT, ROUTER_WEIGHTS, EXPERTS, mixtureExpertsTrace, IMAGE_NOISE, UNET_KERNEL, DIT_READOUT, imageDenoiserTrace } from './visionRoutingMath';
@@ -34,7 +35,7 @@ export function VisionTransformerLab() {
   const [image, setImage] = useState(() => copy(VISION_IMAGE)), [patch, setPatch] = useState(0), [position, setPosition] = useState(1);
   const trace = visionTransformerTrace(image, position), selected = trace.patches[patch];
   const marked = (r: number, c: number) => r >= selected.row && r < selected.row + 2 && c >= selected.column && c < selected.column + 2;
-  return <section className="vision-routing-lab" aria-label="Лаборатория Vision Transformer">
+  return <CoreTopicFilm slug="vit" current={{ image, patch, position }} example={{ image: copy(VISION_IMAGE), patch: 0, position: 1 }} restore={value => { setImage(value.image);setPatch(value.patch);setPosition(value.position); }}><section className="vision-routing-lab" aria-label="Лаборатория Vision Transformer">
     <div className="lesson-intro"><span className="eyebrow">ViT · изображение становится последовательностью</span><h3>От пикселей к вниманию между патчами</h3>
       <p>Изображение 4 × 4 делится на четыре патча 2 × 2. Каждый проходит одну и ту же проекцию 4 → 2; затем добавляется позиция и считается одна голова внимания.</p>
       <p>Это ручной прямой проход мини-блока: без обучения, классификатора, CLS-токена и полного стека ViT. Числа показывают смешивание признаков; распознавание объектов здесь не обучено.</p></div>
@@ -59,14 +60,14 @@ export function VisionTransformerLab() {
       <details><summary>Фиксированные матрицы головы</summary><div className="vr-grids"><NumericGrid values={VISION_Q} label="Wq" /><NumericGrid values={VISION_K} label="Wk" /><NumericGrid values={VISION_V} label="Wv" /></div></details>
     </div>
     <Exercise question="Если поменять один пиксель, что меняется сначала?" options={['Вектор одного патча и его проекция', 'Только позиционный признак', 'Все исходные патчи сразу']} correct={0} explanation="Патчи не пересекаются. Далее через attention изменение одного токена может попасть в выход остальных." />
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function MixtureExpertsLab() {
   const [inputs, setInputs] = useState(() => copy(MOE_INPUT)), [selected, setSelected] = useState(0), [topK, setTopK] = useState<1 | 2>(2), [capacity, setCapacity] = useState(4), [bias, setBias] = useState(0);
   const trace = mixtureExpertsTrace(inputs, topK, capacity, [bias, 0, 0]), token = trace.tokens[selected];
   const requested = trace.requestedLoads.reduce((a, b) => a + b, 0), accepted = trace.loads.reduce((a, b) => a + b, 0);
-  return <section className="vision-routing-lab" aria-label="Лаборатория Mixture of Experts">
+  return <CoreTopicFilm slug="moe" current={{ inputs, selected, topK, capacity, bias }} example={{ inputs: copy(MOE_INPUT), selected: 0, topK: 2, capacity: 4, bias: 0 }} restore={value => { setInputs(value.inputs);setSelected(value.selected);setTopK(value.topK);setCapacity(value.capacity);setBias(value.bias); }}><section className="vision-routing-lab" aria-label="Лаборатория Mixture of Experts">
     <div className="lesson-intro"><span className="eyebrow">MoE · разреженный FFN</span><h3>Роутер выбирает, какие эксперты считать</h3>
       <p>Четыре токена с двумя признаками идут в роутер 2 → 3. У каждого из трёх экспертов свой FFN 2 → 3 → 2 с ReLU. Меняйте признаки и смотрите, как меняются scores, маршруты и итоговая взвешенная сумма.</p>
       <p>Ручные веса не обучены специализациям. Название «эксперт» здесь означает отдельную сеть, а не подтверждённую компетенцию.</p></div>
@@ -98,13 +99,13 @@ export function MixtureExpertsLab() {
       })}</details>
     </div>
     <Exercise question="Top-2 и capacity = 0. Каков вклад MoE?" options={['Нулевой вектор', 'Средний выход всех трёх экспертов', 'Выход самого вероятного эксперта']} correct={0} explanation="Оба назначения отброшены. В этом примере нет запасного эксперта или residual-пути; правило переполнения задано явно." />
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function ImageDenoiserLab() {
   const [clean, setClean] = useState(() => copy(VISION_IMAGE)), [noise, setNoise] = useState(() => copy(IMAGE_NOISE)), [time, setTime] = useState(.6), [skip, setSkip] = useState(true);
   const trace = imageDenoiserTrace(clean, noise, time, skip);
-  return <section className="vision-routing-lab" aria-label="Лаборатория U-Net и DiT">
+  return <CoreTopicFilm slug="unetdit" current={{ clean, noise, time, skip }} example={{ clean: copy(VISION_IMAGE), noise: copy(IMAGE_NOISE), time: .6, skip: true }} restore={value => { setClean(value.clean);setNoise(value.noise);setTime(value.time);setSkip(value.skip); }}><section className="vision-routing-lab" aria-label="Лаборатория U-Net и DiT">
     <div className="lesson-intro"><span className="eyebrow">U-Net → DiT · два предиктора шума</span><h3>Одинаковые xₜ и t, разные пути вычисления ε̂</h3>
       <p>U-Net уменьшает и восстанавливает пространственное разрешение, передавая skip-признаки. DiT превращает картинку в патчи и смешивает их вниманием. Оба получают зашумлённое изображение и время.</p>
       <p>Это ограниченные модели с ручными весами, без обучения и без заявления о генерации изображений. MSE измеряет ошибку текущего предсказания ε̂ относительно известного шума ε, а не качество обученного U-Net или DiT.</p></div>
@@ -135,5 +136,5 @@ export function ImageDenoiserLab() {
       <details><summary>Одношаговая оценка чистой картинки x̂₀</summary><p className="formula">x̂₀ = (xₜ − √(1 − ᾱ) ε̂) / √ᾱ. Это алгебраическая оценка по ручному предиктору, без цикла генерации; значения не обрезаются до [0; 1].</p><div className="vr-grids"><NumericGrid values={trace.unetReconstruction} label="U-Net: оценка x̂₀" /><NumericGrid values={trace.ditReconstruction} label="DiT: оценка x̂₀" /></div></details>
     </div>
     <Exercise question="Что именно переносит skip-путь U-Net?" options={['Признаки encoder того же разрешения', 'Дополнительную пространственную ось времени', 'Готовую целевую картинку']} correct={0} explanation="Skip передаёт вычисленные признаки, здесь через concat двух каналов. Их коэффициенты decoder реально входят в предсказание; выключение пути меняет результат." />
-  </section>;
+  </section></CoreTopicFilm>;
 }

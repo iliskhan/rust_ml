@@ -1,0 +1,44 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\flowmatching\flowmatching.py: TopicScene, 40.00 s, 41 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\flowmatching.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\flowmatching-2.png
+  #0   0.00– 6.00s  flowmatching.py:17  wait
+  #1   6.00– 6.40s  flowmatching.py:14  FadeIn(MathTex '?')
+  #2   6.40–12.00s  flowmatching.py:17  wait
+  #3  12.00–12.40s  flowmatching.py:14  FadeOut(MathTex '?')
+  #4  12.40–12.70s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #5  12.70–13.00s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #6  13.00–13.30s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #7  13.30–13.60s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #8  13.60–13.90s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #9  13.90–14.20s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #10 14.20–14.50s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #11 14.50–14.80s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #12 14.80–15.10s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #13 15.10–15.40s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #14 15.40–15.70s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #15 15.70–16.00s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #16 16.00–16.30s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #17 16.30–16.60s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #18 16.60–16.90s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #19 16.90–17.20s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #20 17.20–17.50s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #21 17.50–17.80s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #22 17.80–18.10s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #23 18.10–18.40s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #24 18.40–18.70s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #25 18.70–19.00s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #26 19.00–19.30s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #27 19.30–19.60s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #28 19.60–19.90s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #29 19.90–20.20s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #30 20.20–20.50s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #31 20.50–20.80s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #32 20.80–21.10s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #33 21.10–21.40s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #34 21.40–21.70s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #35 21.70–22.00s  flowmatching.py:14  Create(Line), Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #36 22.00–26.00s  flowmatching.py:17  wait
+  #37 26.00–27.00s  flowmatching.py:14  Create(Group)
+  #38 27.00–34.00s  flowmatching.py:17  wait
+  #39 34.00–34.70s  flowmatching.py:14  Create(Rectangle)
+  #40 34.70–40.00s  flowmatching.py:17  wait
+layout: no problems in 7 samples

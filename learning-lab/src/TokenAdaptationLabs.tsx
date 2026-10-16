@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
@@ -33,7 +34,7 @@ export function BpeLab() {
   const trained = useMemo(() => trainBpe(corpus, 20), [corpus]);
   const currentStep = Math.min(step, trained.steps.length), model = useMemo(() => trainBpe(corpus, currentStep), [corpus, currentStep]);
   const encoded = applyBpe(text, model), nextPairs = bpePairs(model.tokens), next = nextPairs[0];
-  return <section className="token-adaptation-lab" aria-label="Лаборатория BPE">
+  return <CoreTopicFilm slug="bpe" current={{ corpus, text, step }} example={{ corpus: 'низ низ низ ниже ниже низкий низкий', text: 'низкий ниже 🦊', step: 3 }} restore={value => { setCorpus(value.corpus);setText(value.text);setStep(value.step); }}><section className="token-adaptation-lab" aria-label="Лаборатория BPE">
     <h3>BPE: учим правила слияния, затем применяем их к новому тексту</h3>
     <p>Byte Pair Encoding здесь показан в учебном символьном варианте: стартовые токены — кодовые точки Unicode.
       Пробелы и переводы строк участвуют в подсчёте; корпус — один непрерывный поток. Нормализации и разбиения на слова нет.</p>
@@ -74,7 +75,7 @@ export function BpeLab() {
       }} />
     <p className="note">Одинаковый текст может получать другие ID после изменения корпуса. ID — индекс словаря, не смысловая координата. Слитые пробелы и целые фразы здесь допустимы; промышленные токенизаторы добавляют свои правила и ограничения.</p>
     <p className="note">Источник алгоритма: <a href="https://huggingface.co/learn/llm-course/chapter6/5" target="_blank" rel="noreferrer">Hugging Face: Byte-Pair Encoding tokenization</a>. Наш опыт явно упрощает предварительную обработку и сохраняет неизвестные символы без ID.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function GatedFfnLab() {
@@ -82,7 +83,7 @@ export function GatedFfnLab() {
   const [kind, setKind] = useState<FfnKind>('swiglu'), [input, setInput] = useState([.7, -.4, .6]), [geometry, setGeometry] = useState(false);
   const trace = ffnTrace(input, kind), label = { relu: 'ReLU', gelu: 'GELU (tanh-приближение)', swiglu: 'SwiGLU' }[kind];
   const sweep = Array.from({ length: 41 }, (_, i) => { const x = -2 + i * .1; return { x, output: ffnTrace([x, input[1], input[2]], kind).output }; });
-  return <section className="token-adaptation-lab" aria-label="Лаборатория GELU и SwiGLU">
+  return <CoreTopicFilm slug="swiglu" current={{ kind, input, geometry }} example={{ kind: 'swiglu', input: [.7,-.4,.6], geometry: geometry }} restore={value => { setKind(value.kind);setInput(value.input);setGeometry(value.geometry); }}><section className="token-adaptation-lab" aria-label="Лаборатория GELU и SwiGLU">
     <h3>FFN: нелинейность и умножающий gate</h3>
     <p>Один токен с тремя признаками проходит FFN 3 → 4 → 3. Четыре скрытых канала — индексы,
       а три выходных компоненты образуют реальный вектор y. Этот блок не смешивает соседние токены.</p>
@@ -116,7 +117,7 @@ export function GatedFfnLab() {
     </section>
     <PredictionExperiment question="При z = −1 выход SiLU gate…" options={['Отрицательный', 'Между 0 и 1', 'Ровно 0']} run={prediction => ({ correct: prediction === 0, before: 'Аргумент gate z = −1', after: `SiLU(−1) = ${fmt(activation(-1, 'swiglu'), 6)}, производная = ${fmt(activationDerivative(-1, 'swiglu'), 6)}`, explanation: 'σ(z) положительна, но множитель z отрицателен. SiLU gate не имеет ограничений вероятности.' })} />
     <p className="note">Источники: <a href="https://arxiv.org/abs/1606.08415" target="_blank" rel="noreferrer">Hendrycks, Gimpel: GELU</a>; <a href="https://arxiv.org/abs/2002.05202" target="_blank" rel="noreferrer">Shazeer: GLU Variants Improve Transformer</a>. Здесь проверяется арифметика блока; качество модели по нему не измеряется.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function LoraLab() {
@@ -130,7 +131,7 @@ export function LoraLab() {
   const fullGrad = adaptationGradients(result.full, result.data.train, 'full'), loraGrad = adaptationGradients(result.lora, result.data.train, 'lora');
   const predictions = [baseOutput, sample.y, fullOutput, loraOutput];
   function restart(action: () => void) { action(); setEpochs(0); }
-  return <section className="token-adaptation-lab" aria-label="Лаборатория LoRA и полной адаптации">
+  return <CoreTopicFilm slug="lora" current={{ rank, taskRank, noise, eta, epochs, sampleIndex, geometry }} example={{ rank: 1, taskRank: 1, noise: 0, eta: .4, epochs: 1, sampleIndex: 0, geometry: geometry }} restore={value => { setRank(value.rank);setTaskRank(value.taskRank);setNoise(value.noise);setEta(value.eta);setEpochs(value.epochs);setSampleIndex(value.sampleIndex);setGeometry(value.geometry); }}><section className="token-adaptation-lab" aria-label="Лаборатория LoRA и полной адаптации">
     <h3>LoRA и полная адаптация: одна задача, два набора обучаемых весов</h3>
     <p>Линейный слой 8 → 3 уже имеет базовую матрицу W₀. Full обновляет все 24 её веса.
       LoRA замораживает W₀ и обучает A[r×8], B[3×r]: y = (W₀ + BA)x. Здесь масштаб α/r = 1, bias нет.</p>
@@ -182,5 +183,5 @@ export function LoraLab() {
     }} />
     <p className="note">Это маленькая линейная регрессия без оптимизатора Adam, dropout и quantization. Held-out здесь — учебная проверочная выборка, а не гарантия качества на реальных данных. При r меньше ранга истинного обновления точное представление этого обновления невозможно.</p>
     <p className="note">Источник: <a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noreferrer">Hu et al.: LoRA: Low-Rank Adaptation of Large Language Models</a>. Матрицы W₀ + BA реализуют механизм адаптации; маленькая задача не воспроизводит эксперименты статьи с LLM.</p>
-  </section>;
+  </section></CoreTopicFilm>;
 }

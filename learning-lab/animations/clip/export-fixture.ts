@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const trained=R.trainClip(50,.08,.2),a=R.clipObjective(R.clipInitial(),.2),b=trained.metrics;
+const state={steps:50,temperature:.2,eta:.08,query:0,geometry:false};
+const before=a.imageEmbeddings.map((p,i)=>[p.slice(0,2),a.textEmbeddings[i].slice(0,2)]),after=b.imageEmbeddings.map((p,i)=>[p.slice(0,2),b.textEmbeddings[i].slice(0,2)]),data={a,b,parameters:trained.parameters};
+const headers=['Пара','image z1','image z2','image z3','text z1','text z2','text z3'],rows=R.CLIP_PAIRS.map((p,i)=>[p.name,...b.imageEmbeddings[i],...b.textEmbeddings[i]]);
+const lesson={"media": "clip", "title": "CLIP: обе стороны пары", "label": "CLIP: обе стороны пары", "description": "Четыре пары проходят через два обучаемых проектора.", "target": "clip-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Обучается только картинка?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, обучаются оба проектора.", "time": 9}, "practice": {"question": "При температуре 0,4 меняется лучший кандидат?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, положительный масштаб сохраняет argmax."}, "transcript": ["Четыре пары проходят через два обучаемых проектора.", "Обучается только картинка?", "Нет, обучаются оба проектора.", "Проекция z1,z2: z3 сохранена в таблице. Четыре пары, без языкового encoder.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Проекция z1,z2: z3 сохранена в таблице. Четыре пары, без языкового encoder."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"z1 embedding",axisY:"z2 embedding",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported clip');

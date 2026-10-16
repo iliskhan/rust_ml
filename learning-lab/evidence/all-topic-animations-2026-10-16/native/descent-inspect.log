@@ -1,0 +1,36 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\descent\descent.py: GradientDescent, 50.00 s, 33 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\descent.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\descent-2.png
+  #0   0.00– 1.40s  legacy_visuals.py:20  Create(Group), Create(Group), FadeIn(MathTex 'L=(x^2+8y^2)/2'), FadeIn(Dot)
+  #1   1.40–10.00s  legacy_visuals.py:27  wait
+  #2  10.00–10.70s  legacy_visuals.py:20  FadeIn(MathTex '\\eta=0.12')
+  #3  10.70–11.40s  legacy_visuals.py:20  FadeIn(MathTex '?')
+  #4  11.40–18.00s  legacy_visuals.py:27  wait
+  #5  18.00–18.70s  legacy_visuals.py:20  FadeOut(MathTex '?')
+  #6  18.70–20.30s  legacy_visuals.py:20  Create(Line), Dot.animate.move_to(…)
+  #7  20.30–21.00s  legacy_visuals.py:20  FadeIn(MathTex 'y_1=0.06')
+  #8  21.00–28.00s  legacy_visuals.py:27  wait
+  #9  28.00–28.70s  legacy_visuals.py:20  FadeIn(Group), FadeOut(MathTex '\\eta=0.12')
+  #10 28.70–29.15s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #11 29.15–29.60s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #12 29.60–30.05s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #13 30.05–30.50s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #14 30.50–30.95s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #15 30.95–31.40s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #16 31.40–31.85s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #17 31.85–32.30s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #18 32.30–32.75s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #19 32.75–33.20s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #20 33.20–33.65s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #21 33.65–34.10s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #22 34.10–34.55s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #23 34.55–35.00s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #24 35.00–35.45s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #25 35.45–35.90s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #26 35.90–36.35s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #27 36.35–36.80s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #28 36.80–37.25s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #29 37.25–37.70s  legacy_visuals.py:20  Create(Line), Create(Line), Create(Line), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #30 37.70–42.00s  legacy_visuals.py:27  wait
+  #31 42.00–42.70s  legacy_visuals.py:20  FadeIn(MathTex '\\eta\\;?')
+  #32 42.70–50.00s  legacy_visuals.py:27  wait
+layout: no problems in 7 samples

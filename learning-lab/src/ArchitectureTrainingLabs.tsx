@@ -1,3 +1,4 @@
+import { useFrontierFilm } from './FrontierTopicFilms';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Chart, Exercise, Range, fmt } from './ui';
 import { useLearningActive } from './learning-context';
@@ -49,7 +50,7 @@ function useTraining(family: TrainingFamily, rate: number, balance = .05) {
     }, 0);
     return () => window.clearTimeout(timer);
   }, [active, remaining, run, family, rate, balance]);
-  return { ...run, remaining, error, start: (count: number) => { setError(''); setRemaining(Math.min(count, 1000 - run.steps)); }, stop: () => setRemaining(0), reset: () => { setRemaining(0); setError(''); setRun(newRun(family)); } };
+  return { ...run, remaining, error, replace: (value: typeof run, nextError = '') => { setRemaining(0); setError(nextError); setRun(value); }, start: (count: number) => { setError(''); setRemaining(Math.min(count, 1000 - run.steps)); }, stop: () => setRemaining(0), reset: () => { setRemaining(0); setError(''); setRun(newRun(family)); } };
 }
 type Run = ReturnType<typeof useTraining>;
 function Table({ title, columns, rows }: { title: string; columns: string[]; rows: ReactNode[][] }) {
@@ -89,7 +90,8 @@ export function VitTrainingLab() {
   const sample = visionValidation[example], trace = useMemo(() => vitTrainingTrace(run.parameters, sample), [run.parameters, sample]);
   const gradients = useMemo(() => trainingGradient('vit', run.parameters, run.steps, 0), [run.parameters, run.steps]);
   const train = evaluateVit(run.parameters, visionTrain), validation = evaluateVit(run.parameters, visionValidation);
-  return <section className="panel architecture-training" aria-label="Обучение ViT"><h3>ViT: обучите патчи, attention и классификатор</h3>
+  const film = useFrontierFilm('vittraining', { rate, example, run: { parameters: run.parameters, steps: run.steps, history: run.history }, error: run.error }, state => { setRate(state.rate); setExample(state.example); run.replace(state.run, state.error); }, run.stop);
+  return <section className="panel architecture-training" aria-label="Обучение ViT" {...film.labEvents}>{film.animation}<h3>ViT: обучите патчи, attention и классификатор</h3>
     <p>16 картинок 4×4: горизонтальные и вертикальные полосы с шумом, разной яркостью и инверсией контраста. Восемь отдельных картинок validation получают другой шум и не участвуют в SGD.</p>
     <p className="formula">4 патча 2×2 → E + P (d=2) → softmax(QKᵀ/√2)V + residual → tanh-FFN + residual → mean(h²) → 2 logits → CE.</p>
     <p>Все 40 параметров обучаются. Это маленький учебный вариант ViT: одна голова, FFN 2→2, без LayerNorm и CLS. Усредняются квадраты признаков, чтобы читать ориентацию при смене контраста. Начните с «80 шагов SGD».</p>
@@ -111,7 +113,8 @@ export function MoeTrainingLab() {
   const heldout = moeTrainingTrace(run.parameters, moeValidation, balance, false);
   const hardMse = heldout.rows.reduce((s, row, i) => s + (row.hardOutput - moeValidation[i].target) ** 2, 0) / heldout.rows.length;
   const winners = [0, 1].map(j => trace.rows.filter(row => row.winner === j).length);
-  return <section className="panel architecture-training" aria-label="Обучение MoE"><h3>MoE: router и эксперты учатся вместе</h3>
+  const film = useFrontierFilm('moetraining', { rate, balance, run: { parameters: run.parameters, steps: run.steps, history: run.history }, error: run.error }, state => { setRate(state.rate); setBalance(state.balance); run.replace(state.run, state.error); }, run.stop);
+  return <section className="panel architecture-training" aria-label="Обучение MoE" {...film.labEvents}>{film.animation}<h3>MoE: router и эксперты учатся вместе</h3>
     <p>Два линейных эксперта учатся приближать y=|x|. Router выдаёт softmax от двух affine-logit. На каждом train-примере вычисляются оба эксперта: гладкая смесь позволяет передавать градиент через router. «200 шагов SGD» показывает специализацию по знаку x.</p>
     <p className="formula">ŷ = p₁(x)·E₁(x) + p₂(x)·E₂(x)<br />L = MSE + λ·(2Σₑ mean_batch(pₑ)² − 1).</p>
     <Range label="Вес балансировки λ" value={balance} min={0} max={1} step={.05} onChange={setBalance} />
@@ -131,7 +134,8 @@ export function SsmTrainingLab() {
   const [rate, setRate] = useState(.15), [example, setExample] = useState(0), run = useTraining('ssm', rate);
   const sample = memoryValidation[example], trace = ssmTrainingTrace(run.parameters, sample);
   const gradients = useMemo(() => trainingGradient('ssm', run.parameters, run.steps, 0), [run.parameters, run.steps]);
-  return <section className="panel architecture-training" aria-label="Обучение SSM"><h3>SSM: научитесь удерживать первый сигнал</h3>
+  const film = useFrontierFilm('ssmtraining', { rate, example, run: { parameters: run.parameters, steps: run.steps, history: run.history }, error: run.error }, state => { setRate(state.rate); setExample(state.example); run.replace(state.run, state.error); }, run.stop);
+  return <section className="panel architecture-training" aria-label="Обучение SSM" {...film.labEvents}>{film.animation}<h3>SSM: научитесь удерживать первый сигнал</h3>
     <p>В x₀ записан сигнал; за ним идут пять небольших независимых помех. Только последний выход должен восстановить x₀. Train содержит 12 последовательностей, validation — 8 новых амплитуд и помех. Нажмите «100 шагов SGD».</p>
     <p className="formula">Aⱼ = tanh(aⱼ); hₜⱼ = Aⱼhₜ₋₁ⱼ + Bⱼxₜ; yₜ = Σⱼ Cⱼhₜⱼ; L = (y₅ − x₀)².</p>
     <p>Обучаются все девять a/B/C. Градиент последнего выхода проходит через все шесть обновлений h; обрыва BPTT нет. Ограничение |Aⱼ|&lt;1 задаёт устойчивое затухание. Это дискретная диагональная SSM без селективности Mamba.</p>
@@ -146,7 +150,7 @@ export function SsmTrainingLab() {
   </section>;
 }
 
-function DenoiserBody({ kind }: { kind: DenoiserKind }) {
+function DenoiserBody({ kind, setKind }: { kind: DenoiserKind; setKind: (kind: DenoiserKind) => void }) {
   const [rate, setRate] = useState(.06), [example, setExample] = useState(3), [seed, setSeed] = useState(701), [frame, setFrame] = useState(8);
   const run = useTraining(kind, rate), sample = noiseValidation[example];
   const trace = denoiserTrainingTrace(kind, run.parameters, sample);
@@ -154,10 +158,12 @@ function DenoiserBody({ kind }: { kind: DenoiserKind }) {
   const trajectory = useMemo(() => sampleDenoiser(kind, run.parameters, seed), [kind, run.parameters, seed]);
   const selected = trajectory[8 - frame], a = denoisingAlpha(sample.time);
   const cleanEstimate = sample.noisy.map((x, i) => (x - Math.sqrt(1 - a) * trace.prediction[i]) / Math.sqrt(a));
-  return <>
+  const film = useFrontierFilm('imagedenoisertraining', { kind, rate, example, seed, frame, run: { parameters: run.parameters, steps: run.steps, history: run.history }, error: run.error }, state => { setKind(state.kind); setRate(state.rate); setExample(state.example); setSeed(state.seed); setFrame(state.frame); run.replace(state.run, state.error); }, run.stop);
+  return <div {...film.labEvents}>{film.animation}
+    <label>Обучаемая архитектура<select value={kind} onChange={e => { const next = e.target.value as DenoiserKind; setKind(next); setRate(.06); setExample(3); setSeed(701); setFrame(8); run.replace(newRun(next)); }}><option value="unet">Маленький U-Net</option><option value="dit">Маленький DiT</option></select></label>
     <p>{kind === 'unet' ? 'U-Net: один канал, conv 3×3 → tanh → average pool 4×4→2×2 → conv 3×3 → tanh → nearest upsample → concat со skip → conv 1×1. В обе свёртки добавляется обучаемый коэффициент t; всего 25 параметров.' : 'DiT: четыре патча 2×2, d=4, обучаемые позиции, scale/shift от t, одна Q/K/V attention-голова, residual и tanh-FFN 4→4, выходные патчи шума. Все 128 параметров обучаются. Это вариант без LayerNorm/adaLN-Zero, VAE и conditioning по классу.'}</p>
     <Controls run={run} rate={rate} setRate={setRate} count={160} label={kind === 'unet' ? 'U-Net' : 'DiT'} />
-    <Weights family={kind} parameters={run.parameters} gradients={gradients} rate={rate} />
+    <Weights key={kind} family={kind} parameters={run.parameters} gradients={gradients} rate={rate} />
     <h4>Предсказание шума на отдельном примере</h4>
     <Range label={`Пример validation ${kind}`} value={example} min={0} max={15} step={1} onChange={setExample} />
     <p>t={sample.time}; ᾱₜ={fmt(a, 5)}; MSE(ε̂, ε)={fmt(trace.loss, 5)}.</p>
@@ -172,16 +178,15 @@ function DenoiserBody({ kind }: { kind: DenoiserKind }) {
     <p>Цвет: зелёный для x≥0, оранжевый для x&lt;0, насыщенность до |x|=1. Сам расчёт не обрезает числа; слабая модель может дать большие значения и нечёткий узор.</p>
     <Table title={`Численные пиксели сэмпла, t=${frame}`} columns={['Строка', 'c0', 'c1', 'c2', 'c3']} rows={[0, 1, 2, 3].map(r => [r, ...selected.pixels.slice(r * 4, r * 4 + 4).map(x => fmt(x, 5))])} />
     <details><summary>Все шаги обратного процесса</summary><Table title="Проверка масштаба сэмплирования" columns={['t', 'ᾱ', 'Минимум', 'Максимум', 'RMS пикселей']} rows={trajectory.map(row => [row.time, fmt(denoisingAlpha(row.time), 5), fmt(Math.min(...row.pixels), 4), fmt(Math.max(...row.pixels), 4), fmt(Math.sqrt(row.pixels.reduce((s, x) => s + x * x, 0) / 16), 4)])} /></details>
-  </>;
+  </div>;
 }
 export function DenoiserTrainingLab() {
   const [kind, setKind] = useState<DenoiserKind>('unet');
   return <section className="panel architecture-training" aria-label="Обучение U-Net и DiT"><h3>U-Net и DiT: обучите ε-предсказатель и запустите обратный процесс</h3>
     <p>Два чистых узора 4×4, восемь уровней шума. Train: 32 фиксированные пары; validation: 16 других шумовых реализаций тех же узоров. Каждый шаг SGD использует четыре train-пары по кругу. Это проверка новых шумов, а не новых классов изображений.</p>
     <p className="formula">ᾱₜ = 0,01^(t/8); xₜ = √ᾱₜ·x₀ + √(1−ᾱₜ)·ε; ε~N(0,I)<br />L = mean_pixels(εθ(xₜ,t)−ε)².</p>
-    <label>Обучаемая архитектура<select value={kind} onChange={e => setKind(e.target.value as DenoiserKind)}><option value="unet">Маленький U-Net</option><option value="dit">Маленький DiT</option></select></label>
     <p>Смена архитектуры начинает новый опыт с исходными весами. Сравните снижение MSE после «160 шагов SGD»; ёмкость сетей разная, это не сравнительный benchmark.</p>
-    <DenoiserBody key={kind} kind={kind} />
+    <DenoiserBody kind={kind} setKind={setKind} />
     <Exercise question="Что минимизирует обучение ε-prediction?" options={['MSE между предсказанным и добавленным шумом', 'Разницу между двумя цветными миниатюрами']} correct={0} explanation="MSE вычисляется по 16 числам ε. Цвет миниатюры ограничивает отображение, но не loss и не обратный процесс." />
     <p><a href="https://arxiv.org/abs/2212.09748">DiT</a> · <a href="https://arxiv.org/abs/2010.02502">DDIM: детерминированное сэмплирование</a></p>
   </section>;

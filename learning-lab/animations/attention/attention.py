@@ -1,165 +1,153 @@
-"""One causal attention row, 50 seconds; numerical values come from TypeScript.
-
-The three words label positions, not learned meanings. The lower band y < -1.8
-is intentionally empty for the player captions and controls.
-"""
-
+"""Silent geometric attention. Vectors and probabilities come from the actual lab."""
 import json
 from pathlib import Path
-
 import manimgx as m
 
-
-m.config.background_color = "#101622"
-INK = "#F1F5F9"
-MUTED = "#BBC8DB"
-QUERY = "#75DFFF"
-KEY = "#F5C66A"
-VALUE = "#BFADFF"
-RESULT = "#8CE6B0"
-MASK = "#FFB1AF"
-COLS = (-4.4, 0, 4.4)
+m.config.background_color = '#0B0E14'
+INK, MUTED = '#F0ECE2', '#89929F'
+CYAN, GOLD, PURPLE, GREEN, RED = '#72D8EE', '#F2C66D', '#B3A0E0', '#8FD6A3', '#D88B90'
 
 
-def text(words, x=0, y=0, size=64, color=INK):
-    return m.Text(words, font="sans-serif", font_size=size, color=color).move_to([x, y, 0])
+def label(words, x=0, y=0, size=34, color=INK):
+    return m.Text(words, font='Georgia', font_size=size, color=color).move_to([x, y, 0])
 
 
-def math(expression, x=0, y=0, size=84, color=INK):
-    return m.MathTex(expression, font_size=size, color=color).move_to([x, y, 0])
+def equation(words, x=0, y=0, size=55, color=INK):
+    return m.MathTex(words, font_size=size, color=color).move_to([x, y, 0])
 
 
-def number(value, digits=3):
-    return f"{value:.{digits}f}".rstrip("0").rstrip(".")
-
-
-def vector(values, digits=3):
-    return r"[" + r",\,".join(number(value, digits) for value in values) + r"]"
+def arrow(a, b, color=INK, width=4):
+    return m.Arrow(a, b, buff=0, color=color, stroke_width=width)
 
 
 class AttentionMixture(m.Scene):
     def construct(self):
-        fixture = json.loads(Path(__file__).with_name("fixture.json").read_text(encoding="utf-8"))
-        trace, query = fixture["trace"], fixture["queryIndex"]
-        scores, weights = trace["scores"][query], trace["weights"][query]
-        allowed = fixture["allowed"][query]
-        # null is the serialized -Infinity sentinel, never a numeric zero.
-        assert all((score is not None) == permit for score, permit in zip(scores, allowed))
-        assert abs(sum(weights) - 1) < 1e-12
-        assert all(permit or weight == 0 for permit, weight in zip(allowed, weights))
-        q, k, v = trace["q"][query], trace["k"], trace["v"]
+        f = json.loads(Path(__file__).with_name('fixture.json').read_text(encoding='utf-8'))
+        trace, row = f['trace'], f['queryIndex']
+        q, keys, values = trace['q'][row], trace['k'], trace['v']
+        scores, weights, result = trace['scaledScores'][row], trace['weights'][row], trace['output'][row]
+        assert q == [0, 1]  # Projection onto the actual vertical query below.
+        assert weights[2] == 0 and abs(sum(weights)-1) < 1e-12
+        elapsed = 0
 
-        def tokens(y=1.65):
-            return m.VGroup(*(text(f"{j} · {word}", x=x, y=y, size=60,
-                                  color=QUERY if j == query else INK)
-                              for j, (x, word) in enumerate(zip(COLS, fixture["tokens"]))))
+        def play(*animations, seconds=.7):
+            nonlocal elapsed
+            self.play(*animations, run_time=seconds)
+            elapsed += seconds
 
-        # 00:00–00:08. Q chooses a row; K are compared; V are mixed.
-        title = text("Attention: одна строка", y=3.05, size=76)
-        positions = tokens(y=2.0)
-        roles = m.VGroup(
-            text("Q — запрос", x=COLS[0], y=0.95, size=52, color=QUERY),
-            text("K — ключи", x=COLS[1], y=0.95, size=52, color=KEY),
-            text("V — значения", x=COLS[2], y=0.95, size=52, color=VALUE),
-            text("Выбираем q₁", x=COLS[0], y=0.15, size=42, color=MUTED),
-            text("Сравниваем", x=COLS[1], y=0.15, size=42, color=MUTED),
-            text("Смешиваем", x=COLS[2], y=0.15, size=42, color=MUTED),
-            math(rf"q_1={vector(q)}", x=COLS[0], y=-0.8, size=76, color=QUERY),
-            math(r"k_0,\ k_1,\ k_2", x=COLS[1], y=-0.8, size=76, color=KEY),
-            math(r"v_0,\ v_1,\ v_2", x=COLS[2], y=-0.8, size=76, color=VALUE),
-        )
-        self.play(m.FadeIn(title), m.FadeIn(positions), run_time=0.6)
-        self.play(m.FadeIn(roles), run_time=0.8)
-        self.wait(6.0)
-        self.play(m.FadeOut(title), m.FadeOut(positions), m.FadeOut(roles), run_time=0.6)
+        def until(time):
+            nonlocal elapsed
+            if elapsed < time:
+                self.wait(time-elapsed)
+                elapsed = time
 
-        # 00:08–00:18. Actual dot products, followed by the shared sqrt(d_k).
-        title = text("Запрос q₁ и три ключа", y=3.05, size=72)
-        query_label = math(rf"q_1={vector(q)},\quad d_k={len(q)}", y=2.1, size=72, color=QUERY)
-        positions = tokens(y=1.15)
-        keys = m.VGroup(*(math(rf"k_{j}={vector(key)}", x=x, y=0.15, size=72, color=KEY)
-                          for j, (x, key) in enumerate(zip(COLS, k))))
-        dots = m.VGroup(*(math(rf"q_1\cdot k_{j}={number(score)}", x=x, y=-0.95, size=70)
-                          for j, (x, score) in enumerate(zip(COLS, trace["rawScores"][query]))))
-        self.play(m.FadeIn(title), m.FadeIn(query_label), m.FadeIn(positions), run_time=0.6)
-        self.play(m.FadeIn(keys), run_time=0.6)
-        self.play(m.Write(dots), run_time=0.8)
-        self.wait(2.0)
-        self.play(m.FadeOut(keys), m.FadeOut(dots), run_time=0.4)
-        division = math(r"s_j=(q_1\cdot k_j)/\sqrt{2}", y=2.1, size=76)
-        scaled = m.VGroup(*(math(rf"\approx {number(score)}", x=x, y=-0.05, size=96)
-                            for x, score in zip(COLS, trace["scaledScores"][query])))
-        score_label = text("Score — ещё не вес", y=-1.25, size=56, color=MUTED)
-        self.play(m.ReplacementTransform(query_label, division), m.FadeIn(scaled), m.FadeIn(score_label), run_time=0.7)
-        self.wait(4.3)
-        self.play(m.FadeOut(title), m.FadeOut(division), m.FadeOut(positions),
-                  m.FadeOut(scaled), m.FadeOut(score_label), run_time=0.6)
+        tokens = m.VGroup(*(label(word, x, 3.0, 43) for x, word in zip([-4.3, 0, 4.3], f['tokens'])))
+        selection = m.Line([-.65, 2.58, 0], [.65, 2.58, 0], color=CYAN, stroke_width=5)
+        origin, scale = [-4.2, -.7, 0], 1.75
 
-        # 00:18–00:26. Pause, then explicitly forbid a larger future score.
-        question = text("Будущий ключ получит вес?", y=3.05, size=72)
-        prompt = text("Запрос: позиция 1 · Режим: causal", y=2.1, size=52, color=MUTED)
-        positions = tokens(y=1.15)
-        score_cells = [math(rf"\approx {number(score)}", x=x, y=0.0, size=96,
-                            color=MASK if j > query else INK)
-                       for j, (x, score) in enumerate(zip(COLS, trace["scaledScores"][query]))]
-        future_label = text("Будущее", x=COLS[2], y=-1.1, size=48, color=MASK)
-        self.play(m.FadeIn(question), m.FadeIn(prompt), m.FadeIn(positions),
-                  *(m.FadeIn(cell) for cell in score_cells), m.FadeIn(future_label), run_time=0.6)
-        self.wait(3.4)
-        self.play(m.FadeOut(question), m.FadeOut(future_label), run_time=0.4)
-        answer = text("Маска запрещает будущее", y=3.05, size=74)
-        forbidden = math(r"-\infty", x=COLS[2], y=0.0, size=104, color=MASK)
-        rule = math(r"j>1\quad\Rightarrow\quad s_j=-\infty", y=-1.15, size=78, color=MASK)
-        self.play(m.FadeIn(answer), m.ReplacementTransform(score_cells[2], forbidden),
-                  m.FadeIn(rule), run_time=0.6)
-        self.wait(2.4)
-        self.play(m.FadeOut(answer), m.FadeOut(prompt), m.FadeOut(positions),
-                  m.FadeOut(score_cells[0]), m.FadeOut(score_cells[1]),
-                  m.FadeOut(forbidden), m.FadeOut(rule), run_time=0.6)
+        def point(v):
+            return [origin[0]+scale*v[0], origin[1]+scale*v[1], 0]
 
-        # 00:26–00:35. Normalize the allowed scores; forbidden is exactly zero.
-        title = text("Softmax: от scores к весам", y=3.05, size=68)
-        formula = math(r"a_j=\exp(s_j)/\sum_l\exp(s_l),\quad T=1", y=1.85, size=70)
-        positions = tokens(y=0.7)
-        weight_cells = m.VGroup(*(math(rf"a_{j}" + (r"\approx" if permit else "=") + number(weight), x=x, y=-0.3, size=82,
-                                     color=RESULT if permit else MASK)
-                                 for j, (x, weight, permit) in enumerate(zip(COLS, weights, allowed))))
-        total = math(rf"{number(weights[0])}+{number(weights[1])}+0=1", y=-1.35, size=72, color=RESULT)
-        self.play(m.FadeIn(title), m.FadeIn(formula), run_time=0.6)
-        self.play(m.FadeIn(positions), m.FadeIn(weight_cells), run_time=0.8)
-        self.wait(2.0)
-        self.play(m.Write(total), run_time=0.8)
-        self.wait(4.2)
-        self.play(m.FadeOut(title), m.FadeOut(formula), m.FadeOut(positions),
-                  m.FadeOut(weight_cells), m.FadeOut(total), run_time=0.6)
-
-        # 00:35–00:46. Each weight multiplies V, then both coordinates sum.
-        title = text("Смешиваем значения V", y=3.05, size=76)
-        positions = tokens(y=2.05)
-        values = m.VGroup(*(math(rf"v_{j}={vector(value)}", x=x, y=1.05, size=74, color=VALUE)
-                            for j, (x, value) in enumerate(zip(COLS, v))))
-        terms = m.VGroup(*(math(rf"{number(weight)}\times {vector(value)}", x=x, y=-0.05,
-                               size=66, color=VALUE if permit else MASK)
-                           for x, weight, value, permit in zip(COLS, weights, v, allowed)))
-        self.play(m.FadeIn(title), m.FadeIn(positions), m.FadeIn(values), run_time=0.6)
-        self.play(m.FadeIn(terms), run_time=0.8)
-        self.wait(2.0)
-        result = math(rf"o_1\approx {vector(trace['output'][query])}",
-                      y=-1.25, size=78, color=RESULT)
-        self.play(m.Write(result), run_time=0.8)
-        self.wait(3.2)
-        self.play(m.FadeOut(positions), m.FadeOut(values), m.FadeOut(terms), m.FadeOut(result), run_time=0.6)
-        first = math(rf"o_{{1,0}}=a_0\cdot1+a_1\cdot0.5\approx{number(trace['output'][query][0])}",
-                     y=1.1, size=80, color=RESULT)
-        second = math(rf"o_{{1,1}}=a_0\cdot0+a_1\cdot1\approx{number(trace['output'][query][1])}",
-                      y=-0.3, size=80, color=RESULT)
-        self.play(m.FadeIn(first), m.FadeIn(second), run_time=0.6)
-        self.wait(1.8)
-        self.play(m.FadeOut(title), m.FadeOut(first), m.FadeOut(second), run_time=0.6)
-
-        # 00:46–00:50. A new prediction, with an exact return to the lab.
-        invitation = text("Отключите causal-маску", y=2.0, size=72)
-        prediction = text("У «рыбу» появится вес. А выход?", y=0.6, size=68, color=QUERY)
-        destination = text("Предскажите и проверьте в лаборатории", y=-0.8, size=54, color=MUTED)
-        self.play(m.FadeIn(invitation), m.FadeIn(prediction), m.FadeIn(destination), run_time=0.6)
-        self.wait(3.4)
+        axes = m.VGroup(
+            arrow(point([-.15, 0]), point([1.55, 0]), MUTED, 2),
+            arrow(point([0, -.15]), point([0, 1.8]), MUTED, 2),
+            equation('0', -4.42, -.98, 30, MUTED), equation('1', -2.45, -1, 30, MUTED),
+            equation('1', -4.48, 1.05, 30, MUTED), equation('k_0', -1.23, -.7, 34, MUTED),
+            equation('k_1', -4.62, 2.45, 34, MUTED))
+        query = arrow(point([0, 0]), point(q), CYAN, 7)
+        query_name = equation('q', -4.65, 1.1, 46, CYAN)
+        key_arrows = [arrow(point([0, 0]), point(k), GOLD, 4) for k in keys]
+        key_names = [equation(f'K_{j}', point(k)[0]+.35, point(k)[1]+.15, 36, GOLD)
+                     for j, k in enumerate(keys)]
+        score_x, baseline, bar_scale = [1.2, 3.25, 5.3], -.7, 2.1
+        bar_axis = m.Line([.4, baseline, 0], [6.1, baseline, 0], color=MUTED, stroke_width=2)
+        score_title = equation(r's_j=q\cdot K_j/\sqrt{2}', 3.3, 2.1, 45)
+        bar_names = m.VGroup(*(label(word, x, -1.16, 31, MUTED) for x, word in zip(score_x, f['tokens'])))
+        bars = [m.Rectangle(width=.66, height=.012, color=GOLD, fill_color=GOLD, fill_opacity=.65,
+                            stroke_width=0).move_to([x, baseline+.006, 0]) for x in score_x]
+        # 0–8: one query and three keys in their actual two dimensional space.
+        play(m.FadeIn(tokens), m.Create(selection))
+        play(m.Create(axes), m.Create(query), m.FadeIn(query_name), seconds=1.1)
+        for vector, name in zip(key_arrows, key_names):
+            play(m.Create(vector), m.FadeIn(name), seconds=.65)
+        until(8)
+        # 8–18: project each key onto q, then grow its score bar.
+        play(m.Create(bar_axis), m.FadeIn(score_title), m.FadeIn(bar_names))
+        score_numbers, guides = [], []
+        for j, (key, score) in enumerate(zip(keys, scores)):
+            end, projection = point(key), point([0, key[1]])
+            guide = m.Line(end, projection, color=MUTED, stroke_width=2)
+            guides.append(guide)
+            particle = m.Dot(end, radius=.10, color=GOLD)
+            play(m.Create(guide), m.FadeIn(particle), seconds=.35)
+            play(particle.animate.move_to(projection), seconds=.75)
+            tall = m.Rectangle(width=.66, height=bar_scale*score, color=GOLD, fill_color=GOLD,
+                               fill_opacity=.65, stroke_width=0).move_to([score_x[j], baseline+bar_scale*score/2, 0])
+            number = equation(f'{score:.3f}', score_x[j], baseline+bar_scale*score+.31, 35, GOLD)
+            play(m.ReplacementTransform(bars[j], tall), m.FadeIn(number), m.FadeOut(particle), seconds=.8)
+            bars[j] = tall
+            score_numbers.append(number)
+        until(18)
+        # 18–26: reveal the future mask after the prediction checkpoint21.8.
+        question = equation('?', score_x[2], 2.25, 66, RED)
+        play(m.FadeOut(score_title), m.FadeIn(question), seconds=.5)
+        until(22.5)
+        cross = m.VGroup(m.Line([4.85, -.6, 0], [5.75, 1.65, 0], color=RED, stroke_width=5),
+                         m.Line([4.85, 1.65, 0], [5.75, -.6, 0], color=RED, stroke_width=5))
+        forbidden = equation(r'-\infty', score_x[2], 1.95, 48, RED)
+        play(m.FadeOut(bars[2]), m.FadeOut(score_numbers[2]), m.FadeOut(question),
+             m.Create(cross), m.FadeIn(forbidden), seconds=.9)
+        until(26)
+        # 26–35: exact normalized weights occupy one unit interval.
+        play(m.FadeOut(axes), m.FadeOut(query), m.FadeOut(query_name),
+             *(m.FadeOut(a) for a in key_arrows), *(m.FadeOut(n) for n in key_names),
+             *(m.FadeOut(g) for g in guides),
+             m.FadeOut(bar_axis), m.FadeOut(bar_names), m.FadeOut(cross), m.FadeOut(forbidden),
+             m.FadeOut(bars[0]), m.FadeOut(bars[1]), m.FadeOut(score_numbers[0]), m.FadeOut(score_numbers[1]), seconds=.6)
+        probability = equation(r'a=\operatorname{softmax}(s)', y=1.85, size=62)
+        partitions, left, colors = [], -5.2, [CYAN, GOLD, PURPLE]
+        for j, weight in enumerate(weights[:2]):
+            width = 10.4*weight
+            partitions.append(m.Rectangle(width=width, height=.74, color=colors[j], fill_color=colors[j],
+                                           fill_opacity=.65, stroke_width=0).move_to([left+width/2, .25, 0]))
+            left += width
+        play(m.FadeIn(probability), *(m.GrowFromCenter(p) for p in partitions), seconds=1.4)
+        percentages = m.VGroup(*(equation(f'{w*100:.1f}\\%', p.get_center()[0], -.48, 48, colors[j])
+                                for j, (w, p) in enumerate(zip(weights, partitions))))
+        zero = equation('0', 5.7, .25, 47, RED)
+        unit = m.VGroup(equation('1', y=-1.22, size=43, color=MUTED),
+                        m.Line([-5.2, -.9, 0], [5.2, -.9, 0], color=MUTED, stroke_width=2),
+                        m.Line([-5.2, -.8, 0], [-5.2, -.9, 0], color=MUTED, stroke_width=2),
+                        m.Line([5.2, -.8, 0], [5.2, -.9, 0], color=MUTED, stroke_width=2))
+        play(m.FadeIn(percentages), m.FadeIn(zero), m.FadeIn(unit))
+        until(35)
+        # 35–46: scale actual V arrows, then add them head to tail.
+        play(m.FadeOut(probability), *(m.FadeOut(p) for p in partitions), m.FadeOut(percentages),
+             m.FadeOut(zero), m.FadeOut(unit), seconds=.5)
+        origin, scale = [-3.8, -.9, 0], 2.65
+        v_axes = m.VGroup(arrow(point([-.12, 0]), point([1.72, 0]), MUTED, 2),
+                         arrow(point([0, -.12]), point([0, 1.18]), MUTED, 2),
+                         equation('V_0', .95, -.9, 35, MUTED), equation('V_1', -3.8, 2.5, 35, MUTED),
+                         equation('1', -1.15, -1.24, 30, MUTED), equation('1', -4.1, 1.75, 30, MUTED))
+        vectors = [arrow(point([0, 0]), point(v), colors[j], 4) for j, v in enumerate(values)]
+        v_labels = [equation(f'v_{j}', point(v)[0]+.26, point(v)[1]+.26, 39, colors[j])
+                    for j, v in enumerate(values)]
+        play(m.Create(v_axes), *(m.Create(v) for v in vectors), *(m.FadeIn(n) for n in v_labels), seconds=1)
+        until(37)
+        scaled = [[weights[j]*x for x in v] for j, v in enumerate(values)]
+        terms = [arrow(point([0, 0]), point(scaled[j]), colors[j], 7) for j in range(2)]
+        play(m.ReplacementTransform(vectors[0], terms[0]), m.ReplacementTransform(vectors[1], terms[1]),
+             m.FadeOut(vectors[2]), *(m.FadeOut(n) for n in v_labels), seconds=1.5)
+        translated = arrow(point(scaled[0]), point(result), GOLD, 7)
+        play(m.ReplacementTransform(terms[1], translated), seconds=1.5)
+        output = arrow(point([0, 0]), point(result), GREEN, 8)
+        output_dot = m.Dot(point(result), radius=.11, color=GREEN)
+        compact = equation(r'o=\sum_j a_jv_j', 3.5, 1.3, 56, GREEN)
+        numeric = equation(r'\approx(0.706,\ 0.587)', 3.5, .25, 52, GREEN)
+        play(m.Create(output), m.FadeIn(output_dot), m.FadeIn(compact), m.FadeIn(numeric), seconds=1)
+        until(46)
+        # Keep the result on screen for the next experiment; no closing text slide.
+        future = arrow(point([0, 0]), point(values[2]), PURPLE, 2)
+        next_case = equation(r'v_2\;?', point(values[2])[0]+.45, point(values[2])[1], 46, PURPLE)
+        play(m.Create(future), m.FadeIn(next_case), seconds=.8)
+        until(50)

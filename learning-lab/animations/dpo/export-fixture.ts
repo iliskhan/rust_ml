@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const trained=I.trainDpo([...I.DPO_REFERENCE],0,.5,50),a=I.dpoTrace([...I.DPO_REFERENCE]),b=I.dpoTrace(trained.parameters);
+const state={parameters:trained.parameters,preferred:0,beta:.5,history:[a.loss,...trained.losses]};
+const before=[a.p.map((p,i)=>[i,p]),a.ref.map((p,i)=>[i,p])],after=[b.p.map((p,i)=>[i,p]),b.ref.map((p,i)=>[i,p])],data={a,b};
+const headers=['Ответ','Reference','Policy до','Policy после'],rows=b.p.map((p,i)=>[i,b.ref[i],a.p[i],p]);
+const lesson={"media": "dpo", "title": "DPO: предпочтение и reference", "label": "DPO: предпочтение и reference", "description": "Предпочтительный ответ сравнивается относительно замороженной reference policy.", "target": "dpo-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Reference тоже обучается?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, градиент обновляет только logits policy.", "time": 9}, "practice": {"question": "Ошибочную метку предпочтения тоже можно выучить?", "options": ["Нет", "Да"], "correct": 1, "explanation": "Да, DPO следует разметке, а не проверяет истинность."}, "transcript": ["Предпочтительный ответ сравнивается относительно замороженной reference policy.", "Reference тоже обучается?", "Нет, градиент обновляет только logits policy.", "Малая категориальная policy; нет reward model и PPO.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Малая категориальная policy; нет reward model и PPO."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Ответ, индекс категории",axisY:"Вероятность",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported dpo');

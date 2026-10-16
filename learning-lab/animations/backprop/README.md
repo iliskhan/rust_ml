@@ -1,7 +1,7 @@
 # Два пути к одному градиенту
 
-Сцена `BackpropSharedNode` в `backprop.py`: **44 секунды**, 2D, русский текст
-и русская синтезированная озвучка. Родитель B12; уточнения R01/R04/R06 и U02/U04/U05/U07/U08.
+Сцена `BackpropSharedNode` в `backprop.py`: **44 секунды**, 2D, русский текст,
+текущий MP4 без звука. Родитель B12; уточнения R01/R04/R06 и U02/U04/U05/U07/U08.
 Это разобранный пример; его просмотр не является самостоятельной проверкой.
 
 ## Источник чисел и изображения
@@ -15,9 +15,8 @@ Python читает значения и вклады из JSON; отдельно
 Сценарий и рисунок созданы для RustML, под лицензией проекта
 `MIT OR Apache-2.0`. Использованы собственные текст, геометрия и композиция;
 сторонних кадров, персонажей, музыки, записей голоса или изображений нет.
-Текущая русская речь синтезируется локально голосом Microsoft Irina Desktop
-через Windows SAPI по `narration.ru.json` и включается в MP4 как AAC.
-Подготовка WAV и общий pipeline описаны в [README анимаций](../README.md#русская-озвучка).
+Текущий немой рендер и доступные по выбору VTT описаны в
+[README анимаций](../README.md). `narration.ru.json` сохранён как исторический артефакт.
 Общие приёмы: конкретный пример, постепенное раскрытие зависимости, пауза
 для предсказания, устойчивые цвета и перемещение двух слагаемых к их сумме.
 Цвет дублируется формулами и положением: квадрат — сверху, прямой путь — снизу.
@@ -40,8 +39,6 @@ node learning-lab/animations/backprop/export-fixture.ts
 python -m venv work/backprop-pilot/venv
 work/backprop-pilot/venv/Scripts/python.exe -m pip install -r learning-lab/animations/backprop/requirements.txt
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/backprop/backprop.py BackpropSharedNode -t 3.2,6.4,8.4,10,14,19.5,23,26,29,33,35,38,42,end -o work/backprop-pilot/inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes backprop
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py backprop
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/backprop/render-assets.py
 ```
 
@@ -53,9 +50,8 @@ work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/backprop/ren
 14 выбранных кадров и production build прошли. Числа проверяются тестом
 `tests/backprop-animation.test.ts`. Подробная браузерная приёмка и её границы —
 в [evidence](../../evidence/backprop-pilot-2026-10-16/VALIDATION.md).
-Эта запись и связанный pilot evidence относятся к прежнему выпуску без аудио;
-они не подтверждают озвучку текущего выпуска. Текущая подготовка звука следует
-[общему pipeline](../README.md#русская-озвучка).
+Эта запись и связанный pilot evidence относятся к прежнему выпуску без аудио.
+Актуальный немой рендер описан в [общем README](../README.md).
 
 Постер: кадр **35.000 s**, когда видна сумма вкладов. `render-assets.py`
 сохраняет его из того же `Scene.render(frames=...)`, что создаёт MP4;

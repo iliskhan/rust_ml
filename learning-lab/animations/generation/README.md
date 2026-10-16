@@ -41,12 +41,10 @@ RoPE уже применён к сохранённым K по их абсолю�
 Пауза предсказания 18.6–25.4; ответ с 26.0. Новая строка появляется 28–28.8 s,
 постер — 30 s. Старые строки во время добавления остаются на своих местах.
 Цвет не единственный сигнал: строки имеют номера, таблица — заголовки K/V.
-Полоса y < −1.8 свободна. VTT покрывает 0–50 s; общий render_support.py
-добавляет озвучку из подготовленного локального `narration.wav` через Scene
-и сохраняет MP4 с AAC и постер PNG через FrameSink. Реплики и интервалы
-русской синтезированной речи заданы в `narration.ru.json`, отдельно от VTT;
-голос Microsoft Irina Desktop через Windows SAPI и сборка WAV описаны в
-[общем pipeline](../README.md#русская-озвучка).
+Полоса y < −1.8 свободна. VTT покрывает 0–50 s и включается по выбору.
+Текущий `render_support.py` сохраняет немой MP4 и постер PNG. Отдельный
+`narration.ru.json` хранит исторические реплики; процесс — в
+[общем README](../README.md).
 
 ## Повторить
 
@@ -54,8 +52,6 @@ RoPE уже применён к сохранённым K по их абсолю�
 node learning-lab/animations/generation/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/generation/generation.py learning-lab/animations/generation/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/generation/generation.py CachedGeneration -t 6,14,20.5,27.5,30,35,42,48,end -o work/backprop-pilot/generation-inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes generation
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py generation
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/generation/render-assets.py
 ```
 
@@ -80,7 +76,7 @@ Node ≥24; Python 3.13, requirements.txt. GPU inspect/render последова
 
 ## Передача 2026-10-16
 
-Историческая запись первичной передачи до текущего звукового выпуска.
+Историческая запись первичной передачи до текущего немого выпуска.
 Ниже сохранены наблюдения и незавершённые на тот момент шаги.
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, база a648708, Node 24.19.0,
@@ -88,8 +84,8 @@ Python work/backprop-pilot/venv. Экспорт с проверками всех
 сохранения старых K/V, py_compile и реальный импорт модуля прошли.
 AST-сумма play/wait — 50.0 s; девять последовательных VTT cues покрывают
 0–50 s без разрывов и пересечений. construct без renderer не вызывался.
-Рендер, озвучка, визуальная и
-браузерная desktop/mobile приёмка выполняются координатором.
+На момент передачи рендер, озвучка и браузерная desktop/mobile приёмка
+ещё ожидались у координатора.
 
 Первый GPU-inspect координатора: девять кадров без layout-проблем. При
 визуальном просмотре заголовок первой колонки сокращён до «№», чтобы он

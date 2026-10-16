@@ -1,0 +1,37 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\attention\attention.py: AttentionMixture, 50.00 s, 34 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\attention.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\attention-2.png
+  #0   0.00– 0.70s  attention.py:35  FadeIn(Group), Create(Line)
+  #1   0.70– 1.80s  attention.py:35  Create(Group), Create(Arrow), FadeIn(MathTex 'q')
+  #2   1.80– 2.45s  attention.py:35  Create(Arrow), FadeIn(MathTex 'K_0')
+  #3   2.45– 3.10s  attention.py:35  Create(Arrow), FadeIn(MathTex 'K_1')
+  #4   3.10– 3.75s  attention.py:35  Create(Arrow), FadeIn(MathTex 'K_2')
+  #5   3.75– 8.00s  attention.py:41  wait
+  #6   8.00– 8.70s  attention.py:35  Create(Line), FadeIn(MathTex 's_j=q\\cdot K_j/\\sqrt{2}'), FadeIn(Group)
+  #7   8.70– 9.05s  attention.py:35  Create(Line), FadeIn(Dot)
+  #8   9.05– 9.80s  attention.py:35  Dot.animate.move_to(…)
+  #9   9.80–10.60s  attention.py:35  ReplacementTransform(Rectangle), FadeIn(MathTex '0.354'), FadeOut(Dot)
+  #10 10.60–10.95s  attention.py:35  Create(Line), FadeIn(Dot)
+  #11 10.95–11.70s  attention.py:35  Dot.animate.move_to(…)
+  #12 11.70–12.50s  attention.py:35  ReplacementTransform(Rectangle), FadeIn(MathTex '0.707'), FadeOut(Dot)
+  #13 12.50–12.85s  attention.py:35  Create(Line), FadeIn(Dot)
+  #14 12.85–13.60s  attention.py:35  Dot.animate.move_to(…)
+  #15 13.60–14.40s  attention.py:35  ReplacementTransform(Rectangle), FadeIn(MathTex '1.061'), FadeOut(Dot)
+  #16 14.40–18.00s  attention.py:41  wait
+  #17 18.00–18.50s  attention.py:35  FadeOut(MathTex 's_j=q\\cdot K_j/\\sqrt{2}'), FadeIn(MathTex '?')
+  #18 18.50–22.50s  attention.py:41  wait
+  #19 22.50–23.40s  attention.py:35  FadeOut(Rectangle), FadeOut(MathTex '1.061'), FadeOut(MathTex '?'), Create(Group), FadeIn(MathTex '-\\infty')
+  #20 23.40–26.00s  attention.py:41  wait
+  #21 26.00–26.60s  attention.py:35  FadeOut(Group), FadeOut(Arrow), FadeOut(MathTex 'q'), FadeOut(Arrow), FadeOut(Arrow), FadeOut(Arrow), FadeOut(MathTex 'K_0'), FadeOut(MathTex 'K_1'), FadeOut(MathTex 'K_2'), FadeOut(Line), FadeOut(Line), FadeOut(Line), FadeOut(Line), FadeOut(Group), FadeOut(Group), FadeOut(MathTex '-\\infty'), FadeOut(Rectangle), FadeOut(Rectangle), FadeOut(MathTex '0.354'), FadeOut(MathTex '0.707')
+  #22 26.60–28.00s  attention.py:35  FadeIn(MathTex 'a=\\operatorname{softmax}(s)'), GrowFromCenter(Rectangle), GrowFromCenter(Rectangle)
+  #23 28.00–28.70s  attention.py:35  FadeIn(Group), FadeIn(MathTex '0'), FadeIn(Group)
+  #24 28.70–35.00s  attention.py:41  wait
+  #25 35.00–35.50s  attention.py:35  FadeOut(MathTex 'a=\\operatorname{softmax}(s)'), FadeOut(Rectangle), FadeOut(Rectangle), FadeOut(Group), FadeOut(MathTex '0'), FadeOut(Group)
+  #26 35.50–36.50s  attention.py:35  Create(Group), Create(Arrow), Create(Arrow), Create(Arrow), FadeIn(MathTex 'v_0'), FadeIn(MathTex 'v_1'), FadeIn(MathTex 'v_2')
+  #27 36.50–37.00s  attention.py:41  wait
+  #28 37.00–38.50s  attention.py:35  ReplacementTransform(Arrow), ReplacementTransform(Arrow), FadeOut(Arrow), FadeOut(MathTex 'v_0'), FadeOut(MathTex 'v_1'), FadeOut(MathTex 'v_2')
+  #29 38.50–40.00s  attention.py:35  ReplacementTransform(Arrow)
+  #30 40.00–41.00s  attention.py:35  Create(Arrow), FadeIn(Dot), FadeIn(MathTex 'o=\\sum_j a_jv_j'), FadeIn(MathTex '\\approx(0.706,\\ 0.587)')
+  #31 41.00–46.00s  attention.py:41  wait
+  #32 46.00–46.80s  attention.py:35  Create(Arrow), FadeIn(MathTex 'v_2\\;?')
+  #33 46.80–50.00s  attention.py:41  wait
+layout: no problems in 7 samples

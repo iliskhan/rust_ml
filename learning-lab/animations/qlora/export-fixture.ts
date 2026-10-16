@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const weights=I.quantizationWeights(4),quant=I.quantizeWeights(weights,4,'tensor',4,'symmetric'),trained=I.trainQuantAdapter(I.initialQuantAdapter(),weights,quant.restored,200),a=I.quantAdapterTrace(I.initialQuantAdapter(),weights,quant.restored),b=I.quantAdapterTrace(trained.parameters,weights,quant.restored);
+const state={bits:4,scope:'tensor',scheme:'symmetric',outlier:4,clip:4,parameters:trained.parameters,history:[a.loss,...trained.losses]};
+const before=[weights.flat().map((w,i)=>[w,quant.restored.flat()[i]])],after=[weights.flat().map((w,i)=>[w,b.matrix.flat()[i]])],data={weights,quant,a,b};
+const headers=['Вес','Исходный','Округлённый','С BA'],rows=weights.flat().map((v,i)=>[i,v,quant.restored.flat()[i],b.matrix.flat()[i]]);
+const lesson={"media": "qlora", "title": "Квантизация: поправка ранга один", "label": "Квантизация: поправка ранга один", "description": "Веса округляются на сетку; база затем замораживается.", "target": "qlora-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "SGD меняет замороженную базу?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, изменяются только матрицы A и B.", "time": 9}, "practice": {"question": "При B=0 ненулевая A уже меняет выход?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, произведение BA равно нулю."}, "transcript": ["Веса округляются на сетку; база затем замораживается.", "SGD меняет замороженную базу?", "Нет, изменяются только матрицы A и B.", "Равномерная квантизация, не NF4; ранг один не восстанавливает произвольную матрицу.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Равномерная квантизация, не NF4; ранг один не восстанавливает произвольную матрицу."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Исходный вес",axisY:"Восстановленный вес",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported qlora');

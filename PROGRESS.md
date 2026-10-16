@@ -1,5 +1,39 @@
 # Прогресс RustML
 
+### Анимации остальных тем — реализация проверена, доставка в работе, 2026-10-16
+
+Основной checkout master4065f9f исходно чистый. Добавлены63сцены рядом с
+соответствующими лабораториями: основы4,core21,frontier16,generative/graph/RL22.
+Полный реестр71вместе с прежними8 — [COVERAGE](learning-lab/evidence/all-topic-animations-2026-10-16/COVERAGE.md).
+После замечаний пользователя переработаны все71: геометрия и движение,
+Georgia/MathTex, короткие подписи, без голосовой дорожки; captionsdisabled.
+Сохраняются численные альтернативы, локальные прогнозы и новый случай,
+перенос примера/возврат параметров и остановка автообучения.
+
+Финальный замороженный Python/fixture/narration sourcehash
+58bf33ea1abcedbc04cfa8a513f8278f0f0ed8481fa8c2603cc49233714d30a4.
+Последовательный native batch:71/71inspect+renderexit0,497selectedsamples;
+получены новые720pMP4 и постеры. Layout и отдельный визуальный/численный
+review исправили плотные схемы, маски, SwiGLU, MLA и ViT;6Coreсмысловых
+замечаний повторно просмотрены. Media71/71PASS:1280×720,нетsounтреков,
+source40/44/50s,encodedдобавляет1–2кадра, допуск2/30s явно записан.
+BundledNode24.19:78/78целевых;full640tests=635PASS/0fail/5opt-inSKIP.
+tsc--noEmit ифинальныйVitebuild сVITE_BASE_PATH=/rust_ml/PASS.
+213/213distMP4/PNG/VTTсовпали сpublicSHA256.
+
+Браузер: desktop71mount/metadata. Прежние сравнения restore в
+browser-checks.json часто фиксировали лишь равенство до/после без
+промежуточного preset, поэтому не доказывают действие всех71кнопок.
+Поздние клики/Enter/Space/Return не меняли даже native details в чистой
+production-вкладке; selectOption продолжал переключать React-разделы.
+Причина не доказана; speculativeизменения handlers не вносились.
+Mobile390×844:66видимыхвидеоблоков без pageoverflow, плееры в экране,
+главы≥44px,captionsdisabled;attention320×760также720pбезoverflow.
+5family-блоков mobileкликами не переключены. Фактические экраны и границы
+проверки — [VALIDATION](learning-lab/evidence/all-topic-animations-2026-10-16/VALIDATION.md).
+Следующий шаг: итоговый commit/push,CI/Pages и публичная проверка файлов.
+Весь B12/U00/U07,real-device/screen-reader и эффект обучения не закрыты.
+
 ### Постоянная работа grader — production проверен, 2026-10-16
 
 SQL007 SHA2567d79a60ba931b4ac43bfafe7d241d451a2d30235c3c250c56b2f2bf214d8b497

@@ -1,6 +1,7 @@
-"""Verify the eight rendered MP4s without external media tools."""
+"""Verify silent MP4 dimensions, duration and track inventory without external tools."""
 
 import hashlib
+import argparse
 import json
 import math
 import struct
@@ -10,13 +11,8 @@ from datetime import datetime, timezone
 from importlib.metadata import version
 from pathlib import Path
 
-import numpy as np
-from manimgx._engine import decode_audio
-
-
 ROOT = Path(__file__).resolve().parents[2]
 NAMES = ("backprop", "neuron", "attention", "descent", "xor", "rope", "heads", "generation")
-RATE = 22050
 
 
 def boxes(data):
@@ -67,41 +63,41 @@ def media_info(raw):
                         encoded_samples=frames,
                         average_encoded_fps=frames / info["duration_seconds"])
         tracks[kind] = info
-    if "vide" not in tracks or "soun" not in tracks:
-        raise ValueError("MP4 requires video and sound tracks")
+    if "vide" not in tracks:
+        raise ValueError("MP4 requires a video track")
     return tracks
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('scenes', nargs='*', default=list(NAMES))
+    parser.add_argument('--output', type=Path, default=ROOT / 'learning-lab/evidence/animation-expansion-2026-10-16/media-verification.json')
+    args = parser.parse_args()
     results = []
-    for name in NAMES:
+    for name in args.scenes:
+        if not name.isascii() or not name.isalpha() or not name.islower():
+            raise ValueError(f'Invalid scene name: {name}')
         path = ROOT / "learning-lab/public/animations" / name / f"{name}.mp4"
         raw = path.read_bytes()
         tracks = media_info(raw)
-        pcm, channels = decode_audio(raw, RATE)
-        samples = np.frombuffer(pcm, dtype=np.float32)
-        if not channels or len(samples) % channels:
-            raise ValueError(f"Invalid decoded audio: {name}")
-        duration = len(samples) / channels / RATE
-        peak = float(np.max(np.abs(samples)))
-        rms = float(np.sqrt(np.mean(np.square(samples.astype(np.float64)))))
-        expected = 44 if name in ("backprop", "neuron") else 50
+        if 'soun' in tracks:
+            raise ValueError(f"Unexpected audio track in silent lesson: {name}")
+        manifest = json.loads((ROOT / 'learning-lab/animations' / name / 'narration.ru.json').read_text(encoding='utf-8'))
+        expected = manifest['duration']
         video = tracks["vide"]
         if (video["width"], video["height"]) != (1280, 720):
             raise ValueError(f"Unexpected video dimensions: {name}: {video}")
+        duration_tolerance = 2 / 30 + 1e-6
         if not (video["encoded_samples"] > 0
-                and math.isclose(video["duration_seconds"], expected, abs_tol=0.05)):
+                and math.isclose(video["duration_seconds"], expected, abs_tol=duration_tolerance)):
             raise ValueError(f"Unexpected video duration: {name}: {video}")
-        if not (abs(duration - expected) < 0.05
-                and np.isfinite(samples).all() and peak > 0.001 and rms > 0.001):
-            raise ValueError(f"Invalid audio/video metrics: {name}")
         results.append({
             "name": name, "path": path.relative_to(ROOT).as_posix(),
             "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
-            "video": video, "audio_track": tracks["soun"],
-            "decoded_audio": {"sample_rate_hz": RATE, "channels": channels,
-                              "samples_per_channel": len(samples) // channels,
-                              "duration_seconds": duration, "peak": peak, "rms": rms},
+            "video": video, "audio_track": None,
+            "source_duration_seconds": expected,
+            "duration_delta_seconds": video["duration_seconds"] - expected,
+            "duration_tolerance_seconds": duration_tolerance,
         })
     revision = subprocess.check_output(
         ["git", "-c", f"safe.directory={ROOT.as_posix()}", "rev-parse", "HEAD"],
@@ -109,14 +105,13 @@ def main():
     report = {"checked_at_utc": datetime.now(timezone.utc).isoformat(),
               "checkout": str(ROOT), "revision": revision,
               "python": sys.version.split()[0], "manimgx": version("manimgx"),
-              "command": "work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/verify-media.py",
+              "command": [sys.executable, *sys.argv],
               "results": results}
-    output = ROOT / "learning-lab/evidence/animation-expansion-2026-10-16/media-verification.json"
+    output = args.output
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for result in results:
-        audio = result["decoded_audio"]
-        print(f"{result['name']:10} {result['video']['duration_seconds']:5.2f}s "
-              f"audio {audio['duration_seconds']:5.2f}s peak {audio['peak']:.3f} rms {audio['rms']:.3f}")
+        print(f"{result['name']:10} {result['video']['duration_seconds']:5.2f}s silent")
     print(f"Saved {output}")
 
 

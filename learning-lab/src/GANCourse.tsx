@@ -1,3 +1,4 @@
+import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
 import { useId, useRef, useState } from 'react';
@@ -86,13 +87,15 @@ export function GANCourse() {
     });
   }
 
-  return <section className="gan-course vg-course" aria-label="Интерактивный курс GAN">
+  return <section onClickCapture={pauseCourseFilms} onChangeCapture={pauseCourseFilms} className="gan-course vg-course" aria-label="Интерактивный курс GAN">
     <p className="vg-intro">Здесь GAN учится создавать числа с двумя пиками около −1,2 и +1,2. Две маленькие нейросети действительно меняют веса; каждый результат можно разобрать до производной.</p>
     <nav className="vg-chapters" aria-label="Разделы курса GAN">{SECTIONS.map(([name, title], i) => <button key={name} title={title} aria-pressed={chapter === i} aria-current={chapter === i ? 'step' : undefined} onClick={() => setChapter(i)}><span>{i + 1}</span>{name}</button>)}</nav>
     <label className="vg-mobile-navigation" htmlFor={selectId}>Раздел GAN<select id={selectId} value={chapter} onChange={e => setChapter(Number(e.target.value))}>{SECTIONS.map(([name, title], i) => <option key={name} value={i}>{i + 1}. {name} — {title}</option>)}</select></label>
     <div className="vg-heading"><span>Раздел {chapter + 1} из {SECTIONS.length}</span><h2 tabIndex={-1} ref={heading}>{SECTIONS[chapter][1]}</h2></div>
 
     <div hidden={chapter !== 0}>
+      <GenerativeTopicFilm slug="ganforward" current={{ objective, run, dRate, gRate, dPerG, z, real, probeLogit, sampleSeed, zA, zB, mix }} update={value => { setObjective(value.objective); setRun(value.run); setDRate(value.dRate); setGRate(value.gRate); setDPerG(value.dPerG); setZ(value.z); setReal(value.real); setProbeLogit(value.probeLogit); setSampleSeed(value.sampleSeed); setZA(value.zA); setZB(value.zB); setMix(value.mix); }} fixed={{ objective:'non-saturating' as GeneratorObjective, run:startRun('non-saturating'), dRate:.06, gRate:.06, dPerG:2, z:.5, real:1.2, probeLogit:-5, sampleSeed:0, zA:-1.5, zB:1.5, mix:.5 }} />
+      <h3 id="ganforward-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Представьте ученика, который делает игрушечные яблоки, и проверяющего, который отличает их от настоящих. Ученик — генератор G. Проверяющий — дискриминатор D. Их <ConceptLink concept="adversarial-game">состязательная игра</ConceptLink> даёт генератору сигнал, какие изменения помогают.</p>
       <p className="vg-prompt"><strong>Предскажите.</strong> Два разных z обязательно дадут очень разные x? Подвигайте z и следите за G(z), а не только за оценкой D.</p>
       <div className="vg-columns"><section className="panel"><h3>Один поддельный и один настоящий пример</h3>
@@ -113,6 +116,8 @@ export function GANCourse() {
     </div>
 
     <div hidden={chapter !== 1}>
+      <GenerativeTopicFilm slug="ganobjectives" current={{ objective, run, dRate, gRate, dPerG, z, real, probeLogit, sampleSeed, zA, zB, mix }} update={value => { setObjective(value.objective); setRun(value.run); setDRate(value.dRate); setGRate(value.gRate); setDPerG(value.dPerG); setZ(value.z); setReal(value.real); setProbeLogit(value.probeLogit); setSampleSeed(value.sampleSeed); setZA(value.zA); setZB(value.zB); setMix(value.mix); }} fixed={{ objective:'non-saturating' as GeneratorObjective, run:startRun('non-saturating'), dRate:.06, gRate:.06, dPerG:2, z:.5, real:1.2, probeLogit:-5, sampleSeed:0, zA:-1.5, zB:1.5, mix:.5 }} />
+      <h3 id="ganobjectives-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Один пример получает две разные роли. Для D подделка имеет метку 0. Для non-saturating-цели G полезно увеличить D(fake). Поэтому у сетей разные потери и разные обновляемые веса.</p>
       <div className="vg-columns"><section className="panel"><h3>Шаг D: правильно различать источники</h3>
         <p><ConceptLink concept="cross-entropy">Бинарная кросс-энтропия</ConceptLink> штрафует D за неправильный ответ. Мы суммируем два средних: по real и по fake. Это важно для масштаба loss.</p>
@@ -135,6 +140,8 @@ export function GANCourse() {
     </div>
 
     <div hidden={chapter !== 2}>
+      <GenerativeTopicFilm slug="gantraining" current={{ objective, run, dRate, gRate, dPerG, z, real, probeLogit, sampleSeed, zA, zB, mix }} update={value => { setObjective(value.objective); setRun(value.run); setDRate(value.dRate); setGRate(value.gRate); setDPerG(value.dPerG); setZ(value.z); setReal(value.real); setProbeLogit(value.probeLogit); setSampleSeed(value.sampleSeed); setZA(value.zA); setZB(value.zB); setMix(value.mix); }} fixed={{ objective:'non-saturating' as GeneratorObjective, run:startRun('non-saturating'), dRate:.06, gRate:.06, dPerG:2, z:.5, real:1.2, probeLogit:-5, sampleSeed:0, zA:-1.5, zB:1.5, mix:.5 }} />
+      <h3 id="gantraining-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Нажмите отдельно D и G и проверьте, что меняется ровно одна сеть. Затем запустите пакет коротких циклов: несколько шагов D, один шаг G.</p>
       <p className="vg-prompt"><strong>Опыт.</strong> Начните с 50 циклов и смотрите на распределения, а не только на loss. Потом сделайте ещё 50: качество может колебаться, потому что соперник тоже меняется.</p>
       <div className="vg-columns"><section className="panel"><h3>Настройки и управляемые шаги</h3>
@@ -161,6 +168,8 @@ export function GANCourse() {
     </div>
 
     <div hidden={chapter !== 3}>
+      <GenerativeTopicFilm slug="gandiversity" current={{ objective, run, dRate, gRate, dPerG, z, real, probeLogit, sampleSeed, zA, zB, mix }} update={value => { setObjective(value.objective); setRun(value.run); setDRate(value.dRate); setGRate(value.gRate); setDPerG(value.dPerG); setZ(value.z); setReal(value.real); setProbeLogit(value.probeLogit); setSampleSeed(value.sampleSeed); setZA(value.zA); setZB(value.zB); setMix(value.mix); }} fixed={{ objective:'non-saturating' as GeneratorObjective, run:startRun('non-saturating'), dRate:.06, gRate:.06, dPerG:2, z:.5, real:1.2, probeLogit:-5, sampleSeed:0, zA:-1.5, zB:1.5, mix:.5 }} />
+      <h3 id="gandiversity-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Генератор может научиться делать один убедительный образец и почти перестать использовать z. Это называется mode collapse — потеря разнообразия или пропуск частей распределения.</p>
       <div className="vg-columns"><section className="panel"><h3>Сколько шума превращается в разные ответы</h3>
         <Chart xLabel="шум z" yLabel="выход G(z)" series={[{ name: 'Текущий генератор', points: plotPoints(value => networkTrace(run.model.generator, value).output, -3, 3) }]} />

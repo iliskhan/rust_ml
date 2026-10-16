@@ -1,0 +1,25 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\bce\bce.py: TopicScene, 40.00 s, 22 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\bce.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\bce-2.png
+  #0   0.00– 1.00s  foundations_scene.py:12  Create(Group)
+  #1   1.00– 6.00s  foundations_scene.py:13  wait
+  #2   6.00– 6.40s  foundations_scene.py:15  FadeIn(MathTex '?')
+  #3   6.40–12.00s  foundations_scene.py:16  wait
+  #4  12.00–12.30s  foundations_scene.py:17  FadeOut(MathTex '?')
+  #5  12.30–12.47s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #6  12.47–12.63s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #7  12.63–12.80s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #8  12.80–12.97s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #9  12.97–13.13s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #10 13.13–13.30s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #11 13.30–13.47s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #12 13.47–13.63s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #13 13.63–13.80s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #14 13.80–13.97s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #15 13.97–14.13s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #16 14.13–14.30s  foundations_scene.py:73  Dot.animate.move_to(…)
+  #17 14.30–26.00s  foundations_scene.py:19  wait
+  #18 26.00–26.50s  foundations_scene.py:20  FadeIn(MathTex 'L=-\\log p:\\quad1.609\\;\\long…')
+  #19 26.50–34.00s  foundations_scene.py:21  wait
+  #20 34.00–34.60s  foundations_scene.py:24  FadeIn(MathTex 'p\\;?')
+  #21 34.60–40.00s  foundations_scene.py:25  wait
+layout: no problems in 7 samples

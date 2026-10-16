@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const model=F.trainField(F.createFieldModel(),100),field=(p:Parameters<typeof F.referenceField>[0])=>F.neuralField(model,p),u=((5.5/12)*2-1)*1.15,v=(1-(5.5/12)*2)*1.15,a=F.renderFieldRay(field,0,u,v,32,.5),b=F.renderFieldRay(field,0,u,v,32,1);
+const state={model,source:'model',yaw:0,samples:32,densityScale:1,pixelX:5,pixelY:5,sampleIndex:12,history:[]};
+const before=[a.depths.map((d,i)=>[d,a.trace[i].transmittance])],after=[b.depths.map((d,i)=>[d,b.trace[i].transmittance])],data={a,b};
+const headers=['Глубина','sigma','T','alpha','Вес','R','G','B'],rows=b.trace.filter((_,i)=>i%4===0).map((s,i)=>[b.depths[i*4],s.density,s.transmittance,s.alpha,s.weight,...s.color]);
+const lesson={"media": "neuralfield", "title": "Neural field: свет вдоль луча", "label": "Neural field: свет вдоль луча", "description": "Сеть предсказывает плотность и цвет вдоль луча.", "target": "neuralfield-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Больше плотность: больше T?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, пропускание убывает как exp минус sigma на delta.", "time": 9}, "practice": {"question": "Два слоя alpha=0,5: вес второго равен 0,5?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, T второго равен 0,5, поэтому вес равен 0,25."}, "transcript": ["Сеть предсказывает плотность и цвет вдоль луча.", "Больше плотность: больше T?", "Нет, пропускание убывает как exp минус sigma на delta.", "Глубина — физическая длина. RGB, sigma, alpha и веса перечислены отдельно.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Глубина — физическая длина. RGB, sigma, alpha и веса перечислены отдельно."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Глубина луча, ед. сцены",axisY:"Пропускание T",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported neuralfield');

@@ -38,11 +38,9 @@ V в обычном показанном соглашении RoPE не вращ
 Пауза предсказания 18.6–25.4; ответ начинается с 26.0. Постер — 34 s.
 Нижняя область y < −1.8 свободна под субтитры/контролы; различия дублируются
 подписями Q/K, числами и смыслом, а не только цветом. VTT покрывает 0–50 s.
-Реплики и интервалы русской синтезированной озвучки берутся из `narration.ru.json`,
-отдельно от VTT. [Общий pipeline](../README.md#русская-озвучка) использует голос
-Microsoft Irina Desktop через Windows SAPI и собирает локальный `narration.wav`.
-Общий `render_support.py` добавляет WAV в Scene; ManimGX сохраняет MP4 с AAC
-и постер PNG через FrameSink.
+`narration.ru.json` хранит исторические реплики отдельно от VTT. Текущий
+`render_support.py` сохраняет немой MP4 и постер PNG; VTT включается по выбору.
+Процесс описан в [общем README](../README.md).
 
 ## Повторить
 
@@ -52,8 +50,6 @@ Microsoft Irina Desktop через Windows SAPI и собирает локаль
 node learning-lab/animations/rope/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/rope/rope.py learning-lab/animations/rope/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/rope/rope.py RopeRotation -t 6,10,15,20.5,28,34,39.5,43,48,end -o work/backprop-pilot/rope-inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes rope
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py rope
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/rope/render-assets.py
 ```
 
@@ -77,7 +73,7 @@ dot? Ответ: сохранится, поскольку относительн
 
 ## Передача 2026-10-16
 
-Историческая запись первичной передачи до текущего звукового выпуска.
+Историческая запись первичной передачи до текущего немого выпуска.
 Ниже сохранены наблюдения и незавершённые на тот момент шаги.
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, базовая ревизия a648708;
@@ -86,7 +82,7 @@ Node 24.19.0 bundled runtime, Python из work/backprop-pilot/venv.
 AST-сумма play/wait — 50.0 s; девять последовательных VTT cues покрывают
 0–50 s без разрывов и пересечений. construct без renderer не вызывался.
 Рендер, визуальная приёмка,
-озвучка и браузерная проверка desktop/mobile остаются у координатора.
+на тот момент озвучка и браузерная проверка desktop/mobile ещё ожидались.
 
 Первый GPU-inspect координатора обнаружил пересечения поворачивающихся
 стрелок с делениями и названиями осей. Названия вынесены за полный круг

@@ -36,12 +36,9 @@ KV-групп уменьшает полезный объём KV-кэша при 
 
 Пауза предсказания 26.6–31.6; ответ появляется в 32.0. Постер — 34 s.
 Цвет дублируется номерами Q и групп K/V. Полоса y < −1.8 оставлена для VTT
-и контролов. Субтитры покрывают 0–50 s. Реплики и интервалы русской
-синтезированной озвучки задаёт отдельный `narration.ru.json`.
-[Общий pipeline](../README.md#русская-озвучка) использует голос Microsoft Irina
-Desktop через Windows SAPI и собирает локальный `narration.wav`.
-Общий `render_support.py` добавляет WAV в Scene; ManimGX пишет MP4 с AAC
-и постер PNG через FrameSink.
+и контролов. Субтитры покрывают 0–50 s и включаются по выбору. Отдельный
+`narration.ru.json` хранит исторические реплики. Текущий `render_support.py`
+пишет немой MP4 и постер PNG; процесс описан в [общем README](../README.md).
 
 ## Повторить
 
@@ -49,8 +46,6 @@ Desktop через Windows SAPI и собирает локальный `narratio
 node learning-lab/animations/heads/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/heads/heads.py learning-lab/animations/heads/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/heads/heads.py AttentionHeads -t 6,12,16,22,28,34,38,43,48,end -o work/backprop-pilot/heads-inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes heads
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py heads
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/heads/render-assets.py
 ```
 
@@ -74,7 +69,7 @@ Node ≥24; Python 3.13, зависимости requirements.txt. GPU-опера
 
 ## Передача 2026-10-16
 
-Историческая запись первичной передачи до текущего звукового выпуска.
+Историческая запись первичной передачи до текущего немого выпуска.
 Ниже сохранены наблюдения и незавершённые на тот момент шаги.
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, база a648708, Node 24.19.0,
@@ -82,7 +77,7 @@ Python work/backprop-pilot/venv. Экспорт/численные assert, py_co
 импорт модуля прошли. AST-сумма play/wait — 50.0 s; девять последовательных
 VTT cues покрывают 0–50 s без разрывов и пересечений. construct без renderer
 не вызывался.
-Рендер, озвучка, визуальная и браузерная desktop/mobile приёмка у координатора.
+На момент передачи рендер, озвучка и приёмка ещё ожидались у координатора.
 
 Первый GPU-inspect координатора обнаружил пересечения соседних численных
 пар и рамок. Для четырёх колонок формат сокращён до двух знаков, шрифт

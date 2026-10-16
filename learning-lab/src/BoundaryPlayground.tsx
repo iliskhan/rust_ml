@@ -11,6 +11,9 @@ import { Scene3D, type SceneLine, type Vec3 } from './ThreeD';
 import { Chart, fmt, Range } from './ui';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import './boundary-playground.css';
+import { TopicAnimation } from './TopicAnimation';
+import { useAnimationExample } from './useAnimationExample';
+import boundaryFilm from '../animations/boundary/fixture.json';
 
 const kinds: Record<BoundaryKind, string> = { circles: 'Круги', moons: 'Полумесяцы', spiral: 'Спираль' };
 const segments = 32;
@@ -27,6 +30,7 @@ function readInitialWorkspace() {
 }
 
 export function BoundaryPlayground() {
+  const filmVideo = useRef<HTMLVideoElement>(null);
   const id = useId(), active = useLearningActive();
   const [initial] = useState(readInitialWorkspace);
   const [experiment, setExperiment] = useState(() => initial.saved ? restoreBoundaryRun(initial.saved.current) : createExperiment(initialSettings));
@@ -51,6 +55,11 @@ export function BoundaryPlayground() {
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [projection, setProjection] = useState(true);
   const [targetEpochs, setTargetEpochs] = useState(10);
+  const [filmInitial] = useState(() => ({run:saveBoundaryRun(createExperiment(boundaryFilm.settings as Settings),.5,[.5,.5]),probabilityColors:false,projection:true,targetEpochs:10}));
+  const filmExample = useAnimationExample({run:saveBoundaryRun(experiment,threshold,probe),probabilityColors,projection,targetEpochs},value=>{
+    setExperiment(restoreBoundaryRun(value.run));setThreshold(value.run.threshold);setProbe([...value.run.probe]);
+    setProbabilityColors(value.probabilityColors);setProjection(value.projection);setTargetEpochs(value.targetEpochs);
+  },filmInitial);
   const map = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(400);
   const { settings, dataset, optimizer, history, error } = experiment;
@@ -172,7 +181,8 @@ export function BoundaryPlayground() {
   ], [grid, projection, probe, probability]);
   const architecture = [2, ...config.layers.map(layer => layer.width), 1].join(' → ');
 
-  return <section className="panel boundary-playground" aria-labelledby="boundary-experiment">
+  return <><TopicAnimation film={boundaryFilm.lesson} videoRef={filmVideo} example={filmExample} onPlayback={()=>setExperiment(current=>({...current,auto:false,remaining:0}))} />
+  <section className="panel boundary-playground" aria-labelledby="boundary-experiment" onFocusCapture={()=>filmVideo.current?.pause()} onPointerDownCapture={()=>filmVideo.current?.pause()}>
     <span className="eyebrow">Лаборатория · данные, сеть, обучение</span>
     <h3 id="boundary-experiment" tabIndex={-1}>Лаборатория границ: данные и сеть</h3>
     <p>Запустите 100 шагов и посмотрите, как меняется граница классов — коричневая линия на карте.</p>
@@ -337,5 +347,5 @@ export function BoundaryPlayground() {
       <p>Порог τ применяется после расчёта вероятности и не входит в потерю. Измените его, чтобы увидеть разницу между уверенностью сети и правилом принятия решения.</p>
     </details>
     <p className="boundary-xor-note">Ниже — отдельный пошаговый разбор XOR с фиксированной сетью 2 → 4 → 1. У него свои веса и обучение: его можно изучать независимо от этой лаборатории.</p>
-  </section>;
+  </section></>;
 }

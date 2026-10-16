@@ -1,0 +1,16 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\diffusionreverse\diffusionreverse.py: TopicScene, 40.00 s, 13 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\diffusionreverse.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\diffusionreverse-2.png
+  #0   0.00– 6.00s  scene_geometry.py:36  wait
+  #1   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex 'z\\;?')
+  #2   6.50–12.00s  scene_geometry.py:36  wait
+  #3  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex 'z\\;?')
+  #4  12.30–15.30s  scene_geometry.py:30  Create(Line), Dot.animate.move_to(…)
+  #5  15.30–16.00s  scene_geometry.py:30  FadeIn(MathTex '\\mu_\\theta')
+  #6  16.00–19.00s  scene_geometry.py:30  Create(Line), Dot.animate.move_to(…)
+  #7  19.00–19.70s  scene_geometry.py:30  FadeIn(MathTex 'x_{23}')
+  #8  19.70–26.00s  scene_geometry.py:36  wait
+  #9  26.00–27.00s  scene_geometry.py:30  FadeIn(Dot), FadeIn(MathTex 'z=0')
+  #10 27.00–34.00s  scene_geometry.py:36  wait
+  #11 34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex 'z\\;?')
+  #12 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

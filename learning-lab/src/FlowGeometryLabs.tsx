@@ -1,3 +1,4 @@
+import { useFrontierFilm } from './FrontierTopicFilms';
 import { useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import Scene3D from './Scene3D';
 import { Chart, Exercise, Range, fmt } from './ui';
@@ -86,7 +87,8 @@ export function FlowMatchingLab() {
   const prediction = tinyPredict(model, [...conditional.position, time]);
   function train(count: number) { const next = trainFlow(model, distribution, count); setModel(next); setHistory(previous => [...(previous.length ? previous : [{ x: 0, y: initialLoss }]), { x: next.steps, y: tinyLoss(next, validation) }]); }
   function reset(next: FlowDistribution = distribution) { setDistribution(next); setModel(createFlowModel()); setHistory([]); }
-  return <section className="flow-geometry-lab" aria-label="Лаборатория flow matching">
+  const film = useFrontierFilm('flowmatching', { distribution, model, time, steps, selected, history, dataOpen }, state => { setDistribution(state.distribution); setModel(state.model); setTime(state.time); setSteps(state.steps); setSelected(state.selected); setHistory(state.history); setDataOpen(state.dataOpen); });
+  return <section className="flow-geometry-lab" aria-label="Лаборатория flow matching" {...film.labEvents}>{film.animation}
     <div className="lesson-intro"><span className="eyebrow">Flow matching · обучаем скорость</span><h3>Шум движется по полю, которое ты обучаешь</h3>
       <p>MLP 3 → 24 → 2 со скрытым tanh получает x, y и время t, возвращает две компоненты скорости. Обучение создаёт независимые пары «гауссовский шум N(0,I) → данные» и регрессирует скорость прямого условного пути. Все 146 весов и bias меняются настоящим backprop и Adam в браузере.</p>
       <p>В начале сеть случайная. ODE использует только vθ(x,t): выбранная оранжевая точка ей не передаётся. Учебные данные двумерные; это не генератор фотографий.</p></div>
@@ -131,7 +133,8 @@ export function EquivariantLab() {
   ]);
   const points: ScenePoint[] = coordinates.flatMap((point, i) => [{ name: `Исходный узел ${i + 1}`, position: point, color: '#9f4a19' }, { name: `Преобразованный узел ${i + 1}`, position: trace.transformedInput[i], color: '#27694e' }, { name: `Выход x′ узла ${i + 1}`, position: trace.transformed.positions[i], color: '#27694e', hollow: true }]);
   function reset() { setCoordinates(EGNN_COORDINATES.map(p => [...p] as unknown as Vec3)); setFeatures([...EGNN_FEATURES]); setZ(65); setY(-25); setReflection(false); setTranslation([.6, -.3, .2]); setStrength(.4); setSelected(0); setBroken(false); }
-  return <section className="flow-geometry-lab" aria-label="Лаборатория эквивариантной геометрии EGNN">
+  const film = useFrontierFilm('egnn', { coordinates, features, z, y, reflection, translation, strength, selected, broken }, state => { setCoordinates(state.coordinates); setFeatures(state.features); setZ(state.z); setY(state.y); setReflection(state.reflection); setTranslation(state.translation); setStrength(state.strength); setSelected(state.selected); setBroken(state.broken); });
+  return <section className="flow-geometry-lab" aria-label="Лаборатория эквивариантной геометрии EGNN" {...film.labEvents}>{film.animation}
     <div className="lesson-intro"><span className="eyebrow">EGNN · симметрии реального пространства</span><h3>Поверни вход — векторный выход повернётся вместе с ним</h3>
       <p>Четыре узла имеют физические координаты x, y, z в метрах и скалярные признаки h в условных единицах. Мини-блок строит сообщения по hᵢ, hⱼ и квадрату расстояния; векторный выход — взвешенная сумма относительных направлений.</p>
       <p>Веса этого блока фиксированы, обучение задаче не выполняется. Проверяем структуру E(3)-эквивариантности, включая отражения. Перестановка узлов в GCN — другая симметрия; здесь меняются пространственные координаты.</p></div>
@@ -183,7 +186,8 @@ export function NeuralFieldLab() {
   const farPoint = ray.origin.map((value, d) => value + ray.far * ray.direction[d]) as unknown as Vec3;
   const cameraLine: SceneLine = { name: 'Выбранный физический луч', points: [ray.origin, farPoint], color: '#2a7293' };
   function train(count: number) { const next = trainField(model, count); setModel(next); setSource('model'); setHistory(previous => [...(previous.length ? previous : [{ x: 0, y: initialLoss }]), { x: next.steps, y: tinyLoss(next, validation) }]); }
-  return <section className="flow-geometry-lab" aria-label="Лаборатория neural fields и объёмного рендеринга">
+  const film = useFrontierFilm('neuralfield', { model, source, yaw, samples, densityScale, pixelX, pixelY, sampleIndex, history }, state => { setModel(state.model); setSource(state.source); setYaw(state.yaw); setSamples(state.samples); setDensityScale(state.densityScale); setPixelX(state.pixelX); setPixelY(state.pixelY); setSampleIndex(state.sampleIndex); setHistory(state.history); });
+  return <section className="flow-geometry-lab" aria-label="Лаборатория neural fields и объёмного рендеринга" {...film.labEvents}>{film.animation}
     <div className="lesson-intro"><span className="eyebrow">Neural field · плотность и цвет по координате</span><h3>MLP становится непрерывным полем, а луч — пикселем</h3>
       <p>Сеть 9 → 24 → 4 со скрытым tanh получает координату (x,y,z) и sin/cos(πx,πy,πz), возвращает σ=6·sigmoid(zσ) и RGB=sigmoid(zRGB). 340 параметров обучаются по синтетическим плотностям и цветам двух мягких объёмных облаков. Поле в начале случайное: нажми обучение и сравни с эталоном.</p>
       <p>Это учебное coordinate-conditioned поле и настоящий NeRF-подобный объёмный рендеринг. Обучение здесь использует образцы σ/RGB, а не фотографии камер; цвет не зависит от направления взгляда. Полный NeRF добавляет обучение по изображениям, направлению взгляда и другие детали.</p></div>

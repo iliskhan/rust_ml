@@ -1,3 +1,4 @@
+import { CoreTopicFilm } from './CoreTopicFilms';
 import { useState } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { Scene3D, type Vec3 } from './ThreeD';
@@ -13,7 +14,7 @@ export function LatentAttentionLab() {
   const [n, setN] = useState(6), [position, setPosition] = useState(5), [scale, setScale] = useState(1);
   const result = mlaTrace(n, position, scale);
   const error = Math.max(...result.heads.flatMap(h => h.output.map((x, i) => Math.abs(x - h.absorbedOutput[i]))));
-  return <section className="panel" aria-label="Лаборатория MLA"><h3>Один латентный код вместо отдельных K/V</h3>
+  return <CoreTopicFilm slug="mla" current={{ n, position, scale }} example={{ n: 6, position: 5, scale: 1 }} restore={value => { setN(value.n);setPosition(value.position);setScale(value.scale); }}><section className="panel" aria-label="Лаборатория MLA"><h3>Один латентный код вместо отдельных K/V</h3>
     <p>Здесь две головы используют общий код c размерности 2 и отдельный RoPE-ключ размерности 2. Контентные K и V каждой головы восстанавливаются своими матрицами. Это заданная малая модель MLA KV, а не попытка без потерь сжать произвольные веса MHA.</p>
     <div className="ae-controls"><Range label="Длина последовательности MLA" value={n} min={2} max={12} step={1} onChange={value => { setN(value); setPosition(Math.min(position, value - 1)); }} /><Range label="Позиция запроса MLA" value={position} min={0} max={n - 1} step={1} onChange={setPosition} /><Range label="Масштаб латентного кода" value={scale} min={0} max={2} step={.1} onChange={setScale} /></div>
     <ol className="ae-flow" aria-label="Путь MLA"><li>x: 3 числа</li><li>c = {fmt(scale)}·xW_down: 2</li><li>общий кэш: c + kᴿ</li><li>голова: K=cUᴷ, V=cUⱽ</li></ol>
@@ -26,7 +27,7 @@ export function LatentAttentionLab() {
     <Numbers caption="Два эквивалентных расчёта этой модели" columns={['Голова', 'Восстановить все V, затем смешать', 'Смешать c, затем Uⱽ']} rows={result.heads.map((h, i) => [i + 1, vec(h.output), vec(h.absorbedOutput)])} />
     <p className="formula">Максимальное |Δ| = {error.toExponential(2)}.</p><p>Показано ядро KV-compression и decoupled RoPE. Query-compression, полная сеть DeepSeek и её обучение здесь не воспроизводятся.</p>
     <a href="https://arxiv.org/abs/2405.04434">DeepSeek-V2: описание MLA</a>
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function OnlineAttentionLab() {
@@ -34,7 +35,7 @@ export function OnlineAttentionLab() {
   const { q, k, v } = attentionFixture(n, sharpness), full = fullAttentionReference(q, k, v, causal), online = tiledAttention(q, k, v, block, causal, row);
   const index = Math.min(tile, online.trace.length - 1), selected = online.trace[index];
   const maxError = Math.max(...full.output.flatMap((r, i) => r.map((x, j) => Math.abs(x - online.output[i][j]))));
-  return <section className="panel" aria-label="Лаборатория блочного внимания"><h3>Точный softmax по частям</h3><p>Одна и та же строка Q обходит K/V плитками. Если новая плитка увеличивает максимум m, накопленные сумму l и вектор z пересчитываем в новой шкале. Поэтому ответ совпадает с полным attention, хотя вся матрица scores не нужна.</p>
+  return <CoreTopicFilm slug="exactsoftmax" current={{ n, block, sharpness, causal, row, tile }} example={{ n: 8, block: 3, sharpness: 3, causal: true, row: 7, tile: 0 }} restore={value => { setN(value.n);setBlock(value.block);setSharpness(value.sharpness);setCausal(value.causal);setRow(value.row);setTile(value.tile); }}><section className="panel" aria-label="Лаборатория блочного внимания"><h3>Точный softmax по частям</h3><p>Одна и та же строка Q обходит K/V плитками. Если новая плитка увеличивает максимум m, накопленные сумму l и вектор z пересчитываем в новой шкале. Поэтому ответ совпадает с полным attention, хотя вся матрица scores не нужна.</p>
     <div className="ae-controls"><Range label="Число токенов attention" value={n} min={2} max={24} step={1} onChange={value => { setN(value); setRow(Math.min(row, value - 1)); setTile(0); }} /><Range label="Размер плитки K/V" value={block} min={1} max={8} step={1} onChange={value => { setBlock(value); setTile(0); }} /><Range label="Масштаб запроса Q" value={sharpness} min={0} max={100} step={1} onChange={setSharpness} /><Range label="Строка запроса i" value={row} min={0} max={n - 1} step={1} onChange={value => { setRow(value); setTile(0); }} /></div>
     <label className="ae-causal"><input type="checkbox" checked={causal} onChange={e => { setCausal(e.target.checked); setTile(0); }} /> Causal-маска j ≤ i</label>
     <div className="ae-tiles" aria-label="Плитки ключей">{online.trace.map((t, i) => <button key={i} aria-pressed={index === i} onClick={() => setTile(i)}>K{t.start}…K{t.end - 1}</button>)}</div>
@@ -50,7 +51,7 @@ export function OnlineAttentionLab() {
     <p className="note">Q/K/V и выход не включены в обе оценки. Показан kernel для одной строки Q; матрица probabilities может переиспользовать scores. Учебный интерфейс дополнительно хранит снимки плиток. Это не замер JS heap, времени или GPU FlashAttention.</p>
     <details><summary>Q/K/V выбранного опыта</summary><Numbers caption="Исходные векторы" columns={['t', 'Q', 'K', 'V']} rows={q.map((x, i) => [i, vec(x), vec(k[i]), vec(v[i])])} /></details>
     <a href="https://arxiv.org/abs/2205.14135">FlashAttention: online softmax и блочные вычисления</a>
-  </section>;
+  </section></CoreTopicFilm>;
 }
 
 export function StateSpaceLab() {
@@ -58,7 +59,7 @@ export function StateSpaceLab() {
   const [pattern, setPattern] = useState<'impulse' | 'rewrite' | 'alternating'>('impulse'), [delta, setDelta] = useState(.5), [selectivity, setSelectivity] = useState(0), [retention, setRetention] = useState(.8), [beta, setBeta] = useState(.7), [time, setTime] = useState(7), [space, setSpace] = useState(false);
   const tokens = memoryTokens(pattern), ssm = selectiveSsm(tokens, delta, selectivity), memories = memoryComparison(tokens, retention, beta, selectivity), at = memories[time];
   const limit = Math.max(.5, ...ssm.flatMap(s => s.state.map(Math.abs))) * 1.1;
-  return <section className="panel" aria-label="Лаборатория SSM и DeltaNet"><h3>Состояние: затухание, запись и адресная замена</h3>
+  return <CoreTopicFilm slug="ssm" current={{ pattern, delta, selectivity, retention, beta, time, space }} example={{ pattern: 'impulse', delta: .5, selectivity: 0, retention: .8, beta: .7, time: 7, space: space }} restore={value => { setPattern(value.pattern);setDelta(value.delta);setSelectivity(value.selectivity);setRetention(value.retention);setBeta(value.beta);setTime(value.time);setSpace(value.space); }}><section className="panel" aria-label="Лаборатория SSM и DeltaNet"><h3>Состояние: затухание, запись и адресная замена</h3>
     <label>Входной сигнал<select value={pattern} onChange={e => setPattern(e.target.value as typeof pattern)}><option value="impulse">Импульс и затухание</option><option value="rewrite">Перезапись одного ключа</option><option value="alternating">Чередование знака</option></select></label>
     <div className="ae-controls"><Range label="Шаг дискретизации Δ" value={delta} min={.05} max={2} step={.05} onChange={setDelta} /><Range label="Зависимость параметров от входа" value={selectivity} min={0} max={2} step={.1} onChange={setSelectivity} /><Range label="Базовое сохранение памяти α" value={retention} min={0} max={1} step={.05} onChange={setRetention} /><Range label="Сила адресной записи β" value={beta} min={0} max={1} step={.05} onChange={setBeta} /><Range label="Выбранный шаг t" value={time} min={0} max={7} step={1} onChange={setTime} /></div>
     <h4>1. Непрерывная SSM → точная дискретизация</h4><p className="formula">dh/dt = Ah + Bx; A = diag(−0.3, −0.8, −1.4)<br />Ā = exp(ΔA); запись = (exp(ΔA)−1)A⁻¹Bx; hₜ = Āhₜ₋₁ + запись; yₜ = Cₜhₜ.</p>
@@ -81,5 +82,5 @@ export function StateSpaceLab() {
     <Numbers caption="S после gated delta: строки — компоненты значения, столбцы — ключевые координаты" columns={['Компонента v', 'k₀', 'k₁', 'k₂']} rows={at.delta.state.map((r, i) => [i, ...r.map(x => fmt(x, 4))])} />
     <p className="note">У attention softmax(QKᵀ/√3), у рекуррентных ядер такой нормировки нет: масштабы выходов могут различаться. Гибрид — явно заданная учебная смесь выходов, не воспроизведение слоёв Qwen3-Next. Здесь нет обучения полных Mamba-2/Gated DeltaNet и замеров скорости.</p>
     <p><a href="https://arxiv.org/abs/2405.21060">Mamba-2 / SSD</a> · <a href="https://arxiv.org/abs/2412.06464">Gated Delta Networks</a> · <a href="https://qwen.ai/blog?id=qwen3-next">Пример промышленного гибрида Qwen3-Next</a></p>
-  </section>;
+  </section></CoreTopicFilm>;
 }

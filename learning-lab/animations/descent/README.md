@@ -60,21 +60,17 @@
 node learning-lab/animations/descent/export-fixture.ts
 work/backprop-pilot/venv/Scripts/python.exe -m py_compile learning-lab/animations/descent/descent.py learning-lab/animations/descent/render-assets.py
 work/backprop-pilot/venv/Scripts/manimgx.exe inspect learning-lab/animations/descent/descent.py GradientDescent -t 8,14,18.5,24,29,34,37,41,46,end -o work/backprop-pilot/descent-inspect.png
-learning-lab/animations/synthesize-narration.ps1 -Scenes descent
-work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/assemble-narration.py descent
 work/backprop-pilot/venv/Scripts/python.exe learning-lab/animations/descent/render-assets.py
 ```
 
-Общий `animations/render_support.py` пишет 1280×720/30fps, постер37s и
-подключает подготовленную русскую синтезированную речь; её реплики и интервалы
-заданы в `narration.ru.json`, отдельно от VTT. Голос — Microsoft Irina Desktop
-через Windows SAPI; [общий pipeline](../README.md#русская-озвучка) собирает WAV,
-который ManimGX включает в MP4 как AAC.
+Общий `animations/render_support.py` пишет немой MP4 1280×720/30fps и постер37s.
+VTT доступен по выбору, без автоматического включения; текущий процесс —
+в [общем README](../README.md). `narration.ru.json` хранит исторические реплики.
 Субтитры: `public/animations/descent/captions.ru.vtt`. GPU-рендеры запускать
 последовательно. `construct()` с заглушками не использовать.
 
-Историческая запись первичной передачи до рендера и озвучки приведена ниже;
-она не описывает состояние текущего звукового выпуска.
+Историческая запись первичной передачи приведена ниже;
+она не описывает состояние текущего немого выпуска.
 
 2026-10-16: в текущем общем checkout экспорт с assertions, Python syntax
 и импорт `GradientDescent` прошли. Статическая сумма `play`/`wait` через AST

@@ -1,0 +1,34 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\vit\vit.py: TopicScene, 40.00 s, 31 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\vit.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\vit-2.png
+  #0   0.00– 0.60s  vit.py:54  FadeIn(Group), Create(Group), FadeIn(Group)
+  #1   0.60– 1.20s  vit.py:54  FadeIn(Text 'x, y'), FadeIn(Text 'патчи')
+  #2   1.20– 6.00s  vit.py:59  wait
+  #3   6.00– 6.40s  vit.py:54  FadeIn(Text '?')
+  #4   6.40–12.00s  vit.py:59  wait
+  #5  12.00–12.25s  vit.py:54  FadeOut(Text '?')
+  #6  12.25–13.05s  vit.py:54  Group.animate.move_to(…)
+  #7  13.05–13.45s  vit.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #8  13.45–14.25s  vit.py:54  Group.animate.move_to(…)
+  #9  14.25–14.65s  vit.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #10 14.65–15.45s  vit.py:54  Group.animate.move_to(…)
+  #11 15.45–15.85s  vit.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #12 15.85–16.65s  vit.py:54  Group.animate.move_to(…)
+  #13 16.65–17.05s  vit.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #14 17.05–17.65s  vit.py:54  FadeIn(Text '4 → 2 + P')
+  #15 17.65–26.00s  vit.py:59  wait
+  #16 26.00–26.60s  vit.py:54  Group.animate.scale(…).shift(…)
+  #17 26.60–27.10s  vit.py:54  FadeIn(Group), FadeIn(Text 'без P')
+  #18 27.10–27.35s  vit.py:54  FadeIn(Group)
+  #19 27.35–27.60s  vit.py:54  FadeIn(Group)
+  #20 27.60–27.78s  vit.py:54  Line.animate.move_to(…)
+  #21 27.78–27.88s  vit.py:54  FadeOut(Line)
+  #22 27.88–28.00s  vit.py:54  FadeIn(Line)
+  #23 28.00–28.18s  vit.py:54  Line.animate.move_to(…)
+  #24 28.18–28.28s  vit.py:54  FadeOut(Line)
+  #25 28.28–28.40s  vit.py:54  FadeIn(Line)
+  #26 28.40–28.65s  vit.py:54  FadeOut(Line)
+  #27 28.65–34.00s  vit.py:59  wait
+  #28 34.00–34.50s  vit.py:54  Create(Rectangle), FadeIn(Text '?')
+  #29 34.50–35.00s  vit.py:54  Rectangle.animate.scale(…)
+  #30 35.00–40.00s  vit.py:59  wait
+layout: no problems in 7 samples

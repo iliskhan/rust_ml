@@ -1,0 +1,27 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\cnnforward\cnnforward.py: TopicScene, 40.00 s, 24 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\cnnforward.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\cnnforward-2.png
+  #0   0.00– 0.60s  cnnforward.py:54  FadeIn(Group), FadeIn(Group), Create(Rectangle)
+  #1   0.60– 1.20s  cnnforward.py:54  FadeIn(Text 'x, y'), FadeIn(Text 'Conv[0]')
+  #2   1.20– 6.00s  cnnforward.py:59  wait
+  #3   6.00– 6.40s  cnnforward.py:54  FadeIn(Text '?')
+  #4   6.40–12.00s  cnnforward.py:59  wait
+  #5  12.00–12.25s  cnnforward.py:54  FadeOut(Text '?')
+  #6  12.25–12.95s  cnnforward.py:54  Rectangle.animate.move_to(…)
+  #7  12.95–13.65s  cnnforward.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #8  13.65–14.25s  cnnforward.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #9  14.25–14.95s  cnnforward.py:54  Rectangle.animate.move_to(…)
+  #10 14.95–15.65s  cnnforward.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #11 15.65–16.25s  cnnforward.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #12 16.25–16.95s  cnnforward.py:54  Rectangle.animate.move_to(…)
+  #13 16.95–17.65s  cnnforward.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #14 17.65–18.25s  cnnforward.py:54  FadeOut(Group), ReplacementTransform(Group)
+  #15 18.25–18.85s  cnnforward.py:54  FadeIn(Text 'Σ x·w')
+  #16 18.85–26.00s  cnnforward.py:59  wait
+  #17 26.00–26.60s  cnnforward.py:54  Group.animate.scale(…).shift(…)
+  #18 26.60–27.10s  cnnforward.py:54  FadeIn(Group), FadeIn(Text 'Pool')
+  #19 27.10–27.35s  cnnforward.py:54  FadeIn(Group)
+  #20 27.35–34.00s  cnnforward.py:59  wait
+  #21 34.00–34.50s  cnnforward.py:54  Create(Rectangle), FadeIn(Text '?')
+  #22 34.50–35.00s  cnnforward.py:54  Rectangle.animate.scale(…)
+  #23 35.00–40.00s  cnnforward.py:59  wait
+layout: no problems in 7 samples

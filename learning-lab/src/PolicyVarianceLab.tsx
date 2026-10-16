@@ -1,11 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
 import { gradientHistogram, policyGradientMoments, policyGradientSamples } from './policyVarianceMath';
 import './policy-variance.css';
 
-export default function PolicyVarianceLab({ theta, rewards }: { theta: number; rewards: [number, number] }) {
-  const [count, setCount] = useState(16), [baseline, setBaseline] = useState(0), [seed, setSeed] = useState(71);
+export default function PolicyVarianceLab({ theta, rewards, settings, onSettings }: { theta: number; rewards: [number, number]; settings: { count:number; baseline:number; seed:number }; onSettings: (value: { count:number; baseline:number; seed:number }) => void }) {
+  const { count, baseline, seed } = settings;
+  const setCount = (count: number) => onSettings({ ...settings, count });
+  const setBaseline = (baseline: number) => onSettings({ ...settings, baseline });
+  const setSeed = (seed: number) => onSettings({ ...settings, seed });
   const [left, right] = rewards;
   const data = useMemo(() => {
     const raw = policyGradientSamples(theta, [left, right], 0, count, seed);

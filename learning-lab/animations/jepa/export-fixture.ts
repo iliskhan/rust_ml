@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const a=R.trainJepa(0,1,.05,.99),b=R.trainJepa(100,1,.05,.99),ta=R.jepaTrace(a.parameters,R.JEPA_IMAGES[12],1),tb=R.jepaTrace(b.parameters,R.JEPA_IMAGES[12],1),collapse=R.trainJepa(50,1,.05,.99,true);
+const state={steps:100,mask:1,ema:.99,eta:.05,collapsed:false,sample:12};
+const before=[[ta.prediction,ta.target]],after=[[tb.prediction,tb.target]],data={a:a.parameters,b:b.parameters,metrics:b.metrics,ta,tb,collapse:{loss:collapse.metrics.loss,variance:collapse.metrics.targetVariance}};
+const headers=['Компонента','Predictor до','Target до','Predictor после','Target после'],rows=[0,1].map(i=>[i,ta.prediction[i],ta.target[i],tb.prediction[i],tb.target[i]]);
+const lesson={"media": "jepa", "title": "JEPA: predictor и медленная цель", "label": "JEPA: predictor и медленная цель", "description": "Predictor предсказывает скрытый latent; target меняется через EMA.", "target": "jepa-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Нулевая loss доказывает качество?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, одинаковые нулевые представления дают коллапс.", "time": 9}, "practice": {"question": "При EMA m=1 target получает градиент?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, target заморожен, обновление EMA равно прежней цели."}, "transcript": ["Predictor предсказывает скрытый latent; target меняется через EMA.", "Нулевая loss доказывает качество?", "Нет, одинаковые нулевые представления дают коллапс.", "Две реальные latent-компоненты; отдельно проверяются variance и фиксированная цель.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Две реальные latent-компоненты; отдельно проверяются variance и фиксированная цель."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"z1 latent",axisY:"z2 latent",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported jepa');

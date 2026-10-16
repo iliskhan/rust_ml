@@ -67,7 +67,7 @@ export function LessonAnimation({ videoRef, title, label, description, media, ch
 
   return <section className={`panel lesson-animation ${className}`} aria-labelledby={`${id}-heading`}>
     <h3 id={`${id}-heading`}>{title}</h3>
-    <p id={`${id}-description`}>{description}</p>
+    <details className="lesson-animation-context"><summary>Условия примера</summary><p id={`${id}-description`}>{description}</p></details>
     {failed ? <div className="lesson-animation-fallback" role="status">
       <p>Видео не удалось загрузить или воспроизвести. Весь пример доступен ниже в тексте и таблице; лаборатория продолжает работать.</p>
       <button type="button" onClick={() => { setChapter(0); seeked(0); setFailed(false) }}>Повторить загрузку видео</button>
@@ -92,10 +92,9 @@ export function LessonAnimation({ videoRef, title, label, description, media, ch
         }
         previousTime.current = video.currentTime
       }}>
-      <track kind="captions" src={`${mediaBase}captions.ru.vtt`} srcLang="ru" label="Русские субтитры" default />
+      <track kind="captions" src={`${mediaBase}captions.ru.vtt`} srcLang="ru" label="Русские субтитры" />
       Ваш браузер не поддерживает видео. Прочитайте текст и таблицу ниже.
     </video>}
-    <p className="note">Русская синтезированная озвучка. Звук и громкость — в управлении видео; русские субтитры доступны там же. Видео запускается только вручную.</p>
     {questionOpen && <section className="lesson-animation-question" aria-labelledby={`${id}-question`}>
       <p className="eyebrow">Пауза перед объяснением</p>
       <h4 id={`${id}-question`} ref={questionHeading} tabIndex={-1}>{question.question}</h4>
@@ -117,7 +116,6 @@ export function LessonAnimation({ videoRef, title, label, description, media, ch
           setChapter(index)
         }}>{index + 1}. {item.title}</button>)}
     </nav>
-    <p className="note">Запуск — только вручную. Выбор части открывает её ключевой кадр на паузе. Просмотр не засчитывает освоение темы.</p>
     {!failed && <button type="button" onClick={() => { videoRef.current?.pause(); setFailed(true) }}>Видео не запускается?</button>}
     <details onToggle={event => { if (event.currentTarget.open) videoRef.current?.pause() }}>
       <summary>Текст и числа: тот же пример без видео</summary>
@@ -132,7 +130,7 @@ export function LessonAnimation({ videoRef, title, label, description, media, ch
       <button type="button" onClick={() => { videoRef.current?.pause(); example.onApply(); focusLessonSection(target) }}>Применить числа ролика в лаборатории ↓</button>
       <button type="button" disabled={!example.canRestore} onClick={() => { videoRef.current?.pause(); example.onRestore(); focusLessonSection(target) }}>Вернуть мои настройки</button>
     </div>
-    <p className="note">Первое применение сохраняет ваши текущие числа. Повторное применение сохраняет ту же копию; возврат восстанавливает её. Если в лаборатории есть автообучение, оно остаётся на паузе.</p>
+    <details><summary>Просмотр и возврат настроек</summary><p className="note">Видео без озвучки, субтитры включаются в плеере. Запуск вручную; главы открываются на паузе. Просмотр не засчитывает освоение. Первое применение сохраняет ваши настройки; повторное не перезаписывает копию. Возврат оставляет автообучение на паузе.</p></details>
     <div className="button-row"><button type="button" onClick={() => {
       videoRef.current?.pause()
       focusLessonSection(target)

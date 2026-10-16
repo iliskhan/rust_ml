@@ -1,0 +1,38 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\heads\heads.py: AttentionHeads, 50.00 s, 35 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\heads.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\heads-2.png
+  #0   0.00– 1.20s  legacy_visuals.py:20  FadeIn(Group), Create(Group), FadeIn(MathTex 'MHA')
+  #1   1.20– 1.80s  legacy_visuals.py:20  Create(Group)
+  #2   1.80– 2.40s  legacy_visuals.py:20  Create(Group)
+  #3   2.40– 3.00s  legacy_visuals.py:20  Create(Group)
+  #4   3.00– 3.60s  legacy_visuals.py:20  Create(Group)
+  #5   3.60– 8.00s  legacy_visuals.py:27  wait
+  #6   8.00– 8.50s  legacy_visuals.py:20  FadeOut(Group), FadeOut(Group), FadeOut(MathTex 'MHA')
+  #7   8.50– 9.10s  legacy_visuals.py:20  ReplacementTransform(Group)
+  #8   9.10– 9.70s  legacy_visuals.py:20  ReplacementTransform(Group)
+  #9   9.70–10.30s  legacy_visuals.py:20  ReplacementTransform(Group)
+  #10 10.30–10.90s  legacy_visuals.py:20  ReplacementTransform(Group)
+  #11 10.90–11.60s  legacy_visuals.py:20  FadeIn(MathTex '[o_0\\mid o_1\\mid o_2\\mid o_…')
+  #12 11.60–18.00s  legacy_visuals.py:27  wait
+  #13 18.00–18.70s  legacy_visuals.py:20  FadeIn(MathTex 'W^O:\\;8\\to4')
+  #14 18.70–18.92s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #15 18.92–19.14s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #16 19.14–19.36s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #17 19.36–19.58s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #18 19.58–19.80s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #19 19.80–20.02s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #20 20.02–20.24s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #21 20.24–20.46s  legacy_visuals.py:20  Dot.animate.move_to(…)
+  #22 20.46–21.46s  legacy_visuals.py:20  Create(Group)
+  #23 21.46–26.00s  legacy_visuals.py:27  wait
+  #24 26.00–26.50s  legacy_visuals.py:20  FadeOut(Group), FadeOut(MathTex '[o_0\\mid o_1\\mid o_2\\mid o_…'), FadeOut(Group), FadeOut(MathTex 'W^O:\\;8\\to4')
+  #25 26.50–27.20s  legacy_visuals.py:20  FadeIn(Group), Create(Group), FadeIn(MathTex 'MHA\\;\\longrightarrow\\;?')
+  #26 27.20–32.00s  legacy_visuals.py:27  wait
+  #27 32.00–33.50s  legacy_visuals.py:20  FadeOut(Group), FadeIn(Group), ReplacementTransform(MathTex 'MHA\\;\\longrightarrow\\;?')
+  #28 33.50–36.00s  legacy_visuals.py:27  wait
+  #29 36.00–37.50s  legacy_visuals.py:20  FadeOut(Group), FadeIn(Group), ReplacementTransform(MathTex 'GQA')
+  #30 37.50–40.00s  legacy_visuals.py:27  wait
+  #31 40.00–40.70s  legacy_visuals.py:20  Create(Group), Create(Group)
+  #32 40.70–46.00s  legacy_visuals.py:27  wait
+  #33 46.00–46.70s  legacy_visuals.py:20  Indicate(Group), Indicate(Group)
+  #34 46.70–50.00s  legacy_visuals.py:27  wait
+layout: no problems in 7 samples

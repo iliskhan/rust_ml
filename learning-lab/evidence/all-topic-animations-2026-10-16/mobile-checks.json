@@ -1,0 +1,2046 @@
+{
+  "checked_at": "2026-10-16T20:38:26.198Z",
+  "build": "production VITE_BASE_PATH=/rust_ml/",
+  "scope": "66 unique visible media blocks at 390x844; attention also320x760. Geometry and media only; click/preset/restore acceptance limited by input anomaly.",
+  "checks": [
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "embeddings",
+          "title": "Токены: ID выбирает вектор",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "attention",
+          "title": "Как attention собирает одно сообщение",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "heads",
+          "title": "Четыре головы: собрать ответ",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "rope",
+          "title": "RoPE: поворот и расстояние",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "transformerblock",
+          "title": "Residual, норма и FFN",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "crossmask",
+          "title": "Encoder, decoder и cross",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "generation",
+          "title": "Генерация: сохранить K и V",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "sampling",
+          "title": "Sampling и teacher forcing",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        },
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "outputtraining",
+          "title": "Обучение выходной головы",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "tinytraining",
+          "title": "Tiny Transformer: сквозной backward",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "bpe",
+          "title": "BPE: учить и применять слияния",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "swiglu",
+          "title": "SwiGLU: две ветки и произведение",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "lora",
+          "title": "LoRA: поправка через малый ранг",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "vit",
+          "title": "ViT: пиксели в токены патчей",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "moe",
+          "title": "MoE: маршруты и смесь экспертов",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "mla",
+          "title": "MLA: общий латентный кэш",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "exactsoftmax",
+          "title": "Online softmax: точный ответ плитками",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "ssm",
+          "title": "SSM и DeltaNet: запись в память",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "unetdit",
+          "title": "U-Net и DiT: прямые предикторы шума",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#advanced",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "clip",
+          "title": "CLIP: обе стороны пары",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "flowmatching",
+          "title": "Flow matching: поле ведёт точку",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "superposition",
+          "title": "Суперпозиция и вмешательство",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "egnn",
+          "title": "EGNN: повернуть весь граф",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "neuralfield",
+          "title": "Neural field: свет вдоль луча",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "dpo",
+          "title": "DPO: предпочтение и reference",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "qlora",
+          "title": "Квантизация: поправка ранга один",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "speculative",
+          "title": "Speculative: восполнить массу",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "longcontext",
+          "title": "Длинный контекст: доступ и поиск",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "jepa",
+          "title": "JEPA: predictor и медленная цель",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "maskedtext",
+          "title": "Masked text: подсказка справа",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "kan",
+          "title": "KAN: функции на рёбрах",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 53.60000228881836,
+          "paused": true,
+          "right": 321.60000228881836,
+          "slug": "vittraining",
+          "title": "ViT: обучаются все группы",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 268
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 53.60000228881836,
+          "paused": true,
+          "right": 321.60000228881836,
+          "slug": "moetraining",
+          "title": "MoE: специализация экспертов",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 268
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 53.60000228881836,
+          "paused": true,
+          "right": 321.60000228881836,
+          "slug": "ssmtraining",
+          "title": "SSM: научиться помнить",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 268
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 53.60000228881836,
+          "paused": true,
+          "right": 321.60000228881836,
+          "slug": "imagedenoisertraining",
+          "title": "U-Net / DiT: шум и обратный процесс",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 268
+        }
+      ],
+      "route": "#frontiers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "vaeposterior",
+          "title": "Облако скрытых кодов",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#vae",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "vaeelbo",
+          "title": "ELBO: среднее и выборка",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#vae",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "vaetraining",
+          "title": "Как учится VAE",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#vae",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "vaegeneration",
+          "title": "Генерация из prior",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#vae",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "ganforward",
+          "title": "Два прямых прохода GAN",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#gan",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "ganobjectives",
+          "title": "Сигнал генератору",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#gan",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "gantraining",
+          "title": "Чередование D и G",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#gan",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "gandiversity",
+          "title": "Разнообразие GAN",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#gan",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "diffusionforward",
+          "title": "Данные плюс шум",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#diffusion",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "diffusiontraining",
+          "title": "Обучаем denoiser",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#diffusion",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "diffusionreverse",
+          "title": "Обратный шаг DDPM",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#diffusion",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "diffusionsampling",
+          "title": "DDPM и DDIM",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#diffusion",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "diffusionguidance",
+          "title": "Усиление условия",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#diffusion",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "gnnadjacency",
+          "title": "Узлы, рёбра, признаки",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#gnn",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "gnnmessage",
+          "title": "Как GCN собирает соседей",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#gnn",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "gnntraining",
+          "title": "Обучение графовой сети",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#gnn",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "gnndepth",
+          "title": "Глубина и сглаживание",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#gnn",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "gnnvariants",
+          "title": "GAT и GraphSAGE",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#gnn",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "rltransition",
+          "title": "Действие и переход",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#rl",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "rlbellman",
+          "title": "Планирование Беллмана",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#rl",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "rlqlearning",
+          "title": "Обновление Q по опыту",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#rl",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 31.600000381469727,
+          "paused": true,
+          "right": 343.6000003814697,
+          "slug": "rlpolicy",
+          "title": "Среднее и разброс градиента",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 312
+        }
+      ],
+      "route": "#rl",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "neuron",
+          "title": "Как смещение включает нейрон",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        },
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "activations",
+          "title": "Активация и её чувствительность",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#neuron",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "mse",
+          "title": "MSE: от промаха к общему числу",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        },
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "bce",
+          "title": "BCE: уверенность и истинный класс",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#loss",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "backprop",
+          "title": "Почему в общем узле складываются градиенты",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#backprop",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "descent",
+          "title": "Спуск и величина шага",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#optimizers",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "boundary",
+          "title": "Граница решений и новая проверка",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        },
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "xor",
+          "title": "Как скрытый слой разделяет XOR",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#network",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "dense",
+          "title": "MLP: связи и активации",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 303.6000061035156
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "films": [
+        {
+          "captionModes": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            46.79999923706055,
+            74,
+            46.79999923706055,
+            46.79999923706055,
+            46.79999923706055
+          ],
+          "fallback": false,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 268.99999618530273,
+          "slug": "attention",
+          "title": "Как attention собирает одно сообщение",
+          "videoHeight": 720,
+          "videoWidth": 1280,
+          "width": 233.1999969482422
+        }
+      ],
+      "route": "#transformer",
+      "viewport": {
+        "height": 760,
+        "scrollWidth": 305,
+        "width": 320
+      }
+    }
+  ]
+}

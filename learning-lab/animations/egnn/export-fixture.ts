@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const tr=F.equivarianceTrace(F.EGNN_COORDINATES,F.EGNN_FEATURES,65,-25,false,[.6,-.3,.2],.4),broken=F.equivarianceTrace(F.EGNN_COORDINATES,F.EGNN_FEATURES,65,-25,false,[.6,-.3,.2],.4,true);
+const state={coordinates:F.EGNN_COORDINATES,features:F.EGNN_FEATURES,z:65,y:-25,reflection:false,translation:[.6,-.3,.2],strength:.4,selected:0,broken:false};
+const before=[tr.original.positions.map(p=>p.slice(0,2))],after=[tr.transformed.positions.map(p=>p.slice(0,2))],data={tr,broken};
+const headers=['Вершина','x','y','z','scalar'],rows=tr.transformed.positions.map((p,i)=>[i,...p,tr.transformed.scalars[i]]);
+const lesson={"media": "egnn", "title": "EGNN: повернуть весь граф", "label": "EGNN: повернуть весь граф", "description": "Сообщения зависят от расстояний и скалярных признаков.", "target": "egnn-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Скаляр поворачивается как вектор?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, скаляр сохраняется; координаты и векторы преобразуются.", "time": 9}, "practice": {"question": "Общий перенос [1,0,0] меняет расстояния?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, перенос сокращается в разности координат."}, "transcript": ["Сообщения зависят от расстояний и скалярных признаков.", "Скаляр поворачивается как вектор?", "Нет, скаляр сохраняется; координаты и векторы преобразуются.", "Физическая проекция x,y; настоящий z и scalar доступны в таблице отдельно.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Физическая проекция x,y; настоящий z и scalar доступны в таблице отдельно."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"x физическая, ед. сцены",axisY:"y физическая, ед. сцены",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported egnn');

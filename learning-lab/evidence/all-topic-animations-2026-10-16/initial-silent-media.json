@@ -1,0 +1,159 @@
+{
+  "checked_at_utc": "2026-10-16T20:00:42.228833+00:00",
+  "checkout": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml",
+  "revision": "4065f9f565e45c5320a068a3619f25ab0f1356ba",
+  "python": "3.13.2",
+  "manimgx": "0.1.1",
+  "command": [
+    "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\work\\backprop-pilot\\venv\\Scripts\\python.exe",
+    "learning-lab/animations/verify-media.py",
+    "neuron",
+    "attention",
+    "backprop",
+    "descent",
+    "rope",
+    "heads",
+    "generation",
+    "xor",
+    "--output",
+    "learning-lab/evidence/all-topic-animations-2026-10-16/initial-silent-media.json"
+  ],
+  "results": [
+    {
+      "name": "neuron",
+      "path": "learning-lab/public/animations/neuron/neuron.mp4",
+      "bytes": 141434,
+      "sha256": "4c152f7a5631f99ebac9a2523869a68eb6629040be245f941cc44ed58f4fe212",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 618,
+        "average_encoded_fps": 14.034822104466315
+      },
+      "audio_track": null,
+      "source_duration_seconds": 44,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "attention",
+      "path": "learning-lab/public/animations/attention/attention.mp4",
+      "bytes": 221923,
+      "sha256": "6c00936622cdc65af3cfb01c427e0e434e4ab01dcb7981a623de73ae8b24d844",
+      "video": {
+        "duration_seconds": 50.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 626,
+        "average_encoded_fps": 12.503328894806923
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "backprop",
+      "path": "learning-lab/public/animations/backprop/backprop.mp4",
+      "bytes": 224375,
+      "sha256": "6dc0be5e06522b4cf814ae57f5c68da6623fc6efa5557bbe494a129946a41cf2",
+      "video": {
+        "duration_seconds": 44.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 647,
+        "average_encoded_fps": 14.693414080242242
+      },
+      "audio_track": null,
+      "source_duration_seconds": 44,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "descent",
+      "path": "learning-lab/public/animations/descent/descent.mp4",
+      "bytes": 131244,
+      "sha256": "795716ecc701e44e9e3a00b39ffb10c7c9474eebec092aa1114bc922e9334236",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 490,
+        "average_encoded_fps": 9.793471019320453
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "rope",
+      "path": "learning-lab/public/animations/rope/rope.mp4",
+      "bytes": 184424,
+      "sha256": "fcb4a4f40db18d2f984eafce8c7dc527a64552f797ed7eaac2002df3c8526c61",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 454,
+        "average_encoded_fps": 9.073950699533645
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "heads",
+      "path": "learning-lab/public/animations/heads/heads.mp4",
+      "bytes": 223471,
+      "sha256": "d78ffda0890a3dfbb2647e62111b15c795993764571e6f407c3ca4e8d48b29c8",
+      "video": {
+        "duration_seconds": 50.06666666666667,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 494,
+        "average_encoded_fps": 9.866844207723036
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.06666666666666998,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "generation",
+      "path": "learning-lab/public/animations/generation/generation.mp4",
+      "bytes": 59455,
+      "sha256": "97fcbe8fffe90d77c57d79a8ff56d91f840ffbb4ff9a0a19531d1434dc254b8e",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 327,
+        "average_encoded_fps": 6.53564290473018
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    },
+    {
+      "name": "xor",
+      "path": "learning-lab/public/animations/xor/xor.mp4",
+      "bytes": 157214,
+      "sha256": "bd5147377e53dd9f357dc64696a7254e5bb47c6dc6a3aa54ea0f63c68c883dd3",
+      "video": {
+        "duration_seconds": 50.03333333333333,
+        "width": 1280.0,
+        "height": 720.0,
+        "encoded_samples": 363,
+        "average_encoded_fps": 7.255163224516989
+      },
+      "audio_track": null,
+      "source_duration_seconds": 50,
+      "duration_delta_seconds": 0.03333333333333144,
+      "duration_tolerance_seconds": 0.06666766666666667
+    }
+  ]
+}

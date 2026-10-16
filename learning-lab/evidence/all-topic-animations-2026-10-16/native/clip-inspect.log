@@ -1,0 +1,22 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\clip\clip.py: TopicScene, 40.00 s, 19 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\clip.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\clip-2.png
+  #0   0.00– 0.65s  clip.py:18  Create(Group)
+  #1   0.65– 1.30s  clip.py:18  Create(Group)
+  #2   1.30– 1.95s  clip.py:18  Create(Group)
+  #3   1.95– 2.60s  clip.py:18  Create(Group)
+  #4   2.60– 6.00s  clip.py:21  wait
+  #5   6.00– 6.40s  clip.py:18  FadeIn(MathTex '?')
+  #6   6.40–12.00s  clip.py:21  wait
+  #7  12.00–12.40s  clip.py:18  FadeOut(MathTex '?')
+  #8  12.40–13.80s  clip.py:18  Transform(Group)
+  #9  13.80–15.20s  clip.py:18  Transform(Group)
+  #10 15.20–16.60s  clip.py:18  Transform(Group)
+  #11 16.60–18.00s  clip.py:18  Transform(Group)
+  #12 18.00–18.50s  clip.py:18  FadeIn(Group)
+  #13 18.50–26.00s  clip.py:21  wait
+  #14 26.00–26.50s  clip.py:18  FadeIn(Group)
+  #15 26.50–27.50s  clip.py:18  Create(Group)
+  #16 27.50–34.00s  clip.py:21  wait
+  #17 34.00–34.70s  clip.py:18  Create(Rectangle)
+  #18 34.70–40.00s  clip.py:21  wait
+layout: no problems in 7 samples

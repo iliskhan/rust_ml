@@ -1,0 +1,42 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\gnndepth\gnndepth.py: TopicScene, 40.00 s, 39 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnndepth.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\gnndepth-2.png
+  #0   0.00– 6.00s  scene_geometry.py:36  wait
+  #1   6.00– 6.50s  scene_geometry.py:30  FadeIn(MathTex 'PAP^T\\;?')
+  #2   6.50–12.00s  scene_geometry.py:36  wait
+  #3  12.00–12.30s  scene_geometry.py:30  FadeOut(MathTex 'PAP^T\\;?')
+  #4  12.30–12.58s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #5  12.58–12.86s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #6  12.86–13.14s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #7  13.14–13.42s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #8  13.42–13.70s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #9  13.70–13.98s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #10 13.98–14.26s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #11 14.26–14.54s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #12 14.54–14.82s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #13 14.82–15.10s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #14 15.10–15.38s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #15 15.38–15.66s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #16 15.66–15.94s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #17 15.94–16.22s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #18 16.22–16.50s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #19 16.50–16.78s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #20 16.78–17.06s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #21 17.06–17.34s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #22 17.34–17.62s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #23 17.62–17.90s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #24 17.90–18.18s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #25 18.18–18.46s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #26 18.46–18.74s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #27 18.74–19.02s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #28 19.02–19.30s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #29 19.30–19.58s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #30 19.58–19.86s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #31 19.86–20.14s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #32 20.14–20.42s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #33 20.42–20.70s  scene_geometry.py:30  Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Circle.animate.set_fill(…), Create(Line), Dot.animate.move_to(…)
+  #34 20.70–26.00s  scene_geometry.py:36  wait
+  #35 26.00–27.20s  scene_geometry.py:30  FadeOut(Text 'A'), FadeOut(Text 'B'), FadeOut(Text 'C'), FadeOut(Text 'D'), FadeOut(Text 'E'), FadeOut(Text 'F'), FadeIn(Text '5'), FadeIn(Text '2'), FadeIn(Text '4'), FadeIn(Text '1'), FadeIn(Text '3'), FadeIn(Text '0')
+  #36 27.20–34.00s  scene_geometry.py:36  wait
+  #37 34.00–34.50s  scene_geometry.py:30  FadeIn(MathTex 'k\\;?')
+  #38 34.50–40.00s  scene_geometry.py:36  wait
+layout: no problems in 7 samples

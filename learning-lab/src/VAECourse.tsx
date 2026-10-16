@@ -1,3 +1,4 @@
+import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
 import { useId, useMemo, useRef, useState } from 'react';
@@ -92,13 +93,15 @@ export function VAECourse() {
     });
   }
 
-  return <section className="vae-course vg-course" aria-label="Интерактивный курс VAE">
+  return <section onClickCapture={pauseCourseFilms} onChangeCapture={pauseCourseFilms} className="vae-course vg-course" aria-label="Интерактивный курс VAE">
     <p className="vg-intro">VAE учится придумывать числа, похожие на примеры. Сначала разберём один проход, затем действительно обучим маленькую модель. Термины со стрелкой открывают объяснение с возвратом сюда.</p>
     <nav className="vg-chapters" aria-label="Разделы курса VAE">{SECTIONS.map(([name, title], i) => <button key={name} aria-pressed={chapter === i} aria-current={chapter === i ? 'step' : undefined} title={title} onClick={() => setChapter(i)}><span>{i + 1}</span>{name}</button>)}</nav>
     <label className="vg-mobile-navigation" htmlFor={selectId}>Раздел VAE<select id={selectId} value={chapter} onChange={e => setChapter(Number(e.target.value))}>{SECTIONS.map(([name, title], i) => <option key={name} value={i}>{i + 1}. {name} — {title}</option>)}</select></label>
     <div className="vg-heading"><span>Раздел {chapter + 1} из {SECTIONS.length}</span><h2 tabIndex={-1} ref={heading}>{SECTIONS[chapter][1]}</h2></div>
 
     <div hidden={chapter !== 0}>
+      <GenerativeTopicFilm slug="vaeposterior" current={{ beta, rate, run, x, epsilon, parameter, priorZ, outputNoise, sampleSeed, inputA, inputB, mix, showEncoderScene }} update={value => { setBeta(value.beta); setRate(value.rate); setRun(value.run); setX(value.x); setEpsilon(value.epsilon); setParameter(value.parameter); setPriorZ(value.priorZ); setOutputNoise(value.outputNoise); setSampleSeed(value.sampleSeed); setInputA(value.inputA); setInputB(value.inputB); setMix(value.mix); setShowEncoderScene(value.showEncoderScene); }} fixed={{ beta:1, rate:.015, run:startRun(1), x:1, epsilon:.5, parameter:4, priorZ:0, outputNoise:0, sampleSeed:0, inputA:-1, inputB:2, mix:.5, showEncoderScene:false }} />
+      <h3 id="vaeposterior-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Представьте прибор, который описывает вкус яблока одним скрытым числом z. Для яблока x он выдаёт не единственный «верный код», а область возможных кодов. Декодер пытается по выбранному коду восстановить x.</p>
       <p className="vg-prompt"><strong>Предскажите.</strong> Если ε станет больше, куда сдвинется z? Подвигайте ε, сохраняя x: центр и ширина распределения останутся прежними.</p>
       <div className="vg-columns"><section className="panel"><h3>1. Вход → облако кодов → восстановление</h3>
@@ -121,6 +124,8 @@ export function VAECourse() {
     </div>
 
     <div hidden={chapter !== 1}>
+      <GenerativeTopicFilm slug="vaeelbo" current={{ beta, rate, run, x, epsilon, parameter, priorZ, outputNoise, sampleSeed, inputA, inputB, mix, showEncoderScene }} update={value => { setBeta(value.beta); setRate(value.rate); setRun(value.run); setX(value.x); setEpsilon(value.epsilon); setParameter(value.parameter); setPriorZ(value.priorZ); setOutputNoise(value.outputNoise); setSampleSeed(value.sampleSeed); setInputA(value.inputA); setInputB(value.inputB); setMix(value.mix); setShowEncoderScene(value.showEncoderScene); }} fixed={{ beta:1, rate:.015, run:startRun(1), x:1, epsilon:.5, parameter:4, priorZ:0, outputNoise:0, sampleSeed:0, inputA:-1, inputB:2, mix:.5, showEncoderScene:false }} />
+      <h3 id="vaeelbo-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">У модели две заботы: объяснить пример и не унести его коды слишком далеко от prior. Для β=1 их сумма — отрицательная <ConceptLink concept="elbo">ELBO</ConceptLink>; её минимизируют.</p>
       <p className="vg-prompt"><strong>Попробуйте.</strong> Оставьте x прежним и измените ε. Реконструкция и её цена изменятся, а KL останется той же: KL сравнивает целые распределения.</p>
       <div className="vg-columns"><section className="panel"><h3>Один проход: реальные слагаемые</h3>
@@ -150,6 +155,8 @@ export function VAECourse() {
     </div>
 
     <div hidden={chapter !== 2}>
+      <GenerativeTopicFilm slug="vaetraining" current={{ beta, rate, run, x, epsilon, parameter, priorZ, outputNoise, sampleSeed, inputA, inputB, mix, showEncoderScene }} update={value => { setBeta(value.beta); setRate(value.rate); setRun(value.run); setX(value.x); setEpsilon(value.epsilon); setParameter(value.parameter); setPriorZ(value.priorZ); setOutputNoise(value.outputNoise); setSampleSeed(value.sampleSeed); setInputA(value.inputA); setInputB(value.inputB); setMix(value.mix); setShowEncoderScene(value.showEncoderScene); }} fixed={{ beta:1, rate:.015, run:startRun(1), x:1, epsilon:.5, parameter:4, priorZ:0, outputNoise:0, sampleSeed:0, inputA:-1, inputB:2, mix:.5, showEncoderScene:false }} />
+      <h3 id="vaetraining-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Нажатие кнопки действительно меняет веса. Модель видит 64 фиксированных числа вокруг 0,65; на каждом шаге получает 16 из них и воспроизводимые нормальные ε.</p>
       <p className="vg-prompt"><strong>Опыт.</strong> Сделайте 100 шагов. Сравните цену реконструкции и KL. Затем увеличьте β и продолжите: новая цель сильнее наказывает отклонение кодов от prior.</p>
       <div className="vg-columns"><section className="panel"><h3>Обучаем общие веса</h3>
@@ -174,6 +181,8 @@ export function VAECourse() {
     </div>
 
     <div hidden={chapter !== 3}>
+      <GenerativeTopicFilm slug="vaegeneration" current={{ beta, rate, run, x, epsilon, parameter, priorZ, outputNoise, sampleSeed, inputA, inputB, mix, showEncoderScene }} update={value => { setBeta(value.beta); setRate(value.rate); setRun(value.run); setX(value.x); setEpsilon(value.epsilon); setParameter(value.parameter); setPriorZ(value.priorZ); setOutputNoise(value.outputNoise); setSampleSeed(value.sampleSeed); setInputA(value.inputA); setInputB(value.inputB); setMix(value.mix); setShowEncoderScene(value.showEncoderScene); }} fixed={{ beta:1, rate:.015, run:startRun(1), x:1, epsilon:.5, parameter:4, priorZ:0, outputNoise:0, sampleSeed:0, inputA:-1, inputB:2, mix:.5, showEncoderScene:false }} />
+      <h3 id="vaegeneration-lab" tabIndex={-1}>Ваш опыт</h3>
       <p className="vg-idea">Теперь энкодер не нужен: берём z из prior, передаём декодеру и получаем распределение нового x. Путь между кодами позволяет плавно менять результат.</p>
       <div className="vg-columns"><section className="panel"><h3>Сначала z, затем новый x</h3>
         <Range label="Выбранный код z из области prior" value={priorZ} min={-2.5} max={2.5} step={0.05} onChange={setPriorZ} />

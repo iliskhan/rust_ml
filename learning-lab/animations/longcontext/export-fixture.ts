@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const trained=I.trainContext(.3,6,'alibi',100),a=I.contextTrace(.3,24,18,'alibi',32),b=I.contextTrace(trained.strength,24,18,'alibi',32),closed=I.contextTrace(trained.strength,24,18,'alibi',8);
+const state={method:'alibi',trainLength:6,length:24,distance:18,window:32,strength:trained.strength,history:[I.contextTrainingLoss(.3,6,'alibi').loss,...trained.losses]};
+const before=[a.weights.map((v,i)=>[i,v])],after=[b.weights.map((v,i)=>[i,v])],data={a,b,closed:{...closed,loss:null}};
+const headers=['Позиция','До','После','Окно 8'],rows=b.weights.map((v,i)=>[i,a.weights[i],v,closed.weights[i]]);
+const lesson={"media": "longcontext", "title": "Длинный контекст: доступ и поиск", "label": "Длинный контекст: доступ и поиск", "description": "Обучим score на шести ключах, проверим на двадцати четырёх.", "target": "longcontext-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Закрытый ключ можно найти?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, маска обнуляет путь независимо от score.", "time": 9}, "practice": {"question": "Расстояние 10 и окно 8: ключ доступен?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, расстояние превышает окно."}, "transcript": ["Обучим score на шести ключах, проверим на двадцати четырёх.", "Закрытый ключ можно найти?", "Нет, маска обнуляет путь независимо от score.", "Одна retrieval-голова; индекс позиции не пространственная координата.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Одна retrieval-голова; индекс позиции не пространственная координата."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Позиция ключа, индекс",axisY:"Вес внимания",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported longcontext');

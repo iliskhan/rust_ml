@@ -1,0 +1,33 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\cnntraining\cnntraining.py: TopicScene, 40.00 s, 30 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\cnntraining.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\cnntraining-2.png
+  #0   0.00– 0.60s  cnntraining.py:54  FadeIn(Group), FadeIn(Group), FadeIn(Text 'Вход'), FadeIn(Text 'Цель')
+  #1   0.60– 6.00s  cnntraining.py:59  wait
+  #2   6.00– 6.40s  cnntraining.py:54  FadeIn(Text '?')
+  #3   6.40–12.00s  cnntraining.py:59  wait
+  #4  12.00–12.25s  cnntraining.py:54  FadeOut(Text '?')
+  #5  12.25–12.85s  cnntraining.py:54  FadeOut(Group), FadeOut(Group), FadeOut(Text 'Вход'), FadeOut(Text 'Цель')
+  #6  12.85–13.45s  cnntraining.py:54  FadeIn(Group)
+  #7  13.45–15.45s  cnntraining.py:54  Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…), Dot.animate.move_to(…)
+  #8  15.45–16.05s  cnntraining.py:54  FadeOut(Group), FadeIn(Group), FadeIn(Text 'Σ dw')
+  #9  16.05–16.65s  cnntraining.py:54  FadeIn(Group), FadeIn(Text 'w − η·dw')
+  #10 16.65–26.00s  cnntraining.py:59  wait
+  #11 26.00–26.60s  cnntraining.py:54  Group.animate.scale(…).shift(…)
+  #12 26.60–27.10s  cnntraining.py:54  FadeIn(Group), FadeIn(Text 'SGD')
+  #13 27.10–27.35s  cnntraining.py:54  FadeIn(Group)
+  #14 27.35–27.60s  cnntraining.py:54  FadeIn(Group)
+  #15 27.60–27.85s  cnntraining.py:54  FadeIn(Group)
+  #16 27.85–28.03s  cnntraining.py:54  Line.animate.move_to(…)
+  #17 28.03–28.13s  cnntraining.py:54  FadeOut(Line)
+  #18 28.13–28.25s  cnntraining.py:54  FadeIn(Line)
+  #19 28.25–28.43s  cnntraining.py:54  Line.animate.move_to(…)
+  #20 28.43–28.53s  cnntraining.py:54  FadeOut(Line)
+  #21 28.53–28.65s  cnntraining.py:54  FadeIn(Line)
+  #22 28.65–28.83s  cnntraining.py:54  Line.animate.move_to(…)
+  #23 28.83–28.93s  cnntraining.py:54  FadeOut(Line)
+  #24 28.93–29.05s  cnntraining.py:54  FadeIn(Line)
+  #25 29.05–29.30s  cnntraining.py:54  FadeOut(Line)
+  #26 29.30–34.00s  cnntraining.py:59  wait
+  #27 34.00–34.50s  cnntraining.py:54  Create(Rectangle), FadeIn(Text '?')
+  #28 34.50–35.00s  cnntraining.py:54  Rectangle.animate.scale(…)
+  #29 35.00–40.00s  cnntraining.py:59  wait
+layout: no problems in 7 samples

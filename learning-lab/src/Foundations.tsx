@@ -12,11 +12,16 @@ import { NEURON_PRACTICE_START, MSE_PRACTICE_START, BACKPROP_PRACTICE_START, che
 import { BackpropAnimation } from './BackpropAnimation'
 import { NeuronAnimation } from './NeuronAnimation'
 import { useAnimationExample } from './useAnimationExample'
+import { TopicAnimation } from './TopicAnimation'
+import activationFilm from '../animations/activations/fixture.json'
+import mseFilm from '../animations/mse/fixture.json'
+import bceFilm from '../animations/bce/fixture.json'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
 export function NeuronLesson() {
   const animationVideo = useRef<HTMLVideoElement>(null)
+  const activationVideo = useRef<HTMLVideoElement>(null)
   const [sceneOpened, setSceneOpened] = useState(false)
   const [x1, setX1] = useState(1)
   const [x2, setX2] = useState(2)
@@ -28,6 +33,9 @@ export function NeuronLesson() {
     setX1(value.x1); setX2(value.x2); setW1(value.w1); setW2(value.w2); setBias(value.bias); setKind(value.kind)
   }, { x1: 1, x2: 2, w1: 1, w2: -1, bias: 0, kind: 'relu' })
   const z = x1 * w1 + x2 * w2 + bias
+  const activationExample = useAnimationExample({x1,x2,w1,w2,bias,kind},value=>{
+    setX1(value.x1);setX2(value.x2);setW1(value.w1);setW2(value.w2);setBias(value.bias);setKind(value.kind)
+  },{...activationFilm.example,kind:'sigmoid'})
   const output = activate(z, kind)
   const derivative = activationDerivative(z, kind)
   const samples = Array.from({ length: 121 }, (_, i) => -6 + i / 10)
@@ -39,8 +47,8 @@ export function NeuronLesson() {
     <p className="lesson-intro">Нейрон объединяет признаки: умножает каждый вход на вес, прибавляет смещение и применяет активацию. Вес задаёт влияние признака; смещение сдвигает границу реакции.</p>
     <p className="note">Входы образуют <ConceptLink concept="vector">вектор</ConceptLink>. Взвешенная сумма — это <ConceptLink concept="dot-product">скалярное произведение</ConceptLink>, а чувствительность выхода описывает <ConceptLink concept="derivative">производная</ConceptLink>.</p>
     <LessonOutline items={[{ id: 'neuron-controls', label: 'Собрать нейрон' }, { id: 'neuron-result', label: 'Разобрать результат' }, { id: 'neuron-activation', label: 'Активация и наклон' }, { id: 'neuron-batch', label: 'Пакет и слой' }]} />
-    <NeuronAnimation videoRef={animationVideo} z={z} output={output} activation={activationNames[kind]} example={filmExample} />
-    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+    <NeuronAnimation videoRef={animationVideo} z={z} output={output} activation={activationNames[kind]} example={filmExample} onPlayback={()=>activationVideo.current?.pause()} />
+    <div onFocusCapture={() => {animationVideo.current?.pause();activationVideo.current?.pause()}} onPointerDownCapture={() => {animationVideo.current?.pause();activationVideo.current?.pause()}}>
     <div className="lab-grid">
       <section className="panel">
         <h3 id="neuron-controls" className="lesson-anchor" tabIndex={-1}>Соберите один нейрон</h3>
@@ -85,6 +93,7 @@ export function NeuronLesson() {
       <p className="note">Рядом остаются точные числа и плоский график активации. <ConceptLink concept="derivative">Производная</ConceptLink> объясняет местный наклон, а <ConceptLink concept="gradient">градиент</ConceptLink> собирает наклоны по обоим входам.</p>
     </details>
     <PracticeSection lessonId="neuron" topicId="unit.neuron.affine" />
+    <TopicAnimation film={activationFilm.lesson} videoRef={activationVideo} example={activationExample} onPlayback={()=>animationVideo.current?.pause()} />
     <section className="panel">
       <h3 id="neuron-activation" className="lesson-anchor" tabIndex={-1}>Форма активации и её наклон</h3>
       <Chart series={[
@@ -115,12 +124,18 @@ export function NeuronLesson() {
 }
 
 export function LossLesson() {
+  const mseVideo = useRef<HTMLVideoElement>(null), bceVideo = useRef<HTMLVideoElement>(null)
   const [sceneOpened, setSceneOpened] = useState(false)
   const [predictions, setPredictions] = useState([0.5, 2.5, 2])
   const [mode, setMode] = useState<'probability' | 'logit'>('probability')
   const [probability, setProbability] = useState(0.7)
   const [logit, setLogit] = useState(1)
   const [target, setTarget] = useState(1)
+  const mseExample = useAnimationExample(predictions,setPredictions,mseFilm.before)
+  const bceExample = useAnimationExample({mode,probability,logit,target},value=>{
+    setMode(value.mode);setProbability(value.probability);setLogit(value.logit);setTarget(value.target)
+  },{mode:'probability',probability:.2,logit:bceFilm.logits[0],target:1})
+  const pauseFilms=()=>{mseVideo.current?.pause();bceVideo.current?.pause()}
   const targets = [1, 2, 3]
   const squared = mse(predictions, targets)
   const p = mode === 'probability' ? probability : activate(logit, 'sigmoid')
@@ -131,9 +146,10 @@ export function LossLesson() {
 
   return <>
     <p className="lesson-intro"><ConceptLink concept="loss">Функция потерь</ConceptLink> превращает ошибку предсказания в число для оптимизации. Она должна соответствовать задаче: средняя квадратичная ошибка для чисел, бинарная <ConceptLink concept="cross-entropy">кросс-энтропия</ConceptLink> для класса 0 или 1.</p>
-    <div className="lab-grid">
+    <TopicAnimation film={mseFilm.lesson} videoRef={mseVideo} example={mseExample} onPlayback={()=>bceVideo.current?.pause()} />
+    <div className="lab-grid" onFocusCapture={pauseFilms} onPointerDownCapture={pauseFilms}>
       <section className="panel">
-        <h3>MSE: насколько промахнулись числа</h3>
+        <h3 id="loss-mse-controls" className="lesson-anchor" tabIndex={-1}>MSE: насколько промахнулись числа</h3>
         <p>Средняя квадратичная ошибка (mean squared error, MSE) усредняет квадраты отклонений. Цели y = [1; 2; 3].</p>
         <div className="controls">{predictions.map((value, i) => <Range key={i} label={`Предсказание ŷ${i + 1}, цель ${targets[i]}`} value={value} min={-1} max={5} step={0.1} onChange={next => setPredictions(current => current.map((item, index) => index === i ? next : item))} />)}</div>
         <div className="formula">L = (1/3) Σ(ŷᵢ − yᵢ)²<br />L = ({squared.terms.map(term => fmt(term)).join(' + ')}) / 3 = {fmt(squared.loss)}</div>
@@ -164,8 +180,9 @@ export function LossLesson() {
       <p className="note">Минимальная высота этого среза: {fmt(mseHeight(1,2,predictions[2]))}. Ползунки и таблица выше позволяют проверить числа без 3D.</p>
     </details>
     <PracticeSection lessonId="loss" topicId="unit.loss.mse" />
-    <section className="panel">
-      <h3>BCE: насколько уверенно выбран класс</h3>
+    <TopicAnimation film={bceFilm.lesson} videoRef={bceVideo} example={bceExample} onPlayback={()=>mseVideo.current?.pause()} />
+    <section className="panel" onFocusCapture={pauseFilms} onPointerDownCapture={pauseFilms}>
+      <h3 id="loss-bce-controls" className="lesson-anchor" tabIndex={-1}>BCE: насколько уверенно выбран класс</h3>
       <p>Бинарная кросс-энтропия (binary cross-entropy, BCE) сравнивает вероятность класса 1 с меткой y. Логит — любое вещественное число до сигмоиды; вероятность получается как p = σ(z).</p>
       <div className="button-row" role="group" aria-label="Формат входа BCE">
         <button type="button" aria-pressed={mode === 'probability'} onClick={() => setMode('probability')}>Вероятность p</button>

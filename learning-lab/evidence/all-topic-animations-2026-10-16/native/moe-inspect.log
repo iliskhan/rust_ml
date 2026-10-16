@@ -1,0 +1,39 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\moe\moe.py: TopicScene, 40.00 s, 36 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\moe.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\moe-2.png
+  #0   0.00– 0.60s  moe.py:54  FadeIn(Group), FadeIn(Group)
+  #1   0.60– 1.20s  moe.py:54  FadeIn(Text 'x[0]'), FadeIn(Text 'top-2')
+  #2   1.20– 6.00s  moe.py:59  wait
+  #3   6.00– 6.40s  moe.py:54  FadeIn(Text '?')
+  #4   6.40–12.00s  moe.py:59  wait
+  #5  12.00–12.25s  moe.py:54  FadeOut(Text '?')
+  #6  12.25–12.60s  moe.py:54  Create(Arrow)
+  #7  12.60–12.95s  moe.py:54  Create(Arrow)
+  #8  12.95–13.30s  moe.py:54  Create(Arrow)
+  #9  13.30–13.65s  moe.py:54  Create(Arrow)
+  #10 13.65–14.00s  moe.py:54  Create(Arrow)
+  #11 14.00–14.35s  moe.py:54  Create(Arrow)
+  #12 14.35–14.70s  moe.py:54  Create(Arrow)
+  #13 14.70–15.05s  moe.py:54  Create(Arrow)
+  #14 15.05–15.65s  moe.py:54  FadeIn(Group)
+  #15 15.65–16.25s  moe.py:54  FadeIn(Text 'Σ α·expert')
+  #16 16.25–26.00s  moe.py:59  wait
+  #17 26.00–26.60s  moe.py:54  Group.animate.scale(…).shift(…)
+  #18 26.60–27.10s  moe.py:54  FadeIn(Group), FadeIn(Text 'cap=1')
+  #19 27.10–27.35s  moe.py:54  FadeIn(Group)
+  #20 27.35–27.60s  moe.py:54  FadeIn(Group)
+  #21 27.60–27.85s  moe.py:54  FadeIn(Group)
+  #22 27.85–28.03s  moe.py:54  Line.animate.move_to(…)
+  #23 28.03–28.13s  moe.py:54  FadeOut(Line)
+  #24 28.13–28.25s  moe.py:54  FadeIn(Line)
+  #25 28.25–28.43s  moe.py:54  Line.animate.move_to(…)
+  #26 28.43–28.53s  moe.py:54  FadeOut(Line)
+  #27 28.53–28.65s  moe.py:54  FadeIn(Line)
+  #28 28.65–28.83s  moe.py:54  Line.animate.move_to(…)
+  #29 28.83–28.93s  moe.py:54  FadeOut(Line)
+  #30 28.93–29.05s  moe.py:54  FadeIn(Line)
+  #31 29.05–29.30s  moe.py:54  FadeOut(Line)
+  #32 29.30–34.00s  moe.py:59  wait
+  #33 34.00–34.50s  moe.py:54  Create(Rectangle), FadeIn(Text '?')
+  #34 34.50–35.00s  moe.py:54  Rectangle.animate.scale(…)
+  #35 35.00–40.00s  moe.py:59  wait
+layout: no problems in 7 samples

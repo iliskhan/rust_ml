@@ -1,0 +1,18 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\kan\kan.py: TopicScene, 40.00 s, 15 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\kan.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\kan-2.png
+  #0   0.00– 0.65s  kan.py:18  Create(Group)
+  #1   0.65– 1.30s  kan.py:18  Create(Group)
+  #2   1.30– 6.00s  kan.py:21  wait
+  #3   6.00– 6.40s  kan.py:18  FadeIn(MathTex '?')
+  #4   6.40–12.00s  kan.py:21  wait
+  #5  12.00–12.40s  kan.py:18  FadeOut(MathTex '?')
+  #6  12.40–15.20s  kan.py:18  Transform(Group)
+  #7  15.20–18.00s  kan.py:18  Transform(Group)
+  #8  18.00–18.50s  kan.py:18  FadeIn(Group)
+  #9  18.50–26.00s  kan.py:21  wait
+  #10 26.00–26.50s  kan.py:18  FadeIn(Group)
+  #11 26.50–27.50s  kan.py:18  Create(Group)
+  #12 27.50–34.00s  kan.py:21  wait
+  #13 34.00–34.70s  kan.py:18  Create(Rectangle)
+  #14 34.70–40.00s  kan.py:21  wait
+layout: no problems in 7 samples

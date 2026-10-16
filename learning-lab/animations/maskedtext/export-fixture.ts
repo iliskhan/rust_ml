@@ -1,0 +1,14 @@
+import { writeFileSync } from 'node:fs';
+import * as R from '../../src/representationFrontierMath.ts';
+import * as F from '../../src/flowGeometryMath.ts';
+import * as I from '../../src/inferenceFrontierMath.ts';
+import * as A from '../../src/architectureTrainingMath.ts';
+const trained=I.trainMaskedModel(I.initialMaskedModel(),100),tokens=[-1,-1,2,-1],a=I.maskedPrediction(trained.parameters,[-1,-1,-1,-1]),b=I.maskedPrediction(trained.parameters,tokens),next=I.unmaskStep(trained.parameters,tokens,1,17,true);
+const state={parameters:trained.parameters,tokens,count:1,greedy:true,seed:17,history:[I.maskedObjective(I.initialMaskedModel()).loss,...trained.losses],steps:0};
+const before=[a.probabilities[0].map((v,i)=>[i,v])],after=[b.probabilities[0].map((v,i)=>[i,v])],data={a,b,next};
+const headers=['Токен','Полная маска','В справа'],rows=I.MASK_VOCAB.map((v,i)=>[v,a.probabilities[0][i],b.probabilities[0][i]]);
+const lesson={"media": "maskedtext", "title": "Masked text: подсказка справа", "label": "Masked text: подсказка справа", "description": "Откроем токен В справа от двух скрытых позиций.", "target": "maskedtext-controls", "jumpLabel": "Перейти к лаборатории", "chapters": [{"title": "Устройство", "start": 0, "frame": 4}, {"title": "Ваш прогноз", "start": 6, "frame": 9}, {"title": "Проверка", "start": 12, "frame": 22}, {"title": "Сравнение", "start": 26, "frame": 30}, {"title": "Лаборатория", "start": 34, "frame": 37}], "question": {"question": "Правая подсказка недоступна слева?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, denoiser читает все другие видимые позиции.", "time": 9}, "practice": {"question": "Две заполняемые маски видят новые ответы друг друга?", "options": ["Нет", "Да"], "correct": 0, "explanation": "Нет, внутри шага используется один прежний контекст."}, "transcript": ["Откроем токен В справа от двух скрытых позиций.", "Правая подсказка недоступна слева?", "Нет, denoiser читает все другие видимые позиции.", "Четыре искусственных цикла и линейный denoiser, не естественный язык и не полный LLaDA.", "Примените числа ролика, измените условие, проверьте новый случай и верните настройки."], "note": "Четыре искусственных цикла и линейный denoiser, не естественный язык и не полный LLaDA."};
+const points=[...before.flat(),...after.flat()];const extent=(j:number)=>{const values=points.map(p=>p[j]),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max(.1,(hi-lo)*.12);return [lo-pad,hi+pad]};
+const fixture={version:1,duration:40,chapters:[0,6,12,26,34],keyframes:[4,9,22,30,37],predictionAt:9,answerAt:12,posterAt:30,state,data,geometry:{before,after,axisX:"Токен А…Г, индекс",axisY:"P токена позиции 1",xRange:extent(0),yRange:extent(1)},lesson:{...lesson,table:{caption:'Числа фиксированного опыта',headers,rows}}};
+writeFileSync(new URL('./fixture.json',import.meta.url),JSON.stringify(fixture,null,2)+'\n');
+console.log('Exported maskedtext');

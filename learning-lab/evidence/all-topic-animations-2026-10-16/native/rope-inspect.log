@@ -1,0 +1,22 @@
+C:\Users\lomaster\Desktop\dev\rust_ml\learning-lab\animations\rope\rope.py: RopeRotation, 50.00 s, 19 plays
+storyboard: C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\rope.png, C:\Users\lomaster\Desktop\dev\rust_ml\work\backprop-pilot\all-topic-inspect\rope-2.png
+  #0   0.00– 0.70s  legacy_visuals.py:20  Create(Group), Create(Arrow), Create(Arrow)
+  #1   0.70– 1.40s  legacy_visuals.py:20  Create(Group), Create(Arrow), Create(Arrow)
+  #2   1.40– 2.10s  legacy_visuals.py:20  FadeIn(MathTex 'p_Q=p_K=0')
+  #3   2.10– 8.00s  legacy_visuals.py:27  wait
+  #4   8.00– 8.40s  legacy_visuals.py:20  FadeOut(MathTex 'p_Q=p_K=0')
+  #5   8.40–11.20s  legacy_visuals.py:20  Rotate(Arrow), Rotate(Arrow), Rotate(Arrow), Rotate(Arrow)
+  #6  11.20–11.60s  legacy_visuals.py:20  FadeIn(MathTex 'p_Q=1,\\quad p_K=3')
+  #7  11.60–12.30s  legacy_visuals.py:20  FadeIn(MathTex "Q'\\cdot K'=-1.710")
+  #8  12.30–18.00s  legacy_visuals.py:27  wait
+  #9  18.00–18.70s  legacy_visuals.py:20  ReplacementTransform(MathTex 'p_Q=1,\\quad p_K=3')
+  #10 18.70–26.00s  legacy_visuals.py:27  wait
+  #11 26.00–29.00s  legacy_visuals.py:20  Rotate(Arrow), Rotate(Arrow), Rotate(Arrow), Rotate(Arrow)
+  #12 29.00–29.70s  legacy_visuals.py:20  ReplacementTransform(MathTex 'p_Q+2,\\quad p_K+2\\quad?')
+  #13 29.70–38.00s  legacy_visuals.py:27  wait
+  #14 38.00–40.80s  legacy_visuals.py:20  Rotate(Arrow), Rotate(Arrow)
+  #15 40.80–41.50s  legacy_visuals.py:20  ReplacementTransform(MathTex "Q'\\cdot K'=-1.710"), ReplacementTransform(MathTex 'p_Q=3,\\quad p_K=5')
+  #16 41.50–46.00s  legacy_visuals.py:27  wait
+  #17 46.00–46.70s  legacy_visuals.py:20  Indicate(Arrow), Indicate(Arrow)
+  #18 46.70–50.00s  legacy_visuals.py:27  wait
+layout: no problems in 7 samples
