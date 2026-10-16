@@ -1,0 +1,13 @@
+{
+  "result": "PASS",
+  "checkedAt": "2026-10-16T15:24:52.992156+00:00",
+  "url": "https://iliskhan.github.io/rust_ml/#practice",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "gradeButtonEnabled": true,
+  "horizontalPageOverflow": false,
+  "screenshot": "public-practice.png",
+  "scope": "Read-only inspection of existing signed-in page; no personal draft or history changes."
+}

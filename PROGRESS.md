@@ -1,5 +1,34 @@
 # Прогресс RustML
 
+### Постоянная работа grader — production проверен, 2026-10-16
+
+SQL007 SHA2567d79a60ba931b4ac43bfafe7d241d451a2d30235c3c250c56b2f2bf214d8b497
+применена единожды15:16:22UTC: enabled=true/end=infinity; baseline24/720000
+перенесён без reset. Остальные миграции, manifests и Vercel runtime9a78fa5
+не менялись. Release checkoutgrader-continuous отa648708 изолировал работу
+от текущих анимаций в основном checkout.
+
+Bundled Node24.19: continuous-grading-smoke131PASS15:14:13UTC;
+grading-manifests-smoke89PASS15:14:10UTC. Команды и точный модуль PGlite — в
+[local-validation.json](learning-lab/evidence/grading/continuous-2026-10-16/local-validation.json).
+Независимый review/повтор131PASS15:15:36UTC; ACL/fencing/pins сохранены.
+Hosted rehearsalPASS с подтверждённым ROLLBACK; actual apply COMMITacknowledged.
+Hosted rollback probe15:23:25UTC: over-cap lifetime/expired ledger admit,
+активный лимит запрещает без списания, immutable ledger; все изменения откатились.
+Один реальный JS grade2/2PASS через production API; exact ledger1claim,
+2creations/60000cpu-ms, expiry=deadline+31d. Lifetime26/780000. Тестовый Auth
+GET404, DB fixtures0, собственных VM0; reservation сохранён после удаления.
+Snapshotget15:17:10UTC: прежний trustedID,expiresAt=null,statuscreated.
+Публичный1280×720 UI: доступная кнопка, pageoverflowfalse; drafts не менялись.
+
+Доказательства — [continuous-2026-10-16](learning-lab/evidence/grading/continuous-2026-10-16/README.md).
+Ручное продление больше не нужно. Caps1h/1000 и остальные ограничения сохранены;
+скользящий учёт консервативен и не является provider billing meter. Прежняя
+запись ниже о сроке15ноября описывает предыдущую конфигурацию и заменена SQL007.
+Секреты оставались в локальной памяти; admin key не передавался в Vercel/Git.
+Доставка checkpoint завершается обычным push master; SHA/Actions проверяются
+после него и сообщаются в итоговом ответе без включения чужой текущей работы.
+
 ### Анимации нейрона и attention — готово, 2026-10-16
 
 Основной checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master; исходные

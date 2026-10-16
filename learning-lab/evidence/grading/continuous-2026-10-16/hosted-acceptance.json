@@ -1,0 +1,277 @@
+{
+  "suite": "continuous-hosted-acceptance",
+  "runId": "69ae6385-e5ca-4832-8b93-5197b368d24b",
+  "result": "PASS",
+  "startedAt": "2026-10-16T15:22:57.594Z",
+  "requests": [
+    {
+      "label": "auth_POST",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:24.733Z",
+      "httpStatus": 200,
+      "elapsedMs": 595,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "auth_POST",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:25.893Z",
+      "httpStatus": 200,
+      "elapsedMs": 271,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:26.168Z",
+      "httpStatus": 200,
+      "elapsedMs": 258,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:26.431Z",
+      "httpStatus": 200,
+      "elapsedMs": 209,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:26.641Z",
+      "httpStatus": 200,
+      "elapsedMs": 316,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:26.645Z",
+      "httpStatus": 200,
+      "elapsedMs": 3415,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:30.063Z",
+      "httpStatus": 200,
+      "elapsedMs": 166,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "grader_submit",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:30.230Z",
+      "httpStatus": 202,
+      "elapsedMs": 1622,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:31.958Z",
+      "httpStatus": 200,
+      "elapsedMs": 180,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "grader_resume",
+      "method": "POST",
+      "startedAt": "2026-10-16T15:23:32.139Z",
+      "httpStatus": 202,
+      "elapsedMs": 239,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:33.893Z",
+      "httpStatus": 200,
+      "elapsedMs": 165,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:35.568Z",
+      "httpStatus": 200,
+      "elapsedMs": 119,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:37.192Z",
+      "httpStatus": 200,
+      "elapsedMs": 167,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:38.871Z",
+      "httpStatus": 200,
+      "elapsedMs": 174,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:40.558Z",
+      "httpStatus": 200,
+      "elapsedMs": 160,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:42.228Z",
+      "httpStatus": 200,
+      "elapsedMs": 142,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:43.886Z",
+      "httpStatus": 200,
+      "elapsedMs": 174,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:45.561Z",
+      "httpStatus": 200,
+      "elapsedMs": 132,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:47.194Z",
+      "httpStatus": 200,
+      "elapsedMs": 166,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "cloud",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:48.863Z",
+      "httpStatus": 200,
+      "elapsedMs": 152,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "auth_delete",
+      "method": "DELETE",
+      "startedAt": "2026-10-16T15:23:49.624Z",
+      "httpStatus": 200,
+      "elapsedMs": 147,
+      "timeoutAborted": false,
+      "parentAborted": false
+    },
+    {
+      "label": "auth_absence",
+      "method": "GET",
+      "startedAt": "2026-10-16T15:23:49.771Z",
+      "httpStatus": 404,
+      "elapsedMs": 270,
+      "timeoutAborted": false,
+      "parentAborted": false
+    }
+  ],
+  "evidence": {
+    "providerCleanup": {
+      "result": "PASS",
+      "ownSandboxesRemaining": 0,
+      "attemptsChecked": 1,
+      "listScans": 1,
+      "observedOwnNames": [],
+      "basis": "Complete project-authenticated exact-attempt-tag enumeration; no sandbox or snapshot mutations"
+    },
+    "fixtureCounts": {
+      "sessions": 0,
+      "drafts": 0,
+      "attempts": 0,
+      "jobs": 0
+    }
+  },
+  "before": {
+    "enabled": true,
+    "period_end": "infinity",
+    "cpu": "720000",
+    "creations": "24",
+    "rows": "1"
+  },
+  "authCreationPending": false,
+  "userId": "3398f9a1-5149-48b8-9dc5-7b4706ca1f8a",
+  "probe": {
+    "suite": "continuous-sql007-rollback-probe",
+    "runId": "c2a26ad0-1f46-4514-bcb0-bfd63773ffec",
+    "result": "PASS",
+    "rolledBack": true,
+    "providerCalls": 0,
+    "assertionsPassed": true,
+    "fixtureAbsence": {
+      "sessions_absent": true,
+      "attempts_absent": true,
+      "ledger_absent": true
+    },
+    "finishedAt": "2026-10-16T15:23:25.891Z"
+  },
+  "variantId": "8dfa56bf-6407-4300-8455-19f3437d6160",
+  "attemptId": "6d741768-a10c-401d-b497-226935dbbf91",
+  "exactAttempt": {
+    "status": "graded",
+    "verdict": "pass",
+    "expected_tests": 2,
+    "passed_tests": 2,
+    "job_id": "a0f2e433-e51f-4017-b560-7353d01185b3",
+    "lease_generation": 1,
+    "ledger_rows": 1,
+    "ledger_creations": 2,
+    "ledger_cpu": "60000",
+    "costs_valid": true,
+    "expiry_valid": true
+  },
+  "after": {
+    "enabled": true,
+    "period_end": "infinity",
+    "cpu": "780000",
+    "creations": "26",
+    "rows": "2"
+  },
+  "authDeletedVerified": true,
+  "reservationsRetained": 1,
+  "finalSettings": {
+    "enabled": true,
+    "period_end": "infinity",
+    "cpu": "780000",
+    "creations": "26",
+    "rows": "2"
+  },
+  "finishedAt": "2026-10-16T15:23:50.407Z"
+}

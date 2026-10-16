@@ -1,13 +1,21 @@
 # Публикация практики RustML
 
-Актуально2026-10-16: серверная проверка включена в production. Полный адрес
-`https://rustml-grader.vercel.app/api/practice-grade` сохранён в GitHub variable
-`VITE_PRACTICE_GRADER_URL`; admission включён, reservations не сброшены.
-[Приёмка и ограничения](../evidence/grading/production-2026-10-16/README.md):
-3языка/4 настоящих grades, SQL fencing32/32, restricted logins, isolation,
-cron cleanup и public desktop/mobile проверены. Окно приёма заканчивается
-2026-11-15T12:48:07.965Z; перед продлением сверить rolling usage Hobby.
-Ниже сохранена датированная история первоначального развёртывания13октября.
+Актуально 2026-10-16, 15:17:10 UTC: серверная проверка работает в production.
+Полный адрес `https://rustml-grader.vercel.app/api/practice-grade` сохранён
+в GitHub variable `VITE_PRACTICE_GRADER_URL`. SQL007 применена в 15:16:22 UTC:
+`enabled=true`, `billing_period_end=infinity`, продление по дате не требуется.
+При переходе сохранены 24 создания и 720000 CPU-ms без обнуления. Лимиты
+1000 созданий и 1 CPU-час учитываются по закрытому журналу резервов до execution
+deadline + 31 день; legacy-резерв действует 31 день + 210 секунд после перехода.
+Это консервативный бюджет приложения, не счётчик биллинга провайдера.
+Развёртывание Vercel и runtime не менялись. Read-only запрос существующего
+trusted snapshot `snap_It6mVj2cPSWSKzj0OCukNncSEHDK` в 15:17:10 UTC
+подтвердил `expiresAt=null`, без даты истечения.
+[Приёмка непрерывного режима](../evidence/grading/continuous-2026-10-16/README.md).
+Первоначальная [production-приёмка 16 октября](../evidence/grading/production-2026-10-16/README.md)
+подтвердила 3 языка/4 настоящих grades, SQL fencing32/32, restricted logins,
+isolation, cron cleanup и public desktop/mobile.
+Ниже сохранена датированная история первоначального развёртывания 13 октября.
 
 
 Состояние 2026-10-13: личный предпросмотр Sites опубликован с доступом только владельца.
@@ -126,6 +134,10 @@ asset до 25 MiB. Для размещения в корне `pages.dev` исп�
 
 ## Исполнение кода
 
-Ни GitHub Pages, ни Supabase draft API не исполняют Python/Rust ученика.
-`practice_submit` отвечает `grading_unavailable`. Выбор и проверка изолированного
-runner остаются отдельным незавершённым этапом; см. `practice-execution.md`.
+Серверная проверка Python/JavaScript/Rust реализована через доверенный supervisor
+и отдельные Vercel Sandbox; GitHub Pages и Supabase draft API пользовательский
+код не исполняют. Browser RPC `practice_submit` по-прежнему закрыт:
+авторизованные submit/resume идут через `/api/practice-grade`, а закрытый SQL
+резервирует квоту перед запуском. SQL007 убрала дату отключения с сохранением
+лимитов и fencing. [Устройство исполнителя](../grader/README.md) и
+[приёмка непрерывного режима](../evidence/grading/continuous-2026-10-16/README.md).

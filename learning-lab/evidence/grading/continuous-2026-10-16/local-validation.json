@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "date": "2026-10-16",
+  "checkout": "C:\\Users\\lomaster\\.codex\\worktrees\\grader-continuous\\rust_ml",
+  "baseRevision": "a648708c0c2830e783bf18638c61a0181c08b7c1",
+  "node": "24.19.0",
+  "pglite": "C:\\Users\\lomaster\\Desktop\\dev\\rust_ml\\work\\backend-smoke\\node_modules\\@electric-sql\\pglite\\dist\\index.js",
+  "commands": [
+    {
+      "command": "node learning-lab/supabase/tests/continuous-grading-smoke.mjs <PGlite module path>",
+      "assertions": 131,
+      "result": "PASS",
+      "at": "2026-10-16T15:14:13.422Z",
+      "independentRepeatAt": "2026-10-16T15:15:36Z"
+    },
+    {
+      "command": "node learning-lab/supabase/tests/grading-manifests-smoke.mjs <PGlite module path>",
+      "assertions": 89,
+      "result": "PASS",
+      "at": "2026-10-16T15:14:10.655Z"
+    }
+  ],
+  "sourceSHA256": "7d79a60ba931b4ac43bfafe7d241d451a2d30235c3c250c56b2f2bf214d8b497",
+  "limits": "PGlite does not prove hosted multi-session scheduling or actual provider billing; hosted rollback probe and real VM grade are separate evidence."
+}

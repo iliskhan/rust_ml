@@ -34,23 +34,28 @@ Pages38907090162 SUCCESS. Публичный урок загрузил720p MP4, 
 [доказательства и ограничения](learning-lab/evidence/backprop-pilot-2026-10-16/VALIDATION.md).
 Весь B12/U00/U07 и эффективность обучения этим пилотом не закрываются.
 
-## Production grader — включён, 2026-10-16
+## Production grader — постоянная работа проверена, 2026-10-16
 
-1. Документы и checkout — готово; migrations001–006 не повторялись.
-2. Production Vercel — готово: два dedicated DB URL/CRON_SECRET сохранены
-   с прямого разрешения; deployment9a78fa5 READY. Owner/admin keys туда не передавались.
-3. Серверная приёмка — готово:4 настоящих grades на3языках, persistence/RLS,
-   SQL fencing32/32, isolation3/3, реальный cron deletion PASS; fixtures удалены.
-4. Сайт — проверен: grader URL включён, admission=true; публичные desktop и
-   mobile390/320 показывают доступную кнопку, page overflow отсутствует.
-5. Доставка — готово: evidence283be15 в master, обычный push подтверждён;
-   CI38908384001 и Pages38908383408 SUCCESS. Все локальные ветки входят в master.
+Прямой запрос владельца: убрать дату отключения и ручное продление.
 
-[Переносимые результаты](learning-lab/evidence/grading/production-2026-10-16/README.md).
-Окно приёма ограничено до2026-11-15T12:48:07.965Z; перед продлением сверить
-rolling quota Hobby. Reservations24creations/720000cpu-ms сохранены, не обнулять.
-Задача закрыта. Точный SHA закрывающего документа и его доставку
-проверить по Git/Actions и итоговому ответу; код сайта этим документом не меняется.
+1. Механизм и конфигурация — готово: одного переноса даты было недостаточно;
+   SQL001–006 повторно не запускались.
+2. Постоянная работа — готово: SQL007 применена, enabled=true/end=infinity;
+   прежние24creations/720000cpu-ms перенесены без обнуления. Private immutable
+   ledger автоматически освобождает бюджет через31день после deadline claim.
+3. Production — проверено: новые131 и прежние89 SQL assertions PASS,
+   независимый review PASS, hosted rehearsal/rollback probe PASS; настоящий
+   JS grade2/2 PASS. Аккаунт/VM удалены; резерв остался, lifetime26/780000.
+   Trusted snapshot бессрочный; публичная кнопка доступна.
+4. Доставка — этот checkpoint содержит исходники и переносимые доказательства;
+   точный commit, remote SHA и Actions проверяются после push и сообщаются
+   в итоговом ответе. Параллельные изменения анимаций исключены из commit.
+
+Лимиты1000creations/3600000cpu-ms, rate/concurrency/lease fencing сохранены.
+Это консервативный бюджет приложения, не billing meter Vercel. Ручного
+продления, обнуления счётчиков или отдельного quota cron больше не требуется.
+[Текущие доказательства](learning-lab/evidence/grading/continuous-2026-10-16/README.md).
+Предыдущие3языка/fencing/isolation/reaper остаются проверками прежнего runtime.
 
 ## ManimGX и объяснения в стиле 3Blue1Brown — исследование завершено, 2026-10-16
 

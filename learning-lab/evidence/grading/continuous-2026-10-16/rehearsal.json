@@ -1,0 +1,110 @@
+{
+  "suite": "continuous-sql007",
+  "runId": "e0a051db-bfea-40f3-b3bc-57c6a66e65cb",
+  "action": "rehearse",
+  "startedAt": "2026-10-16T15:15:29.682Z",
+  "sourceSHA": "7d79a60ba931b4ac43bfafe7d241d451a2d30235c3c250c56b2f2bf214d8b497",
+  "currentRev": "a648708c0c2830e783bf18638c61a0181c08b7c1",
+  "result": "PASS",
+  "before": {
+    "settings": {
+      "enabled": true,
+      "billing_period_start": "2026-10-16 12:48:07.965616+00",
+      "billing_period_end": "2026-11-15 12:48:07.965616+00",
+      "cpu_ms_limit": "3600000",
+      "creations_limit": 1000,
+      "reserved_cpu_ms": "720000",
+      "reserved_creations": 24,
+      "case_timeout_ms": 30000
+    },
+    "ledgerExists": false,
+    "permissions": [
+      {
+        "role": "anon",
+        "submit": false,
+        "claim": false
+      },
+      {
+        "role": "authenticated",
+        "submit": false,
+        "claim": false
+      },
+      {
+        "role": "practice_api",
+        "submit": true,
+        "claim": false
+      },
+      {
+        "role": "practice_worker",
+        "submit": false,
+        "claim": true
+      },
+      {
+        "role": "service_role",
+        "submit": false,
+        "claim": false
+      }
+    ]
+  },
+  "expected": {
+    "settings": {
+      "enabled": true,
+      "billing_period_start": "2026-10-16 12:48:07.965616+00",
+      "billing_period_end": "infinity",
+      "cpu_ms_limit": "3600000",
+      "creations_limit": 1000,
+      "reserved_cpu_ms": "720000",
+      "reserved_creations": 24,
+      "case_timeout_ms": 30000
+    },
+    "ledgerExists": true,
+    "permissions": [
+      {
+        "role": "anon",
+        "submit": false,
+        "claim": false
+      },
+      {
+        "role": "authenticated",
+        "submit": false,
+        "claim": false
+      },
+      {
+        "role": "practice_api",
+        "submit": true,
+        "claim": false
+      },
+      {
+        "role": "practice_worker",
+        "submit": false,
+        "claim": true
+      },
+      {
+        "role": "service_role",
+        "submit": false,
+        "claim": false
+      }
+    ],
+    "ledger": {
+      "rows": "1",
+      "baseline_rows": "1",
+      "baseline_creations": "24",
+      "baseline_cpu_ms": "720000",
+      "positive_expiry": true,
+      "baseline_retained": true
+    },
+    "fingerprint": "5feb3d523587f08848783e69247c39376287416b48215b3067d8cbefc00c6947",
+    "contract": {
+      "rls": true,
+      "publicDenied": true,
+      "grantsDenied": true,
+      "noForeignKey": true,
+      "expiryIndex": true,
+      "appendOnlyTrigger": true,
+      "cumulativeConstraint": true,
+      "nonnegativeLedger": true
+    }
+  },
+  "rollbackVerified": true,
+  "finishedAt": "2026-10-16T15:15:32.934Z"
+}

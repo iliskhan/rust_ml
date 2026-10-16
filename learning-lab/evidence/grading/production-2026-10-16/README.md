@@ -1,5 +1,7 @@
 # Production grader — приёмка 2026-10-16
 
+Прежнее конечное окно ниже заменено [постоянным режимом SQL007](../continuous-2026-10-16/README.md) позднее2026-10-16; остальные результаты описывают первоначальную приёмку.
+
 Серверная приёмка завершена, admission включён; GitHub repository variable
 `VITE_PRACTICE_GRADER_URL` указывает на
 `https://rustml-grader.vercel.app/api/practice-grade`.
