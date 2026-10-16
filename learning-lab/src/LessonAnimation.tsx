@@ -31,9 +31,9 @@ export function LessonAnimation({ videoRef, title, label, description, media, ch
 
   function seeked(time: number) {
     previousTime.current = time
+    setQuestionOpen(false)
     if (time < question.time) {
       questionArmed.current = true
-      setQuestionOpen(false)
       setAnswer(null)
     }
   }

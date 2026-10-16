@@ -1,0 +1,14 @@
+✔ film questions interrupt playback once at the crossing, never a seek or a paused chapter (1.0988ms)
+✔ film apply preserves the first full snapshot and does not share mutable arrays (2.912ms)
+✔ ManimGX fixture matches the live backprop calculation and numerical gradients (4.9502ms)
+✔ neuron film matches the lab and both sides of ReLU (3.7852ms)
+✔ attention film preserves projections, mask, softmax and coordinate mixing (3.0917ms)
+✔ new films have ordered captions covering their source timelines (1.8537ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.4566
