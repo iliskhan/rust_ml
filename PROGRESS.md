@@ -20,6 +20,15 @@ inspect14 выбранных кадров PASS после исправления
 объёме; финальные commit/push и Pages проверяются при доставке и сообщаются
 в итоговом ответе. Исторический отчёт ниже сохраняет свой первоначальный статус.
 
+Доставка реализации `70f04e97644a47a3609f89a1189578437e9c73d4` подтверждена:
+обычный push, local=remote, чистое дерево;
+[CI38907090264](https://github.com/iliskhan/rust_ml/actions/runs/38907090264) и
+[Pages38907090162](https://github.com/iliskhan/rust_ml/actions/runs/38907090162) SUCCESS.
+На публичном [уроке backprop](https://iliskhan.github.io/rust_ml/#backprop)
+Chrome загрузил MP4 с1280×720/duration44,033333, autoplay=false;
+кнопка четвёртой части открыла38s на паузе. Закрывающий checkpoint меняет
+только PLAN/PROGRESS, его local/remote SHA сообщается в итоговом ответе.
+
 ### Production grader: окружение разрешено и сохранено — 2026-10-16
 
 Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master после fetch/fast-forward
