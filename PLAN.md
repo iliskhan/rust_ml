@@ -4,7 +4,7 @@
 Цель — изучить Rust и устройство ML через небольшую CPU-библиотеку с проверяемой математикой.
 Готовность определяется работающим сценарием и тестами, а не количеством crates или сроком в месяцах.
 
-## ManimGX: нейрон и attention — проверено, доставка в работе, 2026-10-16
+## ManimGX: нейрон и attention — готово, 2026-10-16
 
 Продолжение пилота по прямому запросу пользователя: B12, R01/R04/R06,
 U02/U04/U05/U07/U08. Фиксированные примеры экспортированы из `linear`/`activate`
@@ -13,9 +13,12 @@ U02/U04/U05/U07/U08. Фиксированные примеры экспорти�
 регрессионных тестов, typecheck/build и inspect16/14 кадров PASS.
 Chrome desktop1440/mobile390/320 и production preview `/rust_ml/` проверены:
 главы, captions, pause, fallback/retry, возврат к лабораториям и backprop.
-Первый commit1c8b3dd отправлен, CI/Pages SUCCESS. Дополнительная проверка
-исправила путь точки ReLU через0; новый ролик проверен, доставка исправления
-в работе. [Приёмка и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
+Путь точки ReLU исправлен через0. Релиз9ea1a48 отправлен, local=remote;
+[CI38912396954](https://github.com/iliskhan/rust_ml/actions/runs/38912396954) и
+[Pages38912397018](https://github.com/iliskhan/rust_ml/actions/runs/38912397018)
+SUCCESS. Публичные ролики загрузились720p, главы34/40с открылись на паузе.
+HTTP200 нейрона отдаёт исправленный MP4475909bytes. Закрывающий checkpoint
+меняет только PLAN/PROGRESS. [Приёмка и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
 Просмотр не засчитывает освоение; весь B12/U00/U07 этим срезом не закрывается.
 
 ## Пилот ManimGX backprop — готово, 2026-10-16

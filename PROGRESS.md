@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Анимации нейрона и attention — проверено, доставка в работе, 2026-10-16
+### Анимации нейрона и attention — готово, 2026-10-16
 
 Основной checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master; исходные
 экраны обоих уроков сохранены перед интеграцией. Срез B12/R01/R04/R06 и
@@ -18,7 +18,16 @@ fallback/retry, живые расчёты; production preview `/rust_ml/` и bac
 Первый commit1c8b3dd local=remote; CI38911718961/Pages38911719216 SUCCESS.
 Дополнительно исправлена траектория точки ReLU: два участка через0 вместо
 прямой над графиком. Финальный inspect16 кадров, включая29.3/29.6/29.9s,
-PASS; новый ролик создан. Осталось отправить исправление и сверить публикацию.
+PASS; новый ролик создан. Исправление9ea1a48c34eb619230c0ec72b066d47c7f261f61
+отправлено обычным push; local=remote, дерево чистое.
+[CI38912396954](https://github.com/iliskhan/rust_ml/actions/runs/38912396954) и
+[Pages38912397018](https://github.com/iliskhan/rust_ml/actions/runs/38912397018)
+SUCCESS. Публичный Chrome загрузил neuron1280×720/duration44.033333,
+attention1280×720/duration50.033333; главы34/40с открываются на паузе,
+autoplay=false. HTTP HEAD нейрона:200/video/mp4/475909bytes — финальный MP4.
+Viewport восстановлен, собственные локальные серверы остановлены.
+Закрывающий commit меняет только этот журнал и PLAN; SHA/local=remote
+сообщаются в итоговом ответе. Все проверки исходников относятся к релизу9ea1a48.
 
 ### Пилот ManimGX backprop — 2026-10-16
 
