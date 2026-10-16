@@ -17,25 +17,22 @@ Pages38907090162 SUCCESS. Публичный урок загрузил720p MP4, 
 [доказательства и ограничения](learning-lab/evidence/backprop-pilot-2026-10-16/VALIDATION.md).
 Весь B12/U00/U07 и эффективность обучения этим пилотом не закрываются.
 
-## Production grader — возобновлён 2026-10-16
+## Production grader — включён, 2026-10-16
 
-Пользователь прямо разрешил передать два dedicated DB URL и CRON_SECRET только
-production Vercel-проекта rustml-grader, завершить приёмку и включить проверку кода.
-Это инфраструктура существующей практики; различие понимания и исполнения кода
-(B05/R08) сохраняется. Новые миссии и UI/UX-план этой задачей не реализуются.
+1. Документы и checkout — готово; migrations001–006 не повторялись.
+2. Production Vercel — готово: два dedicated DB URL/CRON_SECRET сохранены
+   с прямого разрешения; deployment9a78fa5 READY. Owner/admin keys туда не передавались.
+3. Серверная приёмка — готово:4 настоящих grades на3языках, persistence/RLS,
+   SQL fencing32/32, isolation3/3, реальный cron deletion PASS; fixtures удалены.
+4. Сайт — проверен: grader URL включён, admission=true; публичные desktop и
+   mobile390/320 показывают доступную кнопку, page overflow отсутствует.
+5. Доставка checkpoint — на проверке: сохранить этот evidence commit/push,
+   объединить с master и дождаться CI/Pages текущей вершины.
 
-1. Checkout и порядок развёртывания — готово: fast-forward до `9683759`, scripts
-   и предыдущие evidence сверены; миграции 001–006 не повторяются.
-2. Production env — сохранены, deployment в работе. Реальные выделенные TLS logins
-   и 18 запретов прав PASS; owner credential не передавался в Vercel.
-3. Hosted HTTP, SQL fencing и reaper — ожидают deployment и текущего quota window;
-   admission до приёмки закрыт. Счётчики реальных reservations не обнулять.
-4. Frontend grading URL, публичные desktop/mobile и реальная отправка — после
-   полной серверной приёмки. Локальная самопроверка не становится серверным зачётом.
-5. Сохранить evidence, commit/push и проверить совпадение SHA, CI/Pages.
-
-Следующий шаг: развернуть проверенное исправление чужого resume, обновить OIDC,
-проверить реальную бесплатную квоту и выполнить подготовленную приёмку.
+[Переносимые результаты](learning-lab/evidence/grading/production-2026-10-16/README.md).
+Окно приёма ограничено до2026-11-15T12:48:07.965Z; перед продлением сверить
+rolling quota Hobby. Reservations24creations/720000cpu-ms сохранены, не обнулять.
+Следующий шаг этой задачи — завершить commit/push/merge и проверить доставку.
 
 ## ManimGX и объяснения в стиле 3Blue1Brown — исследование завершено, 2026-10-16
 

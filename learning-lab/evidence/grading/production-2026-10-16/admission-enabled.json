@@ -1,0 +1,27 @@
+{
+  "action": "on",
+  "checkedAt": "2026-10-16T13:19:25.740Z",
+  "result": "PASS",
+  "before": {
+    "singleton": true,
+    "enabled": false,
+    "billing_period_start": "2026-10-16T12:48:07.965Z",
+    "billing_period_end": "2026-11-15T12:48:07.965Z",
+    "cpu_ms_limit": "3600000",
+    "creations_limit": 1000,
+    "reserved_cpu_ms": "720000",
+    "reserved_creations": 24,
+    "case_timeout_ms": 30000
+  },
+  "after": {
+    "singleton": true,
+    "enabled": true,
+    "billing_period_start": "2026-10-16T12:48:07.965Z",
+    "billing_period_end": "2026-11-15T12:48:07.965Z",
+    "cpu_ms_limit": "3600000",
+    "creations_limit": 1000,
+    "reserved_cpu_ms": "720000",
+    "reserved_creations": 24,
+    "case_timeout_ms": 30000
+  }
+}

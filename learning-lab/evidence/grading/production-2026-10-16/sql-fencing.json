@@ -1,0 +1,171 @@
+{
+  "suite": "sql-fencing-only",
+  "runId": "24c99acf-c8ac-435f-9b73-3787729c4b90",
+  "startedAt": "2026-10-16T13:18:58.178Z",
+  "result": "PASS",
+  "remote": true,
+  "realGradeEvidence": false,
+  "cleanup": [
+    {
+      "check": "admission_off_reservations_preserved",
+      "result": "PASS",
+      "creations": 24,
+      "cpuMs": 720000
+    },
+    {
+      "check": "task_auth_deleted_and_absence_confirmed",
+      "result": "PASS",
+      "userId": "d6f5df4c-10a6-4517-9fa5-ec389e146f30"
+    },
+    {
+      "check": "task_fixture_absence",
+      "result": "PASS",
+      "sessions": 0,
+      "drafts": 0,
+      "attempts": 0,
+      "jobs": 0
+    }
+  ],
+  "initialReservations": {
+    "creations": 24,
+    "cpuMs": 720000
+  },
+  "userId": "d6f5df4c-10a6-4517-9fa5-ec389e146f30",
+  "sqlFencing": {
+    "result": "PASS",
+    "timestamp": "2026-10-16T13:19:03.915Z",
+    "scope": "owner-function semantics SQL006 fencing; all fixture writes rolled back; dedicated-login permissions and provider execution proved separately",
+    "checks": [
+      {
+        "check": "own user minute quota available before transaction",
+        "result": "PASS",
+        "waitPolls": 0
+      },
+      {
+        "check": "owner role active",
+        "result": "PASS"
+      },
+      {
+        "check": "existing task Auth user",
+        "result": "PASS"
+      },
+      {
+        "check": "first exact claim attempt",
+        "result": "PASS"
+      },
+      {
+        "check": "first generation",
+        "result": "PASS"
+      },
+      {
+        "check": "pinned published manifest",
+        "result": "PASS"
+      },
+      {
+        "check": "pinned runtime",
+        "result": "PASS"
+      },
+      {
+        "check": "first valid renew",
+        "result": "PASS"
+      },
+      {
+        "check": "expired only own job",
+        "result": "PASS"
+      },
+      {
+        "check": "expired renew rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "expired finish rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "reclaim same job",
+        "result": "PASS"
+      },
+      {
+        "check": "reclaim same attempt",
+        "result": "PASS"
+      },
+      {
+        "check": "reclaim exact generation +1",
+        "result": "PASS"
+      },
+      {
+        "check": "reclaim rotates token",
+        "result": "PASS"
+      },
+      {
+        "check": "old token and generation renew rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "old token and generation finish rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "old token latest generation renew rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "old token latest generation finish rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "latest token old generation renew rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "latest token old generation finish rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "latest finish accepted",
+        "result": "PASS"
+      },
+      {
+        "check": "exact finish retry idempotent",
+        "result": "PASS"
+      },
+      {
+        "check": "changed result retry rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "stale finish after completion rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "finished renew rejected",
+        "result": "PASS"
+      },
+      {
+        "check": "persisted exact grade inside transaction",
+        "result": "PASS"
+      },
+      {
+        "check": "CPU reservations increment twice without reset",
+        "result": "PASS"
+      },
+      {
+        "check": "creation reservations increment twice without reset",
+        "result": "PASS"
+      },
+      {
+        "check": "SQL exact submission replay after admission off",
+        "result": "PASS"
+      },
+      {
+        "check": "transaction rolled back",
+        "result": "PASS"
+      },
+      {
+        "check": "fixture absent after rollback",
+        "result": "PASS"
+      }
+    ]
+  },
+  "finishedAt": "2026-10-16T13:19:04.869Z"
+}

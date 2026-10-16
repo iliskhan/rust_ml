@@ -1,5 +1,15 @@
 # Публикация практики RustML
 
+Актуально2026-10-16: серверная проверка включена в production. Полный адрес
+`https://rustml-grader.vercel.app/api/practice-grade` сохранён в GitHub variable
+`VITE_PRACTICE_GRADER_URL`; admission включён, reservations не сброшены.
+[Приёмка и ограничения](../evidence/grading/production-2026-10-16/README.md):
+3языка/4 настоящих grades, SQL fencing32/32, restricted logins, isolation,
+cron cleanup и public desktop/mobile проверены. Окно приёма заканчивается
+2026-11-15T12:48:07.965Z; перед продлением сверить rolling usage Hobby.
+Ниже сохранена датированная история первоначального развёртывания13октября.
+
+
 Состояние 2026-10-13: личный предпросмотр Sites опубликован с доступом только владельца.
 GitHub Pages [опубликован](https://iliskhan.github.io/rust_ml/#practice) из
 `master` commit `ce1d3b6`: CI38394725524 (4 jobs) и Pages38394725921

@@ -1,0 +1,34 @@
+{
+  "result": "PASS",
+  "checkedAt": "2026-10-16T13:26:57.517Z",
+  "url": "https://iliskhan.github.io/rust_ml/#practice",
+  "frontendRevision": "41fe463ae395decbb66f42dea1e013717841945d",
+  "viewports": [
+    {
+      "clientWidth": 1265,
+      "height": 720,
+      "scrollWidth": 1265,
+      "width": 1280,
+      "serverCheckEnabled": true,
+      "staleUnavailableText": false
+    },
+    {
+      "clientWidth": 375,
+      "height": 844,
+      "scrollWidth": 375,
+      "width": 390,
+      "serverCheckEnabled": true
+    },
+    {
+      "clientWidth": 305,
+      "height": 844,
+      "scrollWidth": 305,
+      "width": 320,
+      "serverCheckEnabled": true
+    }
+  ],
+  "userDraftModified": false,
+  "uiSubmissions": 0,
+  "realSubmissionsEvidence": "hosted-real-code.json",
+  "consoleWarningsOrErrors": 0
+}

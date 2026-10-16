@@ -1,0 +1,105 @@
+{
+  "at": "2026-10-16T12:52:45.192Z",
+  "checkout": "/C:/Users/lomaster/Desktop/dev/rust_ml/",
+  "revision": "952fc4b62b79f4f536036efdb76bf5a3a7bfdbf3",
+  "providerSha256": "a9bc5c13fc2c2f6ba4f5003b38880f7dcaa55c91553f5a8132689b8049770136",
+  "snapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+  "created": [
+    {
+      "name": "rustml-case-4ec11ad8-1c96-4bda-beb3-b123ad52439a",
+      "tags": {
+        "rustml_attempt": "54bfdc3d-d201-412b-b612-44539bb75fe0",
+        "rustml_job": "b46870b9-01c2-4c9e-b88e-dca4103bc0e2",
+        "rustml_generation": "1"
+      },
+      "phase": "created",
+      "sessionId": "sbx_MDQewdnegbTTrcwdbQ6a12q6Vx4L",
+      "persistent": false,
+      "vcpus": 1,
+      "memoryMB": 2048,
+      "networkPolicy": "deny-all",
+      "sourceSnapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+      "envKeys": [],
+      "ports": [],
+      "deletedVerified": true,
+      "metadataVerified": true
+    },
+    {
+      "name": "rustml-case-c3cf929a-6165-4b43-9d61-4b4ab1b7ded2",
+      "tags": {
+        "rustml_attempt": "b565ae3c-744f-4456-a078-02d04766c09e",
+        "rustml_job": "cb79080a-a251-47b8-be8d-c333a8cbab56",
+        "rustml_generation": "1"
+      },
+      "phase": "created",
+      "sessionId": "sbx_vlUOeX0TiZLDAGbNK0LHKZbftj7N",
+      "persistent": false,
+      "vcpus": 1,
+      "memoryMB": 2048,
+      "networkPolicy": "deny-all",
+      "sourceSnapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+      "envKeys": [],
+      "ports": [],
+      "deletedVerified": true,
+      "metadataVerified": true
+    },
+    {
+      "name": "rustml-case-1d81e6a7-d3b7-4914-ba72-9b2061f6c778",
+      "tags": {
+        "rustml_attempt": "ea60e99e-bd32-4c77-9c5e-1f88b72e3095",
+        "rustml_job": "485d33a0-bc2c-4f6e-85a8-fe24cf67096c",
+        "rustml_generation": "1"
+      },
+      "phase": "created",
+      "sessionId": "sbx_1G3qNiP5m4EyIuuXKWzOYN5TaU99",
+      "persistent": false,
+      "vcpus": 1,
+      "memoryMB": 2048,
+      "networkPolicy": "deny-all",
+      "sourceSnapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+      "envKeys": [],
+      "ports": [],
+      "deletedVerified": true,
+      "metadataVerified": true
+    }
+  ],
+  "results": [
+    {
+      "id": "isolation",
+      "error": null,
+      "passed": true,
+      "observed": {
+        "uid": 1001,
+        "envKeys": [
+          "HOME",
+          "LANG",
+          "PATH",
+          "TMPDIR"
+        ],
+        "limits": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              5                    5                    seconds   \nMax file size             16777216             16777216             bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    0                    bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             32                   32                   processes \nMax open files            64                   64                   files     \nMax locked memory         8388608              8388608              bytes     \nMax address space         8589934592           8589934592           bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       9132                 9132                 signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         0                    0                    \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n",
+        "networkRequestSucceeded": false,
+        "networkFailureName": "TypeError",
+        "rootFileReadable": false,
+        "rootFileError": "EACCES",
+        "sudoExit": 1,
+        "sudoUID": ""
+      },
+      "trustedSnapshotPreserved": true
+    },
+    {
+      "id": "output-limit",
+      "error": "output_limit",
+      "passed": true,
+      "trustedSnapshotPreserved": true
+    },
+    {
+      "id": "compile-error",
+      "error": "compile_error",
+      "passed": true,
+      "trustedSnapshotPreserved": true
+    }
+  ],
+  "trustedSnapshotPreserved": true,
+  "finishedAt": "2026-10-16T12:53:14.161Z",
+  "cleanupVerified": true
+}

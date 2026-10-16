@@ -1,0 +1,40 @@
+{
+  "productionDeployment": "dpl_BQsndJeKjCtDhJZq4KfRuCkSM1aB",
+  "invokedAt": "2026-10-16T12:53:25.274Z",
+  "httpStatus": 200,
+  "response": {
+    "status": "complete",
+    "pages": 1,
+    "scanned": 1,
+    "eligible": 1,
+    "attempted": 1,
+    "stopped": 1,
+    "deleted": 1,
+    "skipped": 0,
+    "failed": 0,
+    "timedOut": false,
+    "truncated": false
+  },
+  "fixture": {
+    "version": 1,
+    "projectId": "prj_oBRaOlHr7lgiArBUIX1KCv4s2xzA",
+    "teamId": "team_qOKdk9wnoev64sjNSR4aj6aL",
+    "snapshotId": "snap_It6mVj2cPSWSKzj0OCukNncSEHDK",
+    "name": "rustml-case-740906f9-e500-4744-b292-743739950187",
+    "tags": {
+      "rustml_attempt": "933e77ab-cfc4-4545-81e9-448e353bce82",
+      "rustml_job": "85d5aa11-32f8-481a-9b64-f37879f78d53",
+      "rustml_generation": "1"
+    },
+    "phase": "exact-owned-name-absent-source-preserved",
+    "preparedAt": "2026-10-16T12:42:41.483Z",
+    "sessionId": "sbx_sKcCrNFjm12oL6pvcJLzLSZX3zSc",
+    "createdAt": "2026-10-16T12:42:40.425Z",
+    "updatedAt": "2026-10-16T12:42:40.425Z",
+    "sessionCreatedAt": "2026-10-16T12:42:40.356Z",
+    "eligibleAt": "2026-10-16T12:52:40.426Z",
+    "verifiedAt": "2026-10-16T12:53:29.834Z"
+  },
+  "trustedSnapshotPresent": true,
+  "snapshotStatus": "created"
+}

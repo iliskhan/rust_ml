@@ -1,0 +1,531 @@
+{
+  "startedAt": "2026-10-16T13:04:07.887Z",
+  "runner": "hosted-acceptance-root",
+  "result": "FAIL",
+  "checks": {
+    "sqlFencing": {
+      "result": "FAIL",
+      "code": "SQL_FENCING_FAILED"
+    },
+    "failureObservations": {
+      "result": "PASS",
+      "checkedAt": "2026-10-16T13:06:37.648Z",
+      "attempts": [
+        {
+          "attemptId": "6fc0f993-a10e-43b1-87d2-27772453f910",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:07:58.733Z"
+        },
+        {
+          "attemptId": "0fe6fdcc-4768-48ea-ba49-22cc8057ab62",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:08:36.390Z"
+        },
+        {
+          "attemptId": "268d5de1-effa-4012-8e1b-e3ceae82c480",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:08:53.363Z"
+        },
+        {
+          "attemptId": "c62733fc-74c8-4383-aefc-7c5b1758ec21",
+          "present": true,
+          "status": "graded",
+          "verdict": "fail",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:09:27.514Z"
+        }
+      ]
+    },
+    "admissionOff": {
+      "observed": true,
+      "reservedCreations": 24,
+      "reservedCpuMs": 720000
+    },
+    "providerCleanup": {
+      "result": "PASS",
+      "ownSandboxesRemaining": 0,
+      "attemptsChecked": 4,
+      "listScans": 1,
+      "observedOwnNames": [],
+      "basis": "Complete project-authenticated exact-attempt-tag enumeration; no sandbox or snapshot mutations"
+    },
+    "fixtureCounts": {
+      "sessions": 0,
+      "drafts": 0,
+      "attempts": 0,
+      "jobs": 0
+    }
+  },
+  "runtimeReceiptSha256": "e6c4103663388ade8b09d2480e46b85879e5b8aab65048beb0a49e69766e820e",
+  "initialReservations": {
+    "creations": 10,
+    "cpuMs": 300000
+  },
+  "acceptance": {
+    "suite": "hosted-grade-api",
+    "runId": "5f6cc060-a90a-4da0-885a-c3c03c357208",
+    "checkedAt": "2026-10-16T13:04:24.250Z",
+    "result": "FAIL",
+    "checks": [
+      {
+        "check": "two_disposable_accounts_real_auth_jwts",
+        "result": "PASS",
+        "users": [
+          "9e82b7a0-1eea-4e99-8d1b-5bed40714a7b",
+          "b86aaa86-a2f2-4bac-b1ae-b21db2ff0a1a"
+        ]
+      },
+      {
+        "check": "api_rejects_client_source",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "api_rejects_client_tests",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "api_rejects_client_expected",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "api_rejects_client_user_id",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "api_rejects_client_verdict",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "api_rejects_client_runtime",
+        "result": "PASS",
+        "expectedStatuses": [
+          400
+        ],
+        "httpStatus": 400,
+        "code": "invalid_body"
+      },
+      {
+        "check": "other_jwt_cannot_submit_foreign_session",
+        "result": "PASS",
+        "expectedStatuses": [
+          404
+        ],
+        "httpStatus": 404,
+        "code": "session_not_found"
+      },
+      {
+        "check": "legacy_public_submit_is_disabled",
+        "result": "PASS",
+        "expectedStatuses": [
+          400,
+          403
+        ],
+        "httpStatus": 400,
+        "code": "unknown"
+      },
+      {
+        "check": "anonymous_start_is_denied",
+        "result": "PASS",
+        "expectedStatuses": [
+          401,
+          403
+        ],
+        "httpStatus": 401,
+        "code": "unknown"
+      },
+      {
+        "check": "authenticated_direct_attempt_update_denied",
+        "result": "PASS",
+        "expectedStatuses": [
+          401,
+          403
+        ],
+        "httpStatus": 403,
+        "code": "unknown"
+      },
+      {
+        "check": "changed_revision_with_same_key_is_conflict",
+        "result": "PASS",
+        "expectedStatuses": [
+          409
+        ],
+        "httpStatus": 409,
+        "code": "idempotency_key_reused_with_different_request"
+      },
+      {
+        "check": "other_jwt_cannot_resume_attempt",
+        "result": "PASS",
+        "expectedStatuses": [
+          404
+        ],
+        "httpStatus": 404,
+        "code": "attempt_not_found"
+      },
+      {
+        "check": "enqueue_idempotency_revision_freeze_and_foreign_isolation",
+        "result": "PASS",
+        "attemptId": "6fc0f993-a10e-43b1-87d2-27772453f910",
+        "frozenRevision": 1,
+        "currentDraftRevision": 2
+      },
+      {
+        "check": "real_provider_grade_and_fresh_device_persistence",
+        "result": "PASS",
+        "attemptId": "6fc0f993-a10e-43b1-87d2-27772453f910",
+        "language": "python",
+        "verdict": "pass",
+        "passedTests": 4,
+        "expectedTests": 4,
+        "requiredPassed": 1,
+        "requiredCompleted": 1,
+        "independentPassed": 0
+      },
+      {
+        "check": "changed_revision_with_same_key_is_conflict",
+        "result": "PASS",
+        "expectedStatuses": [
+          409
+        ],
+        "httpStatus": 409,
+        "code": "idempotency_key_reused_with_different_request"
+      },
+      {
+        "check": "other_jwt_cannot_resume_attempt",
+        "result": "PASS",
+        "expectedStatuses": [
+          404
+        ],
+        "httpStatus": 404,
+        "code": "attempt_not_found"
+      },
+      {
+        "check": "enqueue_idempotency_revision_freeze_and_foreign_isolation",
+        "result": "PASS",
+        "attemptId": "0fe6fdcc-4768-48ea-ba49-22cc8057ab62",
+        "frozenRevision": 1,
+        "currentDraftRevision": 2
+      },
+      {
+        "check": "real_provider_grade_and_fresh_device_persistence",
+        "result": "PASS",
+        "attemptId": "0fe6fdcc-4768-48ea-ba49-22cc8057ab62",
+        "language": "javascript",
+        "verdict": "pass",
+        "passedTests": 2,
+        "expectedTests": 2,
+        "requiredPassed": 1,
+        "requiredCompleted": 0,
+        "independentPassed": 0
+      },
+      {
+        "check": "changed_revision_with_same_key_is_conflict",
+        "result": "PASS",
+        "expectedStatuses": [
+          409
+        ],
+        "httpStatus": 409,
+        "code": "idempotency_key_reused_with_different_request"
+      },
+      {
+        "check": "other_jwt_cannot_resume_attempt",
+        "result": "PASS",
+        "expectedStatuses": [
+          404
+        ],
+        "httpStatus": 404,
+        "code": "attempt_not_found"
+      },
+      {
+        "check": "enqueue_idempotency_revision_freeze_and_foreign_isolation",
+        "result": "PASS",
+        "attemptId": "268d5de1-effa-4012-8e1b-e3ceae82c480",
+        "frozenRevision": 1,
+        "currentDraftRevision": 2
+      },
+      {
+        "check": "real_provider_grade_and_fresh_device_persistence",
+        "result": "PASS",
+        "attemptId": "268d5de1-effa-4012-8e1b-e3ceae82c480",
+        "language": "rust",
+        "verdict": "pass",
+        "passedTests": 4,
+        "expectedTests": 4,
+        "requiredPassed": 1,
+        "requiredCompleted": 1,
+        "independentPassed": 0
+      },
+      {
+        "check": "changed_revision_with_same_key_is_conflict",
+        "result": "PASS",
+        "expectedStatuses": [
+          409
+        ],
+        "httpStatus": 409,
+        "code": "idempotency_key_reused_with_different_request"
+      },
+      {
+        "check": "other_jwt_cannot_resume_attempt",
+        "result": "PASS",
+        "expectedStatuses": [
+          404
+        ],
+        "httpStatus": 404,
+        "code": "attempt_not_found"
+      },
+      {
+        "check": "enqueue_idempotency_revision_freeze_and_foreign_isolation",
+        "result": "PASS",
+        "attemptId": "c62733fc-74c8-4383-aefc-7c5b1758ec21",
+        "frozenRevision": 1,
+        "currentDraftRevision": 2
+      },
+      {
+        "check": "real_provider_grade_and_fresh_device_persistence",
+        "result": "PASS",
+        "attemptId": "c62733fc-74c8-4383-aefc-7c5b1758ec21",
+        "language": "python",
+        "verdict": "fail",
+        "passedTests": 0,
+        "expectedTests": 4,
+        "requiredPassed": 0,
+        "requiredCompleted": 0,
+        "independentPassed": 0
+      }
+    ],
+    "attempts": [
+      {
+        "attemptId": "6fc0f993-a10e-43b1-87d2-27772453f910",
+        "userId": "9e82b7a0-1eea-4e99-8d1b-5bed40714a7b",
+        "language": "python",
+        "exercise": "unit.transformer.attention.softmax.guided",
+        "variantId": "3bde2452-a3be-4b9a-8ccb-d35719410923",
+        "releaseId": "ba9e9e01-6659-4782-8edb-fc50b92940d7",
+        "draftRevision": 1,
+        "expectedTests": 4,
+        "sourceSha256": "39384ea177110de6638ed0f9fd78ec742f58472094c103201b37cac210fe0338",
+        "status": "graded",
+        "states": [
+          "running",
+          "graded"
+        ],
+        "polls": 19,
+        "pollRequests": 19,
+        "verdict": "pass",
+        "errorKind": null,
+        "passedTests": 4,
+        "lastPollAt": "2026-10-16T13:05:03.098Z",
+        "assistance": "none"
+      },
+      {
+        "attemptId": "0fe6fdcc-4768-48ea-ba49-22cc8057ab62",
+        "userId": "9e82b7a0-1eea-4e99-8d1b-5bed40714a7b",
+        "language": "javascript",
+        "exercise": "unit.transformer.attention.softmax.transfer-a",
+        "variantId": "8dfa56bf-6407-4300-8455-19f3437d6160",
+        "releaseId": "ba9e9e01-6659-4782-8edb-fc50b92940d7",
+        "draftRevision": 1,
+        "expectedTests": 2,
+        "sourceSha256": "a8526d19badadaf3a2d9232d6b74f39abc622164dcdcc4619d17e8157a089660",
+        "status": "graded",
+        "states": [
+          "running",
+          "graded"
+        ],
+        "polls": 6,
+        "pollRequests": 6,
+        "verdict": "pass",
+        "errorKind": null,
+        "passedTests": 2,
+        "lastPollAt": "2026-10-16T13:05:23.243Z",
+        "assistance": "solution"
+      },
+      {
+        "attemptId": "268d5de1-effa-4012-8e1b-e3ceae82c480",
+        "userId": "b86aaa86-a2f2-4bac-b1ae-b21db2ff0a1a",
+        "language": "rust",
+        "exercise": "unit.transformer.attention.softmax.guided",
+        "variantId": "57d9561d-232c-4107-8103-1c238b774def",
+        "releaseId": "ba9e9e01-6659-4782-8edb-fc50b92940d7",
+        "draftRevision": 1,
+        "expectedTests": 4,
+        "sourceSha256": "5007d34c76bbb3db32ca1a6670a3f1761e74645c3304781a6aaec796c93f9b01",
+        "status": "graded",
+        "states": [
+          "running",
+          "graded"
+        ],
+        "polls": 19,
+        "pollRequests": 19,
+        "verdict": "pass",
+        "errorKind": null,
+        "passedTests": 4,
+        "lastPollAt": "2026-10-16T13:05:57.633Z",
+        "assistance": "none"
+      },
+      {
+        "attemptId": "c62733fc-74c8-4383-aefc-7c5b1758ec21",
+        "userId": "b86aaa86-a2f2-4bac-b1ae-b21db2ff0a1a",
+        "language": "python",
+        "exercise": "unit.transformer.attention.softmax.guided",
+        "variantId": "3bde2452-a3be-4b9a-8ccb-d35719410923",
+        "releaseId": "ba9e9e01-6659-4782-8edb-fc50b92940d7",
+        "draftRevision": 1,
+        "expectedTests": 4,
+        "sourceSha256": "98fd5a78cf316a5da7330c41961a4fee866965ea24bb6e5512cca71ee2abd51d",
+        "status": "graded",
+        "states": [
+          "running",
+          "graded"
+        ],
+        "polls": 18,
+        "pollRequests": 18,
+        "verdict": "fail",
+        "errorKind": null,
+        "passedTests": 0,
+        "lastPollAt": "2026-10-16T13:06:31.028Z",
+        "assistance": "none"
+      }
+    ],
+    "cleanup": [
+      {
+        "check": "root_admission_off",
+        "result": "PASS"
+      },
+      {
+        "check": "own_provider_sandboxes_gone",
+        "result": "PASS",
+        "ownSandboxesRemaining": 0
+      },
+      {
+        "check": "task_auth_user_removed_and_absence_confirmed",
+        "userId": "9e82b7a0-1eea-4e99-8d1b-5bed40714a7b",
+        "result": "PASS",
+        "jwtObtained": true
+      },
+      {
+        "check": "task_auth_user_removed_and_absence_confirmed",
+        "userId": "b86aaa86-a2f2-4bac-b1ae-b21db2ff0a1a",
+        "result": "PASS",
+        "jwtObtained": true
+      },
+      {
+        "check": "owner_verifies_task_fixture_cascade",
+        "result": "PASS",
+        "sessions": 0,
+        "drafts": 0,
+        "attempts": 0,
+        "jobs": 0
+      }
+    ],
+    "boundaries": [
+      "SQL001вЂ“006 are never replayed",
+      "No runtime/snapshot publication or billing mutations",
+      "Only task-created Auth IDs are removed",
+      "Provider cleanup/isolation and dedicated DB-login/fencing require separate observed evidence"
+    ],
+    "counts": {
+      "users": 2,
+      "attempts": 4,
+      "referencePasses": 3,
+      "wrongValueFailures": 1,
+      "expectedTests": 14,
+      "passedTests": 10
+    },
+    "failure": {
+      "phase": "sql_fencing",
+      "code": "SQL_FENCING_FAILED"
+    },
+    "failureObservations": {
+      "result": "PASS",
+      "checkedAt": "2026-10-16T13:06:37.648Z",
+      "attempts": [
+        {
+          "attemptId": "6fc0f993-a10e-43b1-87d2-27772453f910",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:07:58.733Z"
+        },
+        {
+          "attemptId": "0fe6fdcc-4768-48ea-ba49-22cc8057ab62",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:08:36.390Z"
+        },
+        {
+          "attemptId": "268d5de1-effa-4012-8e1b-e3ceae82c480",
+          "present": true,
+          "status": "graded",
+          "verdict": "pass",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:08:53.363Z"
+        },
+        {
+          "attemptId": "c62733fc-74c8-4383-aefc-7c5b1758ec21",
+          "present": true,
+          "status": "graded",
+          "verdict": "fail",
+          "errorKind": null,
+          "jobStatus": "finished",
+          "leaseGeneration": 1,
+          "claimDeadlineAt": "2026-10-16T13:09:27.514Z"
+        }
+      ]
+    },
+    "apiSuiteResult": "FAIL",
+    "finishedAt": "2026-10-16T13:06:39.892Z",
+    "fullDeploymentAcceptance": "INCOMPLETE"
+  },
+  "finishedAt": "2026-10-16T13:06:40.164Z"
+}

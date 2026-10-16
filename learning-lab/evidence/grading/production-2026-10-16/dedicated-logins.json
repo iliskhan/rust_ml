@@ -1,0 +1,172 @@
+{
+  "checkedAt": "2026-10-16T12:22:16.898Z",
+  "project": "phnjcmahugetofwvnbto",
+  "checks": [
+    {
+      "login": "rustml_api",
+      "check": "Actual TLS connection and dedicated identity",
+      "result": "PASS",
+      "tlsEncrypted": true,
+      "tlsAuthorized": true,
+      "current_user": "rustml_api",
+      "session_user": "rustml_api",
+      "database": "postgres",
+      "server_version_num": "170011",
+      "own_group": true,
+      "opposite_group": false
+    },
+    {
+      "login": "rustml_api",
+      "check": "Private manifest SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Private settings SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Private queue SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Public attempts SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Public drafts SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Public graded-evidence INSERT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Public graded-evidence UPDATE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Old unbudgeted claim EXECUTE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "Worker exact claim EXECUTE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_api",
+      "check": "All probe transactions rolled back",
+      "result": "PASS"
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Actual TLS connection and dedicated identity",
+      "result": "PASS",
+      "tlsEncrypted": true,
+      "tlsAuthorized": true,
+      "current_user": "rustml_worker",
+      "session_user": "rustml_worker",
+      "database": "postgres",
+      "server_version_num": "170011",
+      "own_group": true,
+      "opposite_group": false
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Private manifest SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Private settings SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Private queue SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Public attempts SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Public drafts SELECT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Public graded-evidence INSERT denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Public graded-evidence UPDATE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "Old unbudgeted claim EXECUTE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "API submit EXECUTE denied",
+      "result": "PASS",
+      "sqlstate": "42501",
+      "rolledBack": true
+    },
+    {
+      "login": "rustml_worker",
+      "check": "All probe transactions rolled back",
+      "result": "PASS"
+    }
+  ],
+  "plaintextWritten": false,
+  "ownerCredentialUsed": false,
+  "businessWrites": false,
+  "result": "PASS"
+}

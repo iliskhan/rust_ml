@@ -29,26 +29,42 @@ Chrome загрузил MP4 с1280×720/duration44,033333, autoplay=false;
 кнопка четвёртой части открыла38s на паузе. Закрывающий checkpoint меняет
 только PLAN/PROGRESS, его local/remote SHA сообщается в итоговом ответе.
 
-### Production grader: окружение разрешено и сохранено — 2026-10-16
+### Production grader: включён и проверен — 2026-10-16
 
-Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master после fetch/fast-forward
-до `9683759`. Пользователь прямо разрешил production Vercel rustml-grader:
-два ограниченных DB URL и новый CRON_SECRET. Prepared provision-env завершился:
-три sensitive значения и публичный SUPABASE_PUBLISHABLE_KEY stored=true.
-Значения не выводились и не добавлялись в Git; owner URL в Vercel не передавался.
+Пользователь разрешил production env rustml-grader и вход Supabase через GitHub.
+Два restricted DB URL и CRON_SECRET сохранены только в production; admin/owner
+ключи в Vercel не передавались. Migration001–006 не повторялись.
+Код grader9a78fa5 в READY deployment dpl_4Q2md3L5USs5viDSAq6DBPU81qsA;
+GitHub variable VITE_PRACTICE_GRADER_URL содержит полный /api/practice-grade URL.
 
-Свежий check-logins.ps1: обе настоящие TLS-сессии rustml_api/rustml_worker,
-правильные роли и 18 deny probes PASS; транзакции rolled back, business writes=false.
-Найдено и исправлено: SQL attempt_not_found при чужом resume ранее превращался
-в HTTP503; теперь404. Regression сначала RED503!=404, затем8/8 supervisor PASS.
-Node24.19/direct Python/Rust1.87: полный suite561/561 PASS,0skipped;
-production typecheck/build PASS. Scope — handler и один существующий test-suite.
+[Сводка и evidence](learning-lab/evidence/grading/production-2026-10-16/README.md).
+Реальные Python4/4, JS2/2, Rust4/4 и неверный Python0/4 дали ожидаемые grades;
+свежий клиент прочитал оценки, immutable revision/help/RLS проверены. SQL-only
+fencing32/32 PASS с rollback и replay после admission OFF; dedicated TLS2+
+18 deny probes PASS. Isolation3/3 и настоящий cron eligible1/deleted1/failed0
+PASS. Test Auth GET404, DB fixtures0, own VM0, trusted snapshot сохранён.
 
-Deployment и hosted acceptance ещё не выполнены. Независимый review выявил
-необходимые отдельные гейты: текущая provider quota, SQL fencing, actual reaper,
-freshness OIDC, cleanup own fixtures и admission OFF в finally.
-Новые helpers находятся в ignored work/practice-grader/release-20261016/;
-локальный syntax/selfcheck не считается hosted PASS. Миграции не повторялись.
+Исправлены три наблюдаемых проблемы: чужой resume attempt_not_found→404;
+новый пользователь без practice profile→общий404; reaper list limit100→50
+по настоящему API ограничению. Старый монолитный test FAIL на SET ROLE сохранён:
+owner этого не может; отдельный owner-function SQL probe прошёл без новых grants.
+Единичный client network_error предыдущего запуска не воспроизвёлся, причина
+не установлена. Все4 real grades были затем подтверждены без retries.
+
+Windows/Node24.19/direct Python/Rust1.87, release9a78fa5:562/562 tests PASS0skip,
+typecheck/build PASS. Frontend41fe463 убирает устаревшую надпись о недоступности;
+typecheck/build объединённого checkout PASS. Публичные desktop/mobile390/320
+осмотрены: server button enabled, page overflow нет, screenshot evidence рядом.
+Пользовательские код/помощь/история через UI не изменялись; реальные отправки
+выполнялись только на disposable QA identities.
+
+Admission включён13:19:25UTC с сохранением24creations/720000cpu-ms reservations.
+Hobby не имеет billing cycle; bounded app window заканчивается15Nov12:48:07.965Z,
+лимиты1000creations/3600000cpu-ms. Перед продлением проверить rolling usage,
+не сбрасывать reservations. Это не автоматический provider quota reset.
+Отдельный backprop-pilot70f04e9 сохранён в общем master. Этот checkpoint
+меняет только документы/evidence; его commit/push/merge и CI/Pages текущего SHA
+проверяются при окончательной доставке, без рекурсивной записи собственного SHA.
 
 ### ManimGX для учебника — 2026-10-16
 

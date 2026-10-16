@@ -81,8 +81,9 @@ Allowlist содержит три проверенных runtime на одном
 SQL006 применена в Supabase 2026-10-13; повторно её не выполнять.
 Опубликованы 1236 immutable manifests; созданы минимальные DB logins
 `rustml_api`/`rustml_worker`, их TLS-подключения и запреты проверены.
-Admission остаётся выключенным. API развёрнут, но без окружения возвращает 503;
-до включения нужны production-env Vercel и полная hosted-приёмка. Пароли этих
+Production-env и hosted-приёмка завершены2026-10-16; admission включён.
+Реальные Python/JavaScript/Rust, wrong values, persistence, SQL fencing,
+isolation и production cron проверены; [текущий evidence](../evidence/grading/production-2026-10-16/README.md). Пароли этих
 logins передаются только серверному окружению; owner/service-role ключи там
 не используются. Frontend активируется через `VITE_PRACTICE_GRADER_URL`.
 Неизвестный исход создания или гибель serverless функции ограничены TTL среды.
@@ -92,7 +93,7 @@ logins передаются только серверному окружению
 snapshots. Защищена отдельным `CRON_SECRET` (не менее 32 символов); без него
 возвращает 503. Hobby cron работает раз в день, поэтому немедленную остановку
 обеспечивают TTL и обычный finally cleanup. Обычный cleanup проверен на семи VM;
-ежедневный cron ещё не прошёл hosted-приёмку.
+production cron прошёл hosted-приёмку2026-10-16: eligible1/deleted1/failed0, snapshot сохранён.
 Оба пути очистки сохраняют snapshots (`deleteOrphanSnapshots: false`): среды
 отдельных cases непостоянны и собственных snapshots не создают.
 

@@ -1,0 +1,45 @@
+{
+  "revision": "9a78fa5fe0fcae5d3fc2119cfb41114ada71f320",
+  "checkout": "C:\\Users\\lomaster\\.codex\\worktrees\\grader-production-release\\rust_ml",
+  "environment": {
+    "os": "Windows",
+    "node": "24.19.0",
+    "rust": "1.87.0"
+  },
+  "tests": {
+    "command": "PRACTICE_VERIFY_ALL_LANGUAGES=1 PRACTICE_PYTHON=<bundled Python> PRACTICE_RUSTC=<rustc1.87> node --test tests/*.test.ts",
+    "pass": 562,
+    "fail": 0,
+    "skip": 0
+  },
+  "build": {
+    "command": "pnpm build",
+    "result": "PASS",
+    "transformedModules": 179
+  },
+  "production": {
+    "project": "rustml-grader",
+    "deployment": "dpl_4Q2md3L5USs5viDSAq6DBPU81qsA",
+    "readyState": "READY",
+    "url": "https://rustml-grader.vercel.app",
+    "api": "https://rustml-grader.vercel.app/api/practice-grade"
+  },
+  "providerEquivalentAcrossCheckouts": {
+    "normalizedTextEqual": true,
+    "receiptRawSha256": "a9bc5c13fc2c2f6ba4f5003b38880f7dcaa55c91553f5a8132689b8049770136",
+    "releaseRawSha256": "59199063bbb732eb3b554173af0705458f268efe73ed0d8ae42c8d7f5d6b5ee8",
+    "difference": "CRLF versus LF only"
+  },
+  "fixes": [
+    "attempt_not_found now HTTP404",
+    "profile_not_found now generic HTTP404 session_not_found",
+    "Sandbox list page size50 matches actual API limit"
+  ],
+  "boundaries": [
+    "No migrations replayed",
+    "No reservation reset",
+    "No owner/admin credential sent to Vercel",
+    "Local selfchecks do not become server mastery",
+    "Public examples can be hardcoded; this grade does not prove generalisation"
+  ]
+}
