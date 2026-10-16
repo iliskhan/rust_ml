@@ -1,0 +1,42 @@
+{
+  "animations/backprop/backprop.py": {
+    "sha256": "2ab0793e99df53e863bb13439903aa7ad4a30bf0584ea8fad7343806758261ab",
+    "bytes": 7113
+  },
+  "animations/backprop/fixture.json": {
+    "sha256": "03b95806f18dba12ef1b01bbd5065f3c1ca1f029ac487dffa71af1135ee42f41",
+    "bytes": 321
+  },
+  "animations/backprop/render-assets.py": {
+    "sha256": "79ce0c884b5bfedd84c5851bb14b997cc6808c91d9d7e0bd9f42e223ad5053db",
+    "bytes": 1083
+  },
+  "animations/backprop/requirements.txt": {
+    "sha256": "3a048eec1d996a279a126b9da7434820af8a30d41703fd253206207321133083",
+    "bytes": 30
+  },
+  "public/animations/backprop/backprop.mp4": {
+    "sha256": "863c204b9cb459ac1afdc63c8dc8d66f9b9d297ce7d9dd7830ccfe3853df7f29",
+    "bytes": 587601
+  },
+  "public/animations/backprop/poster.png": {
+    "sha256": "868717300686e1e262595b38c8faeabd6e823b340983b83b26aecc1f8f224567",
+    "bytes": 49246
+  },
+  "public/animations/backprop/captions.ru.vtt": {
+    "sha256": "1163fd44cea932c7cbc3920dfea836213a2d8f952bb8a56ca69bd22638aea5d0",
+    "bytes": 1251
+  },
+  "src/BackpropAnimation.tsx": {
+    "sha256": "f28a72cfbe7b68b3d2a94e5e3131fc873ded501bed1b1c46d51286666b961a7c",
+    "bytes": 6953
+  },
+  "src/backprop-animation.css": {
+    "sha256": "e808f708c0e1f6a41c59ef4c0bf1695d302b69857e639f463e25e732f5c5b4a2",
+    "bytes": 952
+  },
+  "src/Foundations.tsx": {
+    "sha256": "fef731ac67284f6ffea1afdfd7fe9db7a28bfb94d7903c65b80abfb543f983c3",
+    "bytes": 36430
+  }
+}

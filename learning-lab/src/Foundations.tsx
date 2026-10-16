@@ -9,6 +9,7 @@ import { LessonOutline, focusLessonSection } from './LessonOutline'
 import { ActionExercise } from './ActionExercise'
 import { PracticeSection } from './practice/PracticeCloudProvider'
 import { NEURON_PRACTICE_START, MSE_PRACTICE_START, BACKPROP_PRACTICE_START, checkNeuronPractice, checkMsePractice, checkBackpropPractice } from './actionExerciseMath'
+import { BackpropAnimation } from './BackpropAnimation'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
@@ -193,6 +194,7 @@ export function LossLesson() {
 }
 
 export function BackpropLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null)
   const [x, setX] = useState(1.2)
   const [w, setW] = useState(0.8)
   const [target, setTarget] = useState(1)
@@ -234,6 +236,7 @@ export function BackpropLesson() {
   return <>
     <p className="lesson-intro"><ConceptLink concept="backpropagation">Обратное распространение</ConceptLink> вычисляет влияние каждого параметра на потерю. Если значение используется в двух ветвях, его <ConceptLink concept="gradient">градиент</ConceptLink> складывается из обоих путей — это ключ к правильному автодифференцированию.</p>
     <p className="note">Основа вычисления — <ConceptLink concept="chain-rule">правило цепочки</ConceptLink>. Внутри его разбора можно изучить производную, а затем вернуться к текущему шагу графа.</p>
+    <BackpropAnimation videoRef={animationVideo} x={x} w={w} target={target} />
     <div className="lab-grid">
       <section className="panel">
         <h3>Один промежуточный узел, два пути</h3>
@@ -268,8 +271,8 @@ export function BackpropLesson() {
         <p className="note">Оба прямоугольника справа от q используют одно и то же значение. Это ориентированный ациклический граф (DAG): стрелки не образуют цикл.</p>
       </section>
     </div>
-    <section className="panel">
-      <h3>Пройдите вычисление по шагам</h3>
+    <section className="panel" onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+      <h3 id="backprop-walkthrough" className="lesson-anchor" tabIndex={-1}>Пройдите вычисление по шагам</h3>
       <div className="button-row">
         <button type="button" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0}>← Назад</button>
         <button type="button" onClick={() => setStep(Math.min(3, step + 1))} disabled={step === 3}>Следующий шаг →</button>

@@ -1,0 +1,26 @@
+{
+  "inputs": {
+    "x": 2,
+    "w": 3,
+    "target": 2
+  },
+  "values": {
+    "x": 2,
+    "w": 3,
+    "q": 6,
+    "p": 42,
+    "target": 2,
+    "loss": 800
+  },
+  "gradients": {
+    "loss": 1,
+    "p": 40,
+    "q": 520,
+    "x": 1560,
+    "w": 1040
+  },
+  "qContributions": {
+    "square": 480,
+    "identity": 40
+  }
+}

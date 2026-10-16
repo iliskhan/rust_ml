@@ -1,0 +1,52 @@
+.backprop-animation video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-block: 18px 12px;
+  border-radius: 8px;
+  background: #101622;
+}
+
+.backprop-animation-chapters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block: 14px;
+}
+
+.backprop-animation-chapters button {
+  min-height: 44px;
+  text-align: left;
+}
+
+.backprop-animation-chapters [aria-current="step"] {
+  border-color: var(--green);
+  font-weight: 700;
+}
+
+.backprop-animation-transcript {
+  padding-inline-start: 24px;
+}
+
+.backprop-animation-transcript li {
+  margin-block: 12px;
+}
+
+.backprop-animation-fallback {
+  padding: 16px;
+  margin-block: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+@media (max-width: 560px) {
+  .backprop-animation video {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center 20%;
+  }
+
+  .backprop-animation-chapters {
+    grid-template-columns: 1fr;
+  }
+}
