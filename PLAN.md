@@ -26,13 +26,14 @@ Pages38907090162 SUCCESS. Публичный урок загрузил720p MP4, 
    SQL fencing32/32, isolation3/3, реальный cron deletion PASS; fixtures удалены.
 4. Сайт — проверен: grader URL включён, admission=true; публичные desktop и
    mobile390/320 показывают доступную кнопку, page overflow отсутствует.
-5. Доставка checkpoint — на проверке: сохранить этот evidence commit/push,
-   объединить с master и дождаться CI/Pages текущей вершины.
+5. Доставка — готово: evidence283be15 в master, обычный push подтверждён;
+   CI38908384001 и Pages38908383408 SUCCESS. Все локальные ветки входят в master.
 
 [Переносимые результаты](learning-lab/evidence/grading/production-2026-10-16/README.md).
 Окно приёма ограничено до2026-11-15T12:48:07.965Z; перед продлением сверить
 rolling quota Hobby. Reservations24creations/720000cpu-ms сохранены, не обнулять.
-Следующий шаг этой задачи — завершить commit/push/merge и проверить доставку.
+Задача закрыта. Точный SHA закрывающего документа и его доставку
+проверить по Git/Actions и итоговому ответу; код сайта этим документом не меняется.
 
 ## ManimGX и объяснения в стиле 3Blue1Brown — исследование завершено, 2026-10-16
 

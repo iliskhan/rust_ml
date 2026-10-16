@@ -66,6 +66,14 @@ Hobby не имеет billing cycle; bounded app window заканчиваетс
 меняет только документы/evidence; его commit/push/merge и CI/Pages текущего SHA
 проверяются при окончательной доставке, без рекурсивной записи собственного SHA.
 
+Доставка evidence283be1591b051cd60fd4fabd8605a5b138aa8739 проверена:
+master local=remote, дерево чистое, git branch --no-merged master пуст.
+[CI38908384001](https://github.com/iliskhan/rust_ml/actions/runs/38908384001)
+и [Pages38908383408](https://github.com/iliskhan/rust_ml/actions/runs/38908383408)
+SUCCESS. Runtime и UI побайтово соответствуют проверенному41fe463 (кроме документов).
+Закрывающий commit меняет только PLAN/PROGRESS; его точный local/remote SHA,
+CI и Pages сверяются в итоговом ответе без записи собственного SHA в файл.
+
 ### ManimGX для учебника — 2026-10-16
 
 Исследование по запросу о визуализациях как у 3Blue1Brown завершено:
