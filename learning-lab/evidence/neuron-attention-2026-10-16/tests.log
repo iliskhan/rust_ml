@@ -1,0 +1,46 @@
+✔ all practice starts need an actual action before success (39.8846ms)
+✔ ReLU needs strictly positive preactivation while only bias changes (3.1529ms)
+✔ positive neuron output from changed inputs, weights or activation is not the requested action (0.6442ms)
+✔ MSE task accepts a near target third prediction, including exact target (5.0878ms)
+✔ MSE goal cannot be met by correcting the forbidden first or second prediction (1.4263ms)
+✔ backprop task requires both smaller actual loss and the final graph stage (3.5764ms)
+✔ backprop rejects low loss obtained by changing the input or the target (0.949ms)
+✔ backprop feedback uses both current branch contributions and actual current gradient (0.8893ms)
+✔ triangle contributions locate the weighted mixture at (0.5, 1) (4.3351ms)
+✔ masked values contribute exactly zero even when their magnitude is large (0.563ms)
+✔ zero and negative vectors retain a finite square domain including the origin (0.3831ms)
+✔ practice rejects an unmasked start and rounded near-zero weights, accepts actual causal exclusion (0.6283ms)
+✔ ManimGX fixture matches the live backprop calculation and numerical gradients (4.0599ms)
+✔ neuron film matches the lab and both sides of ReLU (5.3015ms)
+✔ attention film preserves projections, mask, softmax and coordinate mixing (4.7968ms)
+✔ new films have ordered captions covering their source timelines (2.3588ms)
+✔ активации: известные значения, производная по входу и ReLU в нуле (2.2699ms)
+✔ Linear: два образца, три выхода и транспонированная раскладка весов (2.5048ms)
+✔ MSE: среднее, вклад каждого элемента и множитель 2/n (0.7775ms)
+✔ BCE: ручные вероятности и производные по p и z (0.7682ms)
+✔ BCE-logits остается конечной на ±1000; вероятностная BCE не скрывает бесконечность (0.4144ms)
+✔ общий узел: два пути суммируются перед продолжением backward (2.3666ms)
+✔ центральная разность не меняет параметры и проверяет известный полином (0.4837ms)
+✔ SGD и momentum: два ручных шага без изменения старого состояния (1.8716ms)
+✔ Adam: bias correction и epsilon вне квадратного корня (0.7492ms)
+✔ квадратичная поверхность имеет неравные кривизны (0.8422ms)
+✔ сеть 2→4→1: детерминированный seed, нейтральная сеть, все 17 градиентов (4.4537ms)
+✔ Adam действительно обучает XOR на нескольких seed за 3000 шагов (155.5117ms)
+✔ projection uses X[n,in] W[in,out], not the transpose (2.2515ms)
+✔ attention: known average, scaled dot products and row sums (0.6392ms)
+✔ causal and padding masks are exact, including cached query offsets (0.4866ms)
+✔ softmax handles large logits, masks, temperature and additive shifts (1.5133ms)
+✔ RoPE preserves norm and depends on relative position at fixed q/k (0.7997ms)
+✔ LayerNorm centers; RMSNorm keeps mean, and norm placement changes the block (0.9647ms)
+✔ GQA shares K/V within groups, keeping four independent query heads (1.6841ms)
+✔ cached attention equals full causal attention at every prefix, with or without RoPE (1.2292ms)
+✔ sampling implements temperature then top-k then normalized top-p (0.6824ms)
+✔ teacher-forced parallel logits equal sequential prefix logits, with no future leakage (0.8536ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.2566

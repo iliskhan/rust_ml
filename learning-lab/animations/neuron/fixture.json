@@ -1,0 +1,41 @@
+{
+  "activation": "relu",
+  "inputs": [
+    1,
+    2
+  ],
+  "weights": [
+    1,
+    -1
+  ],
+  "contributions": [
+    1,
+    -2
+  ],
+  "initial": {
+    "bias": 0,
+    "z": -1,
+    "output": 0,
+    "derivative": 0
+  },
+  "final": {
+    "bias": 2,
+    "z": 1,
+    "output": 1,
+    "derivative": 1
+  },
+  "curve": [
+    {
+      "z": -2,
+      "output": 0
+    },
+    {
+      "z": 0,
+      "output": 0
+    },
+    {
+      "z": 2,
+      "output": 2
+    }
+  ]
+}

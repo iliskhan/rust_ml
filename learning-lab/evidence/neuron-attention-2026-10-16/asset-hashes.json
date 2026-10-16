@@ -1,0 +1,67 @@
+[
+  {
+    "path": "learning-lab/animations/neuron/neuron.py",
+    "bytes": 7823,
+    "sha256": "32546b2193d6ff27718efb40d269ca88fc56b93fbd80703fec6dc457ab256dd8"
+  },
+  {
+    "path": "learning-lab/animations/neuron/fixture.json",
+    "bytes": 453,
+    "sha256": "5d65c7605003763b050a2aec9f715257953ab5d9c7cf0f8763b2c7e45c9d4c3d"
+  },
+  {
+    "path": "learning-lab/animations/attention/attention.py",
+    "bytes": 9333,
+    "sha256": "7f92a1b7a29b1bcf17df41562786729004247df8f100df27818c378df4647239"
+  },
+  {
+    "path": "learning-lab/animations/attention/fixture.json",
+    "bytes": 2527,
+    "sha256": "c2497c985b84041c19051bbc889c828dd1ad5c180b6665832b305fe8c6e66528"
+  },
+  {
+    "path": "learning-lab/src/LessonAnimation.tsx",
+    "bytes": 3959,
+    "sha256": "b80a62ef260778233b34f5085ad179c4a48b1fbf3a7065898302d7a63d29ba4a"
+  },
+  {
+    "path": "learning-lab/src/NeuronAnimation.tsx",
+    "bytes": 3911,
+    "sha256": "ab57da791533ada2c796dcc68bd205c5122edba6e8143c0b177e167f7e70d1fb"
+  },
+  {
+    "path": "learning-lab/src/AttentionAnimation.tsx",
+    "bytes": 4847,
+    "sha256": "a96960c04ea7fedc25f994791346f11bba68fb3b7d63a7d44fa75da0ae7b3687"
+  },
+  {
+    "path": "learning-lab/public/animations/neuron/captions.ru.vtt",
+    "bytes": 1446,
+    "sha256": "cb245576c1435c3e2a3f997d86e756954ca5f1b16a652e9fd407fa6ecdcf50ec"
+  },
+  {
+    "path": "learning-lab/public/animations/neuron/neuron.mp4",
+    "bytes": 509070,
+    "sha256": "4bdd37daa22c02fa4d78ec697b85586f512f95d0f63363f01fe8ce546570de3d"
+  },
+  {
+    "path": "learning-lab/public/animations/neuron/poster.png",
+    "bytes": 52685,
+    "sha256": "7de8998d25e1b36218195655cd3ff20124c09715b9453c831d3da72329c0c813"
+  },
+  {
+    "path": "learning-lab/public/animations/attention/attention.mp4",
+    "bytes": 721684,
+    "sha256": "5e48008b7b3bc90a820de034aa2dceaea8de6344929c06d04f29ae008048ed8f"
+  },
+  {
+    "path": "learning-lab/public/animations/attention/captions.ru.vtt",
+    "bytes": 1932,
+    "sha256": "847be111f09cf43e925528f5ee7cd1583a7cd1d2c54c5de76466e9c8f6298a6c"
+  },
+  {
+    "path": "learning-lab/public/animations/attention/poster.png",
+    "bytes": 83026,
+    "sha256": "a0cfb17fb552c0e3acb0c6f13bca3c512809264b9a83adfa454d92d2db0d3849"
+  }
+]

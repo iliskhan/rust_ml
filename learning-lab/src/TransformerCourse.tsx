@@ -16,6 +16,7 @@ import { Scene3D } from './ThreeD';
 import { ropePairPath, ropePairPoint } from './spatialSceneMath';
 import { AttentionGeometry } from './AttentionGeometry';
 import { selfAttentionChallenge } from './attentionGeometryMath';
+import { AttentionAnimation } from './AttentionAnimation';
 
 const NormalizationGeometryLab = lazy(() => import('./NormalizationGeometryLab').then(module => ({ default: module.NormalizationGeometryLab })));
 const ResidualGradientLab = lazy(() => import('./ResidualGradientLab').then(module => ({ default: module.ResidualGradientLab })));
@@ -78,6 +79,7 @@ function EmbeddingLesson() {
 
 const ATTENTION_STEPS = ['Q, K, V', 'Сходство', 'Маска', 'Softmax', 'Смесь V'];
 function AttentionLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null);
   const [input, setInput] = useState<Matrix>(SMALL_INPUT.map(row => [...row]));
   const [wq, setWq] = useState<Matrix>(SMALL_PROJECTIONS.q.map(row => [...row]));
   const [wk, setWk] = useState<Matrix>(SMALL_PROJECTIONS.k.map(row => [...row]));
@@ -93,7 +95,9 @@ function AttentionLesson() {
   const entropy = -trace.weights[query].reduce((sum, p) => sum + (p ? p * Math.log(p) : 0), 0);
   return <>
     <LessonLead idea={<>Attention — смешивание сообщений. Q (query) задаёт запрос позиции; K (key) помогает оценить, насколько другая позиция подходит запросу; V (value) — числа, которые мы забираем. Q, K и V получаются из входа с помощью разных обучаемых матриц.</>} experiment={<>У позиции «кот» включите причинную маску: останется только её собственное сообщение. У последней позиции меняйте температуру, чтобы сравнить мягкую смесь и почти единственный выбор.</>} />
-    <div className="tc-columns"><section className="panel"><h4>Вход и настройки</h4><Grid label="X: три позиции × два признака" rows={TOKEN_LABELS} values={input} onChange={setInput} />
+    <AttentionAnimation videoRef={animationVideo} query={query} causal={causal} temperature={temperature} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
+    <div className="tc-columns"><section className="panel"><h4 id="attention-controls" className="lesson-anchor" tabIndex={-1}>Вход и настройки</h4><Grid label="X: три позиции × два признака" rows={TOKEN_LABELS} values={input} onChange={setInput} />
       <label>Чей запрос разбираем<select value={query} onChange={e => setQuery(Number(e.target.value))}>{TOKEN_LABELS.map((token, i) => <option key={i} value={i}>{i}: {token}</option>)}</select></label>
       <label className="tc-check"><input type="checkbox" checked={causal} onChange={e => setCausal(e.target.checked)} />Causal: скрыть будущие позиции</label>
       <label className="tc-check"><input type="checkbox" checked={padding} onChange={e => setPadding(e.target.checked)} />Скрыть третий ключ как padding</label>
@@ -114,6 +118,7 @@ function AttentionLesson() {
     </section></div>
     <section className="tc-action-practice" aria-label="Практика с настройками attention"><h4>Практика: оставить только своё сообщение</h4><p>Для запроса позиции 0 («кот») запретите будущие связи с помощью Causal. Добейтесь долей [1; 0; 0] и выхода, равного V₀. Меняйте настройки опыта выше, затем проверьте результат.</p><p className="note">«Начать» выбирает запрос и ключ 0, отключает Causal и padding, задаёт T=1 и открывает шаг «Смесь V». Матрицы X/W и переключатель √dₖ сохраняются. Без нажатия «Начать» задание не засчитывается.</p><div className="button-row"><button onClick={() => { setPracticeStarted(true); setPracticeResult(null); setQuery(0); setKey(0); setCausal(false); setPadding(false); setTemperature(1); setStep(4); }}>{practiceStarted ? 'Начать заново' : 'Начать практику attention'}</button><button disabled={!practiceStarted} onClick={() => setPracticeResult({ signature: practiceSignature, ...selfAttentionChallenge(trace, query, causal) })}>Проверить настройку attention</button></div><p role="status">{!practiceStarted ? 'Ожидает старта.' : !practiceResult ? 'Практика начата: теперь измените настройки и нажмите «Проверить».' : practiceResult.signature !== practiceSignature ? 'Настройки изменились после проверки. Проверьте новый результат.' : practiceResult.message}</p></section>
     <details><summary>Весь attention одной формулой и границы примера</summary><p className="formula">Q=XWQ, K=XWK, V=XWV<br />A=softmax((QKᵀ/√dₖ + M)/T), Y=AV<br />X: 3×2, WQ/WK/WV: 2×2, A: 3×3, Y: 3×2.</p><p>Softmax применяется отдельно к каждой строке. M равна 0 для разрешённых связей и −∞ для запрещённых. Не следует заменять −∞ на 0: нулевой score обычно даёт ненулевой вес. Все строки здесь имеют хотя бы один доступный ключ. Это одна голова без bias, dropout и обучения. Слова — подписи учебных векторов; веса не доказывают языковое понимание или причинную важность токена.</p></details>
+    </div>
   </>;
 }
 

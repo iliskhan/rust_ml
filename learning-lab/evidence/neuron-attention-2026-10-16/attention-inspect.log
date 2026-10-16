@@ -1,0 +1,38 @@
+learning-lab\animations\attention\attention.py: AttentionMixture, 50.00 s, 35 plays
+storyboard: work\backprop-pilot\attention-inspect.png, work\backprop-pilot\attention-inspect-2.png, work\backprop-pilot\attention-inspect-3.png
+  #0   0.00– 0.60s  attention.py:71  FadeIn(Text 'Attention: одна строка'), FadeIn(Group)
+  #1   0.60– 1.40s  attention.py:72  FadeIn(Group)
+  #2   1.40– 7.40s  attention.py:73  wait
+  #3   7.40– 8.00s  attention.py:74  FadeOut(Text 'Attention: одна строка'), FadeOut(Group), FadeOut(Group)
+  #4   8.00– 8.60s  attention.py:84  FadeIn(Text 'Запрос q₁ и три ключа'), FadeIn(MathTex 'q_1=[0,\\,1],\\quad d_k=2'), FadeIn(Group)
+  #5   8.60– 9.20s  attention.py:85  FadeIn(Group)
+  #6   9.20–10.00s  attention.py:86  Write(Group)
+  #7  10.00–12.00s  attention.py:87  wait
+  #8  12.00–12.40s  attention.py:88  FadeOut(Group), FadeOut(Group)
+  #9  12.40–13.10s  attention.py:93  ReplacementTransform(MathTex 'q_1=[0,\\,1],\\quad d_k=2'), FadeIn(Group), FadeIn(Text 'Score — ещё не вес')
+  #10 13.10–17.40s  attention.py:94  wait
+  #11 17.40–18.00s  attention.py:95  FadeOut(Text 'Запрос q₁ и три ключа'), FadeOut(MathTex 's_j=(q_1\\cdot k_j)/\\sqrt{2}'), FadeOut(Group), FadeOut(Group), FadeOut(Text 'Score — ещё не вес')
+  #12 18.00–18.60s  attention.py:106  FadeIn(Text 'Будущий ключ получит вес?'), FadeIn(Text 'Запрос: позиция 1 · Режим: …'), FadeIn(Group), FadeIn(MathTex '\\approx 0.354'), FadeIn(MathTex '\\approx 0.707'), FadeIn(MathTex '\\approx 1.061'), FadeIn(Text 'Будущее')
+  #13 18.60–22.00s  attention.py:108  wait
+  #14 22.00–22.40s  attention.py:109  FadeOut(Text 'Будущий ключ получит вес?'), FadeOut(Text 'Будущее')
+  #15 22.40–23.00s  attention.py:113  FadeIn(Text 'Маска запрещает будущее'), ReplacementTransform(MathTex '\\approx 1.061'), FadeIn(MathTex 'j>1\\quad\\Rightarrow\\quad s_…')
+  #16 23.00–25.40s  attention.py:115  wait
+  #17 25.40–26.00s  attention.py:116  FadeOut(Text 'Маска запрещает будущее'), FadeOut(Text 'Запрос: позиция 1 · Режим: …'), FadeOut(Group), FadeOut(MathTex '\\approx 0.354'), FadeOut(MathTex '\\approx 0.707'), FadeOut(MathTex '-\\infty'), FadeOut(MathTex 'j>1\\quad\\Rightarrow\\quad s_…')
+  #18 26.00–26.60s  attention.py:128  FadeIn(Text 'Softmax: от scores к весам'), FadeIn(MathTex 'a_j=\\exp(s_j)/\\sum_l\\exp(s_…')
+  #19 26.60–27.40s  attention.py:129  FadeIn(Group), FadeIn(Group)
+  #20 27.40–29.40s  attention.py:130  wait
+  #21 29.40–30.20s  attention.py:131  Write(MathTex '0.413+0.587+0=1')
+  #22 30.20–34.40s  attention.py:132  wait
+  #23 34.40–35.00s  attention.py:133  FadeOut(Text 'Softmax: от scores к весам'), FadeOut(MathTex 'a_j=\\exp(s_j)/\\sum_l\\exp(s_…'), FadeOut(Group), FadeOut(Group), FadeOut(MathTex '0.413+0.587+0=1')
+  #24 35.00–35.60s  attention.py:144  FadeIn(Text 'Смешиваем значения V'), FadeIn(Group), FadeIn(Group)
+  #25 35.60–36.40s  attention.py:145  FadeIn(Group)
+  #26 36.40–38.40s  attention.py:146  wait
+  #27 38.40–39.20s  attention.py:149  Write(MathTex 'o_1\\approx [0.706,\\,0.587]')
+  #28 39.20–42.40s  attention.py:150  wait
+  #29 42.40–43.00s  attention.py:151  FadeOut(Group), FadeOut(Group), FadeOut(Group), FadeOut(MathTex 'o_1\\approx [0.706,\\,0.587]')
+  #30 43.00–43.60s  attention.py:156  FadeIn(MathTex 'o_{1,0}=a_0\\cdot1+a_1\\cdot0…'), FadeIn(MathTex 'o_{1,1}=a_0\\cdot0+a_1\\cdot1…')
+  #31 43.60–45.40s  attention.py:157  wait
+  #32 45.40–46.00s  attention.py:158  FadeOut(Text 'Смешиваем значения V'), FadeOut(MathTex 'o_{1,0}=a_0\\cdot1+a_1\\cdot0…'), FadeOut(MathTex 'o_{1,1}=a_0\\cdot0+a_1\\cdot1…')
+  #33 46.00–46.60s  attention.py:164  FadeIn(Text 'Отключите causal-маску'), FadeIn(Text 'У «рыбу» появится вес. А вы…'), FadeIn(Text 'Предскажите и проверьте в л…')
+  #34 46.60–50.00s  attention.py:165  wait
+layout: no problems in 14 samples

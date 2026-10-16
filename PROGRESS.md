@@ -1,5 +1,22 @@
 # Прогресс RustML
 
+### Анимации нейрона и attention — проверено, доставка в работе, 2026-10-16
+
+Основной checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master; исходные
+экраны обоих уроков сохранены перед интеграцией. Срез B12/R01/R04/R06 и
+U02/U04/U05/U07/U08. Нейрон: x=[1,2],w=[1,−1],b0→2,ReLU0→1.
+Attention: query1,causal,T1,веса≈[0,412521;0,587479;0],смесь
+V≈[0,7062605;0,587479]. Fixtures получены из расчётов лабораторий.
+Node24: `--test tests/lesson-animations.test.ts tests/backprop-animation.test.ts
+tests/transformerMath.test.ts` —14/14 PASS. Neuron inspect13 кадров PASS после
+исправления6 проблем; MP444с720p30 и poster34с созданы ManimGX0.1.1/Python3.13.2.
+Attention inspect14 кадров PASS, финальный MP450с720p30/poster40с созданы.
+Расширенная проверка Node38/38 PASS, tsc/build PASS. Общий player прошёл
+Chrome desktop1440/mobile390/320: главы/keyboard, pause/возврат/текст,
+fallback/retry, живые расчёты; production preview `/rust_ml/` и backprop PASS.
+[Полные свидетельства и ограничения](learning-lab/evidence/neuron-attention-2026-10-16/VALIDATION.md).
+Следующий шаг: commit/push, CI/Pages и публичная сверка двух новых роликов.
+
 ### Пилот ManimGX backprop — 2026-10-16
 
 По прямому поручению пользователя реализован отдельный пилот B12 с R01/R04/R06

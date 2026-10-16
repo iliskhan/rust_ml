@@ -1,4 +1,4 @@
-.backprop-animation video {
+.lesson-animation video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -7,32 +7,32 @@
   background: #101622;
 }
 
-.backprop-animation-chapters {
+.lesson-animation-chapters {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-block: 14px;
 }
 
-.backprop-animation-chapters button {
+.lesson-animation-chapters button {
   min-height: 44px;
   text-align: left;
 }
 
-.backprop-animation-chapters [aria-current="step"] {
+.lesson-animation-chapters [aria-current="step"] {
   border-color: var(--green);
   font-weight: 700;
 }
 
-.backprop-animation-transcript {
+.lesson-animation-transcript {
   padding-inline-start: 24px;
 }
 
-.backprop-animation-transcript li {
+.lesson-animation-transcript li {
   margin-block: 12px;
 }
 
-.backprop-animation-fallback {
+.lesson-animation-fallback {
   padding: 16px;
   margin-block: 16px;
   border: 1px solid var(--line);
@@ -40,13 +40,13 @@
 }
 
 @media (max-width: 560px) {
-  .backprop-animation video {
+  .lesson-animation video {
     aspect-ratio: 1;
     object-fit: contain;
     object-position: center 20%;
   }
 
-  .backprop-animation-chapters {
+  .lesson-animation-chapters {
     grid-template-columns: 1fr;
   }
 }

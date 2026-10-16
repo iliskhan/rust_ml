@@ -1,0 +1,41 @@
+learning-lab\animations\neuron\neuron.py: NeuronActivation, 44.00 s, 38 plays
+storyboard: work\backprop-pilot\neuron-inspect.png, work\backprop-pilot\neuron-inspect-2.png, work\backprop-pilot\neuron-inspect-3.png
+  #0   0.00– 0.60s  neuron.py:52  FadeIn(Text 'Нейрон: от входов к выходу')
+  #1   0.60– 1.40s  neuron.py:53  Write(MathTex 'x_1=1,\\quad w_1=1')
+  #2   1.40– 2.00s  neuron.py:54  Create(Arrow)
+  #3   2.00– 2.60s  neuron.py:55  Write(MathTex '1\\cdot1=1')
+  #4   2.60– 4.00s  neuron.py:56  wait
+  #5   4.00– 4.80s  neuron.py:57  Write(MathTex 'x_2=2,\\quad w_2=-1')
+  #6   4.80– 5.40s  neuron.py:58  Create(Arrow)
+  #7   5.40– 6.00s  neuron.py:59  Write(MathTex '2\\cdot(-1)=-2')
+  #8   6.00– 8.20s  neuron.py:60  wait
+  #9   8.20– 8.80s  neuron.py:61  FadeIn(Text 'Каждый вход умножаем на его…')
+  #10  8.80– 9.40s  neuron.py:62  wait
+  #11  9.40–10.00s  neuron.py:63  FadeOut(Text 'Нейрон: от входов к выходу'), FadeOut(MathTex 'x_1=1,\\quad w_1=1'), FadeOut(MathTex 'x_2=2,\\quad w_2=-1'), FadeOut(Arrow), FadeOut(Arrow), FadeOut(MathTex '1\\cdot1=1'), FadeOut(MathTex '2\\cdot(-1)=-2'), FadeOut(Text 'Каждый вход умножаем на его…')
+  #12 10.00–10.60s  neuron.py:73  FadeIn(Text 'Сложим вклады и смещение')
+  #13 10.60–11.40s  neuron.py:74  Write(MathTex 'z=x_1w_1+x_2w_2+b'), FadeIn(MathTex 'b=0')
+  #14 11.40–13.00s  neuron.py:75  wait
+  #15 13.00–13.80s  neuron.py:76  ReplacementTransform(MathTex 'z=x_1w_1+x_2w_2+b'), FadeIn(Text 'z — число до активации')
+  #16 13.80–17.40s  neuron.py:77  wait
+  #17 17.40–18.00s  neuron.py:78  FadeOut(Text 'Сложим вклады и смещение'), FadeOut(MathTex 'z=1+(-2)+0=-1'), FadeOut(MathTex 'b=0'), FadeOut(Text 'z — число до активации')
+  #18 18.00–18.80s  neuron.py:109  FadeIn(Text 'ReLU оставит какое число?'), Create(Group), FadeIn(MathTex 'a=\\max(0,z)')
+  #19 18.80–19.40s  neuron.py:110  FadeIn(Text 'Подумайте до ответа')
+  #20 19.40–20.00s  neuron.py:111  Write(MathTex 'z=-1\\quad a=?')
+  #21 20.00–23.40s  neuron.py:112  wait
+  #22 23.40–24.20s  neuron.py:113  ReplacementTransform(MathTex 'z=-1\\quad a=?'), FadeIn(Dot)
+  #23 24.20–25.40s  neuron.py:114  wait
+  #24 25.40–26.00s  neuron.py:115  FadeOut(Text 'ReLU оставит какое число?'), FadeOut(Text 'Подумайте до ответа')
+  #25 26.00–26.60s  neuron.py:126  FadeIn(Text 'Меняем только смещение')
+  #26 26.60–27.40s  neuron.py:127  FadeIn(MathTex 'b:0\\longrightarrow 2')
+  #27 27.40–29.00s  neuron.py:128  wait
+  #28 29.00–30.20s  neuron.py:129  ReplacementTransform(MathTex 'z=-1\\quad a=0'), Dot.animate.move_to(…).set_color(…), ReplacementTransform(MathTex 'b:0\\longrightarrow 2')
+  #29 30.20–32.00s  neuron.py:132  wait
+  #30 32.00–32.60s  neuron.py:133  Create(Group)
+  #31 32.60–33.40s  neuron.py:135  ReplacementTransform(Text 'Меняем только смещение')
+  #32 33.40–37.40s  neuron.py:136  wait
+  #33 37.40–38.00s  neuron.py:137  FadeOut(MathTex 'a=\\max(0,z)'), FadeOut(MathTex 'z=1\\quad a=1'), FadeOut(MathTex '1+(-2)+2=1'), FadeOut(Group), FadeOut(Dot), FadeOut(Group), FadeOut(Text 'При z > 0 выход равен z')
+  #34 38.00–38.60s  neuron.py:144  FadeIn(Text 'Те же входы и веса. Меняем b'), FadeIn(Text 'Когда выход будет больше ну…')
+  #35 38.60–40.80s  neuron.py:145  wait
+  #36 40.80–41.40s  neuron.py:146  FadeIn(Text 'Предскажите и проверьте в л…')
+  #37 41.40–44.00s  neuron.py:147  wait
+layout: no problems in 13 samples

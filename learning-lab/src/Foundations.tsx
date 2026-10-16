@@ -10,10 +10,12 @@ import { ActionExercise } from './ActionExercise'
 import { PracticeSection } from './practice/PracticeCloudProvider'
 import { NEURON_PRACTICE_START, MSE_PRACTICE_START, BACKPROP_PRACTICE_START, checkNeuronPractice, checkMsePractice, checkBackpropPractice } from './actionExerciseMath'
 import { BackpropAnimation } from './BackpropAnimation'
+import { NeuronAnimation } from './NeuronAnimation'
 
 const activationNames: Record<Activation, string> = { relu: 'ReLU', sigmoid: 'Сигмоида', tanh: 'tanh' }
 
 export function NeuronLesson() {
+  const animationVideo = useRef<HTMLVideoElement>(null)
   const [sceneOpened, setSceneOpened] = useState(false)
   const [x1, setX1] = useState(1)
   const [x2, setX2] = useState(2)
@@ -33,6 +35,8 @@ export function NeuronLesson() {
     <p className="lesson-intro">Нейрон объединяет признаки: умножает каждый вход на вес, прибавляет смещение и применяет активацию. Вес задаёт влияние признака; смещение сдвигает границу реакции.</p>
     <p className="note">Входы образуют <ConceptLink concept="vector">вектор</ConceptLink>. Взвешенная сумма — это <ConceptLink concept="dot-product">скалярное произведение</ConceptLink>, а чувствительность выхода описывает <ConceptLink concept="derivative">производная</ConceptLink>.</p>
     <LessonOutline items={[{ id: 'neuron-controls', label: 'Собрать нейрон' }, { id: 'neuron-result', label: 'Разобрать результат' }, { id: 'neuron-activation', label: 'Активация и наклон' }, { id: 'neuron-batch', label: 'Пакет и слой' }]} />
+    <NeuronAnimation videoRef={animationVideo} z={z} output={output} activation={activationNames[kind]} />
+    <div onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
     <div className="lab-grid">
       <section className="panel">
         <h3 id="neuron-controls" className="lesson-anchor" tabIndex={-1}>Соберите один нейрон</h3>
@@ -102,6 +106,7 @@ export function NeuronLesson() {
     </section>
     <PracticeSection lessonId="neuron" topicId="unit.neuron.dense" />
     <Exercise question="При z = −2 какой выход даёт ReLU?" options={['−2', '0', '2']} correct={1} explanation="ReLU оставляет положительную часть: max(0, −2) = 0. На отрицательной стороне её производная тоже равна 0." />
+    </div>
   </>
 }
 
@@ -237,7 +242,7 @@ export function BackpropLesson() {
     <p className="lesson-intro"><ConceptLink concept="backpropagation">Обратное распространение</ConceptLink> вычисляет влияние каждого параметра на потерю. Если значение используется в двух ветвях, его <ConceptLink concept="gradient">градиент</ConceptLink> складывается из обоих путей — это ключ к правильному автодифференцированию.</p>
     <p className="note">Основа вычисления — <ConceptLink concept="chain-rule">правило цепочки</ConceptLink>. Внутри его разбора можно изучить производную, а затем вернуться к текущему шагу графа.</p>
     <BackpropAnimation videoRef={animationVideo} x={x} w={w} target={target} />
-    <div className="lab-grid">
+    <div className="lab-grid" onFocusCapture={() => animationVideo.current?.pause()} onPointerDownCapture={() => animationVideo.current?.pause()}>
       <section className="panel">
         <h3>Один промежуточный узел, два пути</h3>
         <div className="controls">
