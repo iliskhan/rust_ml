@@ -1,5 +1,26 @@
 # Прогресс RustML
 
+### Production grader: окружение разрешено и сохранено — 2026-10-16
+
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master после fetch/fast-forward
+до `9683759`. Пользователь прямо разрешил production Vercel rustml-grader:
+два ограниченных DB URL и новый CRON_SECRET. Prepared provision-env завершился:
+три sensitive значения и публичный SUPABASE_PUBLISHABLE_KEY stored=true.
+Значения не выводились и не добавлялись в Git; owner URL в Vercel не передавался.
+
+Свежий check-logins.ps1: обе настоящие TLS-сессии rustml_api/rustml_worker,
+правильные роли и 18 deny probes PASS; транзакции rolled back, business writes=false.
+Найдено и исправлено: SQL attempt_not_found при чужом resume ранее превращался
+в HTTP503; теперь404. Regression сначала RED503!=404, затем8/8 supervisor PASS.
+Node24.19/direct Python/Rust1.87: полный suite561/561 PASS,0skipped;
+production typecheck/build PASS. Scope — handler и один существующий test-suite.
+
+Deployment и hosted acceptance ещё не выполнены. Независимый review выявил
+необходимые отдельные гейты: текущая provider quota, SQL fencing, actual reaper,
+freshness OIDC, cleanup own fixtures и admission OFF в finally.
+Новые helpers находятся в ignored work/practice-grader/release-20261016/;
+локальный syntax/selfcheck не считается hosted PASS. Миграции не повторялись.
+
 ### ManimGX для учебника — 2026-10-16
 
 Исследование по запросу о визуализациях как у 3Blue1Brown завершено:
