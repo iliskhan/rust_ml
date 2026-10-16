@@ -194,6 +194,17 @@ test('HTTP verified auth submit/retry and owner resume schedule only exact attem
   assert.equal(finished.background.length, 0)
 })
 
+test('HTTP fresh authenticated account without practice profile receives generic session denial', async () => {
+  for (const reason of ['profile_not_found', 'session_not_found']) {
+    const state = httpHarness({ sqlFailure: reason }), response = await state.handler(request())
+    assert.equal(response.status, 404)
+    assert.deepEqual(await response.json(), { code: 'session_not_found' })
+    assert.equal(state.calls.length, 1)
+    assert.equal(state.background.length, 0)
+    assert.equal(state.launched.length, 0)
+  }
+})
+
 test('HTTP rejects origin/body/auth/client controls and redacts infrastructure errors', async () => {
   for (const [body, settings, status] of [[submitBody, { origin: 'https://evil.test' }, 403],
     [submitBody, { method: 'GET' }, 405], [submitBody, { contentType: 'text/plain' }, 415],

@@ -24,6 +24,7 @@ async function boundedBody(request, limit) {
 }
 function sqlError(error) {
   const message = typeof error?.message === 'string' ? error.message : ''
+  if (message.includes('profile_not_found')) return new RequestError(404, 'session_not_found')
   for (const [code, status] of [['grading_unavailable',503], ['submission_limit',429], ['grading_budget_exhausted',429], ['grading_capacity',429],
     ['invalid_submission',400], ['invalid_attempt',400], ['draft_conflict',409], ['idempotency_key_reused_with_different_request',409], ['session_not_found',404], ['attempt_not_found',404]]) {
     if (message.includes(code)) return new RequestError(status, code)
