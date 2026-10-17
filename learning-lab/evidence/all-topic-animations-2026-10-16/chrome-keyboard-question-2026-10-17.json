@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-17T11:31:12.052Z",
+  "code_revision": "23e0c2f91a9ee1e477f45b65fd2c0bed17a96a0b",
+  "viewport": "390x844",
+  "neuron": {
+    "before": 1.5,
+    "applied": 1,
+    "restored": 1.5,
+    "keyboardChapter": 34
+  },
+  "activation": {
+    "questionTime": 9,
+    "stopped": {
+      "paused": true,
+      "time": 9.032651
+    },
+    "feedback": "Верно. σ′(z)=σ(z)(1−σ(z)). В нуле наклон 0.25, при z=3 — примерно0.04518: насыщение ослабляет локальную чувствительность.",
+    "afterSeek": {
+      "paused": true,
+      "time": 30
+    },
+    "questionClosed": true
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "code_revision": "23e0c2f91a9ee1e477f45b65fd2c0bed17a96a0b",
+  "checks": [
+    {
+      "checked_at": "2026-10-17T11:27:19.490Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "transformerforward",
+          "width": 1280
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:27:24.480Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "cnnforward",
+          "width": 1280
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:27:27.491Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "cnntraining",
+          "width": 1280
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:27:39.512Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "recurrent",
+          "width": 1280
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:27:41.847Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "bptt",
+          "width": 1280
+        }
+      ],
+      "route": "#architectures",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:28:12.577Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "neuron",
+          "width": 1280
+        },
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 339.4000053405762,
+          "slug": "activations",
+          "width": 1280
+        }
+      ],
+      "route": "#neuron",
+      "viewport": {
+        "height": 844,
+        "scrollWidth": 375,
+        "width": 390
+      }
+    },
+    {
+      "checked_at": "2026-10-17T11:31:12.415Z",
+      "films": [
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 268.99999618530273,
+          "slug": "neuron",
+          "width": 1280
+        },
+        {
+          "captions": [
+            "disabled"
+          ],
+          "chapterHeights": [
+            44,
+            44,
+            44,
+            44,
+            44
+          ],
+          "height": 720,
+          "left": 35.79999923706055,
+          "paused": true,
+          "right": 268.99999618530273,
+          "slug": "activations",
+          "width": 1280
+        }
+      ],
+      "route": "#neuron",
+      "viewport": {
+        "height": 760,
+        "scrollWidth": 305,
+        "width": 320
+      }
+    }
+  ]
+}
