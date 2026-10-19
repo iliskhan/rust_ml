@@ -1,5 +1,65 @@
 # Прогресс RustML
 
+### Playground — проверка основы и проектирование, 2026-10-19
+
+Запрос: тщательно продумать расширение существующей лаборатории.
+Checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, master,
+`ca843d8d0c4c034bcad0b81f90f81f070246794b`; до работы дерево чистое.
+Подготовлено [уточнение в PLAN](PLAN.md#развитие-playground--проектирование-2026-10-19):
+B12/R01/R02/R04/R06, U02/U04/U05/U07/U08; следующий срез данных — B13/R02/R05,
+контекст — B06/U06, наблюдение учеников — B08/R07/U09. Новые функции не реализованы.
+
+Два независимых read-only review: учебные сценарии и техническая совместимость.
+Подтверждены уже работающие A/B/batch/L2/hidden representations/диагностика;
+первый выпуск — два учебных опыта поверх них. Новые данные и признаки отложены до
+соответствующей численной проверки и совместимого workspace v3.
+Генератор делает независимые balanced draws 96/32 с coordinate jitter ±.018,
+не split общего массива и не повреждение меток (`boundaryNetworkMath.ts:20–58`).
+Decoder регенерирует данные, проверяет финальную BCE и численное состояние
+(`boundaryExperiment.ts:124–190`); film replay зависит от legacy defaults.
+Эти ограничения включены в план. Ни итоговый test, ни новый учебный зачёт не заявлены.
+Финальный review выявил отдельный пробел: `PredictionExperiment.tsx:11` и
+`learning-context.tsx:25` хранят состояние в памяти. Инженерный
+`practice/local-progress.ts:4–8` требует language/code и не подходит напрямую.
+План уточнён: маленький отдельный локальный no-code record с проверяемой схемой,
+экспозицией, помощью и scope; boundary workspace первого среза остаётся v2.
+Оба read-only review завершены, замечания внесены; локальные Markdown-пути
+четырёх документов проверены (81/81), `git diff --check` прошёл.
+
+На этой основе bundled Node выполнил команду из корня:
+
+```powershell
+& 'C:/Users/lomaster/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe' --test learning-lab/tests/boundary-network.test.ts learning-lab/tests/boundary-experiment.test.ts learning-lab/tests/boundary-minibatch.test.ts learning-lab/tests/boundary-legacy-export.test.ts learning-lab/tests/boundaryDiagnostics.test.ts learning-lab/tests/foundations-topic-films.test.ts
+```
+
+**40/40 PASS**, 0 skipped, exit0. Обычный `node` через PATH не запустился из-за
+попытки Volta создать недоступный каталог AppData; bundled Node обошёл shim,
+глобальные установки не менялись. Это targeted baseline, не полный suite/build.
+
+Отдельный probe текущего движка: `circles`, seeds 7/42/1337 для данных/init/batch,
+0/1/2 скрытых слоя, каждый шириной8/tanh, Adam η=.02, batch96, λ=0,
+`advanceBoundaryExperiment(createBoundaryExperiment(settings),700)`.
+
+| Seed | Без скрытых: train / validation | Один слой: train / validation | Два слоя: train / validation |
+|---|---|---|---|
+| 7 | 57/96 · 14/32 | 96/96 · 32/32 | 96/96 · 32/32 |
+| 42 | 52/96 · 16/32 | 96/96 · 32/32 | 96/96 · 32/32 |
+| 1337 | 60/96 · 15/32 | 96/96 · 32/32 | 96/96 · 32/32 |
+
+Все девять запусков без численной ошибки. Например, seed42: validation BCE
+.709627 → .010751 → .000281 для глубины0/1/2. Это результаты данных конфигураций,
+не гарантия сходимости, превосходства глубины или понимания учеником.
+Probe исполнялся из `learning-lab` через bundled Node `--input-type=module`,
+импортируя `boundaryExperiment.ts` и `boundaryNetworkMath.ts`, без правок исходников.
+
+Проверены первичные страницы Playground и Google ML Crash Course; ссылки в PLAN.
+Продуктовый UI в этой документационной задаче не менялся и заново не проверялся;
+исследование с учениками, новый U00 и WCAG-проверка не выполнялись.
+Следующий шаг реализации: свежий baseline `#network`, затем первый опыт
+«Зачем скрытый слой?» вместе с новым вопросом и сохранностью учебного контекста.
+Изменения этой задачи ограничены документацией; commit/push фиксируются в ответе
+после проверки совпадения HEAD с origin/master.
+
 ### Анимации остальных тем — опубликовано и проверено, 2026-10-17
 
 Основной checkout master4065f9f исходно чистый. Добавлены63сцены рядом с
