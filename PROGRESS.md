@@ -1,5 +1,37 @@
 # Прогресс RustML
 
+### Playground — реализовано и локально проверено, 2026-10-19
+
+Прямое разрешение пользователя: «Сделай всё нужное и залей». Основа master4730658,
+основной checkout `C:/Users/lomaster/Desktop/dev/rust_ml`, исходно чистое дерево.
+B12/B13, R01/R02/R04/R05/R06, U02/U04/U05/U06/U07/U08; план — секция Playground
+в PLAN.md. Выполнены два no-code опыта, отдельное локальное хранение, данные24/48/96,
+ошибки train-меток, radial feature, v3/legacy, итоговая оценка frozen модели.
+
+Финальная проверка 19.10: **653PASS/5opt-in skipped, fail0 (658всего)**,
+tsc --noEmit PASS, Vite build `/rust_ml/` PASS. После review закрыты CAS race двух
+вкладок (Web Locks), преждевременный показ помощи/ответа (persisted barrier),
+restoreA/film receipts, safe seed error и неверные формулировки линейности при radial.
+10 targeted no-code tests включают pending lock/quota/queued stale draft;
+44 targeted core tests включают реальный legacy-v1 exact continuation, data/radial/v3.
+Desktop1280 и mobile390 baseline сохранены в `learning-lab/evidence/playground-2026-10-19/`.
+Реальные UI действия подтвердили 24/32 точки,5исправленныхметок,4параметра radial,
+100→101шаг, независимое влияние порога/пробы/обучения, reload черновика/экспозиции,
+frozen final test после обучения и restoreA с remembered exposure, безопасную ошибку
+коллизии seed. Финальный production опыт через настоящий UI: circles,0→1слой8tanh,
+700обновлений,raw96/32,Adam.02,seed42 дал validation16/32,BCE.709627→32/32,BCE.010751;
+frozen test32/32,BCE.006684. Help→Esc вернул шаг700/прогноз/снимки.
+Final mobile320 documentWidth305 без выходящих контролов; снимки390/320 сохранены.
+После чистой загрузки production консоль error/warn0. Подготовка JSON через UI
+подтверждена; фактическое завершение скачивания инструментом не подтверждалось.
+
+[Приёмка, команды, снимки и границы](learning-lab/evidence/playground-2026-10-19/VALIDATION.md).
+Финальные source SHA записаны рядом; Rust/зависимости/замороженные film fixtures
+не менялись. Следующий шаг выпуска: commit/push и проверка Pages/CI; результат Git
+сообщается после отправки. UI/математика реализованы; образовательная эффективность
+и соответствие WCAG не заявлены. Исследование с учениками, реальные мобильные
+устройства и экранный чтец не проверялись.
+
 ### Playground — проверка основы и проектирование, 2026-10-19
 
 Запрос: тщательно продумать расширение существующей лаборатории.

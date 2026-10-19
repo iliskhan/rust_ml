@@ -92,8 +92,8 @@ export function HiddenRepresentations({ params, config, dataset, probe, onProbeC
   return <section className="hidden-representations" aria-labelledby={`${id}-heading`} data-step={step} data-layer={width ? layer + 1 : 'none'}>
     <span className="eyebrow">Что происходит между входом и ответом</span>
     <h4 id={`${id}-heading`}>Как сеть преобразует точки</h4>
-    <p>Слева — исходные x₁ и x₂. Справа — ответы нейронов выбранного скрытого слоя: h = activation(Wa + b). Это те же 96 обучающих и 32 проверочные точки, пропущенные через текущие веса сети.</p>
-    <p className="note hidden-source">{source} · шаг <strong>{step}</strong>. Проба {selectedPoint ? `${selectedPoint.id} (${selectedPoint.validation ? 'проверка' : 'обучение'})` : 'свободная'}: x = {vector(probe)}. Перед первым слоем a⁽⁰⁾ = 2x − 1 = {vector(trace.activations[0])}.</p>
+    <p>Слева — исходные x₁ и x₂. Справа — ответы нейронов выбранного скрытого слоя: h = activation(Wa + b). Это те же {dataset.train.length} обучающих и {dataset.validation.length} проверочные точки, пропущенные через текущие веса сети.</p>
+    <p className="note hidden-source">{source} · шаг <strong>{step}</strong>. Проба {selectedPoint ? `${selectedPoint.id} (${selectedPoint.validation ? 'проверка' : 'обучение'})` : 'свободная'}: x = {vector(probe)}. Перед первым слоем a⁽⁰⁾ = {config.features === 'radial' ? '[u; v; u²+v²]' : '[u; v]'} = {vector(trace.activations[0])}; u=2x₁−1, v=2x₂−1.</p>
     <div className="hidden-controls">
       <label>Показать скрытый слой<select disabled={!width} value={layer} onChange={event => setChoice({ layer: Number(event.target.value), axes: [0, 1, 2], neuron: 0 })}>
         {!width && <option value={0}>Скрытых слоёв нет</option>}
@@ -136,8 +136,8 @@ export function HiddenRepresentations({ params, config, dataset, probe, onProbeC
         </>}
       </details>
     </>}
-    <details className="hidden-data"><summary>Все точки и точные координаты · 128 точек{width ? ` · слой ${layer + 1}` : ' · входы и выход'}</summary>
-      <div className="hidden-table-wrap" tabIndex={0} role="region" aria-label="Все 128 точек; таблицу можно прокручивать по горизонтали"><table><caption>Текущие веса, шаг {step}. T — обучение, V — проверка. Числа округлены до 6 знаков; ID выбирает исходную точку без округления. {width > 0 && 'Векторы приведены целиком, включая не показанные на карте координаты.'}</caption><thead><tr><th scope="col">ID</th><th scope="col">Класс</th><th scope="col">Вход x</th>{width > 0 && <><th scope="col">Вход слоя a</th><th scope="col">Все суммы z</th><th scope="col">Полный вектор h</th></>}<th scope="col">p(класс 1)</th></tr></thead><tbody>{points.map(point => <tr key={point.id} data-sample-id={point.id} aria-selected={selectedPoint?.id === point.id}>
+    <details className="hidden-data"><summary>Все точки и точные координаты · {points.length} точек{width ? ` · слой ${layer + 1}` : ' · входы и выход'}</summary>
+      <div className="hidden-table-wrap" tabIndex={0} role="region" aria-label={`Все ${points.length} точек; таблицу можно прокручивать по горизонтали`}><table><caption>Текущие веса, шаг {step}. T — обучение, V — проверка. Числа округлены до 6 знаков; ID выбирает исходную точку без округления. {width > 0 && 'Векторы приведены целиком, включая не показанные на карте координаты.'}</caption><thead><tr><th scope="col">ID</th><th scope="col">Класс</th><th scope="col">Вход x</th>{width > 0 && <><th scope="col">Вход слоя a</th><th scope="col">Все суммы z</th><th scope="col">Полный вектор h</th></>}<th scope="col">p(класс 1)</th></tr></thead><tbody>{points.map(point => <tr key={point.id} data-sample-id={point.id} aria-selected={selectedPoint?.id === point.id}>
         <th scope="row"><button type="button" aria-label={`Выбрать ${point.id} как общую пробу`} onClick={() => onProbeChange([...point.input])}>{point.id}</button></th><td>{point.target}</td><td>{vector(point.input)}</td>{width > 0 && <><td>{vector(point.trace.activations[layer])}</td><td>{vector(point.trace.preactivations[layer])}</td><td>{vector(point.trace.activations[layer + 1])}</td></>}<td>{fmt(point.trace.probability, 6)}</td>
       </tr>)}</tbody></table></div>
     </details>

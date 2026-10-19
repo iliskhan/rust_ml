@@ -1,0 +1,19 @@
+{
+  "learning-lab/src/BoundaryComparison.tsx": "4fb65351a5a74e212b852903f99041b3a1063c2b95bf823c9e735448d8461b49",
+  "learning-lab/src/BoundaryDiagnostics.tsx": "d25c395e7c111a96b94e7bf0a9aaadc53c659e55f53b9898586fe2e8324047eb",
+  "learning-lab/src/BoundaryFinalEvaluation.tsx": "805dce6f7ab6113b306cdb974e4a1afdcd179d23a5ba5e78fc8e544fe360a139",
+  "learning-lab/src/BoundaryLessons.tsx": "f004bb945d28c165c193dbfd2661e216fe1865be2278257f35981854f09a80a5",
+  "learning-lab/src/BoundaryPlayground.tsx": "ffe8d6e73ecbfb7f6e67aac66b127dc5750f32732f3fd14aead4c0f82ca18b2c",
+  "learning-lab/src/Experiments.tsx": "928ecc2ab11968d8c9cee3bb7798697f17d59f7256a7ee63e49ccc9e994bcf24",
+  "learning-lab/src/HiddenRepresentations.tsx": "eec94a5d75793c932c95209ef3449811a557387e63da6f6eab64b9491e2d9fa3",
+  "learning-lab/src/boundary-lessons.css": "45724a2d124cd52573e9100bb87b2f22b79a10e493b68ef464e61861291f32ea",
+  "learning-lab/src/boundary-playground.css": "92856b27522abb7ae1a5c1e4312a354dcc026e5bca11a26017991678471a2722",
+  "learning-lab/src/boundaryDiagnosticsMath.ts": "70a5961c43cc06281abcf7cf623d3bc36dfd71d4dac9e775f6227b01e890a2e9",
+  "learning-lab/src/boundaryEvaluation.ts": "93844dc616113542d3b0e9d25de5a893d7cb4dd476f4bad15e6015397b6434e1",
+  "learning-lab/src/boundaryExperiment.ts": "0810fc6691819e950bca786664fc586c061bcdd7f5d9fdb103d4973f7610b5b7",
+  "learning-lab/src/boundaryLessonMath.ts": "c3b32814f7f0fdc16d10abb14f91d4ebd45f47c386017c4704d7144290b77486",
+  "learning-lab/src/boundaryLessonStorage.ts": "6dab126eda15b335b2a20817224bf22dd3a91394931dffb58f76e7cd4b75a1b1",
+  "learning-lab/src/boundaryNetworkMath.ts": "9755eda7dfb07fa8968bc853025795dfbe18a92a163e607e2cb0be30c808a316",
+  "learning-lab/tests/boundary-lessons.test.ts": "6e11a637315187d7aa242e2d3874aebb4ded472c7360fce8c7fef9c00fd91c14",
+  "learning-lab/tests/boundary-playground.test.ts": "797210efaf6360c4a04ea21e2cb428f92e71f7c5b9c52ec9b17ab514ab714ee2"
+}

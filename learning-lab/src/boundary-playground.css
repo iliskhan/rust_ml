@@ -1,4 +1,14 @@
 .boundary-playground>.eyebrow{margin-bottom:8px}
+.boundary-playground .boundary-final{margin:24px 0;padding:18px;border:1px solid #cbd8ce;border-radius:8px;background:#f6f8f2}
+.boundary-final h4{margin:6px 0 12px;font-size:18px}
+.boundary-final h5{font-size:15px;margin:0 0 10px}
+.boundary-final label{display:block;font-size:14px;font-weight:600;margin:12px 0 7px}
+.boundary-final textarea{box-sizing:border-box;width:100%;max-width:100%;min-height:80px;font:inherit;font-size:16px;line-height:1.5;padding:10px;border:1px solid #819786;border-radius:5px;background:#fffefa;color:#172c24}
+.boundary-final details{margin:12px 0}
+.boundary-final-snapshot{margin-top:18px;padding-top:16px;border-top:1px solid #cbd8ce;overflow-wrap:anywhere}
+.boundary-final-result{padding:12px;background:#e5efdf;border-radius:6px;margin-top:14px}
+.boundary-data-settings{margin-top:16px}
+.boundary-playground #boundary-lesson-settings,.boundary-playground #boundary-lesson-training,.boundary-playground #boundary-lesson-probe,.boundary-playground #boundary-lesson-diagnostics{scroll-margin-top:22px}
 .boundary-playground .boundary-save-status{font-size:12px;margin-top:10px;color:#3c614b}
 .boundary-playground .boundary-saved{margin-top:16px;border:1px solid #d8dfd1;border-radius:8px;padding:12px 15px;background:#fbfbf6}
 .boundary-saved>summary{line-height:1.6}

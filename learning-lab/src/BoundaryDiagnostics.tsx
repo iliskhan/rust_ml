@@ -1,6 +1,7 @@
 import { memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { boundaryConfusion, boundarySliceGrid, boundaryWeightChoices, captureBoundarySlice, evaluateBoundarySlice, type BoundarySliceMode, type BoundarySliceSnapshot, type Outcome } from './boundaryDiagnosticsMath';
 import type { BoundaryConfig, BoundaryDataset } from './boundaryNetworkMath';
+import { boundaryInputSize } from './boundaryNetworkMath';
 import { PredictionExperiment } from './PredictionExperiment';
 import { Scene3D, type Vec3 } from './ThreeD';
 import { Range, fmt } from './ui';
@@ -42,7 +43,7 @@ export function BoundaryDiagnostics(props: Props) {
     <details>
       <summary>Порог → ошибки → precision / recall</summary>
       <p>Карта и матрица используют текущие веса и общий порог τ = {fmt(threshold, 2)}. Нажмите на ячейку матрицы, чтобы выделить её точки; выберите точку, чтобы проверить её также на основной карте.</p>
-      <label>Выборка матрицы<select value={split} onChange={event => { setSplit(event.target.value as typeof split); setPointIndex(0); }}><option value="validation">Validation · 32 точки</option><option value="train">Train · 96 точек</option></select></label>
+      <label>Выборка матрицы<select value={split} onChange={event => { setSplit(event.target.value as typeof split); setPointIndex(0); }}><option value="validation">Validation · {dataset.validation.length} точки</option><option value="train">Train · {dataset.train.length} точек</option></select></label>
       <Range label="Общий порог τ для карты и матрицы" value={threshold} min={.05} max={.95} step={.01} onChange={onThresholdExperiment} />
       <p className="note">Изменение порога здесь ставит обучение на паузу, чтобы сравнивать решения при одних весах.</p>
       <div className="boundary-diagnostic-grid">
@@ -106,7 +107,7 @@ const BoundaryLossSlice = memo(function BoundaryLossSlice({ snapshot, source, in
   const conditions = `${source}, снимок шага ${snapshot.step}; ${labels[0]}=${fmt(values[0], 5)}, ${labels[1]}=${fmt(values[1], 5)}, batch=${batchSize}, шаг выбора ${batchStep}, seed=${snapshot.batchSeed}`;
   const describe = (value: ReturnType<typeof evaluateBoundarySlice>, strength: number) => `λ=${fmt(strength, 2)}; BCE batch=${fmt(value.batch.loss, 6)}, BCE train=${fmt(value.train.loss, 6)}, objective train=${fmt(value.regularized.loss, 6)}; ∂objective/∂(${labels.join(', ')})=(${value.regularized.gradient.map(g => fmt(g, 6)).join('; ')})`;
   return <section aria-label="Срез потери mini-batch и L2">
-    <p className="note">Снимок: {source}, шаг {snapshot.step}; сеть {[2, ...snapshot.config.layers.map(layer => layer.width), 1].join(' → ')}. Сетка 9 × 9, диапазон каждого веса ±1 от снимка. Выборка train: {snapshot.train.length}; validation не участвует. История полной оптимизации сюда не проецируется.</p>
+    <p className="note">Снимок: {source}, шаг {snapshot.step}; сеть {[boundaryInputSize(snapshot.config), ...snapshot.config.layers.map(layer => layer.width), 1].join(' → ')}. Сетка 9 × 9, диапазон каждого веса ±1 от снимка. Выборка train: {snapshot.train.length}; validation не участвует. История полной оптимизации сюда не проецируется.</p>
     <div className="boundary-diagnostic-grid">{pair.map((index, axis) => <label key={axis}>Вес по оси {axis === 0 ? 'X' : 'Y'}<select value={index} onChange={event => { const next = [...pair] as [number, number]; next[axis] = Number(event.target.value); setPair(next); setDelta([0, 0]); }}>{choices.map(choice => <option key={choice.index} value={choice.index} disabled={choice.index === pair[1 - axis]}>{choice.label}</option>)}</select></label>)}</div>
     <p className="note">Wℓ[нейрон, вход] — вес слоя ℓ; нумерация с 1. Оси не являются признаками данных или шагами обучения.</p>
     <Range label="Размер пакета среза" value={batchSize} min={1} max={snapshot.train.length} step={1} onChange={value => { setBatchSize(value); setBatchStep(snapshot.step); }} />

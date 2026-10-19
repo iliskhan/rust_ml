@@ -145,7 +145,7 @@ export function NetworkLesson() {
   return <>
     <p className="lesson-intro">Сеть учится отделять один класс от другого. Сначала меняйте данные и размер сети в лаборатории границ; ниже разберите каждый шаг на небольшом примере XOR. Это два независимых эксперимента со своими весами.</p>
     <Suspense fallback={<section className="panel"><p role="status">Загружается лаборатория границ…</p></section>}>
-      <LessonOutline items={[{ id: 'boundary-experiment', label: 'Граница и обучение' }, { id: 'network-representations', label: 'Скрытые представления' }, { id: 'network-xor', label: 'XOR по шагам' }]} />
+      <LessonOutline items={[{ id: 'boundary-experiment', label: 'Граница и обучение' }, { id: 'boundary-lesson-start', label: 'Опыты без кода' }, { id: 'network-representations', label: 'Скрытые представления' }, { id: 'boundary-final-evaluation', label: 'Итоговая проверка' }, { id: 'network-xor', label: 'XOR по шагам' }]} />
       <BoundaryPlayground />
     </Suspense>
     <h3 id="network-xor" className="lesson-anchor network-xor-heading" tabIndex={-1}>Пошаговый пример: сеть XOR 2 → 4 → 1</h3>

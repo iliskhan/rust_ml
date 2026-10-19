@@ -2,7 +2,8 @@ import { activate, activationDerivative, bceLogit, type Activation } from './mat
 
 export type BoundaryKind = 'circles' | 'moons' | 'spiral';
 export type BoundaryLayer = { width: number; activation: Activation };
-export type BoundaryConfig = { layers: BoundaryLayer[] };
+export type BoundaryConfig = { layers: BoundaryLayer[]; features?: 'raw' | 'radial' };
+export type BoundaryDataSettings = { version: 2; trainSize: 24 | 48 | 96; labelNoise: number };
 export type BoundarySample = { input: [number, number]; target: 0 | 1 };
 export type BoundaryDataset = { train: BoundarySample[]; validation: BoundarySample[] };
 
@@ -18,10 +19,8 @@ function randomSource(seed: number) {
 }
 
 /** Independent balanced draws; fixed coordinate noise U(-0.018, 0.018), labels unchanged. */
-export function makeBoundaryDataset(kind: BoundaryKind, seed = 42): BoundaryDataset {
+function sampleBoundary(kind: BoundaryKind, size: number, streamSeed: number): BoundarySample[] {
   if (!['circles', 'moons', 'spiral'].includes(kind)) throw new RangeError('Boundary: неизвестный набор');
-  randomSource(seed); // Validate before converting the two stream seeds to uint32.
-  const sample = (size: number, streamSeed: number): BoundarySample[] => {
     const random = randomSource(streamSeed);
     const data: BoundarySample[] = [];
     for (let target = 0; target <= 1; target++) {
@@ -54,8 +53,50 @@ export function makeBoundaryDataset(kind: BoundaryKind, seed = 42): BoundaryData
       [data[i], data[j]] = [data[j], data[i]];
     }
     return data;
-  };
-  return { train: sample(96, seed >>> 0), validation: sample(32, (seed >>> 0) ^ 0x9e3779b9) };
+}
+
+export function boundaryTrainSize(data?: BoundaryDataSettings): number {
+  if (data !== undefined && (!data || data.version !== 2 || ![24, 48, 96].includes(data.trainSize) || !Number.isFinite(data.labelNoise) || data.labelNoise < 0 || data.labelNoise > .2)) {
+    throw new RangeError('Boundary: данные v2, train 24/48/96, ошибки меток 0–0.2');
+  }
+  return data?.trainSize ?? 96;
+}
+
+/** Legacy draws remain byte-for-byte stable. V2 selects nested balanced subsets of that pool. */
+export function makeBoundaryDataset(kind: BoundaryKind, seed = 42, settings?: BoundaryDataSettings): BoundaryDataset {
+  randomSource(seed);
+  const size = boundaryTrainSize(settings);
+  const pool = sampleBoundary(kind, 96, seed >>> 0);
+  const validation = sampleBoundary(kind, 32, (seed >>> 0) ^ 0x9e3779b9);
+  if (!settings) return { train: pool, validation };
+  const counts = [0, 0];
+  const train = pool.filter(point => counts[point.target]++ < size / 2);
+  // A separate stream changes only labels, never coordinates, validation or batch order.
+  const random = randomSource((seed >>> 0) ^ 0x85ebca6b);
+  const order = train.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  for (const i of order.slice(0, Math.round(size * settings.labelNoise))) train[i] = { ...train[i], target: train[i].target === 0 ? 1 : 0 };
+  return { train, validation };
+}
+
+/** Dedicated final-test stream, never returned as training or validation data. */
+export function makeBoundaryFinalTest(kind: BoundaryKind, testSeed: number): BoundarySample[] {
+  if (!Number.isInteger(testSeed) || testSeed < 0 || testSeed > 4294967295) throw new RangeError('Boundary: seed test должен быть uint32');
+  return sampleBoundary(kind, 32, (testSeed >>> 0) ^ 0xc2b2ae35);
+}
+
+/** Reject deliberately colliding seeded streams before calling a test independent. */
+export function checkBoundaryFinalTestSeed(dataSeed: number, testSeed: number): void {
+  const finalStream = (testSeed >>> 0) ^ 0xc2b2ae35;
+  if (finalStream === (dataSeed | 0) || finalStream === ((dataSeed >>> 0) ^ 0x9e3779b9)) throw new Error('Этот seed test совпадает с потоком train/validation. Выберите другой seed.');
+}
+
+export function boundaryInputSize(config: BoundaryConfig): number {
+  if (config.features !== undefined && config.features !== 'raw' && config.features !== 'radial') throw new RangeError('Boundary: неизвестное преобразование признаков');
+  return config.features === 'radial' ? 3 : 2;
 }
 
 /** Each layer is row-major W[out,in], followed by b[out]; final output is sigmoid. */
@@ -66,7 +107,7 @@ function layout(config: BoundaryConfig) {
       throw new RangeError('Boundary: ширина 1–16, активация ReLU, tanh или sigmoid');
     }
   }
-  let inputs = 2;
+  let inputs = boundaryInputSize(config);
   let offset = 0;
   return [...config.layers, { width: 1, activation: 'sigmoid' as const }].map(layer => {
     const result = { ...layer, inputs, offset, bias: offset + inputs * layer.width };
@@ -124,6 +165,7 @@ function checkData(data: BoundarySample[]) {
 /** The graph uses centered inputs 2x−1; plots retain the original x in [0,1]. */
 function forward(params: number[], layers: ReturnType<typeof layout>, input: [number, number]) {
   const activations: number[][] = [[2 * input[0] - 1, 2 * input[1] - 1]];
+  if (layers[0].inputs === 3) activations[0].push(activations[0][0] ** 2 + activations[0][1] ** 2);
   const preactivations: number[][] = [];
   for (const layer of layers) {
     const previous = activations[activations.length - 1];
@@ -148,7 +190,7 @@ export function predictBoundary(params: number[], config: BoundaryConfig, input:
 
 export type BoundaryTrace = {
   readonly input: readonly [number, number];
-  /** a⁰ = 2x−1, followed by every hidden vector and the scalar sigmoid output. */
+  /** a⁰ = (u,v), optionally (u,v,u²+v²), then hidden vectors and scalar sigmoid. */
   readonly activations: readonly (readonly number[])[];
   /** One z vector per hidden layer, followed by the scalar output logit. */
   readonly preactivations: readonly (readonly number[])[];

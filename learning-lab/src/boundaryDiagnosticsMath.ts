@@ -1,4 +1,4 @@
-import { boundaryBatchIndices, boundaryL2, boundaryLossGradient, boundaryMetrics, predictBoundary, type BoundaryConfig, type BoundaryDataset, type BoundarySample } from './boundaryNetworkMath.ts';
+import { boundaryBatchIndices, boundaryInputSize, boundaryL2, boundaryLossGradient, boundaryMetrics, predictBoundary, type BoundaryConfig, type BoundaryDataset, type BoundarySample } from './boundaryNetworkMath.ts';
 
 export type Outcome = 'TP' | 'FP' | 'TN' | 'FN';
 
@@ -18,7 +18,7 @@ export function boundaryConfusion(params: number[], config: BoundaryConfig, data
 
 /** Flat indices use exactly the row-major W followed by b layout of boundaryNetworkMath. */
 export function boundaryWeightChoices(config: BoundaryConfig) {
-  let inputs = 2, offset = 0;
+  let inputs = boundaryInputSize(config), offset = 0;
   return [...config.layers, { width: 1 }].flatMap((layer, l) => {
     const choices = Array.from({ length: inputs * layer.width }, (_, i) => ({ index: offset + i, label: `W${l + 1}[${Math.floor(i / inputs) + 1},${i % inputs + 1}]` }));
     offset += inputs * layer.width + layer.width;
@@ -28,7 +28,7 @@ export function boundaryWeightChoices(config: BoundaryConfig) {
 }
 
 export function captureBoundarySlice(params: number[], config: BoundaryConfig, dataset: BoundaryDataset, step: number, batchSeed: number) {
-  return { params: [...params], config: { layers: config.layers.map(layer => ({ ...layer })) },
+  return { params: [...params], config: structuredClone(config),
     train: dataset.train.map(sample => ({ input: [...sample.input] as [number, number], target: sample.target })), step, batchSeed };
 }
 export type BoundarySliceSnapshot = ReturnType<typeof captureBoundarySlice>;
