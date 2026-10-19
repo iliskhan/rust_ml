@@ -27,8 +27,17 @@ Final mobile320 documentWidth305 без выходящих контролов; �
 
 [Приёмка, команды, снимки и границы](learning-lab/evidence/playground-2026-10-19/VALIDATION.md).
 Финальные source SHA записаны рядом; Rust/зависимости/замороженные film fixtures
-не менялись. Следующий шаг выпуска: commit/push и проверка Pages/CI; результат Git
-сообщается после отправки. UI/математика реализованы; образовательная эффективность
+не менялись. Релиз `9a70d072c221e434f9ef804dbd6053983d1853d4` отправлен обычным push,
+local=remote, дерево после выпуска чистое. [CI39265813723](https://github.com/iliskhan/rust_ml/actions/runs/39265813723)
+и [Pages39265813702](https://github.com/iliskhan/rust_ml/actions/runs/39265813702) SUCCESS.
+Публичный `https://iliskhan.github.io/rust_ml/#network` в IAB подтвердил новые режимы,
+пять переходов и final evaluation; консоль error/warn0.
+[DOM и журнал](docs/research/learning-lab-2026-10-14/playground-public-2026-10-19.json),
+[снимок](docs/research/learning-lab-2026-10-14/screenshots/playground-public-2026-10-19.jpg).
+После commit все17sourceSHA совпали. Закрывающий checkpoint меняет лишь документы и
+публичные свидетельства; его Git SHA сообщается после отправки. Собственные preview
+5193/5194 остановлены после проверки, временный viewport сброшен.
+UI/математика реализованы; образовательная эффективность
 и соответствие WCAG не заявлены. Исследование с учениками, реальные мобильные
 устройства и экранный чтец не проверялись.
 

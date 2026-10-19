@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-10-19T14:08:24.410Z",
+  "release": "9a70d072c221e434f9ef804dbd6053983d1853d4",
+  "publicState": {
+    "finalHeading": "Итоговая проверка на новых данных",
+    "mode": "hidden",
+    "nav": [
+      "Граница и обучение",
+      "Опыты без кода",
+      "Скрытые представления",
+      "Итоговая проверка",
+      "XOR по шагам"
+    ],
+    "run": "Обновлений: 0 / 4000 · обработано train-примеров: 0 · эквивалентных эпох: 0.",
+    "scripts": [
+      "https://iliskhan.github.io/rust_ml/assets/index-zmMwThr5.js"
+    ],
+    "url": "https://iliskhan.github.io/rust_ml/#network"
+  },
+  "publicLogs": []
+}
