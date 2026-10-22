@@ -45,7 +45,7 @@ test('rendered experiment references and demo kinds resolve', () => {
 });
 
 test('curriculum destinations are real, all levels are honest and routes are nonempty', () => {
-  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'transformer', 'advanced', 'frontiers', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
+  const lessons = new Set(['neuron', 'loss', 'backprop', 'optimizers', 'network', 'architectures', 'word2vec', 'transformer', 'advanced', 'frontiers', 'vae', 'gan', 'diffusion', 'gnn', 'rl']);
   const groups = new Set(curriculumGroups.map(group => group.id));
   assert.equal(new Set(curriculum.map(topic => topic.id)).size, curriculum.length);
   for (const topic of curriculum) {
@@ -73,4 +73,16 @@ test('implemented architecture directions have destinations and sources', () => 
     assert.equal(topic?.lesson, lesson);
     assert.ok(topic?.source?.title);
   }
+});
+
+test('Word2Vec has a direct destination on the training and Transformer routes with honest scope', () => {
+  const topic = curriculum.find(item => item.id === 'word2vec');
+  assert.ok(topic);
+  assert.equal(topic.coverage, 'interactive');
+  assert.equal(topic.lesson, 'word2vec');
+  for (const route of ['training', 'transformer', 'beyond'] as const) assert.ok(topicsForRoute(route).includes(topic), route);
+  assert.equal(topic.source?.url, 'https://arxiv.org/abs/1310.4546');
+  assert.match(topic.limit, /полным softmax/);
+  assert.match(topic.limit, /CBOW и negative sampling объясняются, но не обучаются/);
+  assert.match(topic.summary, /независимо от предложения/);
 });

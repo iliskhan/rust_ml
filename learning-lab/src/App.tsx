@@ -14,6 +14,7 @@ const KnowledgeExplorer = lazy(() => import('./KnowledgeExplorer').then(module =
 const PracticeWorkspace = lazy(() => import('./practice/PracticeWorkspace').then(module => ({ default: module.PracticeWorkspace })));
 
 const ArchitectureLesson = lazy(() => import('./ArchitectureLesson').then(module => ({ default: module.ArchitectureLesson })));
+const Word2vecLab = lazy(() => import('./Word2vecLab').then(module => ({ default: module.Word2vecLab })));
 const TransformerCourse = lazy(() => import('./TransformerCourse').then(module => ({ default: module.TransformerCourse })));
 const AdvancedArchitecturesCourse = lazy(() => import('./AdvancedArchitecturesCourse').then(module => ({ default: module.AdvancedArchitecturesCourse })));
 const FrontierCourse = lazy(() => import('./FrontierCourse').then(module => ({ default: module.FrontierCourse })));
@@ -33,6 +34,7 @@ const lessons = [
   { id: 'optimizers', title: 'Оптимизаторы', group: 'Основы на практике', hint: 'Сравнить три траектории', component: OptimizerLesson },
   { id: 'network', title: 'Сеть целиком', group: 'Основы на практике', hint: 'Границы решений, скрытые признаки и XOR', component: NetworkLesson },
   { id: 'architectures', title: 'Семейства сетей', group: 'Дальше и глубже', hint: 'Dense, CNN, RNN, LSTM, GRU, Transformer', component: ArchitectureLesson },
+  { id: 'word2vec', title: 'Word2Vec: учим векторы слов', group: 'Дальше и глубже', hint: 'От соседних слов к обученной embedding-таблице', component: Word2vecLab },
   { id: 'transformer', title: 'Transformer по шагам', group: 'Дальше и глубже', hint: 'От токенов к вниманию и предсказанию', component: TransformerCourse },
   { id: 'advanced', title: 'Новые архитектуры', group: 'Дальше и глубже', hint: 'Полный Transformer, BPE, LoRA, ViT, MoE, MLA, SSM и DiT', component: AdvancedArchitecturesCourse },
   { id: 'frontiers', title: 'Новые механизмы и обучение', group: 'Дальше и глубже', hint: 'CLIP, flow matching, EGNN, DPO, JEPA, KAN и обучение архитектур', component: FrontierCourse },
