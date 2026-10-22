@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Word2Vec — реализовано и локально проверено, 2026-10-23
+### Word2Vec — опубликовано и проверено, 2026-10-23
 
 Запрос пользователя: добавить Word2Vec как полезную тему учебника.
 Срез B12/R01/R02/R04/R06, U02/U04/U05/U07; основа master `9c7e8e2`, дерево чистое.
@@ -20,9 +20,14 @@ transport/window2 η=.05/200 шагов `2.3013→2.2435`. DocumentWidth375 пр
 
 [Команды, снимки, доказательства и ограничения](learning-lab/evidence/word2vec-2026-10-23/VALIDATION.md).
 Новых зависимостей, изменений Rust, stable practice IDs и пользовательских данных нет.
-Задача готова к commit и обычному push текущей master; итоговый SHA сообщается после отправки.
+Релиз `e4e0b16194247416aaf5581f477de8b1b05c342a` отправлен обычным push в master,
+local=remote, дерево чистое. [Pages 39856783776](https://github.com/iliskhan/rust_ml/actions/runs/39856783776)
+SUCCESS, включая полный `pnpm test` в GitHub job и production build.
+Публичный [#word2vec](https://iliskhan.github.io/rust_ml/#word2vec) проверен настоящим IAB:
+кнопка 2000 шагов даёт CE `2.1971→.9800`, console warn/error0.
+Этот завершающий checkpoint меняет только PLAN/PROGRESS; итоговый SHA сообщается после push.
 
-Не запускались полный набор тестов, screen reader, реальные mobile, формальный WCAG
+Локально не запускался полный набор тестов; screen reader, реальные mobile, формальный WCAG
 и исследование с учениками. CBOW/negative sampling — пояснения, не trainer;
 показанная близость не подтверждает обобщение. U00/U07 и весь B12 этим не закрыты.
 
