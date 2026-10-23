@@ -82,7 +82,10 @@ test('Word2Vec has a direct destination on the training and Transformer routes w
   assert.equal(topic.lesson, 'word2vec');
   for (const route of ['training', 'transformer', 'beyond'] as const) assert.ok(topicsForRoute(route).includes(topic), route);
   assert.equal(topic.source?.url, 'https://arxiv.org/abs/1310.4546');
-  assert.match(topic.limit, /полным softmax/);
-  assert.match(topic.limit, /CBOW и negative sampling объясняются, но не обучаются/);
+  assert.match(topic.summary, /CBOW — центр по среднему вектору контекста/);
+  assert.match(topic.example, /полный softmax или negative sampling/);
+  assert.match(topic.limit, /SGD для всех четырёх сочетаний/);
+  assert.match(topic.limit, /Sigmoid-оценки negative sampling не образуют распределение по словарю/);
+  assert.match(topic.limit, /потери разных целей нельзя сравнивать напрямую/);
   assert.match(topic.summary, /независимо от предложения/);
 });

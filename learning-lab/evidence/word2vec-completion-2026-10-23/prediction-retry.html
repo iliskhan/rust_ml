@@ -1,0 +1,7 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><title>Проверка ошибок прогноза</title><div id="root"></div><script type="module">
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import {PredictionExperiment} from '/src/PredictionExperiment.tsx';
+let attempts=0;
+createRoot(document.getElementById('root')).render(React.createElement(PredictionExperiment,{headingLevel:3,question:'Проверка обработки ошибки и повторного запуска',options:['Прогноз'],run:()=>{if(attempts++===0)throw Error('Контрольная ошибка вычисления');return {correct:true,before:'До',after:'После',explanation:'Повторный запуск выполнен'};}}));
+</script></html>
