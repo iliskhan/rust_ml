@@ -5,6 +5,9 @@ export type PracticeExercise = {
   prompt: string; formula: string; hints: string[]; explanation: string;
   starter: Record<PracticeLanguage, string>; solution: Record<PracticeLanguage, string>;
   fixtures: { input: string; output: string }[];
+  tolerance?: { atol: number; rtol: number };
+  evidenceScope?: 'repeat';
+  contractNote?: string;
   quiz: { question: string; options: string[]; correctIndex: number; explanation: string };
 };
 export type PracticeTopic = {

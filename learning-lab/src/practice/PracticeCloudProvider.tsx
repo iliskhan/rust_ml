@@ -1,14 +1,14 @@
 import { createContext, lazy, Suspense, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { createPracticeCloud, PracticeCloudError, type CloudAuthSession, type PracticeCloud } from './cloud';
 import { PracticeAccountPanel, type PracticeAccountPanelProps } from './account/PracticeAccountPanel';
-import type { SaveCloudDraft, LoadCloudDraft, PracticeSelection, ChooseCloudLanguage } from './PracticePanel';
+import type { SaveCloudDraft, LoadCloudDraft, PracticeSelection } from './PracticePanel';
 import type { PracticeScope } from './local-progress';
 import { browserPracticeStore } from './local-progress';
 import { useLearningSync } from './useLearningSync';
 import { createGrading, type GradeCode, type GradingSnapshot } from './grading';
 const PracticePanel = lazy(() => import('./PracticePanel').then(module => ({ default: module.PracticePanel })));
 
-type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; choosePrimaryLanguage?: ChooseCloudLanguage; gradeCode?: GradeCode; hasPendingGrade?: (scope: PracticeScope) => boolean };
+type AccountState = Omit<PracticeAccountPanelProps, 'cloudAvailable'> & { cloud: PracticeCloud | null; saveDraft?: SaveCloudDraft; loadDraft?: LoadCloudDraft; gradeCode?: GradeCode; hasPendingGrade?: (scope: PracticeScope) => boolean };
 const AccountContext = createContext<AccountState | null>(null);
 
 export function usePracticeAccount() { return useContext(AccountContext); }
@@ -222,26 +222,12 @@ export function PracticeCloudProvider({ children }: { children: ReactNode }) {
     cloudDrafts.current.set(`${user.id}/${variant.id}`, { sessionId: remote.id, revision: remote.draft.revision, source: remote.draft.source });
     return remote.draft.source;
   }
-  async function choosePrimaryLanguage(scope: PracticeScope) {
-    const epoch = authEpoch.current;
-    const assertOwner = () => { if (epoch !== authEpoch.current || !cloud || !user || scope.ownerId !== user.id || cloud.session?.user.id !== user.id) throw new Error('Аккаунт изменился. Повторите выбор языка после входа.'); };
-    assertOwner();
-    if (!cloud) return;
-    const variants = await cloud.catalog({ releaseKey: scope.releaseId, exerciseKey: scope.exerciseId, language: scope.language });
-    assertOwner();
-    const variant = variants.find(v => v.language === scope.language && v.practice_exercises.exercise_key === scope.exerciseId && v.practice_releases.release_key === scope.releaseId);
-    if (!variant) throw new Error('Выпуск практики ещё не опубликован в аккаунте.');
-    await cloud.startSession(variant.id);
-    assertOwner();
-    await cloud.chooseLanguage(variant.release_id, scope.language);
-    assertOwner();
-  }
-  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, learningSync, syncLearningNow, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, choosePrimaryLanguage: cloud && user ? choosePrimaryLanguage : undefined, gradeCode: grading && user ? gradeCode : undefined, hasPendingGrade: grading ? scope => grading.hasPending(scope) : undefined }}>{children}</AccountContext.Provider>;
+  return <AccountContext.Provider value={{ cloud, emailAuthAvailable, learningSync, syncLearningNow, user, status, error, confirmationEmail, busy, signIn, signOut, signInWithPassword: (email, password) => passwordAuth(email, password, false), signUpWithPassword: (email, password) => passwordAuth(email, password, true), resendConfirmation, saveDraft: cloud && user ? saveDraft : undefined, loadDraft: cloud && user ? loadDraft : undefined, gradeCode: grading && user ? gradeCode : undefined, hasPendingGrade: grading ? scope => grading.hasPending(scope) : undefined }}>{children}</AccountContext.Provider>;
 }
 
 export function PracticeSection({ lessonId, topicId, initialSelection }: { lessonId: string; topicId?: string; initialSelection?: PracticeSelection }) {
   const account = useContext(AccountContext);
-  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} initialSelection={initialSelection} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} onChooseCloudLanguage={account?.choosePrimaryLanguage} onGradeCode={account?.gradeCode} hasPendingGrade={account?.hasPendingGrade} /></Suspense>;
+  return <Suspense fallback={<p role="status">Загружаем практику…</p>}><PracticePanel key={`${account?.user?.id || 'guest'}/${topicId || lessonId}`} ownerId={account?.user?.id} lessonId={lessonId} topicId={topicId} initialSelection={initialSelection} onSaveCloudDraft={account?.saveDraft} onLoadCloudDraft={account?.loadDraft} onGradeCode={account?.gradeCode} hasPendingGrade={account?.hasPendingGrade} /></Suspense>;
 }
 
 export function PracticeAccount() {

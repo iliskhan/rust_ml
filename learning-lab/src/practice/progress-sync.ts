@@ -137,12 +137,12 @@ export function newestLanguagePreference(events: readonly LearningEvent[]): Lear
   return preferences.sort((a, b) => Date.parse(b.occurred_at) - Date.parse(a.occurred_at) || b.event_id.localeCompare(a.event_id))[0] ?? null
 }
 
-/** Uploads immutable local receipts before pulling pages; cursor advances only after durable local merges. */
+/** Pull remains available after an upload failure; cursors advance only after durable local merges. */
 export async function syncLearningProgress(options: {
   cloud: { syncLearning: (release: string, events: readonly LearningEvent[], after: number) => Promise<unknown> }
   store: LocalPracticeStore; storage: StorageLike; topics: readonly PracticeTopic[]
   releaseKey: string; releaseId: string; ownerId: string; assertOwner?: () => void; uploaded?: Set<string>
-}): Promise<{ received: number }> {
+}): Promise<{ received: number; uploadError?: string }> {
   const { cloud, store, storage, topics, releaseKey, releaseId, ownerId, assertOwner = () => {} } = options
   if (!ownerId) throw new Error('Для синхронизации нужен аккаунт.')
   const cursorKey = `rustml-practice:learning-cursor:v1:${JSON.stringify([releaseId, ownerId])}`
@@ -179,10 +179,18 @@ export async function syncLearningProgress(options: {
     return page.length
   }
   // Every invocation retries all retained receipts, including a request whose response was lost.
+  let uploadError: string | undefined
   for (let offset = 0; offset < events.length; offset += 500) {
     assertOwner()
     const batch = events.slice(offset, offset + 500)
-    await mergePage(await cloud.syncLearning(releaseId, batch, cursor))
+    let raw: unknown
+    try { raw = await cloud.syncLearning(releaseId, batch, cursor) }
+    catch (error) {
+      assertOwner()
+      uploadError = error instanceof Error ? error.message : 'Не удалось отправить новые события.'
+      break
+    }
+    await mergePage(raw)
     for (const event of batch) options.uploaded?.add(event.event_id)
   }
   let count: number
@@ -190,5 +198,5 @@ export async function syncLearningProgress(options: {
     assertOwner()
     count = await mergePage(await cloud.syncLearning(releaseId, [], cursor))
   } while (count === 500)
-  return { received }
+  return { received, ...(uploadError ? { uploadError } : {}) }
 }

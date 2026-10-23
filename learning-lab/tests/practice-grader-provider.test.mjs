@@ -7,7 +7,7 @@ import { buildExecution } from '../grader/execution.mjs'
 
 const runtime={language:'javascript',image:'vercel/sandbox/universal@sha256:'+'a'.repeat(64),caseTimeoutMs:45000}
 const scope={attemptId:'10000000-0000-4000-8000-000000000001',jobId:'20000000-0000-4000-8000-000000000001',leaseGeneration:1}
-const execution=buildExecution('function solve(x){return x}',{language:'javascript',protocol:1,adapter:'rustml-public-values-v1',entrypoint:'solve'},{id:'case1',input:{x:2}})
+const execution=buildExecution('function solve(x){return x}',{language:'javascript',protocol:1,adapter:'rustml-public-values-v1',entrypoint:'solve',parameters:[{name:'x'}]},{id:'case1',input:{x:2}})
 const raw='{"protocol":1,"case_id":"case1","value":2}'
 function fixture(options={}) {
   const state={creates:[],commands:[],stops:0,deletes:0,deleteOptions:[],reads:0,writes:[],stats:0,failCleanup:false}

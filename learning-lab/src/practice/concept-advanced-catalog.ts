@@ -112,7 +112,7 @@ export const advancedConceptPracticeTopics:PracticeTopic[]=[...fragments,...grap
   id:`concept.${f.id}`,lessonId:'math',title:f.title,sourceSection:`advancedConcepts.ts · ${f.id}`,prerequisites:advancedConcepts.find(c=>c.id===f.id)!.prerequisites.map(id=>`concept.${id}`),
   exercises:(['guided','transfer-a','transfer-b'] as const).map((suffix,index):PracticeExercise=>{
     const options=[f.wrong,'Проверка этой маленькой формулы доказывает полное освоение всех использующих её моделей.'];options.splice(index,0,f.facts[index]);
-    return {id:`concept.${f.id}.${suffix}`,topicId:`concept.${f.id}`,title:`${index===0?'Разбор':index===1?'Контроль A':'Контроль B'} · ${f.contexts[index]}`,mode:index===0?'guided':'transfer',
+    return {id:`concept.${f.id}.${suffix}`,topicId:`concept.${f.id}`,title:`${index===0?'Разбор':index===1?'Контроль A':'Контроль B'} · ${f.contexts[index]}`,mode:index===0?'guided':'transfer',evidenceScope:'repeat',
       prompt:`${f.contexts[index]} Реализуйте solve(values) для любого допустимого входа. ${f.contract} Все числа конечны, |value|≤1000. Не меняйте input. Невалидные данные: ValueError/RangeError/InputError (Rust Result). Допуск atol=1e−12,rtol=1e−10. Область subskill: ${f.scope}`,
       formula:f.formula,hints:[f.hint,f.facts[index]],explanation:`${f.trace} ${f.facts[index]} Границы: ${f.scope} Это открытая formative самопроверка; quiz/fixture не создают server pass.`,...code(f),
       fixtures:f.cases.map((_,offset)=>{const [values,output]=f.cases[(index+offset)%f.cases.length];return {input:JSON.stringify({values}),output:JSON.stringify(output)};}),

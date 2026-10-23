@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
@@ -46,13 +47,13 @@ function VaeEncoderScene({ parameters, x, epsilon, beta }: { parameters: number[
 }
 
 export function VAECourse() {
-  const [chapter, setChapter] = useState(0), [beta, setBeta] = useState(1), [rate, setRate] = useState(0.015);
+  const [chapter, setChapter, heading] = useCourseSection('vae'), [beta, setBeta] = useState(1), [rate, setRate] = useState(0.015);
   const [run, setRun] = useState(() => startRun(1));
   const [x, setX] = useState(1), [epsilon, setEpsilon] = useState(0.5), [parameter, setParameter] = useState(4);
   const [priorZ, setPriorZ] = useState(0), [outputNoise, setOutputNoise] = useState(0), [sampleSeed, setSampleSeed] = useState(0);
   const [inputA, setInputA] = useState(-1), [inputB, setInputB] = useState(2), [mix, setMix] = useState(0.5);
   const [showEncoderScene, setShowEncoderScene] = useState(false);
-  const active = useLearningActive(), selectId = useId(), heading = useRef<HTMLHeadingElement>(null);
+  const active = useLearningActive(), selectId = useId();
   const trace = vaeTrace(run.parameters, x, epsilon, beta);
   const expected = vaeExpected(run.parameters, [x], 1);
   const current = vaeExpected(run.parameters, VAE_DATA, beta);

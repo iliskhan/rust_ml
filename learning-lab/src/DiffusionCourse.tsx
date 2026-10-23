@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
@@ -250,10 +251,10 @@ const CHAPTERS = [
 ];
 
 export function DiffusionCourse() {
-  const active = useLearningActive(), [chapter, setChapter] = useState(0), [kind, setKind] = useState<NoiseSchedule>('linear');
+  const active = useLearningActive(), [chapter, setChapter, heading] = useCourseSection('diffusion'), [kind, setKind] = useState<NoiseSchedule>('linear');
   const schedule = useMemo(() => diffusionSchedule(kind), [kind]);
   const [training, setTraining] = useState(() => initialTraining(schedule)), [remaining, setRemaining] = useState(0), [learningRate, setLearningRate] = useState(.003);
-  const heading = useRef<HTMLHeadingElement>(null), mobileId = useId();
+  const mobileId = useId();
   useEffect(() => {
     if (!active || chapter !== 1) { if (remaining) setRemaining(0); return; }
     if (!remaining) return;

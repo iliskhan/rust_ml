@@ -126,9 +126,9 @@ const sharedGraph=code('def backprop_graph(x: float, w: float, target: float) ->
   'if [x,w,target].iter().any(|v|!v.is_finite()||v.abs()>4.0){return Err(InputError::InvalidInput);}\nlet q=w*x;let p=q*q+q;let error=p-target;let dq=error*(2.0*q+1.0);Ok(vec![q,p,error*error/2.0,dq*w,dq*x])',
 ]);
 const fit=code('def fit_standardizer(train: list[float]) -> list[float]','function fitStandardizer(train)','pub fn fit_standardizer(train: &[f64]) -> Result<Vec<f64>, InputError>',[
-  'if not 1<=len(train)<=64 or any(not finite(v) or abs(v)>1000 for v in train): raise ValueError("Неверная обучающая выборка")\nmean=sum(train)/len(train);variance=sum((v-mean)**2 for v in train)/len(train)\nreturn [mean,math.sqrt(variance) if variance>0 else 1]',
-  'if(!Array.isArray(train)||!train.length||train.length>64||train.some(v=>!Number.isFinite(v)||Math.abs(v)>1000))throw new RangeError("Неверная обучающая выборка");const mean=train.reduce((s,v)=>s+v,0)/train.length,variance=train.reduce((s,v)=>s+(v-mean)**2,0)/train.length;return [mean,variance>0?Math.sqrt(variance):1];',
-  'if train.is_empty()||train.len()>64||train.iter().any(|v|!v.is_finite()||v.abs()>1000.0){return Err(InputError::InvalidInput);}\nlet mean=train.iter().sum::<f64>()/train.len() as f64;let variance=train.iter().map(|v|(v-mean).powi(2)).sum::<f64>()/train.len() as f64;Ok(vec![mean,if variance>0.0{variance.sqrt()}else{1.0}])',
+  'if not 1<=len(train)<=64 or any(not finite(v) or abs(v)>1000 for v in train): raise ValueError("Неверная обучающая выборка")\nmean=sum(train)/len(train);variance=sum((v-mean)**2 for v in train)/len(train)\nreturn [mean,max(1e-12,math.sqrt(variance)) if variance>0 else 1]',
+  'if(!Array.isArray(train)||!train.length||train.length>64||train.some(v=>!Number.isFinite(v)||Math.abs(v)>1000))throw new RangeError("Неверная обучающая выборка");const mean=train.reduce((s,v)=>s+v,0)/train.length,variance=train.reduce((s,v)=>s+(v-mean)**2,0)/train.length;return [mean,variance>0?Math.max(1e-12,Math.sqrt(variance)):1];',
+  'if train.is_empty()||train.len()>64||train.iter().any(|v|!v.is_finite()||v.abs()>1000.0){return Err(InputError::InvalidInput);}\nlet mean=train.iter().sum::<f64>()/train.len() as f64;let variance=train.iter().map(|v|(v-mean).powi(2)).sum::<f64>()/train.len() as f64;Ok(vec![mean,if variance>0.0{variance.sqrt().max(1e-12)}else{1.0}])',
 ]);
 const transform=code('def transform_scalar(x: float, mean: float, scale: float) -> float','function transformScalar(x, mean, scale)','pub fn transform_scalar(x: f64, mean: f64, scale: f64) -> Result<f64, InputError>',[
   'if any(not finite(v) or abs(v)>1000 for v in (x,mean)) or not finite(scale) or not 1e-12<=scale<=2000: raise ValueError("Неверные параметры преобразования")\nreturn (x-mean)/scale',
@@ -319,4 +319,8 @@ const coreTopics:PracticeTopic[]=[
     ['Контроль B · нет положительных целей','Посчитайте метрики для [.5,.2] и [0,0] при пороге .5. Проверьте правило равенства порогу и неопределённость recall.','При отсутствии положительных целей знаменатель recall равен 0.','Один FP и один TN: accuracy=.5, precision=0 определена, recallDefined=false. Нельзя молча выдавать успешный recall=1.',{p:[.5,.2],labels:[0,0],threshold:.5},{accuracy:.5,precisionDefined:true,precision:0,recallDefined:false,recall:0,counts:[0,1,0,1]},'Что делать с recall при отсутствии положительных целей?',['Обозначить неопределённость','Всегда вернуть 1','Удалить ошибочные примеры'],0],
   ]),
 ];
-export const conceptCoreTopics:PracticeTopic[]=coreTopics;
+export const conceptCoreTopics:PracticeTopic[]=coreTopics.map(topic=>topic.id==='concept.train-validation-test' ? {
+  ...topic, exercises:topic.exercises.map(exercise=>({...exercise,
+    contractNote:'Уточнение масштаба: при variance=0 scale=1, иначе scale=max(1e−12,√variance). transform использует сохранённый scale без повторной подгонки. Для train=[0,1e−13] параметры [5e−14,1e−12], преобразованные значения [−.05,.05].',
+  })),
+} : topic);

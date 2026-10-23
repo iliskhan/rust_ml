@@ -35,7 +35,7 @@ function sqlError(error) {
 // Config and dependencies stay server-side. Response never includes private job,
 // source, manifest, owner identifier, auth token, raw SQL or provider diagnostics.
 export function createGradeHandler({ supabaseUrl, publishableKey, origins, db, runAttempt,
-  waitUntil, fetch: requestFetch = globalThis.fetch, bodyLimit = 4096, authTimeoutMs = 5000 }) {
+  waitUntil, recover, fetch: requestFetch = globalThis.fetch, bodyLimit = 4096, authTimeoutMs = 5000 }) {
   const url = new URL(supabaseUrl)
   if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash ||
     typeof publishableKey !== 'string' || !publishableKey || !Array.isArray(origins) || !origins.length ||
@@ -76,7 +76,12 @@ export function createGradeHandler({ supabaseUrl, publishableKey, origins, db, r
         }
         const result = await db.query('select private.practice_attempt_for_owner($1::uuid,$2::uuid) as attempt', [owner, attemptId])
         attempt = result.rows[0]?.attempt
-      } catch (error) { throw sqlError(error) }
+      } catch (error) {
+        const safe = sqlError(error)
+        // A valid owned session may encounter a queue full of abandoned jobs.
+        if (submit && safe.code === 'submission_limit' && recover) waitUntil(Promise.resolve().then(recover).catch(() => {}))
+        throw safe
+      }
       if (!attempt) throw new RequestError(404, 'attempt_not_found')
       if (attempt.id !== attemptId || !['queued', 'running', 'graded', 'error'].includes(attempt.status)) throw new RequestError(503, 'infrastructure')
       if (attempt.status === 'queued' || attempt.status === 'running') {

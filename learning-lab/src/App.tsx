@@ -1,3 +1,5 @@
+import { useExplanationAnchor } from './useCourseSection';
+import { lessonRoute } from './lesson-routing';
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ConceptLink, LearningActivity, LearningProvider, useLearning } from './learning-context';
 import { ConceptSearch } from './ConceptSearch';
@@ -48,13 +50,14 @@ const lessons = [
 const lessonGroups = [...new Set(lessons.map(lesson => lesson.group))];
 
 function navigate(id: string) { window.location.hash = id; }
-function getLesson() { return lessons.find(l => l.id === window.location.hash.slice(1)) ?? lessons[0]; }
+function getLesson() { return lessons.find(l => l.id === lessonRoute(window.location.hash).lessonId) ?? lessons[0]; }
 
 export function App() {
   return <LearningProvider><PracticeCloudProvider><LearningShell /></PracticeCloudProvider></LearningProvider>;
 }
 
 function LearningShell() {
+  useExplanationAnchor();
   const [searchOpen, setSearchOpen] = useState(false);
   const [lesson, setLesson] = useState(getLesson);
   const [visited, setVisited] = useState(() => [getLesson().id]);
@@ -84,6 +87,7 @@ function LearningShell() {
   }, []);
   useLayoutEffect(() => {
     if (!routeChanged.current) return;
+    if (lessonRoute(window.location.hash).topicId) { routeChanged.current = false; return; }
     main.current?.querySelector<HTMLElement>('h1')?.focus({ preventScroll: true });
     const top = routePositions.current.get(lesson.id) ?? 0;
     window.scrollTo({ top, behavior: 'instant' });

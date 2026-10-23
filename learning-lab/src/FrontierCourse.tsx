@@ -1,6 +1,7 @@
+import { useCourseSection } from './useCourseSection';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
-import { lazy, Suspense, useId, useRef, useState } from 'react';
+import { lazy, Suspense, useId, useState } from 'react';
 import { LearningActivity } from './learning-context';
 import './transformer-course.css';
 import './advanced-architectures.css';
@@ -42,8 +43,9 @@ const chapters = [
 ];
 
 export function FrontierCourse() {
-  const [chapter, setChapter] = useState(0), [visited, setVisited] = useState([0]);
-  const selectId = useId(), heading = useRef<HTMLHeadingElement>(null);
+  const [chapter, setChapter, heading] = useCourseSection('frontiers'), [visited, setVisited] = useState([0]);
+  const selectId = useId();
+  if (!visited.includes(chapter)) setVisited(current => [...current, chapter]);
   function choose(index: number, move = false) {
     setChapter(index); setVisited(old => old.includes(index) ? old : [...old, index]);
     if (move) requestAnimationFrame(() => { heading.current?.focus({ preventScroll: true }); heading.current?.scrollIntoView({ block: 'start' }); });

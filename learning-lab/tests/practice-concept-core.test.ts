@@ -10,6 +10,14 @@ import type { PracticeExercise } from '../src/practice/catalog.ts';
 const all=conceptCoreTopics.flatMap(t=>t.exercises);
 const fixtures=all.flatMap(e=>e.fixtures.map(f=>({e,input:JSON.parse(f.input),expected:JSON.parse(f.output)})));
 const by=(id:string,suffix='guided')=>all.find(e=>e.id===`concept.${id}.${suffix}`)!;
+const standardizerCases=[
+  {e:by('train-validation-test'),input:{train:[0,1e-13]},expected:[5e-14,1e-12]},
+  {e:by('train-validation-test'),input:{train:[0,2e-12]},expected:[1e-12,1e-12]},
+  {e:by('train-validation-test'),input:{train:[7,7]},expected:[7,1]},
+  {e:by('train-validation-test','transfer-a'),input:{x:0,mean:5e-14,scale:1e-12},expected:-.05},
+  {e:by('train-validation-test','transfer-a'),input:{x:1e-13,mean:5e-14,scale:1e-12},expected:.05},
+];
+fixtures.push(...standardizerCases);
 const invalid=([
   ['function',{x:101}],['slope',{x:2,h:0}],['limit',{x:2,hs:[0]}],
   ['derivative',{x:1,delta:2}],['partial-derivative',{point:[1,2],axis:2,h:.1}],
@@ -59,6 +67,16 @@ test('concept core identities, granular authored content, three language variant
 });
 test('all public concept fixtures execute trusted authored JavaScript and preserve input',()=>authorJS(fixtures).forEach((a,i)=>close(a,fixtures[i].expected)));
 test('authored JavaScript rejects invalid domains and dimensions in every kernel',()=>authorJS(invalid).forEach(v=>assert.equal(v,true)));
+
+test('train fit produces transform-compatible parameters for tiny nonzero and constant variance',()=>{
+  const result=authorJS(standardizerCases);
+  result.forEach((value,index)=>close(value,standardizerCases[index].expected));
+  const [mean,scale]=result[0] as number[];
+  assert.ok(scale>=1e-12);
+  const applied=authorJS([0,1e-13].map(x=>({e:by('train-validation-test','transfer-a'),input:{x,mean,scale}})));
+  close(applied,[-.05,.05]);
+  assert.match(by('train-validation-test').contractNote!,/scale=max\(1e−12,√variance\)/);
+});
 
 test('independent calculus and moment identities, finite differences, matrix and tensor oracles',()=>{
   const by=(id:string)=>all.find(e=>e.id===`concept.${id}.guided`)!;
@@ -165,7 +183,7 @@ test('author Python/Rust fixture audit (opt-in)',{skip:process.env.PRACTICE_VERI
   try{
     const py=join(dir,'authors.py');
     writeFileSync(py,'import json\noutputs=[]\n'+fixtures.map(({e,input})=>e.solution.python+`\ndata=json.loads(${JSON.stringify(JSON.stringify(input))})\noutputs.append(${e.solution.python.match(/def (\w+)/)![1]}(*data.values()))`).join('\n')+'\n'+invalid.map(({e,input})=>e.solution.python+`\ndata=json.loads(${JSON.stringify(JSON.stringify(input))})\ntry:\n    ${e.solution.python.match(/def (\w+)/)![1]}(*data.values())\n    raise AssertionError("invalid domain accepted")\nexcept ValueError:\n    pass\n`).join('\n')+'\n'+by('function').solution.python+'\ntry:\n    quadratic(True)\n    raise AssertionError("bool accepted as number")\nexcept ValueError:\n    pass\nprint(json.dumps(outputs))');
-    const python=spawnSync(process.env.PRACTICE_PYTHON||'python',[py],{encoding:'utf8',timeout:30000,env:{...process.env,PYTHONUTF8:'1'}});assert.equal(python.status,0,python.stderr||python.error?.message);const pyResult=JSON.parse(python.stdout)as unknown[];assert.equal(pyResult.length,fixtures.length);pyResult.forEach((a,i)=>close(a,fixtures[i].expected));
+    const python=spawnSync(process.env.PRACTICE_PYTHON||'python',[py],{encoding:'utf8',timeout:30000,env:{...process.env,PYTHONUTF8:'1'}});assert.equal(python.status,0,python.stderr||python.error?.message);const pyResult=JSON.parse(python.stdout)as unknown[];assert.equal(pyResult.length,fixtures.length);pyResult.forEach((a,i)=>{close(a,fixtures[i].expected);if(fixtures[i].e.topicId==='concept.train-validation-test'&&Array.isArray(a))assert.ok((a as number[])[1]>=1e-12);});
     const literal=(v:unknown,type?:string):string=>{
       if(typeof v==='string')return JSON.stringify(v);if(typeof v==='boolean')return String(v);
       if(Array.isArray(v)){if(type==='&[usize]')return'&['+v.map(a=>`${a}usize`).join(',')+']';if(v.some(Array.isArray))return'&vec!['+v.map(row=>'vec!['+(row as unknown[]).map(a=>literal(a)).join(',')+']').join(',')+']';return'&['+v.map(a=>literal(a)).join(',')+']';}
@@ -179,7 +197,7 @@ test('author Python/Rust fixture audit (opt-in)',{skip:process.env.PRACTICE_VERI
     };
     const modules=all.map((e,i)=>{
       const name=e.solution.rust.match(/pub fn (\w+)/)![1],types=e.solution.rust.match(/pub fn \w+\(([^)]*)\)/)![1].split(',').map(p=>p.trim().split(':').slice(1).join(':').trim());
-      return`mod m${i}{use super::check;${e.solution.rust}\npub fn verify(){${e.fixtures.map(f=>`let v=${name}(${Object.values(JSON.parse(f.input)).map((a,j)=>literal(a,types[j])).join(',')}).unwrap();${checks('v',JSON.parse(f.output))}`).join('\n')}\n${invalid.filter(c=>c.e.id===e.id).map(({input})=>`assert!(${name}(${Object.values(input).map((a,j)=>literal(a,types[j])).join(',')}).is_err());`).join('\n')}}}`;
+      return`mod m${i}{use super::check;${e.solution.rust}\npub fn verify(){${fixtures.filter(c=>c.e.id===e.id).map(({input,expected})=>`let v=${name}(${Object.values(input).map((a,j)=>literal(a,types[j])).join(',')}).unwrap();${checks('v',expected)}${e.topicId==='concept.train-validation-test'&&Array.isArray(expected)?'assert!(v[1]>=1e-12);':''}`).join('\n')}\n${invalid.filter(c=>c.e.id===e.id).map(({input})=>`assert!(${name}(${Object.values(input).map((a,j)=>literal(a,types[j])).join(',')}).is_err());`).join('\n')}}}`;
     }).join('\n');
     const rs=join(dir,'authors.rs'),exe=join(dir,process.platform==='win32'?'authors.exe':'authors');
     writeFileSync(rs,'fn check(a:f64,e:f64){assert!(a.is_finite());assert!((a-e).abs()<=1e-12+1e-10*e.abs(),"{} != {}",a,e);}\n'+modules+'\nfn main(){'+all.map((_,i)=>`m${i}::verify();`).join('')+'}');

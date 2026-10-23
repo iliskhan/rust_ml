@@ -1,7 +1,8 @@
+import { useCourseSection } from './useCourseSection';
 import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
-import { useId, useRef, useState } from 'react';
+import { useId, useState } from 'react';
 import { ConceptLink, useLearningActive } from './learning-context';
 import { Chart, Exercise, Range, fmt } from './ui';
 import {
@@ -33,12 +34,12 @@ const percent = (x: number) => `${fmt(100 * x, 1)}%`;
 const largestChange = (a: number[], b: number[]) => Math.max(...a.map((x, i) => Math.abs(x - b[i])));
 
 export function GANCourse() {
-  const [chapter, setChapter] = useState(0), [objective, setObjective] = useState<GeneratorObjective>('non-saturating');
+  const [chapter, setChapter, heading] = useCourseSection('gan'), [objective, setObjective] = useState<GeneratorObjective>('non-saturating');
   const [run, setRun] = useState(() => startRun('non-saturating'));
   const [dRate, setDRate] = useState(0.06), [gRate, setGRate] = useState(0.06), [dPerG, setDPerG] = useState(2);
   const [z, setZ] = useState(0.5), [real, setReal] = useState(1.2), [probeLogit, setProbeLogit] = useState(-5);
   const [sampleSeed, setSampleSeed] = useState(0), [zA, setZA] = useState(-1.5), [zB, setZB] = useState(1.5), [mix, setMix] = useState(0.5);
-  const active = useLearningActive(), selectId = useId(), heading = useRef<HTMLHeadingElement>(null);
+  const active = useLearningActive(), selectId = useId();
   const metrics = ganMetrics(run.model, objective), steps = run.model.dSteps + run.model.gSteps;
   const generated = networkTrace(run.model.generator, z);
   const fakeJudgment = networkTrace(run.model.discriminator, generated.output);

@@ -1,34 +1,25 @@
-import { readFileSync } from 'node:fs'
-import pg from 'pg'
-import { attachDatabasePool, getDeadline, waitUntil } from '@vercel/functions'
+import { getDeadline, waitUntil } from '@vercel/functions'
 import { createGradeHandler } from '../grader/http-handler.mjs'
-import { createSupervisor } from '../grader/supervisor.mjs'
-import { createVercelProvider } from '../grader/vercel-provider.mjs'
+import { databasePool, workerRuntime } from '../grader/server-runtime.mjs'
+import { recoverQueue } from '../grader/recovery.mjs'
 
 const origin = 'https://iliskhan.github.io'
 let handler
 function configuredHandler() {
   if (handler) return handler
-  const runtimes = JSON.parse(readFileSync(new URL('../grader/runtimes.json', import.meta.url), 'utf8'))
-  if (!Object.keys(runtimes).length) throw Error('runtime_not_verified')
-  const ca = readFileSync(new URL('../grader/supabase-ca.crt', import.meta.url), 'utf8')
-  function pool(name, login) {
-    const connection = new URL(process.env[name] ?? '')
-    if (connection.protocol !== 'postgresql:' || connection.hostname !== 'aws-1-eu-central-1.pooler.supabase.com' ||
-      connection.port !== '5432' || connection.pathname !== '/postgres' || connection.search || connection.hash ||
-      decodeURIComponent(connection.username) !== `${login}.phnjcmahugetofwvnbto` || !connection.password) throw Error('invalid_database_config')
-    const value = new pg.Pool({ connectionString: connection.href, ssl: { ca, rejectUnauthorized: true },
-      max: 1, connectionTimeoutMillis: 5000, idleTimeoutMillis: 5000, query_timeout: 5000, statement_timeout: 4000 })
-    value.on('error', () => {})
-    attachDatabasePool(value)
-    return value
-  }
-  const api = pool('PRACTICE_API_DATABASE_URL', 'rustml_api')
-  const worker = pool('PRACTICE_WORKER_DATABASE_URL', 'rustml_worker')
-  const run = createSupervisor({ db: worker, provider: createVercelProvider(), runtimes })
+  const api = databasePool('PRACTICE_API_DATABASE_URL', 'rustml_api')
+  const { db, runAttempt: rawSupervisor } = workerRuntime()
+  const invocationDeadline = () => (getDeadline()?.getTime() ?? Date.now() + 300000) - 20000
+  // Queue workers call the unwrapped supervisor, so a sweep cannot recursively drain.
+  const drain = deadline => recoverQueue({ db, runExactAttempt: rawSupervisor, deadline })
   handler = createGradeHandler({ supabaseUrl: 'https://phnjcmahugetofwvnbto.supabase.co',
     publishableKey: process.env.SUPABASE_PUBLISHABLE_KEY, origins: [origin], db: api, waitUntil,
-    runAttempt: id => run(id, { deadline: (getDeadline()?.getTime() ?? Date.now() + 240000) - 20000 }) })
+    recover: () => drain(invocationDeadline()),
+    runAttempt: async id => {
+      const deadline = invocationDeadline()
+      try { return await rawSupervisor(id, { deadline }) }
+      finally { await drain(deadline) }
+    } })
   return handler
 }
 

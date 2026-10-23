@@ -2,7 +2,6 @@ import { CoreTopicFilm } from './CoreTopicFilms';
 import { useMemo, useState, type ReactNode } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
-import { useLearningActive } from './learning-context';
 import { Scene3D, type SceneAxes, type Vec3 } from './ThreeD';
 import { activation, activationDerivative, adaptationInitial, adaptationStep, adaptationGradients,
   adaptationDelta, adaptationPredict, applyBpe, bpePairs, ffnTrace, FFN_UP, FFN_GATE, FFN_DOWN,
@@ -79,7 +78,6 @@ export function BpeLab() {
 }
 
 export function GatedFfnLab() {
-  const active = useLearningActive();
   const [kind, setKind] = useState<FfnKind>('swiglu'), [input, setInput] = useState([.7, -.4, .6]), [geometry, setGeometry] = useState(false);
   const trace = ffnTrace(input, kind), label = { relu: 'ReLU', gelu: 'GELU (tanh-приближение)', swiglu: 'SwiGLU' }[kind];
   const sweep = Array.from({ length: 41 }, (_, i) => { const x = -2 + i * .1; return { x, output: ffnTrace([x, input[1], input[2]], kind).output }; });
@@ -112,7 +110,7 @@ export function GatedFfnLab() {
         <ScrollTable label="Локальные производные произведения"><table className="data-table"><caption>Производные по независимым ветвям</caption><thead><tr><th scope="col">Канал</th><th scope="col">∂p/∂u</th><th scope="col">∂p/∂g</th></tr></thead><tbody>{trace.rows.map((row, i) => <tr key={i}><th scope="row">{i + 1}</th><td>{fmt(row.dProductDUp, 6)}</td><td>{kind === 'swiglu' ? fmt(row.dProductDGate, 6) : 'Нет gate'}</td></tr>)}</tbody></table></ScrollTable>
       </details>
       <div className="button-row"><button type="button" aria-pressed={geometry} onClick={() => setGeometry(!geometry)}>{geometry ? 'Скрыть' : 'Показать'} 3D выходного вектора</button></div>
-      {geometry && active && <Scene3D title="Выходы FFN при изменении x₁" description="Линия соединяет настоящие тройки (y₁, y₂, y₃) при фиксированных x₂ и x₃. Текущее положение — выход для выбранного входа; индекс канала и x₁ не являются дополнительными осями. Числа доступны в графике и таблице." axes={outputAxes(sweep.map(point => point.output))}
+      {geometry && <Scene3D title="Выходы FFN при изменении x₁" description="Линия соединяет настоящие тройки (y₁, y₂, y₃) при фиксированных x₂ и x₃. Текущее положение — выход для выбранного входа; индекс канала и x₁ не являются дополнительными осями. Числа доступны в графике и таблице." axes={outputAxes(sweep.map(point => point.output))}
         lines={[{ name: 'Траектория y при x₁ от −2 до 2', points: sweep.map(point => point.output as unknown as Vec3) }]} points={[{ name: 'Текущий y', position: trace.output as unknown as Vec3, color: '#b75d24' }]} />}
     </section>
     <PredictionExperiment question="При z = −1 выход SiLU gate…" options={['Отрицательный', 'Между 0 и 1', 'Ровно 0']} run={prediction => ({ correct: prediction === 0, before: 'Аргумент gate z = −1', after: `SiLU(−1) = ${fmt(activation(-1, 'swiglu'), 6)}, производная = ${fmt(activationDerivative(-1, 'swiglu'), 6)}`, explanation: 'σ(z) положительна, но множитель z отрицателен. SiLU gate не имеет ограничений вероятности.' })} />
@@ -121,7 +119,6 @@ export function GatedFfnLab() {
 }
 
 export function LoraLab() {
-  const active = useLearningActive();
   const [rank, setRank] = useState(1), [taskRank, setTaskRank] = useState<1 | 3>(1), [noise, setNoise] = useState(0), [eta, setEta] = useState(.4), [epochs, setEpochs] = useState(0), [sampleIndex, setSampleIndex] = useState(0), [geometry, setGeometry] = useState(false);
   const result = useMemo(() => trainAdaptation(rank, taskRank, noise, eta, epochs), [rank, taskRank, noise, eta, epochs]);
   const last = result.history[result.history.length - 1], sample = result.data.heldout[sampleIndex];
@@ -170,7 +167,7 @@ export function LoraLab() {
       <p>x = {vector(sample.x)}</p>
       <ScrollTable label="Предсказания на held-out"><table className="data-table"><caption>Три настоящие компоненты выхода для одного общего входа</caption><thead><tr><th scope="col">Метод</th><th scope="col">y₁</th><th scope="col">y₂</th><th scope="col">y₃</th></tr></thead><tbody>{['База W₀x', 'Цель', 'Full', 'LoRA'].map((name, i) => <tr key={name}><th scope="row">{name}</th>{predictions[i].map((v, j) => <td key={j}>{fmt(v, 6)}</td>)}</tr>)}</tbody></table></ScrollTable>
       <div className="button-row"><button type="button" aria-pressed={geometry} onClick={() => setGeometry(!geometry)}>{geometry ? 'Скрыть' : 'Показать'} 3D сравнение выхода</button></div>
-      {geometry && active && <Scene3D title="База, цель и два адаптированных выхода" description="Три оси — реальные компоненты одного выходного вектора y₁, y₂, y₃. Отрезки показывают изменение выхода относительно замороженной базы. Номер примера и эпоха не являются пространственными координатами. Точные значения есть в таблице выше." axes={outputAxes(predictions)}
+      {geometry && <Scene3D title="База, цель и два адаптированных выхода" description="Три оси — реальные компоненты одного выходного вектора y₁, y₂, y₃. Отрезки показывают изменение выхода относительно замороженной базы. Номер примера и эпоха не являются пространственными координатами. Точные значения есть в таблице выше." axes={outputAxes(predictions)}
         points={['База', 'Цель', 'Full', 'LoRA'].map((name, i) => ({ name, position: predictions[i] as unknown as Vec3, color: ['#6a52a0', '#2a7293', '#27694e', '#b75d24'][i] }))}
         lines={[{ name: 'Обновление Full', points: [baseOutput as unknown as Vec3, fullOutput as unknown as Vec3], color: '#27694e' }, { name: 'Обновление LoRA', points: [baseOutput as unknown as Vec3, loraOutput as unknown as Vec3], color: '#b75d24' }]} />}
     </section>

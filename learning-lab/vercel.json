@@ -5,12 +5,17 @@
   "outputDirectory": "grader-public",
   "fluid": true,
   "regions": ["fra1"],
-  "crons": [{ "path": "/api/practice-reap", "schedule": "15 3 * * *" }],
+  "crons": [{ "path": "/api/practice-reap", "schedule": "15 3 * * *" },
+    { "path": "/api/practice-recover", "schedule": "30 3 * * *" }],
   "functions": {
     "api/practice-grade.js": {
       "maxDuration": 300,
       "includeFiles": "grader/{runtimes.json,supabase-ca.crt}"
     },
-    "api/practice-reap.js": { "maxDuration": 60 }
+    "api/practice-reap.js": { "maxDuration": 60 },
+    "api/practice-recover.js": {
+      "maxDuration": 300,
+      "includeFiles": "grader/{runtimes.json,supabase-ca.crt}"
+    }
   }
 }

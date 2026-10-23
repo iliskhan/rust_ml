@@ -161,6 +161,7 @@ function authoredCode(skill: Skill): Pick<PracticeExercise, 'starter' | 'solutio
   };
 }
 
+const tolerance = { atol: 1e-10, rtol: 1e-9 };
 export const architecturePracticeTopics: PracticeTopic[] = skills.map(skill => {
   const topicId = 'unit.architecture.'+skill.key;
   const code = authoredCode(skill);
@@ -172,8 +173,8 @@ export const architecturePracticeTopics: PracticeTopic[] = skills.map(skill => {
       return {
         id: `${topicId}.${index===0?'guided':index===1?'transfer-a':'transfer-b'}`, topicId,
         title: `${index===0?'Вычисление':index===1?'Перенос A':'Перенос B'} · ${skill.title}`,
-        mode: index===0?'guided':'transfer', formula: skill.formula,
-        prompt: `Напишите solve(values). Вход: ${skill.inputs}. Все числа конечны, |v|≤4, форма точно как в примере; вход не изменять. Отклоняйте неверную форму и значения (ValueError/RangeError/Err). ${example.context} ${skill.boundary} Сравнение atol=1e−10, rtol=1e−9.`,
+        mode: index===0?'guided':'transfer', formula: skill.formula, tolerance,
+        prompt: `Напишите solve(values). Вход: ${skill.inputs}. Все числа конечны, |v|≤4, форма точно как в примере; вход не изменять. Отклоняйте неверную форму и значения (ValueError/RangeError/Err). ${example.context} ${skill.boundary} Сравнение atol=${tolerance.atol.toExponential().replace('e-', 'e−')}, rtol=${tolerance.rtol.toExponential().replace('e-', 'e−')}.`,
         hints: ['Назовите каждый элемент входа по порядку, указанному в условии.',skill.formula],
         explanation: `${example.context} Для входа ${JSON.stringify(example.values)} ожидается ${JSON.stringify(example.result)}. ${skill.boundary}`,
         ...code, fixtures: [{ input: JSON.stringify({values:example.values}), output: JSON.stringify(example.result) }],

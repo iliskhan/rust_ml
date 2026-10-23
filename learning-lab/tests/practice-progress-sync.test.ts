@@ -135,19 +135,54 @@ function fakeCloud() {
 }
 const syncOptions = (a: ReturnType<typeof setup>, cloud: ReturnType<typeof fakeCloud>['cloud']) => ({ cloud, store: a.store, storage: a.storage, topics, releaseKey: practiceRelease, releaseId: 'cloud-release', ownerId: scope.ownerId })
 
-test('ambiguous offline commit is retried idempotently; cursor and local events are durable', async () => {
+test('ambiguous upload is recovered by pull and subsequent retries remain idempotent', async () => {
   const a = setup(), b = setup(), server = fakeCloud()
   await a.store.recordQuiz(scope, 1, true)
   server.loseNext()
-  await assert.rejects(syncLearningProgress(syncOptions(a, server.cloud)), /offline/)
+  assert.deepEqual(await syncLearningProgress(syncOptions(a, server.cloud)), { received: 1, uploadError: 'offline after commit' })
   assert.equal(server.rows.length, 1)
-  assert.ok(![...a.values.keys()].some(k => k.includes('learning-cursor')))
+  assert.ok([...a.values.entries()].some(([k, v]) => k.includes('learning-cursor') && v === '1'))
   await syncLearningProgress(syncOptions(a, server.cloud))
   assert.equal(server.rows.filter(e => e.kind === 'quiz').length, 1)
   await syncLearningProgress(syncOptions(b, server.cloud))
   assert.equal(b.store.read(scope).history.length, 1)
   await syncLearningProgress(syncOptions(b, server.cloud))
   assert.equal(b.store.read(scope).history.length, 1)
+})
+
+test('upload rejection still pulls history without acknowledging unsent receipts', async () => {
+  const a = setup(), b = setup(), server = fakeCloud(), uploaded = new Set<string>()
+  await a.store.recordQuiz(scope, 1, true)
+  await b.store.recordHelp(scope, 'solution')
+  await server.cloud.syncLearning('cloud-release', await collectLearningEvents(b.store, topics, practiceRelease, scope.ownerId), 0)
+  const pending = (await collectLearningEvents(a.store, topics, practiceRelease, scope.ownerId))[0]
+  const sent: number[] = []
+  const cloud = { async syncLearning(release: string, events: readonly LearningEvent[], after: number) {
+    sent.push(events.length)
+    if (events.length) throw new Error('upload quota')
+    return server.cloud.syncLearning(release, events, after)
+  } }
+  assert.deepEqual(await syncLearningProgress({ ...syncOptions(a, cloud), uploaded }), { received: 1, uploadError: 'upload quota' })
+  assert.deepEqual(sent, [1, 0])
+  assert.deepEqual(a.store.read(scope).help.map(receipt => receipt.kind), ['solution'])
+  assert.equal(a.store.read(scope).history.length, 1)
+  assert.equal(uploaded.has(pending.event_id), false)
+  await syncLearningProgress({ ...syncOptions(a, server.cloud), uploaded })
+  assert.equal(server.rows.filter(row => row.event_id === pending.event_id).length, 1)
+})
+
+test('a delayed language event keeps its original identity and cannot override a newer choice', async () => {
+  const a = setup(), b = setup(), server = fakeCloud()
+  const old = recordLanguagePreference(a.storage, practiceRelease, scope.ownerId, 'rust', at)
+  const newer = recordLanguagePreference(b.storage, practiceRelease, scope.ownerId, 'javascript', '2026-10-13T08:01:00.000Z')
+  await syncLearningProgress(syncOptions(b, server.cloud))
+  await syncLearningProgress(syncOptions(a, server.cloud))
+  await syncLearningProgress(syncOptions(b, server.cloud))
+  await syncLearningProgress(syncOptions(a, server.cloud))
+  assert.equal(a.store.getPrimaryLanguage(practiceRelease, scope.ownerId), 'javascript')
+  assert.equal(b.store.getPrimaryLanguage(practiceRelease, scope.ownerId), 'javascript')
+  assert.deepEqual(server.rows.map(row => row.event_id), [newer.event_id, old.event_id])
+  assert.deepEqual(server.rows.map(row => row.occurred_at), [newer.occurred_at, old.occurred_at])
 })
 
 test('paginated pull merges more than 500 events and rejects account switches before applying response', async () => {

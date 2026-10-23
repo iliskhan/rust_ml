@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { createNetwork, createOptimizerState, networkLossGradient, optimizerStep, quadratic, XOR_DATA, type OptimizerKind, type OptimizerState } from './math';
 import { Chart, Exercise, Range, fmt } from './ui';
@@ -28,7 +29,9 @@ export function OptimizerLesson() {
   const [lr, setLr] = useState(.12), [momentum, setMomentum] = useState(.9);
   const [beta1, setBeta1] = useState(.9), [beta2, setBeta2] = useState(.999);
   const [tracks, setTracks] = useState(makeTracks), [running, setRunning] = useState(false);
-  const [selected, setSelected] = useState<OptimizerKind>('adam');
+  const [methodIndex, setMethodIndex, methodHeading] = useCourseSection('optimizers', 2);
+  const selected = kinds[methodIndex];
+  const setSelected = (next: OptimizerKind) => setMethodIndex(kinds.indexOf(next));
   const filmExample = useAnimationExample({ lr, momentum, beta1, beta2, tracks, selected }, value => {
     setRunning(false); setLr(value.lr); setMomentum(value.momentum); setBeta1(value.beta1); setBeta2(value.beta2); setTracks(value.tracks); setSelected(value.selected);
   }, { lr: .12, momentum: .9, beta1: .9, beta2: .999, tracks: makeTracks(), selected: 'sgd' });
@@ -87,7 +90,7 @@ export function OptimizerLesson() {
       {sceneOpened && <Scene3D title="Оптимизаторы на поверхности L" description="Настоящая функция L=½(x²+8y²) и координаты всех выполненных шагов. Это два веса и значение потери, а не три веса. Координаты за пределами окна остаются в таблице расчётов." axes={[{label:'Вес x',min:-4,max:4},{label:'Вес y',min:-2,max:2},{label:'Потеря L',min:0,max:24}]} surfaces={[{name:'L = ½(x² + 8y²)',rows:functionSurface([-4,4],[-2,2],quadraticHeight),opacity:.28}]} lines={kinds.map(k=>({name:names[k],color:colors[k],dashed:k!=='sgd',points:tracks[k].path.map(point=>[point.x,point.y,quadraticHeight(point.x,point.y)] as const)}))} points={kinds.map(k=>({name:`${names[k]} · текущий шаг`,color:colors[k],position:[tracks[k].state.params[0],tracks[k].state.params[1],quadraticHeight(tracks[k].state.params[0],tracks[k].state.params[1])] as const}))} />}
       <p className="note">Плоские контуры выше — взгляд на эту же функцию сверху. Масштабы весов и высоты различаются; угол на экране не измеряет величину градиента. <ConceptLink concept="gradient">Как высота связана с градиентом?</ConceptLink></p>
     </details>
-    <section className="panel"><h3>Градиент и шаг — разные числа</h3>
+    <section className="panel"><h3 ref={methodHeading} tabIndex={-1}>Градиент и шаг — разные числа</h3>
       <label>Разберите метод <select value={selected} onChange={e => setSelected(e.target.value as OptimizerKind)}>{kinds.map(k => <option key={k} value={k}>{names[k]}</option>)}</select></label>
       <div className="formula">Градиент перед последним шагом g = [{t.grad.map(v => fmt(v)).join('; ')}]<br />Изменение параметров Δθ = [{t.delta.map(v => fmt(v)).join('; ')}]<br />{selected === 'sgd' ? 'θₜ = θₜ₋₁ − ηgₜ' : selected === 'momentum' ? 'vₜ = μvₜ₋₁ + gₜ; θₜ = θₜ₋₁ − ηvₜ' : 'mₜ = β₁mₜ₋₁ + (1−β₁)gₜ; vₜ = β₂vₜ₋₁ + (1−β₂)gₜ²'}</div>
       {selected === 'adam' && <div className="formula">{n > 0 ? <>Шаг t = {n}: m̂ₓ = {fmt(t.state.m[0])} / {fmt(1 - beta1 ** n, 6)} = {fmt(t.state.m[0] / (1 - beta1 ** n))}<br />v̂ₓ = {fmt(t.state.v[0])} / {fmt(1 - beta2 ** n, 6)} = {fmt(t.state.v[0] / (1 - beta2 ** n))}</> : 'Сделайте шаг, чтобы увидеть поправку смещения оценок.'}<br />θₜ = θₜ₋₁ − η·m̂ₜ / (√v̂ₜ + 10⁻⁸)</div>}

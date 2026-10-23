@@ -51,7 +51,7 @@ export function HeadGeometryLab({ parameters, hidden, targets, mask, rate, steps
       <div className="button-row">{hidden.map((row, t) => <button key={t} onClick={() => setProbe([...row])}>Проверить h позиции t={t}</button>)}<button disabled={steps >= 500} onClick={onTrainOne}>1 текущий шаг SGD · обновить плоскости</button></div>
       <p className="formula">Для токена j: zⱼ=h₀·W[0,j]+h₁·W[1,j]+b[j].</p>
       {ids.map(token => <p className="formula" key={token}>«{TOY_VOCAB[token]}»: z = h₀·{fmt(parameters.weights[0][token], 5)} + h₁·{fmt(parameters.weights[1][token], 5)} + {fmt(parameters.bias[token], 5)}. В проверочной точке z={fmt(result.logits[token], 6)}.</p>)}
-      {open && active && <div className="tv-scenes">
+      {open && <div className="tv-scenes">
         <Scene3D title="Две текущие affine-плоскости logits" description="X=h₀, Y=h₁, Z=logit выбранного токена. Две плоскости используют одни W,b с таблицей и SGD; точки t имеют фиксированные X,Y и высоты каждой из двух плоскостей."
           axes={[{ label: 'Скрытый признак h₀', min: -range, max: range }, { label: 'Скрытый признак h₁', min: -range, max: range }, { label: 'Logit z', min: -zRange, max: zRange }]}
           surfaces={ids.map(token => ({ name: `z: ${TOY_VOCAB[token]}`, color: colors[token], opacity: .38, rows: Array.from({ length: 5 }, (_, i) => Array.from({ length: 5 }, (_, j) => plane(token, -range + 2 * range * i / 4, -range + 2 * range * j / 4))) }))}

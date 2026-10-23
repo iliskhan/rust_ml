@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { createSupervisor, runtimeKey } from '../grader/supervisor.mjs'
 import { createGradeHandler } from '../grader/http-handler.mjs'
 import { canonical, sha256, buildBundle, exercises } from '../grader/bundles.mjs'
+import { createRecoveryHandler, recoverQueue } from '../grader/recovery.mjs'
 
 const owner = '10000000-0000-4000-8000-000000000001'
 const attemptId = '20000000-0000-4000-8000-000000000001'
@@ -26,6 +27,9 @@ function harness(options = {}) {
   const db = { async query(sql, values) {
     calls.push({ sql, values: [...values] })
     if (sql.includes('claim_practice_job')) return { rows: [{ job: options.claim === undefined ? active : options.claim }] }
+    if (sql.includes('practice_execution_contract')) return { rows: [{ contract: options.badContract ? null : {
+      language: active.language, entrypoint: active.runner_spec.entrypoint, input_language: 'python', input_starter: item.starter.python,
+    } }] }
     if (sql.includes('renew_practice_job')) return { rows: [{ renewed: options.renew ?? true }] }
     if (sql.includes('finish_practice_job')) {
       if (options.lostFinish && calls.filter(call => call.sql.includes('finish_practice_job')).length === 1) throw Error('network lost after commit secret-source')
@@ -139,6 +143,53 @@ test('wrong guest values fail; provider throw/cleanup failure do not expose raw 
   }
 })
 
+test('legacy pinned editions resolve arguments from immutable published starters without changing the digest', async () => {
+  for (const badContract of [false, true]) {
+    const state = harness({ badContract })
+    delete state.active.runner_spec.parameters
+    state.active.bundle_sha256 = sha256(canonical({ grading_tests: state.active.grading_tests, runner_spec: state.active.runner_spec }))
+    const original = structuredClone(state.active)
+    assert.equal((await state.run(attemptId)).status, badContract ? 'queued' : 'graded')
+    assert.deepEqual(state.active, original)
+    assert.equal(state.executions.length, badContract ? 0 : original.expected_tests)
+    assert.ok(state.calls.some(call => call.sql.includes('practice_execution_contract')))
+  }
+})
+
+test('trusted recovery drains a bounded due snapshot with at most two exact claims and no recursive sweeps', async () => {
+  const ids = Array.from({ length: 20 }, (_, index) => `20000000-0000-4000-8000-${String(index).padStart(12, '0')}`)
+  let discovered = 0, active = 0, peak = 0
+  const claimed = []
+  const result = await recoverQueue({ db: { async query(sql, values) {
+    assert.equal(sql, 'select attempt_id from private.practice_due_attempts()'); assert.deepEqual(values, [])
+    discovered++; return { rows: ids.map(attempt_id => ({ attempt_id })) }
+  } }, deadline: Date.now() + 1000, runExactAttempt: async (id, options) => {
+    claimed.push(id); active++; peak = Math.max(peak, active)
+    assert.ok(options.deadline > Date.now())
+    await new Promise(resolve => setImmediate(resolve)); active--
+    return { status: claimed.length % 2 ? 'queued' : 'graded' }
+  } })
+  assert.equal(discovered, 1); assert.equal(peak, 2)
+  assert.deepEqual(claimed, ids); assert.equal(result.attempted, 20)
+  assert.equal(result.completed + result.deferred, 20); assert.equal(result.failed, 0)
+})
+
+test('recovery respects deadlines, rejects malformed discovery, authenticates cron and redacts output', async () => {
+  const db = { async query() { return { rows: [{ attempt_id: attemptId }] } } }
+  const raw = await recoverQueue({ db, runExactAttempt: () => assert.fail('expired invocation must not claim'), deadline: 1, now: () => 2 })
+  assert.equal(raw.attempted, 0); assert.equal(raw.deferred, 1)
+  await assert.rejects(recoverQueue({ db: { async query() { return { rows: [{ attempt_id: 'secret-invalid' }] } } },
+    runExactAttempt: () => assert.fail('invalid queue must not claim'), deadline: Date.now() + 1000 }), /invalid_recovery_queue/)
+  const secret = 's'.repeat(32), calls = []
+  const handler = createRecoveryHandler({ secret, recover: async () => { calls.push(1); return { ...raw, source: 'SECRET', owner: owner } } })
+  const request = value => new Request('https://backend.test/api/practice-recover', { headers: { Authorization: `Bearer ${value}` } })
+  assert.equal((await handler(request('wrong'))).status, 403); assert.equal(calls.length, 0)
+  const response = await handler(request(secret))
+  assert.deepEqual(await response.json(), raw); assert.equal(calls.length, 1)
+  const missing = createRecoveryHandler({ recover: () => assert.fail('missing cron secret must not run') })
+  assert.equal((await missing(request(secret))).status, 503)
+})
+
 function httpHarness(options = {}) {
   const calls = [], background = [], authCalls = [], launched = []
   const handler = createGradeHandler({ supabaseUrl: 'https://project.supabase.co', publishableKey: 'public-key', origins: ['https://rustml.test'],
@@ -152,7 +203,7 @@ function httpHarness(options = {}) {
       if (options.sqlFailure) throw Error(options.sqlFailure === true ? 'secret postgres connection' : options.sqlFailure)
       if (sql.includes('submit_practice')) return { rows: [{ id: attemptId }] }
       return { rows: [{ attempt: options.foreign ? null : { id: attemptId, status: options.status ?? 'queued' } }] }
-    } }, runAttempt: async id => { launched.push(id); return { status: 'graded' } },
+    } }, runAttempt: async id => { launched.push(id); return { status: 'graded' } }, recover: options.recover,
     waitUntil: promise => background.push(promise),
   })
   return { handler, calls, background, authCalls, launched }
@@ -203,6 +254,17 @@ test('HTTP fresh authenticated account without practice profile receives generic
     assert.equal(state.background.length, 0)
     assert.equal(state.launched.length, 0)
   }
+})
+
+test('authorized submit blocked by a full queue schedules private recovery without exposing other attempts', async () => {
+  let sweeps = 0
+  const state = httpHarness({ sqlFailure: 'submission_limit', recover: async () => { sweeps++ } })
+  const response = await state.handler(request())
+  assert.equal(response.status, 429); assert.deepEqual(await response.json(), { code: 'submission_limit' })
+  await Promise.all(state.background)
+  assert.equal(sweeps, 1); assert.deepEqual(state.launched, [])
+  const denied = httpHarness({ sqlFailure: 'session_not_found', recover: () => assert.fail('foreign session cannot wake queue') })
+  await denied.handler(request()); assert.equal(denied.background.length, 0)
 })
 
 test('HTTP rejects origin/body/auth/client controls and redacts infrastructure errors', async () => {

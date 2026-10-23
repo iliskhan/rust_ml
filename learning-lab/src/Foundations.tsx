@@ -326,7 +326,7 @@ export function BackpropLesson() {
       check={() => checkBackpropPractice({ x, w, target, step })} stateKey={JSON.stringify([x, w, target, step])} />
     <PracticeSection lessonId="backprop" topicId="unit.backprop.shared" />
     <section className="panel">
-      <h3>Проверка конечной разностью</h3>
+      <h3 id="backprop-check" tabIndex={-1}>Проверка конечной разностью</h3>
       <p>Независимо оценим наклон: немного увеличим и уменьшим параметр, каждый раз пересчитаем весь прямой проход. Остальные параметры остаются фиксированными.</p>
       <Range label="Показатель ε в 10ⁿ" value={epsilonPower} min={-6} max={-1} step={1} onChange={setEpsilonPower} />
       <div className="formula">ε = {epsilon.toExponential(0)}<br />∂L/∂θ ≈ [L(θ + ε) − L(θ − ε)] / (2ε)</div>

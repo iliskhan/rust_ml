@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { CoreTopicFilm } from './CoreTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
@@ -294,10 +295,10 @@ const CHAPTERS = [
 ];
 
 export function TransformerCourse() {
-  const [chapter, setChapter] = useState(0);
+  const [chapter, setChapter, chapterHeading] = useCourseSection('transformer');
   const [visited, setVisited] = useState([0]);
   const chapterSelectId = useId();
-  const chapterHeading = useRef<HTMLHeadingElement>(null);
+  if (!visited.includes(chapter)) setVisited(current => [...current, chapter]);
   function chooseChapter(index: number) {
     setChapter(index);
     setVisited(current => current.includes(index) ? current : [...current, index]);

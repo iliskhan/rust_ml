@@ -22,6 +22,7 @@ function requirementsFor(topic) {
   return topic.exercises.map(exercise => {
     const pair = exercise.mode === 'transfer' && exercise.id.match(/^(.*)\.transfer-([ab])$/)
     const independent = Boolean(pair && pairs.get(pair[1]).size === 2)
+    if (independent && exercise.evidenceScope === 'repeat') throw new Error('Repeated examples cannot publish independent transfer: ' + exercise.id)
     return { exercise, key: independent ? pair[1] + ':transfer' : exercise.id,
       rule: independent ? 'independent' : 'pass', required: exercise.mode === 'guided' || independent }
   })
@@ -58,5 +59,6 @@ for (const [position, topic] of practiceTopics.entries()) {
   }
 }
 lines.push(`select private.publish_practice_release('${release}');`, 'commit;', '')
-writeFileSync(new URL('migrations/202610120003_anchor_content.sql', import.meta.url), lines.join('\n'))
+// Preserve published releases; authoring a new release requires a new output path.
+writeFileSync(new URL(process.argv[2] ?? 'migrations/202610120003_anchor_content.sql', import.meta.url), lines.join('\n'), { flag: 'wx' })
 console.log(JSON.stringify({ release: practiceRelease, ...totals, grading: "disabled" }))

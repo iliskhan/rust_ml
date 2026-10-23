@@ -3,7 +3,6 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
 import { Scene3D, type SceneAxes, type Vec3 } from './ThreeD';
-import { useLearningActive } from './learning-context';
 import {
   CLIP_PAIRS, clipInitial, clipObjective, trainClip,
   FEATURE_IMPORTANCE, superpositionInitial, superpositionTrace, trainSuperposition,
@@ -35,7 +34,6 @@ function Pattern({ pixels, name }: { pixels: number[]; name: string }) {
 
 export function ClipLab() {
   const [steps, setSteps] = useState(0), [temperature, setTemperature] = useState(.2), [eta, setEta] = useState(.08), [query, setQuery] = useState(0), [geometry, setGeometry] = useState(false);
-  const active = useLearningActive();
   const trained = useMemo(() => trainClip(steps, eta, temperature), [steps, eta, temperature]);
   const before = useMemo(() => clipObjective(clipInitial(), temperature), [temperature]);
   const current = trained.metrics, names = CLIP_PAIRS.map(pair => pair.name);
@@ -66,7 +64,7 @@ export function ClipLab() {
       <p role="status">Первое описание: «{names[selected]}». {selected === query ? 'Совпадает с заданной парой.' : 'Пара пока перепутана.'} Softmax по строке: {vector(queryProbabilities)}.</p>
       <p className="note">Softmax показывает конкуренцию четырёх описаний в этом наборе. Это не калиброванная вероятность того, что описание истинно. Температура меняет CE и распределение, но при фиксированных весах не меняет порядок сходств.</p>
       <div className="button-row"><button type="button" aria-pressed={geometry} onClick={() => setGeometry(!geometry)}>{geometry ? 'Скрыть' : 'Показать'} 3D embedding</button></div>
-      {geometry && active && <Scene3D title="Картинки и описания в R³" description="Каждая ось — реальная компонента обученного embedding. Круги — картинки; треугольники — описания. Отрезок соединяет заданную пару; индекс класса не является координатой. Числа доступны ниже." axes={clipAxes}
+      {geometry && <Scene3D title="Картинки и описания в R³" description="Каждая ось — реальная компонента обученного embedding. Круги — картинки; треугольники — описания. Отрезок соединяет заданную пару; индекс класса не является координатой. Числа доступны ниже." axes={clipAxes}
         points={names.flatMap((name, i) => [{ name: `Картинка: ${name}`, position: current.imageEmbeddings[i] as unknown as Vec3, color: colors[i] }, { name: `Описание: ${name}`, position: current.textEmbeddings[i] as unknown as Vec3, shape: 'triangle' as const, color: colors[i] }])}
         lines={names.map((name, i) => ({ name: `Пара: ${name}`, points: [current.imageEmbeddings[i] as unknown as Vec3, current.textEmbeddings[i] as unknown as Vec3], color: colors[i] }))} />}
       <details><summary>Численные координаты и веса</summary><Matrix title="Embedding картинок: z₁, z₂, z₃" values={current.imageEmbeddings} rowLabels={names} /><Matrix title="Embedding описаний: t₁, t₂, t₃" values={current.textEmbeddings} rowLabels={names} /><Matrix title="Обученный Wᵢ" values={trained.parameters.image} /><Matrix title="Обученный Wₜ" values={trained.parameters.text} /></details>
@@ -190,7 +188,7 @@ export function JepaLab() {
 
 export function KanLab() {
   const [steps, setSteps] = useState(0), [knots, setKnots] = useState(7), [eta, setEta] = useState(.08), [task, setTask] = useState<RegressionTask>('additive'), [x, setX] = useState(.2), [y, setY] = useState(.3), [surface, setSurface] = useState<'none' | 'kan' | 'mlp' | 'target'>('none');
-  const active = useLearningActive(), trained = useMemo(() => trainKanComparison(steps, knots, eta, task), [steps, knots, eta, task]);
+  const trained = useMemo(() => trainKanComparison(steps, knots, eta, task), [steps, knots, eta, task]);
   const grid = Array.from({ length: 61 }, (_, i) => -1 + i / 30), metrics = trained.metrics;
   const target = regressionTarget(x, y, task), kan = kanPredict(trained.kan, [x, y]), mlp = regressionMlpPredict(trained.mlp, [x, y]).output;
   const surfaceData = useMemo(() => {
@@ -230,7 +228,7 @@ export function KanLab() {
       <p role="status">Цель {fmt(target, 5)}; KAN {fmt(kan, 5)} (ошибка {fmt(kan - target, 5)}); MLP {fmt(mlp, 5)} (ошибка {fmt(mlp - target, 5)}).</p>
       <Chart xLabel="x при фиксированном y" yLabel={`f(x, y=${fmt(y, 2)})`} xDomain={[-1, 1]} series={[{ name: 'Цель', color: colors[2], points: grid.map(v => ({ x: v, y: regressionTarget(v, y, task) })) }, { name: 'KAN', color: colors[0], points: grid.map(v => ({ x: v, y: kanPredict(trained.kan, [v, y]) })) }, { name: 'MLP', color: colors[1], points: grid.map(v => ({ x: v, y: regressionMlpPredict(trained.mlp, [v, y]).output })) }]} />
       <label>3D поверхность<select value={surface} onChange={e => setSurface(e.target.value as typeof surface)}><option value="none">Скрыта — использовать график и числа</option><option value="target">Истинная функция</option><option value="kan">Выход KAN</option><option value="mlp">Выход MLP</option></select></label>
-      {surface !== 'none' && active && <Scene3D title={`Поверхность ${surface === 'target' ? 'цели' : surface.toUpperCase()}`} description="Оси X и Y — два настоящих входа регрессии; Z — значение f(x,y). Узлы, номер модели и шаг обучения не являются пространственными координатами. Для проверки используйте плоский срез и численные предсказания выше." axes={[{ label: 'Вход x', min: -1, max: 1 }, { label: 'Вход y', min: -1, max: 1 }, { label: 'Выход f(x,y)', min: low - .1, max: high + .1 }]} surfaces={[{ name: surface, rows: surfaceData, color: surface === 'kan' ? colors[0] : surface === 'mlp' ? colors[1] : colors[2], opacity: .65 }]} points={[{ name: 'Текущий запрос', position: [x, y, surface === 'kan' ? kan : surface === 'mlp' ? mlp : target], color: '#263c32' }]} />}
+      {surface !== 'none' && <Scene3D title={`Поверхность ${surface === 'target' ? 'цели' : surface.toUpperCase()}`} description="Оси X и Y — два настоящих входа регрессии; Z — значение f(x,y). Узлы, номер модели и шаг обучения не являются пространственными координатами. Для проверки используйте плоский срез и численные предсказания выше." axes={[{ label: 'Вход x', min: -1, max: 1 }, { label: 'Вход y', min: -1, max: 1 }, { label: 'Выход f(x,y)', min: low - .1, max: high + .1 }]} surfaces={[{ name: surface, rows: surfaceData, color: surface === 'kan' ? colors[0] : surface === 'mlp' ? colors[1] : colors[2], opacity: .65 }]} points={[{ name: 'Текущий запрос', position: [x, y, surface === 'kan' ? kan : surface === 'mlp' ? mlp : target], color: '#263c32' }]} />}
     </section>
     <PredictionExperiment question="Может ли эта однослойная аддитивная KAN точно представить слагаемое 0,6xy?" options={['Да, достаточно больше узлов', 'Нет, нужно взаимодействие между входами']} run={prediction => {
       const predictionAt = (a: number, b: number) => kanPredict(trained.kan, [a, b]);

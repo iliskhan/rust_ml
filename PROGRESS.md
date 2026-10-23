@@ -1,5 +1,31 @@
 # Прогресс RustML
 
+### Исправлены 12 замечаний в коде и миграциях, 2026-10-23
+
+Основа `master` / `32e053f`. После детального ревью исправления выполнены тремя
+параллельными субагентами (grader, frontend, content) и интегратором (Rust/sync/UI).
+Срез B06/B09/B12, R02/R04/R06/R08, U02/U05/U06/U08.
+
+Порядок аргументов больше не зависит от JSONB; старые editions поддерживаются
+без переписывания истории. Очередь получает серверный recovery с существующими
+quotas/leases. Reshape сохраняет логический порядок; раскрытие помощи требует
+receipt; выбор языка не дублируется; upload failure не блокирует pull.
+RL restore корректно инвалидирует соседей; ссылки выбирают главу, поиск сохраняет
+камеру. 141 упражнение в 47 темах явно обозначено как повторение, UI/SQL исключают
+ложное independent mastery. Численные tolerances и fit→transform согласованы.
+
+**682 PASS / 0 FAIL / 0 SKIP** Node suite с Python 3.11 и Rust **1.87.0**;
+Rust workspace **86 PASS**, format, typecheck и production build PASS.
+PGlite: 1236 published manifests, 35 execution cases, 56 grading checks;
+SQL009 сохраняет историю и RLS. Браузер: desktop/mobile390, RL apply/restore,
+LoRA same-hash/focus, SSM yaw80/search, quota→retry, legacy progress без ложного mastery.
+
+Новых production dependencies нет. **Live backend ещё не обновлён**; необходимые
+SQL008/009, API/cron, manifest edition и оставшиеся ограничения записаны в одном
+[backlog с доказательствами](learning-lab/evidence/review-fixes-2026-10-23/VALIDATION.md).
+Новые независимые банки, hosted Sandbox и ручная a11y/ученики не объявлены проверенными.
+Commit/push этого checkpoint и совпадение local/remote сообщаются после отправки.
+
 ### Word2Vec — четыре режима опубликованы и проверены, 2026-10-23
 
 Запрос: «доделай всё что нужно сделать». Основа master `18a8f15`, дерево чистое.

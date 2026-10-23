@@ -61,8 +61,10 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
   }, [cloud, ownerId, accountCatalog, releaseId, accountRevision])
   const accountState = cloudOwnerId(cloud) === ownerId && accountCatalog?.releaseKey === releaseId && account && account.ownerId === ownerId && account.catalog === accountCatalog ? account.state : null
   const accountRows = accountState?.rows.filter(row => row.language === language && shownTopics.some(topic => topic.id === row.topicId)) ?? []
-  const accountTotal = accountRows.reduce((sum, row) => sum + row.total, 0)
-  const accountCompleted = accountRows.reduce((sum, row) => sum + row.completed, 0)
+  const repeatTopics = new Set(topics.filter(topic => topic.exercises.some(exercise => exercise.evidenceScope === 'repeat')).map(topic => topic.id))
+  const independentRows = accountRows.filter(row => !repeatTopics.has(row.topicId))
+  const accountTotal = independentRows.reduce((sum, row) => sum + row.total, 0)
+  const accountCompleted = independentRows.reduce((sum, row) => sum + row.completed, 0)
   const accountPrimary = accountState?.rows.find(row => row.isPrimary)?.language
 
   return <section className="panel practice-progress" aria-labelledby={`${id}-title`}>
@@ -106,8 +108,10 @@ export function PracticeProgress({ ownerId, store: suppliedStore, topics = pract
       !accountState || accountState.status === 'loading' ? <p role="status">Загружаем прогресс текущего аккаунта…</p> :
       accountState.status === 'error' ? <p role="alert">{accountState.message}</p> :
       accountRows.length === 0 ? <p role="status">В аккаунте ещё нет данных прогресса для выбранного выпуска, курса и языка.</p> : <>
-        <p role="status">Серверные требования: {accountCompleted} / {accountTotal}. Данные есть для {accountRows.length} / {shownTopics.length} тем на {progressLanguageLabels[language]}. Основной язык аккаунта: {accountPrimary ? progressLanguageLabels[accountPrimary] : 'не указан в ответе сервера'}.</p>
-        <ul>{accountRows.map(row => <li key={row.topicId}>{shownTopics.find(topic => topic.id === row.topicId)?.title}: выполнено {row.completed} / {row.total} требований; pass: {row.passed}. {row.total > 0 && row.completed === row.total ? 'Тема подтверждена сервером.' : 'Остались требования, включая самостоятельный перенос, если он обязателен.'}</li>)}</ul>
+        <p role="status">Серверные требования вне повторного банка: {accountCompleted} / {accountTotal}. Данные есть для {accountRows.length} / {shownTopics.length} тем на {progressLanguageLabels[language]}. Основной язык аккаунта: {accountPrimary ? progressLanguageLabels[accountPrimary] : 'не указан в ответе сервера'}.</p>
+        <ul>{accountRows.map(row => <li key={row.topicId}>{shownTopics.find(topic => topic.id === row.topicId)?.title}: {repeatTopics.has(row.topicId)
+          ? `повторение, проверено ${row.passed} / ${row.total} заданий. Самостоятельное освоение этим банком не подтверждается. История попыток сохранена.`
+          : <>выполнено {row.completed} / {row.total} требований; pass: {row.passed}. {row.total > 0 && row.completed === row.total ? 'Тема подтверждена сервером.' : 'Остались требования, включая самостоятельный перенос, если он обязателен.'}</>}</li>)}</ul>
       </>}
   </section>
 }

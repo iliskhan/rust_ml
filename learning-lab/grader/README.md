@@ -33,7 +33,9 @@ Vercel Sandbox и завершает созданную среду. Код уч�
 4. Для каждого case `buildExecution(source, runner_spec, case)` возвращает
    `{files, compile?, run, result_file}`. В sandbox попадают source, текущий
    input, opaque case ID и public adapter. Expected values и final verdict
-   отсутствуют. JS/Python вызывают функцию с positional input values; Rust
+   отсутствуют. Все языки получают positional values по ordered `parameters[].name`,
+   а не по порядку ключей JSONB. Имена соответствуют полям public input;
+   JavaScript camelCase aliases сохраняют ту же позицию. Rust
    использует сигнатуру/поля structs из starter. Неизвестный contract отклоняется.
 5. Provider пишет только фиксированные filenames в новый workspace, выполняет
    fixed argv (SDK использует фиксированную sudo/bash-обёртку), ограничивает
@@ -116,6 +118,38 @@ node --test learning-lab/tests/practice-grader.test.ts
 node --test learning-lab/tests/practice-grader-provider.test.ts learning-lab/tests/practice-grader-supervisor.test.ts learning-lab/tests/practice-grading.test.ts
 PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test learning-lab/tests/practice-grader.test.ts
 ```
+
+## Исправления ревью 23 октября 2026: развёртывание ещё требуется
+
+Новые manifests содержат упорядоченные имена аргументов всех языков и структурированные
+авторские numeric tolerances. Их следует опубликовать новой `edition` (например, 2)
+через `prepareManifests` после проверки immutable каталога. Старые manifests,
+attempt hashes и история не переписываются. SQL008 добавляет только закрытый
+worker helper: старые JS/Python editions получают порядок из immutable опубликованного
+Python starter того же exercise/release; learner source никогда не задаёт сигнатуру.
+Применить SQL008 нужно **до** развёртывания нового API. Rust editions уже содержали имена.
+Старые pinned допуски сохраняются; исправленные допуски относятся к новой edition.
+
+После обычной проверки тот же удерживаемый `waitUntil` выполняет один bounded sweep
+`practice_due_attempts`: максимум 20 IDs, два worker, общий invocation deadline.
+Workers вызывают исходный supervisor без повторного drain; каждый claim по-прежнему
+резервирует квоту и проверяет lease/fencing. Submit, отклонённый из-за заполненной
+очереди валидной собственной сессии, также планирует этот sweep. После трёх попыток
+существующий SQL claim переводит брошенную job в terminal error без нового запуска.
+
+`/api/practice-recover` независимо восстанавливает очередь: GET с серверным
+`Authorization: Bearer CRON_SECRET`, fail-closed без секрета, в ответе только пять
+счётчиков. В Vercel Hobby настроен ежедневный резервный cron; после гибели всех
+активных workers и без новых submit восстановление может ждать до следующего дня
+(с учётом задержки scheduler), а полный drain — нескольких запусков. Для регулярного
+восстановления crash в течение минут нужен отдельно настроенный серверный scheduler
+с тем же защищённым endpoint; платный план этим изменением не подключается.
+Новый API, SQL008, manifests и cron production в этой правке не развёрнуты.
+
+Адресная SQL-проверка использует тот же explicit PGlite loader, что остальные smoke scripts:
+`node learning-lab/supabase/tests/review-grading-smoke.mjs /absolute/path/to/@electric-sql/pglite/dist/index.js`.
+Она проверяет настоящий JSONB roundtrip и private SQL claim, legacy/new editions,
+immutable history, helper ACL и terminal recovery; sandbox provider остаётся mock.
 
 Opt-in toolchains задаются `PRACTICE_PYTHON` и `PRACTICE_RUSTC`.
 Общий CI flag `PRACTICE_VERIFY_ALL_LANGUAGES=1` включает оба языка;

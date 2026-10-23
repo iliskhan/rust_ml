@@ -23,6 +23,10 @@ test('architecture: exactly nine inventory IDs, one guided and two distinct tran
     assert.deepEqual(topic.exercises.map(e=>e.mode),['guided','transfer','transfer']);
     assert.equal(new Set(topic.exercises.map(e=>e.prompt)).size,3);
     assert.equal(new Set(topic.exercises.map(e=>e.fixtures[0].input)).size,3);
+    for(const e of topic.exercises){
+      assert.deepEqual(e.tolerance,{atol:1e-10,rtol:1e-9});
+      assert.ok(e.prompt.includes(`atol=${e.tolerance!.atol.toExponential().replace('e-', 'e−')}, rtol=${e.tolerance!.rtol.toExponential().replace('e-', 'e−')}`));
+    }
     for(const e of topic.exercises)for(const lang of ['python','javascript','rust'] as const)assert.ok(e.solution[lang].length>100&&e.starter[lang]!==e.solution[lang]);
   }
 });

@@ -2,7 +2,6 @@ import { CoreTopicFilm } from './CoreTopicFilms';
 import { useState } from 'react';
 import { Chart, Range, fmt } from './ui';
 import { Scene3D, type Vec3 } from './ThreeD';
-import { useLearningActive } from './learning-context';
 import { attentionFixture, fullAttentionReference, tiledAttention, mlaTrace, memoryTokens, selectiveSsm, memoryComparison } from './efficientSequenceMath';
 
 const vec = (xs: number[]) => `[${xs.map(x => fmt(x, 4)).join('; ')}]`;
@@ -55,7 +54,6 @@ export function OnlineAttentionLab() {
 }
 
 export function StateSpaceLab() {
-  const active = useLearningActive();
   const [pattern, setPattern] = useState<'impulse' | 'rewrite' | 'alternating'>('impulse'), [delta, setDelta] = useState(.5), [selectivity, setSelectivity] = useState(0), [retention, setRetention] = useState(.8), [beta, setBeta] = useState(.7), [time, setTime] = useState(7), [space, setSpace] = useState(false);
   const tokens = memoryTokens(pattern), ssm = selectiveSsm(tokens, delta, selectivity), memories = memoryComparison(tokens, retention, beta, selectivity), at = memories[time];
   const limit = Math.max(.5, ...ssm.flatMap(s => s.state.map(Math.abs))) * 1.1;
@@ -66,7 +64,7 @@ export function StateSpaceLab() {
     <p>При нулевой зависимости это линейная SSM. При ненулевой Δₜ, Bₜ, Cₜ зависят от xₜ: Δₜ=Δ·exp(s·xₜ), Bₜ=[1; .5; −.4](1+.25s·xₜ), Cₜ=[1; −.5; .7](1+.2s·xₜ). Это малое селективное ядро; convolution, gates, расширение каналов и полный блок Mamba здесь не добавлены.</p>
     <Chart xLabel="Шаг t" yLabel="Значение состояния" series={[0, 1, 2].map(j => ({ name: `h${j}`, points: ssm.map((s, x) => ({ x, y: s.state[j] })) }))} />
     <button aria-expanded={space} onClick={() => setSpace(!space)}>{space ? 'Скрыть' : 'Показать'} 3D состояния</button>
-    {space && active && <Scene3D title="Три настоящих компоненты состояния SSM" description="Оси h0, h1, h2. Линия соединяет состояния по времени; время не является координатой." axes={[0, 1, 2].map(j => ({ label: `Состояние h${j}`, min: -limit, max: limit })) as [{ label: string; min: number; max: number }, { label: string; min: number; max: number }, { label: string; min: number; max: number }]} lines={[{ name: 'Траектория h', points: [[0, 0, 0], ...ssm.map(s => s.state as unknown as Vec3)] }]} points={[{ name: `t=${time}`, position: ssm[time].state as unknown as Vec3, shape: 'triangle' }]} />}
+    {space && <Scene3D title="Три настоящих компоненты состояния SSM" description="Оси h0, h1, h2. Линия соединяет состояния по времени; время не является координатой." axes={[0, 1, 2].map(j => ({ label: `Состояние h${j}`, min: -limit, max: limit })) as [{ label: string; min: number; max: number }, { label: string; min: number; max: number }, { label: string; min: number; max: number }]} lines={[{ name: 'Траектория h', points: [[0, 0, 0], ...ssm.map(s => s.state as unknown as Vec3)] }]} points={[{ name: `t=${time}`, position: ssm[time].state as unknown as Vec3, shape: 'triangle' }]} />}
     <Numbers caption="Численная альтернатива: состояния SSM" columns={['t', 'x', 'Δₜ', 'Ā', 'hₜ', 'yₜ']} rows={ssm.map((s, i) => [i, s.input, fmt(s.delta, 4), vec(s.decay), vec(s.state), fmt(s.output, 4)])} />
     <h4>2. Mamba-2 / SSD: скалярное затухание матричной памяти</h4><p className="formula">Sₜ = αₜSₜ₋₁ + vₜkₜᵀ; oₜ = Sₜqₜ.</p><p>Это рекуррентное ядро с общей для состояния αₜ=α^(exp(s·|xₜ|)), связанное с SSD/Mamba-2. В примере q=k — один из трёх единичных ключей; v=[x; .5x; −.25x]. Добавление одного и того же ключа накапливает значения.</p>
     <h4>3. Gated DeltaNet: сначала забыть, затем исправить запись</h4><p className="formula">S̄ = αₜSₜ₋₁; e = vₜ − S̄kₜ;<br />Sₜ = S̄ + β·e·kₜᵀ; oₜ=Sₜqₜ.</p><p>α стирает всю память; β меняет значение по выбранному единичному ключу. При α=β=1 новая запись точно заменяет прежнюю по этому ключу, сохраняя ортогональные ключи. Сравните режим «Перезапись одного ключа».</p>

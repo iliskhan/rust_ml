@@ -1,5 +1,6 @@
 // Builds files for a NEW external sandbox. This module never launches learner code.
 // Expected values, private bundle and credentials are deliberately absent.
+import { orderedArguments } from './parameters.mjs'
 const identifier = /^[A-Za-z_][A-Za-z0-9_]*$/
 function rustString(value) {
   return '"' + [...value].map(char => char === '"' ? '\\"' : char === '\\' ? '\\\\' : char.codePointAt(0) < 32 ? `\\u{${char.codePointAt(0).toString(16)}}` : char).join('') + '"'
@@ -28,7 +29,7 @@ impl<T:JsonValue> JsonValue for Vec<T> { fn json(&self)->String { format!("[{}]"
 `
 export function rustCaseProgram(source, spec, test, moduleName = 'solution') {
   if (!identifier.test(spec.entrypoint) || !identifier.test(moduleName)) throw Error('invalid_adapter')
-  const args = Object.values(test.input)
+  const args = orderedArguments(spec, test.input)
   if (!Array.isArray(spec.parameters) || args.length !== spec.parameters.length) throw Error('input_signature_mismatch')
   const implementations = (spec.structs ?? []).map(({ name, fields }) => {
     if (!identifier.test(name) || fields.some(field => !identifier.test(field))) throw Error('invalid_adapter')
@@ -43,7 +44,7 @@ export function buildExecution(source, spec, test) {
   if (spec.protocol !== 1 || spec.adapter !== 'rustml-public-values-v1' || !identifier.test(spec.entrypoint) ||
     typeof test.id !== 'string' || test.id.length > 128 || !test.input || typeof test.input !== 'object' || Array.isArray(test.input)) throw Error('invalid_execution_request')
   // Copy ONLY the current input and opaque ID. Never copy expected or the bundle.
-  const request = JSON.stringify({ protocol: 1, case_id: test.id, args: Object.values(test.input) })
+  const request = JSON.stringify({ protocol: 1, case_id: test.id, args: orderedArguments(spec, test.input) })
   const result_file = 'result.json'
   if (spec.language === 'javascript') {
     return { files: {

@@ -35,9 +35,11 @@ export function useLearningSync(cloud: PracticeCloud | null, owner?: string) {
         assertOwner()
         releaseId ??= (await client.progressCatalog(practiceRelease)).releaseId
         assertOwner()
-        await syncLearningProgress({ cloud: client, store, storage, topics: practiceTopics, releaseKey: practiceRelease, releaseId, ownerId: accountId, assertOwner, uploaded })
+        const result = await syncLearningProgress({ cloud: client, store, storage, topics: practiceTopics, releaseKey: practiceRelease, releaseId, ownerId: accountId, assertOwner, uploaded })
         assertOwner()
-        publish({ busy: false, error: false, message: 'Прогресс синхронизирован между устройствами. Код сохраняйте кнопкой «Сохранить в аккаунте».' })
+        publish(result.uploadError
+          ? { busy: false, error: true, message: `Облачная история получена. Новые события остаются на устройстве и ещё не отправлены: ${result.uploadError}` }
+          : { busy: false, error: false, message: 'Прогресс синхронизирован между устройствами. Код сохраняйте кнопкой «Сохранить в аккаунте».' })
       } catch (error) {
         publish({ busy: false, error: true, message: `Прогресс пока сохранён на устройстве. ${error instanceof Error ? error.message : 'Повторите синхронизацию.'}` })
       } finally {

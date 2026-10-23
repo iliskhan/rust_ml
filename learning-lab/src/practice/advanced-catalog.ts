@@ -207,7 +207,7 @@ export const advancedPracticeTopics: PracticeTopic[] = [...fragments,...frontier
     id:fragment.id,lessonId:fragment.id.startsWith('unit.advanced.')?'advanced':'frontiers',title:fragment.title,sourceSection:fragment.section,prerequisites:fragment.prerequisites,
     exercises:(['guided','transfer-a','transfer-b'] as const).map((suffix,index):PracticeExercise => ({
       id:`${fragment.id}.${suffix}`,topicId:fragment.id,title:index===0?'Разбор · '+fragment.title:`Контроль ${index===1?'A':'B'} · ${fragment.contexts[index]}`,
-      mode:index===0?'guided':'transfer',formula:fragment.formula,
+      mode:index===0?'guided':'transfer',evidenceScope:'repeat',formula:fragment.formula,
       prompt:`${fragment.contexts[index]} Реализуйте solve(values) для всех допустимых входов, не заготовленный fixture. ${fragment.contract} Все числа конечны, |value|≤1000. Не меняйте вход. Невалидные данные отклоняются ValueError/RangeError/InputError (Rust Result). Допуск atol=1e−12, rtol=1e−10. Покрытый subskill: ${fragment.scope}`,
       hints:[fragment.hint,`${fragment.checks[index]} Разберите промежуточные величины до записи результата.`],
       explanation:`${fragment.trace} ${fragment.checks[index]} Граница упражнения: ${fragment.scope} Публичные примеры и quiz служат самопроверкой, не серверным зачётом.`,...codeSamples,

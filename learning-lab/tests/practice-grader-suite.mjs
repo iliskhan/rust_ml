@@ -8,6 +8,7 @@ import { buildBundle, buildBundles, exercises, runnerSpec } from '../grader/bund
 import { buildExecution, rustCaseProgram } from '../grader/execution.mjs'
 import { compareCase, finishResult } from '../grader/compare.mjs'
 import { prepareManifests } from '../grader/publication.mjs'
+import { orderedArguments } from '../grader/parameters.mjs'
 
 const message = (testCase, value) => JSON.stringify({ protocol: 1, case_id: testCase.id, value })
 const exercise = exercises.find(item => item.id === 'unit.neuron.dot.guided') ?? exercises[0]
@@ -19,6 +20,8 @@ test('deployed API imports without the TypeScript catalog and fails closed witho
     delete process.env.PRACTICE_WORKER_DATABASE_URL;
     const { default: api } = await import(${JSON.stringify(new URL('../api/practice-grade.js', import.meta.url).href)});
     await import(${JSON.stringify(new URL('../api/practice-reap.js', import.meta.url).href)});
+    const { default: recovery } = await import(${JSON.stringify(new URL('../api/practice-recover.js', import.meta.url).href)});
+    assert.equal((await recovery.fetch(new Request('https://backend.test/api/practice-recover'))).status, 503);
     const response = await api.fetch(new Request('https://rustml-grader.vercel.app/api/practice-grade', {
       headers: { Origin: 'https://iliskhan.github.io' }
     }));
@@ -71,6 +74,32 @@ test('every authored exercise/language has a supported execution contract and pu
       assert.ok(execution.run.length)
       assert.ok(!JSON.stringify(execution).includes('"expected"'))
     }
+  }
+})
+
+test('all input signatures survive JSONB object reordering, including JavaScript aliases', () => {
+  const reordered = value => value === null || typeof value !== 'object' ? value : Array.isArray(value) ? value.map(reordered) :
+    Object.fromEntries(Object.keys(value).sort((a, b) => a.length - b.length || a.localeCompare(b)).map(key => [key, reordered(value[key])]))
+  for (const item of exercises) for (const language of ['python', 'javascript', 'rust']) {
+    const bundle = buildBundle(item, language)
+    for (const current of bundle.grading_tests) {
+      const after = reordered(current)
+      assert.deepEqual(orderedArguments(bundle.runner_spec, after.input), Object.values(current.input), item.id + '/' + language)
+      assert.deepEqual(buildExecution(item.starter[language], bundle.runner_spec, after), buildExecution(item.starter[language], bundle.runner_spec, current))
+    }
+  }
+  const bundle = buildBundle(exercise, 'javascript'), current = bundle.grading_tests[0]
+  assert.throws(() => buildExecution('', bundle.runner_spec, { ...current, input: { ...current.input, extra: 1 } }), /input_signature_mismatch/)
+  assert.throws(() => buildExecution('', { ...bundle.runner_spec, parameters: undefined }, current), /input_signature_mismatch/)
+})
+
+test('architecture grading accepts the precision promised by its authored contract', () => {
+  const item = exercises.find(item => item.id === 'unit.architecture.bptt.transfer-a')
+  for (const language of ['python', 'javascript', 'rust']) {
+    const bundle = buildBundle(item, language), current = bundle.grading_tests[0]
+    assert.deepEqual({ atol: bundle.runner_spec.atol, rtol: bundle.runner_spec.rtol }, item.tolerance)
+    assert.equal(compareCase(message(current, [0.287874074, -0.446370104]), current, bundle.runner_spec).passed, true)
+    assert.equal(compareCase(message(current, [0.2878, -0.4464]), current, bundle.runner_spec).passed, false)
   }
 })
 
@@ -139,7 +168,7 @@ test('all public fixtures: authored JavaScript references match trusted comparat
   const cases = exercises.flatMap(item => item.fixtures.map((_, index) => ({ item, index })))
   const program = 'const values=[];\n' + cases.map(({ item, index }) => {
     const bundle = buildBundle(item, 'javascript'), current = bundle.grading_tests[index]
-    return `{${item.solution.javascript}\nvalues.push(${bundle.runner_spec.entrypoint}(...${JSON.stringify(Object.values(current.input))}));}`
+    return `{${item.solution.javascript}\nvalues.push(${bundle.runner_spec.entrypoint}(...${JSON.stringify(orderedArguments(bundle.runner_spec, current.input))}));}`
   }).join('\n') + '\nprocess.stdout.write(JSON.stringify(values));'
   const dir = mkdtempSync(join(tmpdir(), 'rustml-author-grader-js-'))
   try {
@@ -173,7 +202,7 @@ test('Python and Rust authored adapters (opt-in local toolchains)', { skip: proc
     const py = join(dir, 'references.py')
     writeFileSync(py, 'import json\nvalues=[]\n' + cases.map(({ item, index }) => {
       const bundle = buildBundle(item, 'python'), current = bundle.grading_tests[index]
-      return `scope={}\nexec(${JSON.stringify(item.solution.python)},scope)\nvalues.append(scope['${bundle.runner_spec.entrypoint}'](*json.loads(${JSON.stringify(JSON.stringify(Object.values(current.input)))})))`
+      return `scope={}\nexec(${JSON.stringify(item.solution.python)},scope)\nvalues.append(scope['${bundle.runner_spec.entrypoint}'](*json.loads(${JSON.stringify(JSON.stringify(orderedArguments(bundle.runner_spec, current.input)))})))`
     }).join('\n') + '\nprint(json.dumps(values,allow_nan=False))\n')
     const result = spawnSync(process.env.PRACTICE_PYTHON || 'python', ['-X', 'utf8', py], { encoding: 'utf8', timeout: 30000, maxBuffer: 16 * 1024 * 1024 })
     assert.equal(result.status, 0, result.stderr || result.error?.message)

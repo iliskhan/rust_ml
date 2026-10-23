@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { CoreTopicFilm } from './CoreTopicFilms';
 import { lazy, memo, Suspense, useLayoutEffect, useRef, useState } from 'react';
 import { Range, Exercise, fmt } from './ui';
@@ -85,10 +86,12 @@ const CnnChannelScene = memo(function CnnChannelScene({ trace, channels, open: _
 // Keep the camera mounted while collapsed, without rebuilding hidden geometry.
 }, (_previous, next) => !next.open);
 
-function CnnLab() {
+function CnnLab({ shiftRequest = 0 }: { shiftRequest?: number }) {
   const [stride, setStride] = useState(1), [padding, setPadding] = useState(0), [dilation, setDilation] = useState(1), [channels, setChannels] = useState(1), [scale, setScale] = useState(1), [scan, setScan] = useState(0), [pooling, setPooling] = useState<'max' | 'average'>('max');
   const [sceneOpen, setSceneOpen] = useState(false), [sceneVisited, setSceneVisited] = useState(false);
   const [shiftOpen, setShiftOpen] = useState(false), [shiftVisited, setShiftVisited] = useState(false);
+  const [seenShiftRequest, setSeenShiftRequest] = useState(0);
+  if (shiftRequest && shiftRequest !== seenShiftRequest) { setSeenShiftRequest(shiftRequest); setShiftOpen(true); setShiftVisited(true); }
   const input = Array.from({ length: channels }, (_, c) => Array.from({ length: 5 }, (_, y) => Array.from({ length: 5 }, (_, x) => c ? (x + y) % 2 : x < 2 ? 0 : 1)));
   const filter = [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]].map(row => row.map(v => v * scale));
   const kernels = [Array.from({ length: channels }, () => filter)];
@@ -112,7 +115,7 @@ function CnnLab() {
       <Matrix label={`ReLU → ${pooling} pooling 2×2`} values={pool2d(result.output[0].map(row => row.map(x => Math.max(0, x))), 2, pooling)} />
       <details><summary>Варианты CNN и форма данных</summary><table className="data-table"><thead><tr><th>Операция</th><th>Данные без batch</th><th>Здесь</th></tr></thead><tbody><tr><td>Conv1D</td><td>C×L: звук, временной ряд</td><td>Только схема расширения</td></tr><tr><td>Conv2D</td><td>C×H×W: изображение</td><td>Численный расчёт</td></tr><tr><td>Conv3D</td><td>C×D×H×W: объём, видео</td><td>Только схема расширения</td></tr></tbody></table><p>В 1D сумма идёт по одной пространственной оси, в 3D — по трём. Формула размера применяется отдельно к каждой оси. В этом прямом проходе groups=1, один выходной канал и bias=0. Переключатель «Обучить фильтр» открывает отдельный опыт с обновлением весов.</p></details>
     </section></div>
-    <details className="panel" onToggle={event => { setShiftOpen(event.currentTarget.open); if (event.currentTarget.open) setShiftVisited(true); }}>
+    <details className="panel" open={shiftOpen} onToggle={event => { setShiftOpen(event.currentTarget.open); if (event.currentTarget.open) setShiftVisited(true); }}>
       <summary>Опыт: сдвиг входа, stride и эквивариантность CNN</summary>
       {shiftVisited && <Suspense fallback={<p role="status">Загружается опыт сдвига CNN…</p>}><CnnShiftLab open={shiftOpen} /></Suspense>}
     </details>
@@ -177,9 +180,11 @@ function TransformerLab() {
     </section></div><Exercise question="Откуда берутся Q, K и V в cross-attention decoder?" options={['Все из исходных токенов encoder', 'Q из decoder; K и V из выхода encoder', 'Q и K — случайные числа, V — маска']} correct={1} explanation="Decoder формулирует запрос Q к памяти encoder. Её ключи K определяют веса, значения V смешиваются по этим весам." /></></CoreTopicFilm>;
 }
 
-function FamilyPanel({ family }: { family: ArchitectureFamily }) {
+function FamilyPanel({ family, routedTraining, shiftRequest, request }: { family: ArchitectureFamily; routedTraining: boolean; shiftRequest: number; request: number }) {
   const [training, setTraining] = useState(false);
   const [trainingVisited, setTrainingVisited] = useState(false);
+  const [seenRequest, setSeenRequest] = useState(0);
+  if (request && request !== seenRequest) { setSeenRequest(request); setTraining(routedTraining); if (routedTraining) setTrainingVisited(true); }
   const canTrain = family === 'cnn' || family === 'rnn';
   return <>
     {canTrain && <div className="button-row" role="group" aria-label={`Режим ${family.toUpperCase()}`}>
@@ -187,7 +192,7 @@ function FamilyPanel({ family }: { family: ArchitectureFamily }) {
       <button aria-pressed={training} onClick={() => { setTrainingVisited(true); setTraining(true); }}>{family === 'cnn' ? 'Обучить фильтр' : 'Обучить RNN: BPTT'}</button>
     </div>}
     <div hidden={training}><LearningActivity active={!training}>
-      {family === 'dense' ? <DenseLab /> : family === 'cnn' ? <CnnLab /> : family === 'transformer' ? <TransformerLab /> : <RecurrentLab family={family} />}
+      {family === 'dense' ? <DenseLab /> : family === 'cnn' ? <CnnLab shiftRequest={shiftRequest} /> : family === 'transformer' ? <TransformerLab /> : <RecurrentLab family={family} />}
     </LearningActivity></div>
     {trainingVisited && <div hidden={!training}><LearningActivity active={training}>
       <Suspense fallback={<p role="status">Загружаем лабораторию обучения…</p>}>{family === 'cnn' ? <CnnTrainingLab /> : <BpttLab />}</Suspense>
@@ -197,17 +202,20 @@ function FamilyPanel({ family }: { family: ArchitectureFamily }) {
 }
 
 export function ArchitectureLesson() {
-  const [family, setFamily] = useState<ArchitectureFamily>('dense');
+  const [chapter, setChapter, heading, request] = useCourseSection('architectures');
+  const families: ArchitectureFamily[] = ['dense', 'cnn', 'cnn', 'cnn', 'rnn', 'rnn', 'lstm', 'gru', 'transformer'];
+  const family = families[chapter];
   const [visited, setVisited] = useState<ArchitectureFamily[]>(['dense']);
   function chooseFamily(next: ArchitectureFamily) {
-    setFamily(next);
+    setChapter(families.indexOf(next));
     setVisited(current => current.includes(next) ? current : [...current, next]);
   }
+  if (!visited.includes(family)) setVisited(current => [...current, family]);
   const entry = architectureFamilies.find(f => f.id === family)!;
-  return <section aria-labelledby="architectures-title"><h2 id="architectures-title">Архитектуры: проследите путь числа</h2><p className="lesson-intro">Выберите семейство, измените параметр и раскройте нужный шаг. Каждая активная схема связана с пересчитываемым прямым проходом. В CNN и RNN можно переключиться на обучение; состояния опытов сохраняются при смене семейства. Варианты, представленные только пояснением, отмечены отдельно.</p><div className="button-row" aria-label="Семейство архитектуры">{architectureFamilies.map(item => <button key={item.id} aria-pressed={family === item.id} onClick={() => chooseFamily(item.id)}>{item.name}</button>)}</div><p className="note"><strong>Вычисляется:</strong> {entry.supported}. <strong>Граница:</strong> {entry.schema}.</p>
+  return <section aria-labelledby="architectures-title"><h2 id="architectures-title" ref={heading} tabIndex={-1}>Архитектуры: проследите путь числа</h2><p className="lesson-intro">Выберите семейство, измените параметр и раскройте нужный шаг. Каждая активная схема связана с пересчитываемым прямым проходом. В CNN и RNN можно переключиться на обучение; состояния опытов сохраняются при смене семейства. Варианты, представленные только пояснением, отмечены отдельно.</p><div className="button-row" aria-label="Семейство архитектуры">{architectureFamilies.map(item => <button key={item.id} aria-pressed={family === item.id} onClick={() => chooseFamily(item.id)}>{item.name}</button>)}</div><p className="note"><strong>Вычисляется:</strong> {entry.supported}. <strong>Граница:</strong> {entry.schema}.</p>
     <p className="note">Нужные основы: <ConceptLink concept="tensor">тензоры и формы</ConceptLink>, <ConceptLink concept="matrix">матрицы</ConceptLink>, <ConceptLink concept="dot-product">скалярное произведение</ConceptLink>. Для внимания: <ConceptLink concept="softmax">softmax</ConceptLink> и <ConceptLink concept="normalization">нормализация</ConceptLink>.</p>
     {family === 'transformer' && <p><a href="#transformer">Transformer по шагам: от токена до генерации и вариантов →</a></p>}
-    {visited.map(id => <div key={id} hidden={family !== id}><LearningActivity active={family === id}><FamilyPanel family={id} /></LearningActivity></div>)}
+    {visited.map(id => <div key={id} hidden={family !== id}><LearningActivity active={family === id}><FamilyPanel family={id} routedTraining={chapter === 2 || chapter === 5} shiftRequest={family === id && chapter === 3 ? request : 0} request={family === id ? request : 0} /></LearningActivity></div>)}
     <details><summary>Что реализовано и где проверить определения</summary><table className="data-table"><thead><tr><th>Семейство</th><th>Численно работает</th><th>Только схема / ограничение</th></tr></thead><tbody>{architectureFamilies.map(item => <tr key={item.id}><th>{item.name}</th><td>{item.supported}</td><td>{item.schema}</td></tr>)}</tbody></table><p>Формулы сверены с первичными источниками: <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html">PyTorch Conv2D</a>, <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html">LSTM</a>, <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.GRU.html">GRU (отличие reset-after отмечено выше)</a>, <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>. В CNN и RNN переключитесь в режим обучения: там работают общий фильтр и BPTT скалярной сети. Dense, LSTM, GRU и блок Transformer в этой главе показывают прямой проход.</p></details>
   </section>;
 }

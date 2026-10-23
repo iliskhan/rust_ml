@@ -1,3 +1,4 @@
+import { useCourseSection } from './useCourseSection';
 import { GenerativeTopicFilm, pauseCourseFilms } from './GenerativeTopicFilms';
 import { PracticeSection } from './practice/PracticeCloudProvider';
 import { practiceChapter } from './practice/placement';
@@ -101,9 +102,9 @@ function VariantLesson({ filmGraph, restoreFilmGraph, adjacency, features, node,
 }
 const SECTIONS = ['Граф и признаки', 'Одно сообщение', 'Обучить GCN', 'Глубина и порядок', 'GAT и GraphSAGE'];
 export function GNNCourse() {
-  const [section, setSection] = useState(0), [adjacency, setAdjacency] = useState<GraphMatrix>(() => GRAPH_ADJACENCY.map(r => [...r])), [features, setFeatures] = useState<GraphMatrix>(() => GRAPH_FEATURES.map(r => [...r])), [node, setNode] = useState(2);
+  const [section, setSection, heading] = useCourseSection('gnn'), [adjacency, setAdjacency] = useState<GraphMatrix>(() => GRAPH_ADJACENCY.map(r => [...r])), [features, setFeatures] = useState<GraphMatrix>(() => GRAPH_FEATURES.map(r => [...r])), [node, setNode] = useState(2);
   const [model, setModel] = useState<TrainingState>(() => newTraining(GRAPH_ADJACENCY, GRAPH_FEATURES));
-  const heading = useRef<HTMLHeadingElement>(null), selectId = useId();
+  const selectId = useId();
   function changeGraph(a: GraphMatrix) { setAdjacency(a); setModel(newTraining(a, features)); }
   function changeFeatures(x: GraphMatrix) { setFeatures(x); setModel(newTraining(adjacency, x)); }
   function train(count: number, rate: number) { setModel(previous => { let weights = previous.weights; const history = [...previous.history], steps = Math.min(count, 1000 - previous.step); for (let i = 1; i <= steps; i++) { const next = gcnTrainStep(adjacency, features, GRAPH_LABELS, GRAPH_TRAIN, weights, rate); weights = next.weights; history.push({ x: previous.step + i, y: next.after.loss }); } return { weights, history, step: previous.step + steps }; }); }

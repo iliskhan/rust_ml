@@ -152,7 +152,8 @@ impl<T: DType> Tensor<T> {
 
         let new_data = self
             .data
-            .clone()
+            .as_standard_layout()
+            .into_owned()
             .into_shape(IxDyn(new_shape.dims()))
             .map_err(|e| RustMLError::invalid_shape(new_shape.dims(), &e.to_string()))?;
 
@@ -309,6 +310,18 @@ mod tests {
         let reshaped = tensor.reshape([3, 2]).unwrap();
         assert_eq!(reshaped.shape().dims(), &[3, 2]);
         assert_eq!(reshaped.numel(), 6);
+    }
+
+    #[test]
+    fn reshape_preserves_logical_order_across_layouts() {
+        let mut strided = Tensor::from_vec(vec![1_i32, 2, 3, 4, 5, 6], [2, 3]).unwrap();
+        strided.data_mut().swap_axes(0, 1);
+        let standard = Tensor::from_vec(vec![1_i32, 4, 2, 5, 3, 6], [3, 2]).unwrap();
+        assert_eq!(strided.data(), standard.data());
+        assert_eq!(
+            strided.reshape([6]).unwrap().data(),
+            standard.reshape([6]).unwrap().data()
+        );
     }
 
     #[test]

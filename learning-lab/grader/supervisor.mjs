@@ -1,6 +1,7 @@
 import { canonical, sha256 } from './digest.mjs'
 import { buildExecution } from './execution.mjs'
 import { finishResult } from './compare.mjs'
+import { signature } from './parameters.mjs'
 
 export const isUuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
 // Include every immutable runtime pin so old snapshot editions remain addressable.
@@ -81,10 +82,18 @@ export function createSupervisor({ db, provider, runtimes, now = Date.now,
         limits.stdout_bytes !== 16384 || limits.result_bytes !== 65536 ||
         !Number.isSafeInteger(runtime.caseTimeoutMs) || runtime.caseTimeoutMs <= 0 ||
         runtime.caseTimeoutMs > limits.case_timeout_ms) throw Error('invalid_reserved_runtime_profile')
+      let executionSpec = spec
+      if (spec.parameters === undefined) {
+        const response = await deadlineBound(db.query('select private.practice_execution_contract($1::uuid) as contract', [attemptId]), operationMs)
+        const contract = response.rows[0]?.contract
+        if (contract?.language !== spec.language || contract?.entrypoint !== spec.entrypoint ||
+          !['python', 'javascript'].includes(spec.language) || contract.input_language !== 'python') throw Error('invalid_legacy_contract')
+        executionSpec = { ...spec, parameters: signature(contract.input_starter, contract.input_language).parameters }
+      }
       const results = []
       for (const current of claim.grading_tests) {
         if (control.signal.aborted || now() >= wallDeadline) { deadlineReached = !leaseLost; throw abortError() }
-        const execution = buildExecution(claim.source, spec, current)
+        const execution = buildExecution(claim.source, executionSpec, current)
         const result = await untilAbort(provider.executeCase({ execution, runtime, scope,
           deadline: Math.min(wallDeadline, now() + runtime.caseTimeoutMs), signal: control.signal }), control.signal)
         // Provider results are transport envelopes, never verdicts from guest stdout.

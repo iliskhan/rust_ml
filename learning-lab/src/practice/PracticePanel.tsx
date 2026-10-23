@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { getConcept } from '../concepts'
 import { ConceptLink } from '../learning-context'
+import { explanationHref, openExplanation } from '../lesson-routing'
 import { practiceRelease, practiceTopics, type PracticeExercise, type PracticeLanguage } from './all-catalog'
 import { browserPracticeStore, primaryLanguageKey, PracticeStorageError, type LocalPracticeStore, type LocalPracticeRecord, type PracticeScope } from './local-progress'
 import './practice.css'
@@ -12,7 +13,6 @@ const extensions: Record<PracticeLanguage, string> = { python: 'py', javascript:
 export type SaveCloudDraft = (scope: PracticeScope, source: string, revision: number) => Promise<string | void>
 export type LoadCloudDraft = (scope: PracticeScope) => Promise<string>
 export type PracticeSelection = { topicId: string; scope: PracticeScope }
-export type ChooseCloudLanguage = (scope: PracticeScope) => Promise<void>
 const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Не удалось сохранить данные. Скачайте код в файл.'
 // Unsaved edits survive route/language changes during this page session, including storage failure.
 const pendingEdits = new Map<string, string>()
@@ -20,7 +20,7 @@ const scopeKey = (scope: PracticeScope) => JSON.stringify(scope)
 const blankRecord = (): LocalPracticeRecord => ({ version: 1, draft: null, help: [], history: [] })
 const prerequisiteTitle = (key: string) => practiceTopics.find(topic => topic.id === key)?.title ?? getConcept(key.replace(/^concept\./, ''))?.title ?? ({ 'concept.chain-rule': 'Правило цепочки', 'concept.partial-derivative': 'Частная производная' } as Record<string, string>)[key] ?? 'Основание из объяснения темы'
 
-export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initialSelection, onSaveCloudDraft, onLoadCloudDraft, onChooseCloudLanguage, onGradeCode, hasPendingGrade }: { lessonId: string; topicId?: string; ownerId?: string; initialSelection?: PracticeSelection; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft; onChooseCloudLanguage?: ChooseCloudLanguage; onGradeCode?: GradeCode; hasPendingGrade?: (scope: PracticeScope) => boolean }) {
+export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initialSelection, onSaveCloudDraft, onLoadCloudDraft, onGradeCode, hasPendingGrade }: { lessonId: string; topicId?: string; ownerId?: string; initialSelection?: PracticeSelection; onSaveCloudDraft?: SaveCloudDraft; onLoadCloudDraft?: LoadCloudDraft; onGradeCode?: GradeCode; hasPendingGrade?: (scope: PracticeScope) => boolean }) {
   const id = useId()
   const [store] = useState(browserPracticeStore)
   const topics = practiceTopics.filter(topic => topic.lessonId === lessonId && (!chapterTopic || topic.id === chapterTopic || topic.id.startsWith(chapterTopic + '.') || topic.id.startsWith(chapterTopic + '-')))
@@ -56,23 +56,19 @@ export function PracticePanel({ lessonId, topicId: chapterTopic, ownerId, initia
     {!topic || !exercise ? <p className="note">Для этого урока в текущем выпуске ещё нет практики. Чтение урока доступно без ограничений.</p> : <>
       <div className="practice-selectors">
         <label htmlFor={`${id}-topic`}>Тема<select id={`${id}-topic`} value={topic.id} disabled={saving} onChange={event => { setTopicId(event.target.value); setExerciseId('') }}>{topics.map(t => <option key={t.id} value={t.id}>{t.title}</option>)}</select></label>
-        <label htmlFor={`${id}-exercise`}>Задание<select id={`${id}-exercise`} value={exercise.id} disabled={saving} onChange={event => setExerciseId(event.target.value)}>{topic.exercises.map(e => <option key={e.id} value={e.id}>{e.mode === 'transfer' ? 'Перенос · ' : ''}{e.title}</option>)}</select></label>
+        <label htmlFor={`${id}-exercise`}>Задание<select id={`${id}-exercise`} value={exercise.id} disabled={saving} onChange={event => setExerciseId(event.target.value)}>{topic.exercises.map(e => <option key={e.id} value={e.id}>{e.evidenceScope === 'repeat' ? 'Повторение · ' : e.mode === 'transfer' ? 'Перенос · ' : ''}{e.title}</option>)}</select></label>
         <label htmlFor={`${id}-language`}>Язык черновика<select id={`${id}-language`} value={language} disabled={saving} onChange={event => setLanguage(event.target.value as PracticeLanguage)}>{Object.entries(languageLabels).map(([key, title]) => <option value={key} key={key}>{title}{key === primary ? ' · основной' : ''}</option>)}</select></label>
       </div>
-      <div className="button-row"><button type="button" disabled={(language === primary && !onChooseCloudLanguage) || saving} onClick={async () => {
+      <div className="button-row"><button type="button" disabled={language === primary || saving} onClick={async () => {
         setSaving(true)
         try {
           await store.setPrimaryLanguage(practiceRelease, language, ownerId); setPrimary(language); window.dispatchEvent(new Event('rustml-practice-language'))
-          if (onChooseCloudLanguage) {
-            try { await onChooseCloudLanguage({ releaseId: practiceRelease, exerciseId: exercise.id, language, ownerId }) }
-            catch (error) { setNotice(`Основной язык на этом устройстве: ${languageLabels[language]}. Аккаунт не подтвердил смену: ${errorMessage(error)}`); return }
-          }
-          setNotice(`Основной язык${onChooseCloudLanguage ? ' на этом устройстве и в аккаунте' : ' на этом устройстве'}: ${languageLabels[language]}. История других языков сохранена.`)
+          setNotice(`Основной язык на этом устройстве: ${languageLabels[language]}. ${ownerId ? 'Выбор отправится при синхронизации прогресса. ' : ''}История других языков сохранена.`)
         } catch (error) { setNotice(errorMessage(error)) }
         finally { setSaving(false) }
       }}>Сделать {languageLabels[language]} основным</button></div>
       <p className="note">Основной маршрут: {languageLabels[primary]}. Работа на других языках сохраняется отдельно. Смена языка открывает его собственный черновик.</p>
-      {topic.sourceSection && <p>{topic.id.startsWith('concept.') ? <ConceptLink concept={topic.id.slice(8)}>Разобрать основание: {topic.title}</ConceptLink> : <a href={`#${lessonId}`}>Вернуться к объяснению: {topic.title}</a>}</p>}
+      {topic.sourceSection && <p>{topic.id.startsWith('concept.') ? <ConceptLink concept={topic.id.slice(8)}>Разобрать основание: {topic.title}</ConceptLink> : <a href={explanationHref(lessonId, topic.id)} onClick={openExplanation}>Вернуться к объяснению: {topic.title}</a>}</p>}
       <p className="note">Предпосылки: {topic.prerequisites.map(prerequisiteTitle).join(', ') || 'достаточно текущего объяснения'}.</p>
       <PracticeEditor key={`${ownerId || 'guest'}/${practiceRelease}/${exercise.id}/${language}`} exercise={exercise} scope={{ releaseId: practiceRelease, exerciseId: exercise.id, language, ownerId }} store={store} autoFocus={Boolean(selected)} onSaving={setSaving} onSaveCloudDraft={onSaveCloudDraft} onLoadCloudDraft={onLoadCloudDraft} onGradeCode={onGradeCode} hasPendingGrade={hasPendingGrade} />
     </>}
@@ -101,11 +97,12 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
   const [cloudCode, setCloudCode] = useState<string | null>(null)
   const [gradeStatus, setGradeStatus] = useState('')
   const [gradingBusy, setGradingBusy] = useState(false)
+  const [helpBusy, setHelpBusy] = useState(false)
   const gradeAbort = useRef<AbortController | null>(null)
   const gradeCallback = useRef(onGradeCode)
   gradeCallback.current = onGradeCode
   async function checkCode() {
-    if (!gradeCallback.current || gradingBusy || blocked.current || conflict) return
+    if (!gradeCallback.current || gradingBusy || helpBusy || blocked.current || conflict) return
     const control = new AbortController(); gradeAbort.current?.abort(); gradeAbort.current = control
     setGradingBusy(true); setGradeStatus('Сохраняем код и историю помощи перед отправкой…')
     try { await queue.current; if (blocked.current) throw new Error('Разрешите конфликт черновика перед отправкой.'); await gradeCallback.current(scope, code, control.signal, message => { if (!control.signal.aborted) setGradeStatus(message) }) }
@@ -164,19 +161,21 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
   }
 
   async function openHelp(kind: string) {
+    if (helpBusy || gradingBusy) return
+    setHelpBusy(true)
     try { const next = await store.recordHelp(scope, kind); setRecord(next); setVisibleHelp(current => [...new Set([...current, kind])]) }
     catch (error) {
-      setStatus(`${errorMessage(error)} Помощь доступна для чтения, но её запись на этом устройстве не подтверждена.`)
-      setVisibleHelp(current => [...new Set([...current, kind])])
+      setStatus(`${errorMessage(error)} Помощь не открыта: её просмотр сначала нужно сохранить. Освободите место или восстановите хранилище и повторите нажатие.`)
     }
+    finally { setHelpBusy(false) }
   }
 
   return <div className="practice-editor">
     <h3>{exercise.title}</h3>
-    <p className="practice-mode">{exercise.mode === 'transfer' ? 'Перенос на новые условия. История помощи у этого варианта отдельная.' : 'Разберите правило и напишите небольшой фрагмент.'}</p>
+    <p className="practice-mode">{exercise.evidenceScope === 'repeat' ? 'Повторение известных примеров: разбор и варианты A/B используют общий банк. Результаты сохраняются, но самостоятельный перенос этой темы пока не подтверждается.' : exercise.mode === 'transfer' ? 'Перенос на новые условия. История помощи у этого варианта отдельная.' : 'Разберите правило и напишите небольшой фрагмент.'}</p>
     <div className="practice-workspace">
       <div className="practice-statement">
-        <p>{exercise.prompt}</p><div className="formula">{exercise.formula}</div>
+        <p>{exercise.prompt}</p>{exercise.contractNote && <p className="note">{exercise.contractNote}</p>}<div className="formula">{exercise.formula}</div>
         <table className="data-table"><caption>Открытые примеры для ручного разбора; код здесь не запускается</caption><thead><tr><th scope="col">Вход</th><th scope="col">Ожидаемый результат</th></tr></thead><tbody>{exercise.fixtures.map((f, i) => <tr key={i}><td><code>{f.input}</code></td><td><code>{f.output}</code></td></tr>)}</tbody></table>
       </div>
       <div className="practice-code">
@@ -201,7 +200,7 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
             catch (error) { setStatus(errorMessage(error)) }
             finally { setBusy(false); onSaving(false) }
           }}>Открыть облачный черновик</button>
-          <button type="button" disabled={!onGradeCode || busy || gradingBusy || Boolean(conflict) || blocked.current} aria-describedby={`${id}-execution`} onClick={() => void checkCode()}>{gradingBusy ? 'Проверяем открытые примеры…' : 'Проверить код на сервере'}</button>
+          <button type="button" disabled={!onGradeCode || busy || gradingBusy || helpBusy || Boolean(conflict) || blocked.current} aria-describedby={`${id}-execution`} onClick={() => void checkCode()}>{gradingBusy ? 'Проверяем открытые примеры…' : 'Проверить код на сервере'}</button>
         </div>
         <p id={`${id}-execution`} className="note">{onGradeCode ? 'Сервер проверяет открытые примеры сохранённой версии кода. Редактор остаётся доступным; новые изменения относятся к следующей отправке.' : 'Серверный исполнитель ещё не подключён. Вопрос ниже — самопроверка понимания; он не запускает и не оценивает ваш код.'}{!onSaveCloudDraft && ' Для сохранения в аккаунте войдите в настроенный сервис.'}</p>
         {gradeStatus && <p role="status" aria-live="polite" aria-atomic="true" className="practice-save">{gradeStatus}</p>}
@@ -224,8 +223,8 @@ function PracticeEditor({ exercise, scope, store, autoFocus, onSaving, onSaveClo
     <section className="practice-help" aria-labelledby={`${id}-help`}>
       <h4 id={`${id}-help`}>Помощь по шагам</h4>
       <p className="note">Открытие подсказки или решения записывается для этого задания и языка. Перезагрузка страницы не очищает сохранённую помощь.</p>
-      {exercise.hints.map((hint, index) => <div key={index}><button type="button" disabled={gradingBusy || visibleHelp.includes(`hint-${index}`) || (index > 0 && !visibleHelp.includes(`hint-${index - 1}`))} onClick={() => void openHelp(`hint-${index}`)}>Подсказка {index + 1}{visibleHelp.includes(`hint-${index}`) ? ' · открыта' : ''}</button>{visibleHelp.includes(`hint-${index}`) && <p>{hint}</p>}</div>)}
-      <div className="button-row"><button type="button" disabled={gradingBusy || visibleHelp.includes('explanation')} onClick={() => void openHelp('explanation')}>Открыть разбор</button><button type="button" disabled={gradingBusy || visibleHelp.includes('solution')} onClick={() => void openHelp('solution')}>Открыть полное решение</button></div>
+      {exercise.hints.map((hint, index) => <div key={index}><button type="button" disabled={gradingBusy || helpBusy || visibleHelp.includes(`hint-${index}`) || (index > 0 && !visibleHelp.includes(`hint-${index - 1}`))} onClick={() => void openHelp(`hint-${index}`)}>Подсказка {index + 1}{visibleHelp.includes(`hint-${index}`) ? ' · открыта' : ''}</button>{visibleHelp.includes(`hint-${index}`) && <p>{hint}</p>}</div>)}
+      <div className="button-row"><button type="button" disabled={gradingBusy || helpBusy || visibleHelp.includes('explanation')} onClick={() => void openHelp('explanation')}>Открыть разбор</button><button type="button" disabled={gradingBusy || helpBusy || visibleHelp.includes('solution')} onClick={() => void openHelp('solution')}>Открыть полное решение</button></div>
       {visibleHelp.includes('explanation') && <p>{exercise.explanation}</p>}
       {visibleHelp.includes('solution') && <><label htmlFor={`${id}-solution`}>Эталон для разбора · {languageLabels[scope.language]}</label><textarea id={`${id}-solution`} readOnly value={exercise.solution[scope.language]} rows={10} wrap="off" /></>}
       <p className="note">Помощь: {visibleHelp.length ? 'открыта в этом варианте' : initial.error ? 'историю не удалось прочитать' : 'ещё не открывалась в этой сессии'}. Локальная запись не подтверждает самостоятельное освоение.</p>

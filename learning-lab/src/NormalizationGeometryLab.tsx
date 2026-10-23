@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useLearningActive } from './learning-context';
 import { Scene3D, type Vec3, type SceneSurface } from './ThreeD';
 import { Range, fmt } from './ui';
 import { PredictionExperiment } from './PredictionExperiment';
@@ -19,7 +18,6 @@ const guides: SceneSurface[] = [
 ];
 
 export function NormalizationGeometryLab() {
-  const active = useLearningActive();
   const [open, setOpen] = useState(false), [visited, setVisited] = useState(false);
   const [base, setBase] = useState<Vec3>(initialBase);
   const [shift, setShift] = useState(0), [scale, setScale] = useState(1), [epsilon, setEpsilon] = useState(.01);
@@ -37,7 +35,7 @@ export function NormalizationGeometryLab() {
         <Range label="Положительное ε" value={epsilon} min={.001} max={.2} step={.001} onChange={setEpsilon} />
       </div>
       <p>LayerNorm вычитает среднее μ={fmt(trace.layer.mean, 5)}: центрированный вектор и выход лежат в плоскости суммы координат 0. RMSNorm сохраняет направление x и обычно не лежит в этой плоскости.</p>
-      {open && active && <div className="tv-scenes">{(['layer', 'rms'] as const).map(kind => {
+      {open && <div className="tv-scenes">{(['layer', 'rms'] as const).map(kind => {
         const output = trace[kind].output, title = kind === 'layer' ? 'LayerNorm: центрирование → масштаб' : 'RMSNorm: масштаб вдоль исходного луча';
         return <Scene3D key={kind} title={title} description="Плоскость суммы 0 и сфера √3 показаны как ориентиры. Стрелки идут из нуля к реальным векторам; численные координаты ниже."
           axes={[{ label: 'Признак x₁', min: -6, max: 6 }, { label: 'Признак x₂', min: -6, max: 6 }, { label: 'Признак x₃', min: -6, max: 6 }]}
