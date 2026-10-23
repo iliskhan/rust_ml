@@ -1,6 +1,6 @@
 # Прогресс RustML
 
-### Word2Vec — четыре режима завершены, локальная приёмка пройдена, 2026-10-23
+### Word2Vec — четыре режима опубликованы и проверены, 2026-10-23
 
 Запрос: «доделай всё что нужно сделать». Основа master `18a8f15`, дерево чистое.
 B12/R01/R02/R04/R06, U02/U04/U05/U07: CBOW и negative sampling переведены
@@ -10,10 +10,11 @@ B12/R01/R02/R04/R06, U02/U04/U05/U07: CBOW и negative sampling переведе
 NS-график сравнивает один фиксированный банк; смена конфигурации сбрасывает
 историю и прогноз. Ошибка PredictionExperiment не даёт ложную оценку и допускает retry.
 
-9/9 численных тестов PASS, полный набор **663 PASS/0 FAIL/5 opt-in skipped**;
+9/9 численных тестов PASS, полный локальный набор **663 PASS/0 FAIL/5 opt-in skipped**;
 tsc и Pages build PASS. Первый общий запуск дал 7 ошибок запуска rustup: нет 1.87,
 запись в `.rustup/tmp` запрещена. Повтор с явным PRACTICE_RUSTC 1.92 прошёл;
-это не локальная проверка на 1.87. CI Pages использует закреплённый 1.87.
+это не локальная проверка на 1.87. CI Pages на закреплённом 1.87 прошёл
+**668 PASS/0 FAIL/0 skipped**, включая все пять opt-in checks.
 В IAB desktop1440/2000 η=.1: Skip-gram softmax `2.1971→.9800`, Skip-gram NS
 `2.7903→1.5604`, CBOW softmax `2.1877→1.0657`, CBOW NS `2.7553→1.5695`.
 Это четыре разных опыта, не рейтинг потерь. CBOW/NS прогноз на двух входах:
@@ -24,7 +25,13 @@ Mobile320: documentWidth305, таблица233/content358, ArrowRight прокр
 заголовок h3, alert без оценки, повтор успешен. Console warn/error0 в основном уроке.
 
 [Сценарии, снимки и ограничения](learning-lab/evidence/word2vec-completion-2026-10-23/VALIDATION.md).
-Commit/push и публичная проверка завершаются. Новых зависимостей, изменений Rust,
+Релиз `c401939c829b931cb63c84005a5623b2109a8f33` отправлен в master, local=remote,
+дерево чистое. [Pages 39946731176](https://github.com/iliskhan/rust_ml/actions/runs/39946731176)
+и [CI 39946731158](https://github.com/iliskhan/rust_ml/actions/runs/39946731158) SUCCESS.
+Публичный [Word2Vec](https://iliskhan.github.io/rust_ml/#word2vec) в IAB подтвердил
+CBOW/NS k3/2000: NS2.7553→1.5695 nat, console warn/error0.
+Этот завершающий checkpoint меняет только PLAN/PROGRESS; его SHA сообщается после push.
+Новых зависимостей, изменений Rust,
 stable practice IDs или пользовательских данных нет. Остаются ручные свидетельства:
 чтец, реальное mobile-устройство, ученики; они не объявлены пройденными.
 

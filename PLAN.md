@@ -10,7 +10,12 @@
 **B12/R01/R02/R04/R06, U02/U04/U05/U07**: довести описанные CBOW и negative sampling
 до работающего обучения, сохранить понятные числа и доступное управление.
 
-Статус: реализовано и локально проверено; commit/push и публикация завершаются.
+Статус: реализовано, опубликовано и проверено. Релиз
+`c401939c829b931cb63c84005a5623b2109a8f33` отправлен в master, local=remote.
+[Pages 39946731176](https://github.com/iliskhan/rust_ml/actions/runs/39946731176) и
+[CI 39946731158](https://github.com/iliskhan/rust_ml/actions/runs/39946731158) SUCCESS;
+удалённый полный набор на закреплённом Rust 1.87: **668 PASS, 0 FAIL, 0 skipped**.
+Публичный `#word2vec` подтвердил CBOW/NS k3, 2000 шагов: 2.7553→1.5695 nat, console0.
 
 - Оба направления Skip-gram/CBOW и обе цели full softmax/negative sampling:
   4 режима реального SGD. CBOW усредняет соседние позиции, повторные слова суммируют градиенты.
@@ -27,7 +32,7 @@
 
 9 численных тестов, 663 PASS/0 FAIL/5 opt-in skipped полного локального набора;
 typecheck/build PASS. Rust references проверены установленным Rust 1.92 напрямую:
-rustup для закреплённого 1.87 заблокирован правами; CI проверит 1.87. Desktop1440,
+rustup для закреплённого 1.87 заблокирован правами; CI уже проверил 1.87. Desktop1440,
 mobile390/320, все 4 режима, k=5, снимок/сброс/ошибка/retry проверены в IAB.
 Материалы: `learning-lab/evidence/word2vec-completion-2026-10-23/`.
 
