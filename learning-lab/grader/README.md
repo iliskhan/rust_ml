@@ -119,7 +119,15 @@ node --test learning-lab/tests/practice-grader-provider.test.ts learning-lab/tes
 PRACTICE_VERIFY_ALL_LANGUAGES=1 node --test learning-lab/tests/practice-grader.test.ts
 ```
 
-## Исправления ревью 23 октября 2026: развёртывание ещё требуется
+## Исправления ревью 23 октября 2026: SQL применён, API ожидает развёртывания
+
+SQL008/009 применены в production 2026-10-23 в 14:44:22 UTC одной транзакцией.
+Проверка полных fingerprints 17 таблиц, policies, RLS и настроек квот подтвердила
+их сохранность; worker-only helper и security-invoker view действуют.
+[Квитанция](../evidence/review-fixes-2026-10-23/server-sql008-009.json).
+Повторно запускать SQL008 нельзя. API/cron и 851 изменённый manifest edition 2
+ещё не опубликованы; требуется завершить шаг входа Vercel с решением владельца
+по предложению включить 2FA. Остальные 385 manifest не меняются.
 
 Новые manifests содержат упорядоченные имена аргументов всех языков и структурированные
 авторские numeric tolerances. Их следует опубликовать новой `edition` (например, 2)
@@ -144,7 +152,7 @@ Workers вызывают исходный supervisor без повторного
 (с учётом задержки scheduler), а полный drain — нескольких запусков. Для регулярного
 восстановления crash в течение минут нужен отдельно настроенный серверный scheduler
 с тем же защищённым endpoint; платный план этим изменением не подключается.
-Новый API, SQL008, manifests и cron production в этой правке не развёрнуты.
+Новый API, manifests и cron production пока не развёрнуты; hosted-приёмка ожидает их.
 
 Адресная SQL-проверка использует тот же explicit PGlite loader, что остальные smoke scripts:
 `node learning-lab/supabase/tests/review-grading-smoke.mjs /absolute/path/to/@electric-sql/pglite/dist/index.js`.

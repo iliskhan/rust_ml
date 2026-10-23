@@ -14,8 +14,11 @@ Immutable опубликованные условия, IDs, attempts и hashes �
 
 Общие проверки: 682/682 Node tests с Python/Rust 1.87, 86 Rust tests/doctests,
 format/typecheck/build PASS; SQL smoke с RLS/историей, desktop/mobile390 PASS.
-**Backend rollout пока не выполнен**: SQL008/009, новый API/cron и manifest edition
-нужно применить отдельно. 47 повторных банков не дают самостоятельного зачёта;
+**Backend rollout частичный**: SQL008/009 применены в production 23 октября,
+14:44:22 UTC; данные, RLS/policies и настройки квот сохранены. API/cron и 851 новый
+manifest edition 2 подготовлены, но ещё не развёрнуты: ожидается решение владельца
+по предложению Vercel включить 2FA. Hosted smoke нового API пока не выполнен.
+47 повторных банков не дают самостоятельного зачёта;
 новые независимые банки не объявлены готовыми. Все 12 пунктов, доказательства и
 единый остаточный backlog — [VALIDATION.md](learning-lab/evidence/review-fixes-2026-10-23/VALIDATION.md).
 

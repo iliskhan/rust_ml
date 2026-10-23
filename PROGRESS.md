@@ -20,8 +20,13 @@ PGlite: 1236 published manifests, 35 execution cases, 56 grading checks;
 SQL009 сохраняет историю и RLS. Браузер: desktop/mobile390, RL apply/restore,
 LoRA same-hash/focus, SSM yaw80/search, quota→retry, legacy progress без ложного mastery.
 
-Новых production dependencies нет. **Live backend ещё не обновлён**; необходимые
-SQL008/009, API/cron, manifest edition и оставшиеся ограничения записаны в одном
+Новых production dependencies нет. **SQL008/009 применены в production** 23 октября
+в 14:44:22 UTC одной транзакцией: fingerprint 17 таблиц, policies, RLS и настройки
+grader не изменились; 47/47 повторных тем, 0 независимых подтверждений, worker-only
+helper и security-invoker view проверены. Подготовлены 851 новый manifest edition 2;
+385 неизменённых сохраняют edition 1. Публикация, новый API/cron и hosted smoke
+ожидают решения владельца по предложению включить Vercel 2FA. Полное закрытие
+12 замечаний до этой приёмки не заявляется. Оставшиеся шаги и ограничения — в одном
 [backlog с доказательствами](learning-lab/evidence/review-fixes-2026-10-23/VALIDATION.md).
 Новые независимые банки, hosted Sandbox и ручная a11y/ученики не объявлены проверенными.
 Commit/push этого checkpoint и совпадение local/remote сообщаются после отправки.

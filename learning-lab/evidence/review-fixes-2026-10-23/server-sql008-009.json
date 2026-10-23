@@ -1,0 +1,11 @@
+[
+  {
+    "repeated_topic_keys": 47,
+    "published_repeated_topics": 47,
+    "invalid_independent_rows": 0,
+    "sql008_exists": true,
+    "view_security_invoker": true,
+    "data_policy_settings_fingerprints_preserved": true,
+    "applied_at": "2026-10-23 14:44:22.165735+00"
+  }
+]

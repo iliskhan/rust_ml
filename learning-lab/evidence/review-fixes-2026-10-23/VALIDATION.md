@@ -50,14 +50,39 @@ owner и fake cloud без запросов в production; временные HT
 [камера mobile](fix-09-search-camera-mobile390.png),
 [прогресс со старым ответом сервера](fix-10-legacy-progress-repeat.png).
 
+## Production SQL, 2026-10-23
+
+SQL008/009 применены в Supabase `phnjcmahugetofwvnbto` в **14:44:22 UTC** одной
+транзакцией `REPEATABLE READ`. Полные fingerprints 17 таблиц, RLS flags, policies
+и настройки grader до/после совпали. Временная таблица сверки удалена при COMMIT.
+Worker-only helper существует; view сохраняет `security_invoker=true`;
+**47 repeat keys / 47 published topics / 0 invalid independent rows**.
+[JSON-квитанция](server-sql008-009.json), [снимок результата](server-sql008-009.png).
+
+Wrapper заранее прошёл PGlite 001–007 → 008/009; отрицательная проверка изменила
+тестовый draft, получила отказ проверки и откатила обе миграции вместе с изменением.
+Production-история не переписывалась. До rollout: 0 attempts, 1 пользовательский
+draft, 1236 immutable manifests; исходные строки сохранены.
+
+`prepareManifests` сверил все 1236 опубликованных контрактов с текущими pinned
+runtimes. Подготовлены **851 INSERT edition 2**, остальные **385** сохраняют прежний
+manifest. Атомарная публикация проверена на PGlite: сохранение всех 1236 старых
+строк и queued attempt, 1236 desired latest, отказ повторного запуска и полный
+откат при неверном postcondition. Это подготовка, ещё не production-публикация.
+
 ## Оставшийся backlog и границы
 
-1. **Production rollout backend ещё не выполнен.** Применить SQL008/009 от migration
-   owner (старые 001–007 повторно не запускать), затем развернуть API с recovery cron
+1. **Production rollout backend не завершён.** SQL008/009 уже применены; повторно
+   их не запускать. Развернуть API с recovery cron
    и существующим `CRON_SECRET`. Сверить опубликованный каталог через `prepareManifests`
    и добавить новую свободную edition с текущими pinned runtimes; старые hashes/history
    не обновлять. После этого проверить hosted JS/Python/Rust и закрытую вкладку.
    Порядок и ограничения — [grader README](../../grader/README.md).
+   Вход в Vercel дошёл до предложения включить 2FA. Автоматическая проверка
+   запретила нажать «Skip securing my account» без отдельного решения владельца,
+   расценив это как возможное ослабление защиты. Вопрос владельцу задан; защиту
+   не меняли и этот шаг другим способом не обходили. Все 12 замечаний пока нельзя
+   считать полностью закрытыми в production.
 2. Daily cron в существующем Hobby-плане — резерв после гибели всех workers.
    Без новых submit аварийная job может ждать следующего дня и задержки scheduler;
    полный drain иногда требует нескольких запусков. Для восстановления за минуты
